@@ -1,0 +1,49 @@
+project:
+  type: website
+
+website:
+  title: "Seoyeon's Blog"
+  
+  page-footer:
+    border: true
+    
+  navbar:
+    left:
+      - text: Lectures
+        href: https://seoyeonc.github.io/md/
+      - text: Lectures_fastai
+        href: https://seoyeonc.github.io/chch/
+      - text: Research_fastai
+        href: https://seoyeonc.github.io/ms/
+      - text: GODE
+        href: https://seoyeonc.github.io/blog/
+        
+    right:
+      - about.qmd
+      - icon: github
+        href: https://seoyeonc.github.io/sy_hub/
+        
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - 1_essays.qmd
+      - section: "**Studies**"
+        contents:
+          - 2_graph.qmd
+      - section: "**Researches**"
+        contents:
+          - 2_itstgcn.qmd
+      
+format:
+  html:
+    theme: 
+        light: minty
+    css: styles.css
+    toc: true
+    code-fold: false
+    code-line-numbers: false
+    code-copy: false
+
+
+
