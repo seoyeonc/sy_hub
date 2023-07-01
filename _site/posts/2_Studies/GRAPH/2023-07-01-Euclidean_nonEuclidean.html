@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="SEOYEON CHOI">
+<meta name="dcterms.date" content="2023-07-01">
+
+<title>Seoyeon’s Blog - Non-Euclidean vs Euclidean</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Seoyeon’s Blog</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/md/">
+ <span class="menu-text">Lectures</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/chch/">
+ <span class="menu-text">Lectures_fastai</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/blog/">
+ <span class="menu-text">Research_ing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/ms/">
+ <span class="menu-text">Research_fastai</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://seoyeonc.github.io/sy_hub/"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Non-Euclidean vs Euclidean</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title d-none d-lg-block">Non-Euclidean vs Euclidean</h1>
+                                <div class="quarto-categories">
+                <div class="quarto-category">Non-Euclidean</div>
+                <div class="quarto-category">Euclidean</div>
+                <div class="quarto-category">Manifold</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>SEOYEON CHOI </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">July 1, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../1_essays.html" class="sidebar-item-text sidebar-link"><strong>Essays</strong></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true"><strong>Studies</strong></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_graph.html" class="sidebar-item-text sidebar-link">Graph</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_ml.html" class="sidebar-item-text sidebar-link">Machine Learning</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true"><strong>Researches</strong></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../3_itstgcn.html" class="sidebar-item-text sidebar-link">ITSTGCN</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#first-check-the-definition-of-regular-graph" id="toc-first-check-the-definition-of-regular-graph" class="nav-link active" data-scroll-target="#first-check-the-definition-of-regular-graph">First, check the definition of regular graph</a></li>
+  <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import">Import</a></li>
+  <li><a href="#non-euclidean-vs-euclidean" id="toc-non-euclidean-vs-euclidean" class="nav-link" data-scroll-target="#non-euclidean-vs-euclidean">Non-Euclidean vs Euclidean</a>
+  <ul class="collapse">
+  <li><a href="#euclidean" id="toc-euclidean" class="nav-link" data-scroll-target="#euclidean">Euclidean</a>
+  <ul class="collapse">
+  <li><a href="#ex1-1d-grid" id="toc-ex1-1d-grid" class="nav-link" data-scroll-target="#ex1-1d-grid">Ex1) 1D grid</a></li>
+  <li><a href="#ex2-2d-grids" id="toc-ex2-2d-grids" class="nav-link" data-scroll-target="#ex2-2d-grids">Ex2) 2d grids</a></li>
+  </ul></li>
+  <li><a href="#non-euclidean" id="toc-non-euclidean" class="nav-link" data-scroll-target="#non-euclidean">Non-Euclidean</a>
+  <ul class="collapse">
+  <li><a href="#ex3-different-weights" id="toc-ex3-different-weights" class="nav-link" data-scroll-target="#ex3-different-weights">Ex3) Different Weights</a></li>
+  <li><a href="#ex3-non-euclidean-data-with-non-euclidean-domain" id="toc-ex3-non-euclidean-data-with-non-euclidean-domain" class="nav-link" data-scroll-target="#ex3-non-euclidean-data-with-non-euclidean-domain">Ex3) Non-Euclidean data with Non-Euclidean domain</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#appendix" id="toc-appendix" class="nav-link" data-scroll-target="#appendix">Appendix</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Graph vs Manifold
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>굳이 포함관계를 따지자면, Non-Euclidean &gt; Graph &gt; Manifold</li>
+<li>Non-Euclidean
+<ul>
+<li>Graph
+<ul>
+<li>거리는 Edge 나 weight 로 정의함.
+<ul>
+<li>Manifold(ex. swiss roll, 아래 예시 있음!)
+<ol type="1">
+<li>underline = domain(swiss roll에서 말린 곡면)</li>
+<li>underlying function = color(swiss roll에서 무지개 색)</li>
+<li>유한한 그래프 시그널로 표현 가능
+<ul>
+<li>무한한 노드에서 realization sample 뽑고,</li>
+<li>그래프로 가져오려면 distance 정의 수정이 필요하다.
+<ul>
+<li>수정하는 방법
+<ol type="1">
+<li><span class="math inline">\(W_{i,j} = \begin{cases} \exp\left(-\frac{\|{\boldsymbol v}_i -{\boldsymbol v}_j\|^2}{2\theta^2}\right) &amp; \|{\boldsymbol v}_i -{\boldsymbol v}_j\|^2 \le \kappa \\ 0 &amp; o.w\end{cases}\)</span>를 사용하여 가까운 것만 거리 계산하도록 하기, 곡선은 유클리디안 거리를 semi 사용하고(이 식에서 <span class="math inline">\(\kappa\)</span>로 먼 거리는 자르니까), 곡면은 하버사인 거리를 사용.</li>
+<li>similarity(유사도) 따지기(ex. 몇 번 건너서 다음 노드로 가는지 등)</li>
+</ol></li>
+</ul></li>
+</ul></li>
+</ol></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+<section id="first-check-the-definition-of-regular-graph" class="level1">
+<h1>First, check the definition of regular graph</h1>
+<p><a href="https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-06-30-Regular%20Graph.html">Regular Graph?</a></p>
+</section>
+<section id="import" class="level1">
+<h1>Import</h1>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> networkx <span class="im">as</span> nx</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div>
+</div>
+</section>
+<section id="non-euclidean-vs-euclidean" class="level1">
+<h1>Non-Euclidean vs Euclidean</h1>
+<section id="euclidean" class="level2">
+<h2 class="anchored" data-anchor-id="euclidean">Euclidean</h2>
+<section id="ex1-1d-grid" class="level3">
+<h3 class="anchored" data-anchor-id="ex1-1d-grid">Ex1) 1D grid</h3>
+<blockquote class="blockquote">
+<p>Text, etc.</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/1dgrid.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Sentence, word, sound: 1D Euclidean domains. This image is sourced from the <a href="http://helper.ipam.ucla.edu/publications/dlt2018/dlt2018_14506.pdf">PAM Workshop “New Deep Learning Techniques” Feb 7th 2017</a></figcaption><p></p>
+</figure>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="192">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>w<span class="op">=</span>np.zeros((<span class="dv">5</span>,<span class="dv">5</span>))</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i<span class="op">==</span>j :</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>            w[i,j] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> i<span class="op">-</span>j <span class="op">==</span> <span class="dv">1</span> : </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>            w[i,j] <span class="op">=</span> <span class="dv">1</span></span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="193">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lst <span class="op">=</span> []</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> w[i,j] <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            lst.append([i,j])</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="194">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">=</span> w.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>D<span class="op">=</span> np.diag(d)</span></code></pre></div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>모든 Degree가 동일한, 특히 단위행렬로 나오는(Regular graph인) 유클리디안 데이터</p>
+</div>
+</div>
+<div class="cell" data-execution_count="195">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>D</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="195">
+<pre><code>array([[0., 0., 0., 0., 0.],
+       [0., 1., 0., 0., 0.],
+       [0., 0., 1., 0., 0.],
+       [0., 0., 0., 1., 0.],
+       [0., 0., 0., 0., 1.]])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="196">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.Graph()</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="197">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>G.add_edges_from(np.array(lst))</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="198">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">5</span>)) </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx(G, with_labels<span class="op">=</span><span class="va">True</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, node_color<span class="op">=</span><span class="st">'orange'</span>, node_size<span class="op">=</span><span class="dv">1500</span>, font_color<span class="op">=</span><span class="st">'white'</span>, font_size<span class="op">=</span><span class="dv">30</span>,width<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2023-07-01-Euclidean_nonEuclidean_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="ex2-2d-grids" class="level3">
+<h3 class="anchored" data-anchor-id="ex2-2d-grids">Ex2) 2d grids</h3>
+<blockquote class="blockquote">
+<p>Image, etc.</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/2dgrid.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Image, volume, video: 2D, 3D, 2D+1 Euclidean domains. This image is sourced from the <a href="http://helper.ipam.ucla.edu/publications/dlt2018/dlt2018_14506.pdf">PAM Workshop “New Deep Learning Techniques” Feb 7th 2017</a></figcaption><p></p>
+</figure>
+</div>
+<div class="cell" data-tags="[]" data-execution_count="221">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.ones((<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i<span class="op">==</span>j :</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>            w[i,j] <span class="op">=</span> <span class="dv">0</span></span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="222">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>lst <span class="op">=</span> []</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> w[i,j] <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>            lst.append([i,j])</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="223">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>d<span class="op">=</span> w.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>D<span class="op">=</span> np.diag(d)</span></code></pre></div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>모든 Degree가 동일하여 <span class="math inline">\(D = 3I\)</span>로 표현되는(Regular graph인) 유클리디안 데이터</p>
+</div>
+</div>
+<div class="cell" data-execution_count="224">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>D</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="224">
+<pre><code>array([[3., 0., 0., 0.],
+       [0., 3., 0., 0.],
+       [0., 0., 3., 0.],
+       [0., 0., 0., 3.]])</code></pre>
+</div>
+</div>
+<div class="cell" data-execution_count="225">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.Graph()</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="226">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>G.add_edges_from(np.array(lst))</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="227">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>)) </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx(G, with_labels<span class="op">=</span><span class="va">True</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, node_color<span class="op">=</span><span class="st">'orange'</span>, node_size<span class="op">=</span><span class="dv">1500</span>, font_color<span class="op">=</span><span class="st">'white'</span>, font_size<span class="op">=</span><span class="dv">30</span>,width<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2023-07-01-Euclidean_nonEuclidean_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+</section>
+<section id="non-euclidean" class="level2">
+<h2 class="anchored" data-anchor-id="non-euclidean">Non-Euclidean</h2>
+<section id="ex3-different-weights" class="level3">
+<h3 class="anchored" data-anchor-id="ex3-different-weights">Ex3) Different Weights</h3>
+<blockquote class="blockquote">
+<p>Weight 같다고 가정하고 그래프 시각화</p>
+</blockquote>
+<div class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>w<span class="op">=</span>np.zeros((<span class="dv">5</span>,<span class="dv">5</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> i<span class="op">==</span>j :</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>            w[i,j] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> i<span class="op">!=</span>j: </span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>            w[i,j] <span class="op">=</span> <span class="dv">1</span></span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>lst <span class="op">=</span> []</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> w[i,j] <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>            lst.append([i,j])</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>G <span class="op">=</span> nx.Graph()</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>G.add_edges_from(np.array(lst))</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">10</span>)) </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>nx.draw_networkx(G, with_labels<span class="op">=</span><span class="va">True</span>, font_weight<span class="op">=</span><span class="st">'bold'</span>, node_color<span class="op">=</span><span class="st">'orange'</span>, node_size<span class="op">=</span><span class="dv">1500</span>, font_color<span class="op">=</span><span class="st">'white'</span>, font_size<span class="op">=</span><span class="dv">30</span>,width<span class="op">=</span><span class="dv">5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="2023-07-01-Euclidean_nonEuclidean_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>pi<span class="op">=</span>np.pi</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>ang<span class="op">=</span>np.linspace(<span class="op">-</span>pi,pi<span class="op">-</span><span class="dv">2</span><span class="op">*</span>pi<span class="op">/</span><span class="dv">5</span>,<span class="dv">5</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>r<span class="op">=</span><span class="dv">5</span><span class="op">+</span>np.cos(np.linspace(<span class="dv">0</span>,<span class="dv">12</span><span class="op">*</span>pi,<span class="dv">5</span>))</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>vx<span class="op">=</span>r<span class="op">*</span>np.cos(ang)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>vy<span class="op">=</span>r<span class="op">*</span>np.sin(ang)</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>f1<span class="op">=</span><span class="dv">10</span><span class="op">*</span>np.sin(np.linspace(<span class="dv">0</span>,<span class="dv">6</span><span class="op">*</span>pi,<span class="dv">5</span>))</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> f1 <span class="op">+</span> np.random.normal(<span class="dv">5</span>)</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> np.zeros([<span class="dv">5</span>,<span class="dv">5</span>])</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>locations <span class="op">=</span> np.stack([vx, vy],axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5</span>):</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i,<span class="dv">5</span>):</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>        D[i,j]<span class="op">=</span>np.linalg.norm(locations[i]<span class="op">-</span>locations[j])</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>D <span class="op">=</span> D <span class="op">+</span> D.T</span></code></pre></div>
+</div>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>D</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>array([[ 0.        ,  6.0964895 , 11.4126782 ,  9.53062515,  7.05342303],
+       [ 6.0964895 ,  0.        ,  6.0964895 ,  7.60845213,  9.53062515],
+       [11.4126782 ,  6.0964895 ,  0.        ,  6.0964895 , 11.4126782 ],
+       [ 9.53062515,  7.60845213,  6.0964895 ,  0.        ,  6.0964895 ],
+       [ 7.05342303,  9.53062515, 11.4126782 ,  6.0964895 ,  0.        ]])</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>가중치 값이 다 다르게 형성되어 있다. 따라서 <span class="math inline">\(D=kI\)</span>형태로도 표현할 수 없어 레귤러 메트릭스의 정의를 충족하지 못하며, 이는 비유클리디안 데이터이다.</p>
+</div>
+</div>
+</section>
+<section id="ex3-non-euclidean-data-with-non-euclidean-domain" class="level3">
+<h3 class="anchored" data-anchor-id="ex3-non-euclidean-data-with-non-euclidean-domain">Ex3) Non-Euclidean data with Non-Euclidean domain</h3>
+<blockquote class="blockquote">
+<p>degree matrix가 단위행렬이 아니어서 레귤러 그래프가 아닌 그래프</p>
+</blockquote>
+<section id="d-shape-manifold" class="level4">
+<h4 class="anchored" data-anchor-id="d-shape-manifold">1. 3D shape, Manifold</h4>
+<blockquote class="blockquote">
+<p>도메인이 표면(컵)이며, underlying function 이 regular graph로 정의되지 않는다.</p>
+</blockquote>
+<p><a href="https://graphics.stanford.edu/courses/cs468-20-fall/">reference</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/surfaces.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Surface (non-Euclid data). This image is sourced from the (Fall 2020 course website for Non-Euclidean Methods in Machine Learning (CS468), Stanford University)</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="d-shape-manifold-1" class="level4">
+<h4 class="anchored" data-anchor-id="d-shape-manifold-1">2. 3D shape, Manifold</h4>
+<blockquote class="blockquote">
+<p>도메인이 구로 형성되어 있고, graph로 인지 시, underlying function 이 색(파란색)으로 볼 수 있고, 다른 색으로 구성된 것은 <span class="math inline">\(\eta\)</span>로 볼 수 있고, regular graph로 정의되지 않는다.</p>
+</blockquote>
+<p><em>간단 <span class="math inline">\(\eta\)</span> 정의 review = noise 이지만, 특정 i에서 값이 큰 nois를 갖음</em></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/distributions.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Distributions on 3D shapes (non-Euclid data). This image is sourced from the <a href="https://graphics.stanford.edu/courses/cs468-20-fall/">Fall 2020 course website for Non-Euclidean Methods in Machine Learning (CS468), Stanford University</a></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="d-shape-manifold-2" class="level4">
+<h4 class="anchored" data-anchor-id="d-shape-manifold-2">3. 3D shape, Manifold</h4>
+<blockquote class="blockquote">
+<p>도메인이 표면(고양이)이며, underlying function 이 색이라고 할 수 있다.</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/functions_on_manifolds.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Functions on manifolds (non-Euclid data). This image is sourced from the <a href="https://graphics.stanford.edu/courses/cs468-20-fall/">Fall 2020 course website for Non-Euclidean Methods in Machine Learning (CS468), Stanford University</a></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="d-shape-manifold-3" class="level4">
+<h4 class="anchored" data-anchor-id="d-shape-manifold-3">4. 3D shape, Manifold</h4>
+<blockquote class="blockquote">
+<p>도메인이 표면이며, underlying function 이 색이다. graph로 볼 때 regular graph로 정의되지 않는다.</p>
+</blockquote>
+<p><a href="https://graphics.stanford.edu/courses/cs468-20-fall/">reference</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/general_manifolds.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: General manifolds (non-Euclid data). This image is sourced from the (Fall 2020 course website for Non-Euclidean Methods in Machine Learning (CS468), Stanford University)</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="graph" class="level4">
+<h4 class="anchored" data-anchor-id="graph">5. Graph</h4>
+<blockquote class="blockquote">
+<p>도메인이 노드인 graph. underlying function 은 정의할 수 없지만 굳이 따지자면 Classification work. 신경망 모양..</p>
+</blockquote>
+<p><a href="https://graphics.stanford.edu/courses/cs468-20-fall/">reference</a></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/graphs_networks.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Graphs networks (non-Euclid data). This image is sourced from the [Fall 2020 course website for Non-Euclidean Methods in Machine Learning (CS468), Stanford University]</figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="graphmanifold" class="level4">
+<h4 class="anchored" data-anchor-id="graphmanifold">6. Graph(Manifold?)</h4>
+<blockquote class="blockquote">
+<p>위의 정의 참고, 노드가 도메인인 graph. 색이 underlying function.</p>
+</blockquote>
+<p>Swiss roll (non-euclid data) from <span class="citation" data-cites="das2021nonlinear">(<a href="#ref-das2021nonlinear" role="doc-biblioref">Das and Pal 2021</a>)</span></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/swiss_roll.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Swiss roll (non-euclid data) from <span class="citation" data-cites="das2021nonlinear">Das and Pal (<a href="#ref-das2021nonlinear" role="doc-biblioref">2021</a>)</span></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="graph-1" class="level4">
+<h4 class="anchored" data-anchor-id="graph-1">7. Graph</h4>
+<blockquote class="blockquote">
+<p>도메인이 노드이며, classification work</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://www.frontiersin.org/files/Articles/61343/fncom-08-00051-HTML/image_m/fncom-08-00051-g003.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Brain network (non-Euclid data) from <span class="citation" data-cites="ginestet2014statistical">Ginestet, Fournel, and Simmons (<a href="#ref-ginestet2014statistical" role="doc-biblioref">2014</a>)</span></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="graph-signal" class="level4">
+<h4 class="anchored" data-anchor-id="graph-signal">8. Graph Signal</h4>
+<blockquote class="blockquote">
+<p>도메인이 노드(택시 탄 장소)이며, underlying function 이 색(택시 픽업 얼마나 하는지를 나타냄, 많이 할 수록 레드쪽으로) regular graph로 정의되지 않는다.</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/Manhattan.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Taxi-pickup distribution in Manhattan (non-euclid data) from <span class="citation" data-cites="ortega2018graph">Ortega et al. (<a href="#ref-ortega2018graph" role="doc-biblioref">2018</a>)</span></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="graph-signal-spatiotemporal-data" class="level4">
+<h4 class="anchored" data-anchor-id="graph-signal-spatiotemporal-data">9. Graph signal, spatiotemporal data</h4>
+<blockquote class="blockquote">
+<p>도메인이 노드(sequence)이며, underlying function 이 regular graph로 정의되지 않는다.(파란색인 양의 signal, 검정색인 음의 signal로 mapping되어 있는 graph signal의 형태)</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/Minnesota_road_graph.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: Minnesota road graph (non-euclid data) from Shuman et al.<span class="citation" data-cites="shuman2013emerging">(<a href="#ref-shuman2013emerging" role="doc-biblioref">2013</a>)</span></figcaption><p></p>
+</figure>
+</div>
+</section>
+<section id="graphsequence-dynamic-spatiotemporal-data" class="level4">
+<h4 class="anchored" data-anchor-id="graphsequence-dynamic-spatiotemporal-data">10. Graph(Sequence), dynamic spatiotemporal data</h4>
+<blockquote class="blockquote">
+<p>도메인이 표면(사람,motion을 sequence로 전달)이며, dynamic spatiotemporal data</p>
+</blockquote>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/point_cloud.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure: 3D point cloud sequence (non-euclid data) from <span class="citation" data-cites="ortega2018graph">(<a href="#ref-ortega2018graph" role="doc-biblioref">Ortega et al. 2018</a>)</span></figcaption><p></p>
+</figure>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="appendix" class="level1">
+<h1>Appendix</h1>
+<p><strong>Difficulties in analyzing non-Euclidean data</strong></p>
+<p>Analyzing non-Euclidean data is one of the most popular topics in recent years. These are collectively referred to as geometric deep learning <span class="citation" data-cites="bronstein2017geometric">(<a href="#ref-bronstein2017geometric" role="doc-biblioref">Bronstein et al. 2017</a>)</span>,<span class="citation" data-cites="cao2020comprehensive">(<a href="#ref-cao2020comprehensive" role="doc-biblioref">Cao et al. 2020</a>)</span>, graph signal processing <span class="citation" data-cites="shuman2013emerging">(<a href="#ref-shuman2013emerging" role="doc-biblioref">Shuman et al. 2013</a>)</span>, and graph learning <span class="citation" data-cites="xia2021graph">(<a href="#ref-xia2021graph" role="doc-biblioref">Xia et al. 2021</a>)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Figs/gc.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figure. Classical CNN (left) and geometric CNN</figcaption><p></p>
+</figure>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-bronstein2017geometric" class="csl-entry" role="doc-biblioentry">
+Bronstein, Michael M, Joan Bruna, Yann LeCun, Arthur Szlam, and Pierre Vandergheynst. 2017. <span>“Geometric Deep Learning: Going Beyond Euclidean Data.”</span> <em>IEEE Signal Processing Magazine</em> 34 (4): 18–42.
+</div>
+<div id="ref-cao2020comprehensive" class="csl-entry" role="doc-biblioentry">
+Cao, Wenming, Zhiyue Yan, Zhiquan He, and Zhihai He. 2020. <span>“A Comprehensive Survey on Geometric Deep Learning.”</span> <em>IEEE Access</em> 8: 35929–49.
+</div>
+<div id="ref-das2021nonlinear" class="csl-entry" role="doc-biblioentry">
+Das, Suchismita, and Nikhil R Pal. 2021. <span>“Nonlinear Dimensionality Reduction for Data Visualization: An Unsupervised Fuzzy Rule-Based Approach.”</span> <em>IEEE Transactions on Fuzzy Systems</em> 30 (7): 2157–69.
+</div>
+<div id="ref-ginestet2014statistical" class="csl-entry" role="doc-biblioentry">
+Ginestet, Cedric E, Arnaud P Fournel, and Andrew Simmons. 2014. <span>“Statistical Network Analysis for Functional MRI: Summary Networks and Group Comparisons.”</span> <em>Frontiers in Computational Neuroscience</em> 8: 51.
+</div>
+<div id="ref-ortega2018graph" class="csl-entry" role="doc-biblioentry">
+Ortega, Antonio, Pascal Frossard, Jelena Kovačević, José MF Moura, and Pierre Vandergheynst. 2018. <span>“Graph Signal Processing: Overview, Challenges, and Applications.”</span> <em>Proceedings of the IEEE</em> 106 (5): 808–28.
+</div>
+<div id="ref-shuman2013emerging" class="csl-entry" role="doc-biblioentry">
+Shuman, David I, Sunil K Narang, Pascal Frossard, Antonio Ortega, and Pierre Vandergheynst. 2013. <span>“The Emerging Field of Signal Processing on Graphs: Extending High-Dimensional Data Analysis to Networks and Other Irregular Domains.”</span> <em>IEEE Signal Processing Magazine</em> 30 (3): 83–98.
+</div>
+<div id="ref-xia2021graph" class="csl-entry" role="doc-biblioentry">
+Xia, Feng, Ke Sun, Shuo Yu, Abdul Aziz, Liangtian Wan, Shirui Pan, and Huan Liu. 2021. <span>“Graph Learning: A Survey.”</span> <em>IEEE Transactions on Artificial Intelligence</em> 2 (2): 109–27.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

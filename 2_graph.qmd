@@ -1,8 +1,8 @@
 ---
-title: "GRAPH"
+title: "Graph"
 listing:
   contents: posts/2_Studies/GRAPH
-  sort: "date"
+  sort: "date desc"
   type: table
   categories: false
   sort-ui: false

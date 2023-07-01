@@ -2,32 +2,18 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/3_Researches/GODE/Untitled.html",
-      "/posts/post-with-code/index.html",
-      "/posts/3_Researches/GODE/2023-06-27-Linear_graph_code_for_paper.html",
-      "/posts/welcome/index.html",
-      "/posts/3_Researches/GODE/2023-06-22-comparison_earthquake.html",
-      "/posts/3_Researches/GODE/2022-12-27-DFT_study.html",
-      "/posts/3_Researches/GODE/2022-12-01-graph_code_guebin.html",
-      "/posts/3_Researches/GODE/2022-11-19-class_code_for_paper.html",
-      "/posts/3_Researches/GODE/2022-10-02-Earthquake_real.html",
-      "/posts/3_Researches/GODE/2022-09-02-paper_simulation.html",
-      "/posts/3_Researches/GODE/index.html"
+      "/posts/3_Researches/GODE/2023-07-01-graph_spectral_domain.html",
+      "/posts/3_Researches/GODE/2023-07-01-NonEuclidean_data_of_GODE.html",
+      "/posts/2_Studies/GRAPH/2023-07-01-Euclidean_nonEuclidean.html",
+      "/posts/2_Studies/GRAPH/2023-06-30-Graph Signal.html",
+      "/posts/2_Studies/GRAPH/2023-06-30-Regular Graph.html",
+      "/posts/3_Researches/ITSTGCN/2023-05-20-EbayesThresh toy ex.html",
+      "/posts/3_Researches/ITSTGCN/2023-05-18-Self Consistency toy ex.html"
     ]
   },
   {
-    "listing": "/3_GODE.html",
-    "items": [
-      "/posts/3_Researches/GODE/Untitled.html",
-      "/posts/3_Researches/GODE/2023-06-27-Linear_graph_code_for_paper.html",
-      "/posts/3_Researches/GODE/2023-06-22-comparison_earthquake.html",
-      "/posts/3_Researches/GODE/2022-12-27-DFT_study.html",
-      "/posts/3_Researches/GODE/2022-12-01-graph_code_guebin.html",
-      "/posts/3_Researches/GODE/2022-11-19-class_code_for_paper.html",
-      "/posts/3_Researches/GODE/2022-10-02-Earthquake_real.html",
-      "/posts/3_Researches/GODE/2022-09-02-paper_simulation.html",
-      "/posts/3_Researches/GODE/index.html"
-    ]
+    "listing": "/2_ml.html",
+    "items": []
   },
   {
     "listing": "/1_essays.html",
@@ -35,10 +21,17 @@
   },
   {
     "listing": "/2_graph.html",
-    "items": []
+    "items": [
+      "/posts/2_Studies/GRAPH/2023-07-01-Euclidean_nonEuclidean.html",
+      "/posts/2_Studies/GRAPH/2023-06-30-Graph Signal.html",
+      "/posts/2_Studies/GRAPH/2023-06-30-Regular Graph.html"
+    ]
   },
   {
     "listing": "/3_itstgcn.html",
-    "items": []
+    "items": [
+      "/posts/3_Researches/ITSTGCN/2023-05-18-Self Consistency toy ex.html",
+      "/posts/3_Researches/ITSTGCN/2023-05-20-EbayesThresh toy ex.html"
+    ]
   }
 ]

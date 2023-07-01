@@ -13,10 +13,10 @@ website:
         href: https://seoyeonc.github.io/md/
       - text: Lectures_fastai
         href: https://seoyeonc.github.io/chch/
+      - text: Research_ing
+        href: https://seoyeonc.github.io/blog/
       - text: Research_fastai
         href: https://seoyeonc.github.io/ms/
-      - text: GODE
-        href: https://seoyeonc.github.io/blog/
         
     right:
       - about.qmd
@@ -31,14 +31,15 @@ website:
       - section: "**Studies**"
         contents:
           - 2_graph.qmd
+          - 2_ml.qmd
       - section: "**Researches**"
         contents:
-          - 2_itstgcn.qmd
+          - 3_itstgcn.qmd
       
 format:
   html:
     theme: 
-        light: minty
+        light: journal
     css: styles.css
     toc: true
     code-fold: false

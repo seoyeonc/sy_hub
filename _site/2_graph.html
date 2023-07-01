@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Seoyeon’s Blog - GRAPH</title>
+<title>Seoyeon’s Blog - Graph</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -70,9 +70,9 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: [{ data: ['index'] },{ data: ['categories'] }],
+      valueNames: ['listing-date','listing-title','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
       
-      searchColumns: [],
+      searchColumns: ["listing-date","listing-title","listing-author"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
@@ -120,12 +120,12 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Lectures_fastai</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://seoyeonc.github.io/ms/">
- <span class="menu-text">Research_fastai</span></a>
+    <a class="nav-link" href="https://seoyeonc.github.io/blog/">
+ <span class="menu-text">Research_ing</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://seoyeonc.github.io/blog/">
- <span class="menu-text">GODE</span></a>
+    <a class="nav-link" href="https://seoyeonc.github.io/ms/">
+ <span class="menu-text">Research_fastai</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -145,7 +145,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">GRAPH</h1>
+      <h1 class="quarto-secondary-nav-title">Graph</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -178,7 +178,12 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./2_graph.html" class="sidebar-item-text sidebar-link active">GRAPH</a>
+  <a href="./2_graph.html" class="sidebar-item-text sidebar-link active">Graph</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./2_ml.html" class="sidebar-item-text sidebar-link">Machine Learning</a>
   </div>
 </li>
       </ul>
@@ -192,8 +197,10 @@ ul.task-list li input[type="checkbox"] {
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
-  2_itstgcn.qmd
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./3_itstgcn.html" class="sidebar-item-text sidebar-link">ITSTGCN</a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -208,7 +215,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">GRAPH</h1>
+<h1 class="title d-none d-lg-block">Graph</h1>
 </div>
 
 
@@ -232,9 +239,51 @@ ul.task-list li input[type="checkbox"] {
 <table class="quarto-listing-table table">
 <thead>
 <tr>
+<th>
+Date
+</th>
+<th>
+Title
+</th>
+<th>
+Author
+</th>
 </tr>
 </thead>
 <tbody class="list">
+<tr data-index="0" data-categories="Non-Euclidean,Euclidean,Manifold" data-listing-date-sort="1688137200000" data-listing-file-modified-sort="1688249851929" data-listing-reading-time-sort="3.585" data-listing-title-sort="Non-Euclidean vs Euclidean" data-listing-filename-sort="2023-07-01-Euclidean_nonEuclidean.ipynb">
+<td class="listing-date">
+Jul 1, 2023
+</td>
+<td class="listing-title">
+<a href="./posts/2_Studies/GRAPH/2023-07-01-Euclidean_nonEuclidean.html" class="title">Non-Euclidean vs Euclidean</a>
+</td>
+<td class="listing-author">
+SEOYEON CHOI
+</td>
+</tr>
+<tr data-index="1" data-categories="Graph" data-listing-date-sort="1688050800000" data-listing-file-modified-sort="1688204508814" data-listing-reading-time-sort="0.535" data-listing-title-sort="Graph Signal" data-listing-filename-sort="2023-06-30-Graph Signal.ipynb">
+<td class="listing-date">
+Jun 30, 2023
+</td>
+<td class="listing-title">
+<a href="./posts/2_Studies/GRAPH/2023-06-30-Graph Signal.html" class="title">Graph Signal</a>
+</td>
+<td class="listing-author">
+SEOYEON CHOI
+</td>
+</tr>
+<tr data-index="2" data-categories="Regular Graph" data-listing-date-sort="1688050800000" data-listing-file-modified-sort="1688203958649" data-listing-reading-time-sort="0.75" data-listing-title-sort="Regular Graph" data-listing-filename-sort="2023-06-30-Regular Graph.ipynb">
+<td class="listing-date">
+Jun 30, 2023
+</td>
+<td class="listing-title">
+<a href="./posts/2_Studies/GRAPH/2023-06-30-Regular Graph.html" class="title">Regular Graph</a>
+</td>
+<td class="listing-author">
+SEOYEON CHOI
+</td>
+</tr>
 </tbody>
 
 </table>
