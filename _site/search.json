@@ -25,7 +25,7 @@
     "href": "posts/2_Studies/GRAPH/2023-07-01-Euclidean_nonEuclidean.html",
     "title": "Non-Euclidean vs Euclidean",
     "section": "",
-    "text": "Graph vs Manifold\n\n\n\n\n굳이 포함관계를 따지자면, Non-Euclidean > Graph > Manifold\nNon-Euclidean\n\nGraph\n\n거리는 Edge 나 weight 로 정의함.\n\nManifold(ex. swiss roll, 아래 예시 있음!)\n\nunderline = domain(swiss roll에서 말린 곡면)\nunderlying function = color(swiss roll에서 무지개 색)\n유한한 그래프 시그널로 표현 가능\n\n무한한 노드에서 realization sample 뽑고,\n그래프로 가져오려면 distance 정의 수정이 필요하다.\n\n수정하는 방법\n\n\\(W_{i,j} = \\begin{cases} \\exp\\left(-\\frac{\\|{\\boldsymbol v}_i -{\\boldsymbol v}_j\\|^2}{2\\theta^2}\\right) & \\|{\\boldsymbol v}_i -{\\boldsymbol v}_j\\|^2 \\le \\kappa \\\\ 0 & o.w\\end{cases}\\)를 사용하여 가까운 것만 거리 계산하도록 하기, 곡선은 유클리디안 거리를 semi 사용하고(이 식에서 \\(\\kappa\\)로 먼 거리는 자르니까), 곡면은 하버사인 거리를 사용.\nsimilarity(유사도) 따지기(ex. 몇 번 건너서 다음 노드로 가는지 등)"
+    "text": "Regular Graph?\n\nSummary\n\n\nEuclidean data\n\nunderlying function이 regular graph로 정의가 가능한 data\nunderline(domain)이 euclidean domain에 위치한 데이터(x축, 1d-grid, 2d-grid 등)\neuclidean distance로 계산할 수 있는 data\n\nNon-Euclidean data\n\nunderlying function이 regular graph로 정의가 가능하지 않은 data\nunderline(domain)이 non-euclidean domain에 위치한 데이터(곡선, 곡면 등)\neuclidean distance calculation이 not reasonable한 data\n\n\n\n\n\n\n\n\nGraph vs Manifold\n\n\n\n\n굳이 포함관계를 따지자면, Non-Euclidean > Graph > Manifold\nNon-Euclidean\n\nGraph\n\n거리는 Edge 나 weight 로 정의함.\n\nManifold(ex. swiss roll, 아래 예시 있음!)\n\nunderline = domain(swiss roll에서 말린 곡면)\nunderlying function = color(swiss roll에서 무지개 색)\n유한한 그래프 시그널로 표현 가능\n\n무한한 노드에서 realization sample 뽑고,\n그래프로 가져오려면 distance 정의 수정이 필요하다.\n\n수정하는 방법\n\n\\(W_{i,j} = \\begin{cases} \\exp\\left(-\\frac{\\|{\\boldsymbol v}_i -{\\boldsymbol v}_j\\|^2}{2\\theta^2}\\right) & \\|{\\boldsymbol v}_i -{\\boldsymbol v}_j\\|^2 \\le \\kappa \\\\ 0 & o.w\\end{cases}\\)를 사용하여 가까운 것만 거리 계산하도록 하기, 곡선은 유클리디안 거리를 semi 사용하고(이 식에서 \\(\\kappa\\)로 먼 거리는 자르니까), 곡면은 하버사인 거리를 사용.\nsimilarity(유사도) 따지기(ex. 몇 번 건너서 다음 노드로 가는지 등)"
   },
   {
     "objectID": "posts/2_Studies/GRAPH/2023-07-01-Euclidean_nonEuclidean.html#euclidean",
@@ -128,9 +128,9 @@
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "About",
+    "title": "All about Researches",
     "section": "",
-    "text": "About this blog"
+    "text": "This blog is generated to manage my blogs.\nThere are two purposes to achieving knowledge here.\n\nFirst\nGet definitions of any subjects and organize that in my words.\nIt is important to understand those definitions if I want to research exactly and improve myself.\n\n\nSecond\nBrief my past and present research.\nOverall, this blog will be the step in developing my skills."
   },
   {
     "objectID": "3_itstgcn.html",

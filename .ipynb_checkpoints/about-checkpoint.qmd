@@ -2,12 +2,25 @@
 title: "About"
 image: profile.jpg
 about:
-  template: jolla
+  template: trestles
   links:
     - icon: github
       text: Github
       href: https://github.com/seoyeonc
-
 ---
 
-About this blog
+This blog is generated to manage my blogs.
+
+There are two purposes to achieving knowledge here.
+
+# First
+
+Get definitions of any subjects and organize that in my words.
+
+It is important to understand those definitions if I want to research exactly and improve myself.
+
+# Second
+
+Brief my past and present research.
+
+Overall, this blog will be the step in developing my skills.
