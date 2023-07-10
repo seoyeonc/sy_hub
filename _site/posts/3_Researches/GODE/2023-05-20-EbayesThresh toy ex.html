@@ -129,7 +129,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed slimcontent">
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -168,7 +168,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://seoyeonc.github.io/sy_hub/"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://seoyeonc.github.io/"><i class="bi bi-github" role="img">
 </i> 
  <span class="menu-text"></span></a>
   </li>  
@@ -286,7 +286,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
@@ -315,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>As this structure exhibits a “sparse signal + heavy-tailed” characteristics, by applying Bayesian modeling and thresholding <span class="math inline">\({\bf p}_y\)</span>, we can estimate an appropriate <span class="math inline">\({\bf p}_{pp}\)</span> as discussed in <span class="citation" data-cites="johnstone2004needles">[@johnstone2004needles]</span>.</p></li>
 </ul>
 </section>
-<section id="bayesian-model" class="level1 page-columns page-full">
+<section id="bayesian-model" class="level1">
 <h1>Bayesian Model</h1>
 <p><span class="math inline">\(x_i \sim N(\mu_i,1)\)</span></p>
 <p><a href="https://guebin.github.io/AP2023/posts/II.%20%ED%99%95%EB%A5%A0%EB%A1%A0%EA%B8%B0%EC%B4%88/2023-05-02-09wk.html">확률변수</a>가 잘 정의되어 있을때, 여기서 <span class="math inline">\(\mu_i\)</span>를 정하는 Baysian.</p>
@@ -342,10 +342,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Ebayes는 사전분포를 Heavy-tail으로 정의했다.</p>
 <p><strong>heavy tail?</strong></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/ae7604a7-3ffd-4374-8640-097dfc92061c-1-9c4b08eb-c3d0-4414-960e-f5a50b79799f.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption margin-caption">image.png</figcaption><p></p>
+<p></p><figcaption class="figure-caption">image.png</figcaption><p></p>
 </figure>
 </div>
 <p><span class="math inline">\(\mu_x \sim\)</span> Double Exponential <span class="math inline">\(= p_{pp} + p_{ac}\)</span> -&gt; 혼합형(misture) = pure point + absolutely continuous</p>
