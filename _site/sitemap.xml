@@ -2,54 +2,58 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/index.html</loc>
-    <lastmod>2023-07-02T06:44:36.300Z</lastmod>
+    <lastmod>2023-07-10T10:08:12.392Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/2_ml.html</loc>
-    <lastmod>2023-07-02T06:44:36.660Z</lastmod>
+    <lastmod>2023-07-10T10:08:12.612Z</lastmod>
+  </url>
+  <url>
+    <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-07-02-GSO.html</loc>
+    <lastmod>2023-07-10T10:08:13.128Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-06-30-Graph Signal.html</loc>
-    <lastmod>2023-07-02T06:44:37.060Z</lastmod>
+    <lastmod>2023-07-10T10:08:13.448Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-07-01-Euclidean_nonEuclidean.html</loc>
-    <lastmod>2023-07-02T06:44:37.804Z</lastmod>
+    <lastmod>2023-07-10T10:08:13.904Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-06-30-Regular Graph.html</loc>
-    <lastmod>2023-07-02T06:44:38.420Z</lastmod>
+    <lastmod>2023-07-10T10:08:14.320Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/3_Researches/ITSTGCN/2023-05-18-Self Consistency toy ex.html</loc>
-    <lastmod>2023-07-02T06:44:39.112Z</lastmod>
-  </url>
-  <url>
-    <loc>https://seoyeonc.github.io/sy_hub/posts/3_Researches/ITSTGCN/2023-05-20-EbayesThresh toy ex.html</loc>
-    <lastmod>2023-07-02T06:44:39.948Z</lastmod>
+    <lastmod>2023-07-10T10:08:14.736Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/3_Researches/GODE/2023-07-01-graph_spectral_domain.html</loc>
-    <lastmod>2023-07-02T06:44:40.368Z</lastmod>
+    <lastmod>2023-07-10T10:08:14.980Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/3_Researches/GODE/2023-07-01-NonEuclidean_data_of_GODE.html</loc>
-    <lastmod>2023-07-02T06:44:41.792Z</lastmod>
+    <lastmod>2023-07-10T10:08:15.864Z</lastmod>
+  </url>
+  <url>
+    <loc>https://seoyeonc.github.io/sy_hub/posts/3_Researches/GODE/2023-05-20-EbayesThresh toy ex.html</loc>
+    <lastmod>2023-07-10T10:08:16.408Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/1_essays.html</loc>
-    <lastmod>2023-07-02T06:44:42.180Z</lastmod>
+    <lastmod>2023-07-10T10:08:16.932Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/2_graph.html</loc>
-    <lastmod>2023-07-02T06:44:42.568Z</lastmod>
+    <lastmod>2023-07-10T10:08:17.188Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/about.html</loc>
-    <lastmod>2023-07-02T06:44:42.912Z</lastmod>
+    <lastmod>2023-07-10T10:08:17.432Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/3_itstgcn.html</loc>
-    <lastmod>2023-07-02T06:44:43.296Z</lastmod>
+    <lastmod>2023-07-10T10:08:17.684Z</lastmod>
   </url>
 </urlset>

@@ -2,12 +2,13 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/2_Studies/GRAPH/2023-07-02-GSO.html",
       "/posts/3_Researches/GODE/2023-07-01-graph_spectral_domain.html",
       "/posts/3_Researches/GODE/2023-07-01-NonEuclidean_data_of_GODE.html",
       "/posts/2_Studies/GRAPH/2023-07-01-Euclidean_nonEuclidean.html",
       "/posts/2_Studies/GRAPH/2023-06-30-Graph Signal.html",
       "/posts/2_Studies/GRAPH/2023-06-30-Regular Graph.html",
-      "/posts/3_Researches/ITSTGCN/2023-05-20-EbayesThresh toy ex.html",
+      "/posts/3_Researches/GODE/2023-05-20-EbayesThresh toy ex.html",
       "/posts/3_Researches/ITSTGCN/2023-05-18-Self Consistency toy ex.html"
     ]
   },
@@ -22,6 +23,7 @@
   {
     "listing": "/2_graph.html",
     "items": [
+      "/posts/2_Studies/GRAPH/2023-07-02-GSO.html",
       "/posts/2_Studies/GRAPH/2023-07-01-Euclidean_nonEuclidean.html",
       "/posts/2_Studies/GRAPH/2023-06-30-Graph Signal.html",
       "/posts/2_Studies/GRAPH/2023-06-30-Regular Graph.html"
@@ -30,8 +32,7 @@
   {
     "listing": "/3_itstgcn.html",
     "items": [
-      "/posts/3_Researches/ITSTGCN/2023-05-18-Self Consistency toy ex.html",
-      "/posts/3_Researches/ITSTGCN/2023-05-20-EbayesThresh toy ex.html"
+      "/posts/3_Researches/ITSTGCN/2023-05-18-Self Consistency toy ex.html"
     ]
   }
 ]

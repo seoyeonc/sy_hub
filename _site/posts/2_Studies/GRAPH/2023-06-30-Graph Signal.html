@@ -148,7 +148,7 @@ div.csl-indent {
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar docked nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -184,7 +184,7 @@ div.csl-indent {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../../about.html">
- <span class="menu-text">All about Researches</span></a>
+ <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
     <a class="nav-link" href="https://seoyeonc.github.io/sy_hub/"><i class="bi bi-github" role="img">
@@ -302,7 +302,7 @@ div.csl-indent {
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
@@ -324,12 +324,14 @@ div.csl-indent {
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div>
 </div>
 </section>
-<section id="graph-signal" class="level1">
+<section id="graph-signal" class="level1 page-columns page-full">
 <h1>Graph Signal</h1>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="Figs/graphsignal.png" class="img-fluid figure-img" width="800"></p>
-<p></p><figcaption class="figure-caption">Figure: A random positive graph signal on the vertices of the Petersen graph. The height of each blue bar represents the signal value at the vertex where the bar originates <span class="citation" data-cites="shuman2013emerging">(<a href="#ref-shuman2013emerging" role="doc-biblioref">Shuman et al. 2013</a>)</span></figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">Figure: A random positive graph signal on the vertices of the Petersen graph. The height of each blue bar represents the signal value at the vertex where the bar originates <span class="citation" data-cites="shuman2013emerging">(<a href="#ref-shuman2013emerging" role="doc-biblioref">Shuman et al. 2013</a>)</span><div id="ref-shuman2013emerging" class="csl-entry" role="doc-biblioentry">
+Shuman, David I, Sunil K Narang, Pascal Frossard, Antonio Ortega, and Pierre Vandergheynst. 2013. <span>“The Emerging Field of Signal Processing on Graphs: Extending High-Dimensional Data Analysis to Networks and Other Irregular Domains.”</span> <em>IEEE Signal Processing Magazine</em> 30 (3): 83–98.
+</div></figcaption><p></p>
 </figure>
 </div>
 <p>Suppose we have observed a real-valued signal, denoted as <span class="math inline">\(y: V \to \mathbb{R}\)</span>, from a graph <span class="math inline">\({\cal G} = (V, E)\)</span>, where <span class="math inline">\(V\)</span> represents the set of nodes and <span class="math inline">\(E\)</span> represents the set of edges.</p>
@@ -338,11 +340,7 @@ div.csl-indent {
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-shuman2013emerging" class="csl-entry" role="doc-biblioentry">
-Shuman, David I, Sunil K Narang, Pascal Frossard, Antonio Ortega, and Pierre Vandergheynst. 2013. <span>“The Emerging Field of Signal Processing on Graphs: Extending High-Dimensional Data Analysis to Networks and Other Irregular Domains.”</span> <em>IEEE Signal Processing Magazine</em> 30 (3): 83–98.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -437,6 +435,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
+</script>
+<script src="https://utteranc.es/client.js" repo="seoyeonc/sy_hub" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
 </script>
 </div> <!-- /content -->
 

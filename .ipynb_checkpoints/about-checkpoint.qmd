@@ -9,18 +9,18 @@ about:
       href: https://github.com/seoyeonc
 ---
 
-This blog is generated to manage my blogs.
+This blog was generated to manage my blogs.
 
-There are two purposes to achieving knowledge here.
+There are two purposes to achieving something here.
 
 # First
 
-Get definitions of any subjects and organize that in my words.
+I will get definitions of any subjects and organize that in my words.
 
 It is important to understand those definitions if I want to research exactly and improve myself.
 
 # Second
 
-Brief my past and present research.
+I will brief my past and present researches.
 
-Overall, this blog will be the step in developing my skills.
+Overall, this blog will be the essential step in developing my skills.
