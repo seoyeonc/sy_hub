@@ -14,3 +14,7 @@ comments:
 reference-location: margin
 citation-location: margin
 # cap-location: margin
+
+format: 
+  html: default
+  ipynb: default

@@ -21,7 +21,7 @@ website:
     right:
       - about.qmd
       - icon: github
-        href: https://seoyeonc.github.io/
+        href: https://github.com/seoyeonc
         
   sidebar:
     style: "docked"
