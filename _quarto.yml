@@ -34,7 +34,8 @@ website:
           - 2_ml.qmd
       - section: "**Researches**"
         contents:
-          - 3_itstgcn.qmd
+          - 3_gode_1.qmd
+          - 3_ittgnn.qmd
       
 format:
   html:
