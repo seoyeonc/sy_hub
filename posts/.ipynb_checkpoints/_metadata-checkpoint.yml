@@ -11,9 +11,11 @@ comments:
   utterances: 
     repo: seoyeonc/sy_hub
 
+notebook-links: true
+cap-location: margin
 reference-location: margin
 citation-location: margin
-# cap-location: margin
+bibliography: ref.bib
 
 format: 
   html: default

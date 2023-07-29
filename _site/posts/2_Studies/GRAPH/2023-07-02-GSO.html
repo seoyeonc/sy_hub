@@ -22,6 +22,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -66,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar docked nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -219,12 +238,14 @@ ul.task-list li input[type="checkbox"] {
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
 
-<p><strong>Definition<span class="citation" data-cites="djuric2018cooperative">[@djuric2018cooperative]</span>:</strong> Given a normal shift operator <span class="math inline">\({\bf S}\)</span>, we say that a graph signal <span class="math inline">\({\bf y}\)</span> is weakly stationary with respect to <span class="math inline">\({\bf S}\)</span> if, for all <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and <span class="math inline">\(c \leq b\)</span>, the following equality holds:</p>
+<div class="page-columns page-full"><p><strong>Definition<span class="citation" data-cites="djuric2018cooperative">(<a href="#ref-djuric2018cooperative" role="doc-biblioref">Djuric and Richard 2018</a>)</span>:</strong> Given a normal shift operator <span class="math inline">\({\bf S}\)</span>, we say that a graph signal <span class="math inline">\({\bf y}\)</span> is weakly stationary with respect to <span class="math inline">\({\bf S}\)</span> if, for all <span class="math inline">\(a\)</span>, <span class="math inline">\(b\)</span>, and <span class="math inline">\(c \leq b\)</span>, the following equality holds:</p><div class="no-row-height column-margin column-container"><div id="ref-djuric2018cooperative" class="csl-entry" role="doc-biblioentry">
+Djuric, Petar, and Cédric Richard. 2018. <em>Cooperative and Graph Signal Processing: Principles and Applications</em>. Academic Press.
+</div></div></div>
 <p><span class="math display">\[\mathbb{E} \bigg[ \big({\bf S}^a{\bf y}\big)\Big(\big({\bf S}^H)^b {\bf y}\Big)^H  \bigg]=\mathbb{E}\bigg[\big({\bf S}^{a+c}{\bf y}\big)\Big(\big({\bf S}^H\big)^{b-c}{\bf y} \Big)^H \bigg].\]</span></p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -260,6 +281,7 @@ Note
 <li>결국, normal GSO가 주어질 때, <span class="math inline">\(y\)</span>는 약정상성을 S에 대해 가지고 있다는 말이 된다.</li>
 <li>정상성 조건: 평균, 분산이 일정할때, 자기 공분산이 시차 t에만 의존할 때</li>
 </ul>
+
 
 
 </section>

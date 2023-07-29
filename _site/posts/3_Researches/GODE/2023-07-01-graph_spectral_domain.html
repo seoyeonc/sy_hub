@@ -22,6 +22,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -264,7 +283,7 @@ ul.task-list li input[type="checkbox"] {
 <p><span class="math display">\[F=F_{ac}+F_{pp}\]</span></p>
 <p><span class="math inline">\(F\)</span>에 대응하는 혼합형 확률변수 <span class="math inline">\(X\)</span>가 존재하고 그에 대응하는 (일반화된) pdf가 존재한다.</p>
 </section>
-<section id="appendix-2-라돈니코딤-정리" class="level1">
+<section id="appendix-2-라돈니코딤-정리" class="level1 page-columns page-full">
 <h1>Appendix 2 <a href="https://guebin.github.io/AP2023/posts/II.%20%ED%99%95%EB%A5%A0%EB%A1%A0%EA%B8%B0%EC%B4%88/2023-05-30-13wk.html">라돈니코딤 정리</a></h1>
 <p><code>-</code> <strong>이론</strong>: 분포함수 <span class="math inline">\(F_X:\mathbb{R} \to [0,1]\)</span>가 (르벡메져에 대하여) 절대연속이라면 아래를 만족하는 함수 <span class="math inline">\(f_X:\mathbb{R} \to \mathbb{R}^+\)</span>가 존재한다.</p>
 <p><span class="math display">\[F_X = \int_{(-\infty,x]}f_Xd\lambda\]</span></p>
@@ -275,9 +294,12 @@ ul.task-list li input[type="checkbox"] {
 <blockquote class="blockquote">
 <p>위에서 <span class="math inline">\(f\)</span>의 공역이 <span class="math inline">\(\mathbb{R}^+\)</span>인 이유는 <span class="math inline">\(F_X\)</span>가 증가함수라서..</p>
 </blockquote>
-<p><code>-</code> <strong>Thm</strong> (라돈니코딤 정리)<span class="citation" data-cites="durrett2019probability">[@durrett2019probability, Thm A.4.8.]</span>: 가측공간 <span class="math inline">\((S,{\cal S})\)</span>를 고려하자. 그리고 <span class="math inline">\(\mu\)</span>와 <span class="math inline">\(\lambda\)</span>가 <span class="math inline">\((S,{\cal S})\)</span>에서의 <span class="math inline">\(\sigma\)</span>-finite measure 라고 하자. 만약에 <span class="math inline">\(\mu &lt;&lt; \lambda\)</span> 이라면 아래를 만족하는 가측함수 <span class="math inline">\(f:(S,{\cal S}) \to (\mathbb{R}^+,{\cal R}^+)\)</span>가 <strong>거의 유일하게 (w.r.t. <span class="math inline">\(\lambda\)</span>)</strong> 존재한다.</p>
-<p><span class="math display">\[\forall B \in {\cal S}:~ \mu(B) = \int_B f d\lambda.\]</span></p>
+<p><code>-</code> <strong>Thm</strong> (라돈니코딤 정리)<span class="citation" data-cites="durrett2019probability">(<a href="#ref-durrett2019probability" role="doc-biblioref">Durrett 2019</a>, Thm A.4.8.)</span>: 가측공간 <span class="math inline">\((S,{\cal S})\)</span>를 고려하자. 그리고 <span class="math inline">\(\mu\)</span>와 <span class="math inline">\(\lambda\)</span>가 <span class="math inline">\((S,{\cal S})\)</span>에서의 <span class="math inline">\(\sigma\)</span>-finite measure 라고 하자. 만약에 <span class="math inline">\(\mu &lt;&lt; \lambda\)</span> 이라면 아래를 만족하는 가측함수 <span class="math inline">\(f:(S,{\cal S}) \to (\mathbb{R}^+,{\cal R}^+)\)</span>가 <strong>거의 유일하게 (w.r.t. <span class="math inline">\(\lambda\)</span>)</strong> 존재한다.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-durrett2019probability" class="csl-entry" role="doc-biblioentry">
+Durrett, Rick. 2019. <em>Probability: Theory and Examples</em>. Vol. 49. Cambridge university press.
+</div></div><p><span class="math display">\[\forall B \in {\cal S}:~ \mu(B) = \int_B f d\lambda.\]</span></p>
 <p>여기에서 <span class="math inline">\(f\)</span>를 <strong><em>Radon-Nikodym derivative of <span class="math inline">\(\mu\)</span> w.r.t. <span class="math inline">\(\lambda\)</span></em></strong> 라고 하며, 이러한 의미에서 <span class="math inline">\(f=\frac{d\mu}{d\lambda}\)</span>와 같이 표현하기도 한다.</p>
+
 
 
 </section>

@@ -85,6 +85,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -129,7 +148,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar docked nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -286,12 +305,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
 
-<section id="import" class="level1">
+<section id="import" class="level1 page-columns page-full">
 <h1>Import</h1>
 <div class="cell" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itstgcn.learners <span class="im">import</span> <span class="op">*</span> </span></code></pre></div>
@@ -310,12 +329,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>ebayesthresh <span class="op">=</span> importr(<span class="st">'EbayesThresh'</span>).ebayesthresh</span></code></pre></div>
 </div>
 <ul>
-<li><p>While <span class="math inline">\({\bf p}_y\)</span> serves as a consistent estimator for <span class="math inline">\(\mathbb{E}[|{\bf V}^H{\bf y}|^2]\)</span>, it is not an efficient estimator, and therefore, improvement is needed <span class="citation" data-cites="djuric2018cooperative">[@djuric2018cooperative]</span>. The traditional approach for improvement is to use the windowed periodogram.</p></li>
+<li><p>While <span class="math inline">\({\bf p}_y\)</span> serves as a consistent estimator for <span class="math inline">\(\mathbb{E}[|{\bf V}^H{\bf y}|^2]\)</span>, it is not an efficient estimator, and therefore, improvement is needed <span class="citation" data-cites="djuric2018cooperative">(<a href="#ref-djuric2018cooperative" role="doc-biblioref">Djuric and Richard 2018</a>)</span>. The traditional approach for improvement is to use the windowed periodogram.</p></li>
 <li><p>The windowed periodogram is efficient in detecting specific frequencies or periods, but it may not be as efficient in estimating the underlying function. One notable paper that utilized the windowed periodogram is the one that detected the El Niño phenomenon.</p></li>
-<li><p>As this structure exhibits a “sparse signal + heavy-tailed” characteristics, by applying Bayesian modeling and thresholding <span class="math inline">\({\bf p}_y\)</span>, we can estimate an appropriate <span class="math inline">\({\bf p}_{pp}\)</span> as discussed in <span class="citation" data-cites="johnstone2004needles">[@johnstone2004needles]</span>.</p></li>
+<li><p>As this structure exhibits a “sparse signal + heavy-tailed” characteristics, by applying Bayesian modeling and thresholding <span class="math inline">\({\bf p}_y\)</span>, we can estimate an appropriate <span class="math inline">\({\bf p}_{pp}\)</span> as discussed in <span class="citation" data-cites="johnstone2004needles">(<a href="#ref-johnstone2004needles" role="doc-biblioref">Johnstone and Silverman 2004</a>)</span>.</p></li>
 </ul>
-</section>
-<section id="bayesian-model" class="level1">
+<div class="no-row-height column-margin column-container"><div id="ref-djuric2018cooperative" class="csl-entry" role="doc-biblioentry">
+Djuric, Petar, and Cédric Richard. 2018. <em>Cooperative and Graph Signal Processing: Principles and Applications</em>. Academic Press.
+</div><div id="ref-johnstone2004needles" class="csl-entry" role="doc-biblioentry">
+Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in Haystacks: Empirical Bayes Estimates of Possibly Sparse Sequences.”</span>
+</div></div></section>
+<section id="bayesian-model" class="level1 page-columns page-full">
 <h1>Bayesian Model</h1>
 <p><span class="math inline">\(x_i \sim N(\mu_i,1)\)</span></p>
 <p><a href="https://guebin.github.io/AP2023/posts/II.%20%ED%99%95%EB%A5%A0%EB%A1%A0%EA%B8%B0%EC%B4%88/2023-05-02-09wk.html">확률변수</a>가 잘 정의되어 있을때, 여기서 <span class="math inline">\(\mu_i\)</span>를 정하는 Baysian.</p>
@@ -342,10 +365,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul>
 <p>Ebayes는 사전분포를 Heavy-tail으로 정의했다.</p>
 <p><strong>heavy tail?</strong></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
+<div class="quarto-figure quarto-figure-center page-columns page-full">
+<figure class="figure page-columns page-full">
 <p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/ae7604a7-3ffd-4374-8640-097dfc92061c-1-9c4b08eb-c3d0-4414-960e-f5a50b79799f.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">image.png</figcaption><p></p>
+<p></p><figcaption class="figure-caption margin-caption">image.png</figcaption><p></p>
 </figure>
 </div>
 <p><span class="math inline">\(\mu_x \sim\)</span> Double Exponential <span class="math inline">\(= p_{pp} + p_{ac}\)</span> -&gt; 혼합형(misture) = pure point + absolutely continuous</p>
@@ -900,6 +923,7 @@ R[write to console]: Loading required package: RColorBrewer
 <p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-66-output-1.png" class="img-fluid"></p>
 </div>
 </div>
+
 
 
 </section>
