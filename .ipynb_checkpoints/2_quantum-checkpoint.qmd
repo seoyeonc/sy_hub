@@ -1,0 +1,15 @@
+---
+title: "Quantum"
+listing:
+  contents: posts/2_Studies/QUANTUM
+  sort: "date desc"
+  type: table
+  categories: false
+  sort-ui: false
+  filter-ui: false
+  page-size: 9999
+page-layout: full
+title-block-banner: false
+---
+
+- [tensorflow](https://www.tensorflow.org/quantum/overview?hl=ko)

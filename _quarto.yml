@@ -27,14 +27,17 @@ website:
     style: "docked"
     search: true
     contents:
-      - 1_essays.qmd
+      - 1_note.qmd
       - section: "**Studies**"
         contents:
           - 2_graph.qmd
           - 2_ml.qmd
+          - 2_quantum.qmd
+          - 2_pyg.qmd
       - section: "**Researches**"
         contents:
           - 3_ittgnn.qmd
+          - 3_gode.qmd
       
 format:
   html:
