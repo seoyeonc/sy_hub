@@ -2,98 +2,114 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/index.html</loc>
-    <lastmod>2023-07-30T21:58:15.355Z</lastmod>
+    <lastmod>2023-08-06T21:52:43.371Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/2_ml.html</loc>
-    <lastmod>2023-07-30T21:58:15.839Z</lastmod>
+    <lastmod>2023-08-06T21:52:43.635Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/3_gode.html</loc>
-    <lastmod>2023-07-30T21:58:17.395Z</lastmod>
+    <lastmod>2023-08-06T21:52:44.551Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/PYG/2023-07-30-Pyg.html</loc>
-    <lastmod>2023-07-30T21:58:18.415Z</lastmod>
+    <lastmod>2023-08-06T21:52:45.123Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/QUANTUM/2023-07-29-quantum_basic.html</loc>
-    <lastmod>2023-07-30T21:58:19.331Z</lastmod>
+    <lastmod>2023-08-06T21:52:45.651Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/QUANTUM/2023-08-05-QFT.html</loc>
-    <lastmod>2023-07-30T21:58:20.387Z</lastmod>
+    <lastmod>2023-08-06T21:52:46.203Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2022-12-26-Chap-12.2.html</loc>
-    <lastmod>2023-07-30T21:58:21.783Z</lastmod>
+    <lastmod>2023-08-06T21:52:46.927Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-07-02-GSO.html</loc>
-    <lastmod>2023-07-30T21:58:22.975Z</lastmod>
+    <lastmod>2023-08-06T21:52:47.675Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2022-12-27-Chap-12.2.1~12.3.1.html</loc>
-    <lastmod>2023-07-30T21:58:25.775Z</lastmod>
+    <lastmod>2023-08-06T21:52:49.227Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-01-15-Chap-12.4.html</loc>
-    <lastmod>2023-07-30T21:58:27.811Z</lastmod>
+    <lastmod>2023-08-06T21:52:50.339Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-06-30-Graph Signal.html</loc>
-    <lastmod>2023-07-30T21:58:28.551Z</lastmod>
+    <lastmod>2023-08-06T21:52:50.847Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2022-12-24-Chap-8.3.html</loc>
-    <lastmod>2023-07-30T21:58:29.723Z</lastmod>
+    <lastmod>2023-08-06T21:52:51.591Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-07-01-Euclidean_nonEuclidean.html</loc>
-    <lastmod>2023-07-30T21:58:30.527Z</lastmod>
+    <lastmod>2023-08-06T21:52:52.511Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/2_Studies/GRAPH/2023-06-30-Regular Graph.html</loc>
-    <lastmod>2023-07-30T21:58:31.607Z</lastmod>
+    <lastmod>2023-08-06T21:52:53.871Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/3_Researches/ITTGNN/2023-05-18-Self Consistency toy ex.html</loc>
-    <lastmod>2023-07-30T21:58:32.371Z</lastmod>
+    <lastmod>2023-08-06T21:52:54.987Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/3_Researches/GODE/2023-07-01-graph_spectral_domain.html</loc>
-    <lastmod>2023-07-30T21:58:33.215Z</lastmod>
+    <lastmod>2023-08-06T21:52:55.823Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/3_Researches/GODE/2023-07-01-NonEuclidean_data_of_GODE.html</loc>
-    <lastmod>2023-07-30T21:58:35.111Z</lastmod>
+    <lastmod>2023-08-06T21:52:57.087Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/posts/3_Researches/GODE/2023-05-20-EbayesThresh toy ex.html</loc>
-    <lastmod>2023-07-30T21:58:37.183Z</lastmod>
+    <lastmod>2023-08-06T21:52:58.495Z</lastmod>
+  </url>
+  <url>
+    <loc>https://seoyeonc.github.io/sy_hub/posts/1_Note/2019-04-26-퓨리에 변환.html</loc>
+    <lastmod>2023-08-06T21:52:59.427Z</lastmod>
+  </url>
+  <url>
+    <loc>https://seoyeonc.github.io/sy_hub/posts/1_Note/2022-04-03-(5주차) 4월2일.html</loc>
+    <lastmod>2023-08-06T21:53:00.483Z</lastmod>
+  </url>
+  <url>
+    <loc>https://seoyeonc.github.io/sy_hub/posts/1_Note/2022-12-31-Space-study.html</loc>
+    <lastmod>2023-08-06T21:53:01.367Z</lastmod>
+  </url>
+  <url>
+    <loc>https://seoyeonc.github.io/sy_hub/posts/1_Note/2022-03-28-(4주차) 3월28일.html</loc>
+    <lastmod>2023-08-06T21:53:02.147Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/3_ittgnn.html</loc>
-    <lastmod>2023-07-30T21:58:39.223Z</lastmod>
+    <lastmod>2023-08-06T21:53:03.011Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/2_quantum.html</loc>
-    <lastmod>2023-07-30T21:58:39.563Z</lastmod>
+    <lastmod>2023-08-06T21:53:03.319Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/1_note.html</loc>
-    <lastmod>2023-07-30T21:58:39.907Z</lastmod>
+    <lastmod>2023-08-06T21:53:03.731Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/2_graph.html</loc>
-    <lastmod>2023-07-30T21:58:40.959Z</lastmod>
+    <lastmod>2023-08-06T21:53:04.459Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/about.html</loc>
-    <lastmod>2023-07-30T21:58:41.299Z</lastmod>
+    <lastmod>2023-08-06T21:53:04.707Z</lastmod>
   </url>
   <url>
     <loc>https://seoyeonc.github.io/sy_hub/2_pyg.html</loc>
-    <lastmod>2023-07-30T21:58:41.675Z</lastmod>
+    <lastmod>2023-08-06T21:53:04.983Z</lastmod>
   </url>
 </urlset>
