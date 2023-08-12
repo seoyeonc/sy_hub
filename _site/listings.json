@@ -2,6 +2,7 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/1_Note/2099-01-01-ggplot3.out.html",
       "/posts/2_Studies/QUANTUM/2023-08-05-QFT.html",
       "/posts/2_Studies/PYG/2023-07-30-Pyg.html",
       "/posts/2_Studies/QUANTUM/2023-07-29-quantum_basic.html",
@@ -51,6 +52,7 @@
   {
     "listing": "/1_note.html",
     "items": [
+      "/posts/1_Note/2099-01-01-ggplot3.out.html",
       "/posts/1_Note/2022-12-31-Space-study.html",
       "/posts/1_Note/2022-04-03-(5주차) 4월2일.html",
       "/posts/1_Note/2022-03-28-(4주차) 3월28일.html",
