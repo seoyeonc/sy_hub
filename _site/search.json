@@ -648,7 +648,7 @@
     "href": "posts/1_Note/2023-08-12-ggplot3_comparison.html#key-components",
     "title": "[ggplot3]ggplot2 vs ggplot3",
     "section": "2.3 Key components",
-    "text": "2.3 Key components\nggplot2\nggplot(mpg, aes(x = displ, y = hwy)) + geom_point()\n\nggplot() + point(mpg$displ,mpg$hwy)"
+    "text": "2.3 Key components\nggplot2\nggplot(mpg, aes(x = displ, y = hwy)) + geom_point()\n\nggplot(mpg) + point(mpg$displ, mpg$hwy)"
   },
   {
     "objectID": "posts/1_Note/2023-08-12-ggplot3_comparison.html#colour-size-shape-and-other-aesthetic-attributes",
@@ -683,7 +683,7 @@
     "href": "posts/1_Note/2023-08-12-ggplot3_comparison.html#bar-charts",
     "title": "[ggplot3]ggplot2 vs ggplot3",
     "section": "2.6.4 Bar charts",
-    "text": "2.6.4 Bar charts\nggplot2\nggplot(mpg, aes(manufacturer)) + \n  geom_bar()\n\nx,y축 어떻게 바꿀 수 있을까…\n\nggplot() + col(mpg$manufacturer,fill=3)\n\n\n\n\n\ndrugs &lt;- data.frame(\n  drug = c(\"a\", \"b\", \"c\"),\n  effect = c(4.2, 9.7, 6.1)\n)\n\nggplot2\nggplot(drugs, aes(drug, effect)) + geom_bar(stat = \"identity\")\nggplot(drugs, aes(drug, effect)) + geom_point()\n\np1 = ggplot() + col(drugs$drug, drugs$effect)\np2 = ggplot() + point(drugs$drug, drugs$effect)\nfigsize(10,5)\np1|p2\nfigsize()\n\n\n\n\nggplot2\nggplot(economics, aes(date, unemploy / pop)) +\n  geom_line()\nggplot(economics, aes(date, uempmed)) +\n  geom_line()\n\np1 = ggplot() + line(economics$date, economics$unemploy)\np2 = ggplot() + line(economics$date, economics$uempmed)\nfigsize(10,5)\np1|p2\nfigsize()"
+    "text": "2.6.4 Bar charts\nggplot2\nggplot(mpg, aes(manufacturer)) + \n  geom_bar()\n\nx,y축 어떻게 바꿀 수 있을까…\n\nmpg$manufacturer\n\n\nggplot() + col(mpg$manufacturer,fill=3)\n\n\ndrugs &lt;- data.frame(\n  drug = c(\"a\", \"b\", \"c\"),\n  effect = c(4.2, 9.7, 6.1)\n)\n\nggplot2\nggplot(drugs, aes(drug, effect)) + geom_bar(stat = \"identity\")\nggplot(drugs, aes(drug, effect)) + geom_point()\n\np1 = ggplot() + col(drugs$drug, drugs$effect)\np2 = ggplot() + point(drugs$drug, drugs$effect)\nfigsize(10,5)\np1|p2\nfigsize()\n\n\n\n\nggplot2\nggplot(economics, aes(date, unemploy / pop)) +\n  geom_line()\nggplot(economics, aes(date, uempmed)) +\n  geom_line()\n\np1 = ggplot() + line(economics$date, economics$unemploy)\np2 = ggplot() + line(economics$date, economics$uempmed)\nfigsize(10,5)\np1|p2\nfigsize()"
   },
   {
     "objectID": "posts/1_Note/2023-08-12-ggplot3_comparison.html#same-with-ggplot2",
