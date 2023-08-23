@@ -41,7 +41,7 @@ website:
 format:
   html:
     theme: 
-        light: Sketchy
+        light: default
         dark: default
     css: styles.css
     toc: true
