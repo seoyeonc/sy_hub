@@ -9,7 +9,7 @@
 <meta name="author" content="SEOYEON CHOI">
 <meta name="dcterms.date" content="2023-08-25">
 
-<title>Seoyeon’s Blog - [ggplot3]ggplot2 vs ggplot3</title>
+<title>Seoyeon’s Blog - [ggplot3]With Non tidy Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,10 +71,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -155,6 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -163,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><strong>[ggplot3]</strong>ggplot2 vs ggplot3</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><strong>[ggplot3]</strong>With Non tidy Data</li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -176,7 +179,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title"><strong>[ggplot3]</strong>ggplot2 vs ggplot3</h1>
+      <h1 class="title"><strong>[ggplot3]</strong>With Non tidy Data</h1>
                       </div>
   </div>
     
@@ -286,7 +289,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">Import</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">data</a></li>
   <li><a href="#tidydata" id="toc-tidydata" class="nav-link" data-scroll-target="#tidydata">Tidydata</a></li>
   <li><a href="#results" id="toc-results" class="nav-link" data-scroll-target="#results">results</a>
   <ul class="collapse">
@@ -311,7 +313,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p><a href="https://ggplot2-book.org/">ggplot2 book</a></p>
+<p>데이터 출처 : https://github.com/nickhould/tidy-data-python</p>
+<p>https://partrita.github.io/posts/tidy-data/</p>
 <section id="import" class="level1">
 <h1>Import</h1>
 <div id="0251f914-e7bf-4cb2-84fa-c0c595177b0d" class="cell" data-execution_count="1">
@@ -329,565 +332,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
 </div>
-<div id="c02eadac-617c-4fb1-abe2-7f024b96c604" class="cell" data-execution_count="2">
+<div id="c02eadac-617c-4fb1-abe2-7f024b96c604" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mgcv)</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: nlme
 
-
-Attaching package: ‘nlme’
-
-
-The following object is masked from ‘package:dplyr’:
-
-    collapse
-
-
-This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
+This is mgcv 1.8-42. For overview type 'help("mgcv-package")'.
 </code></pre>
 </div>
 </div>
-</section>
-<section id="data" class="level1 page-columns page-full">
-<h1>data</h1>
-<div id="fe1c19da-54b6-4900-8130-65ef4f390ae7" class="cell page-columns page-full" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mpg)</span></code></pre></div>
-<div class="cell-output cell-output-display page-columns page-full">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th" scope="col">manufacturer</th>
-<th data-quarto-table-cell-role="th" scope="col">model</th>
-<th data-quarto-table-cell-role="th" scope="col">displ</th>
-<th data-quarto-table-cell-role="th" scope="col">year</th>
-<th data-quarto-table-cell-role="th" scope="col">cyl</th>
-<th data-quarto-table-cell-role="th" scope="col">trans</th>
-<th data-quarto-table-cell-role="th" scope="col">drv</th>
-<th data-quarto-table-cell-role="th" scope="col">cty</th>
-<th data-quarto-table-cell-role="th" scope="col">hwy</th>
-<th data-quarto-table-cell-role="th" scope="col">fl</th>
-<th data-quarto-table-cell-role="th" scope="col">class</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;dbl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>audi</td>
-<td>a4</td>
-<td>1.8</td>
-<td>1999</td>
-<td>4</td>
-<td>auto(l5)</td>
-<td>f</td>
-<td>18</td>
-<td>29</td>
-<td>p</td>
-<td>compact</td>
-</tr>
-<tr class="even">
-<td>audi</td>
-<td>a4</td>
-<td>1.8</td>
-<td>1999</td>
-<td>4</td>
-<td>manual(m5)</td>
-<td>f</td>
-<td>21</td>
-<td>29</td>
-<td>p</td>
-<td>compact</td>
-</tr>
-<tr class="odd">
-<td>audi</td>
-<td>a4</td>
-<td>2.0</td>
-<td>2008</td>
-<td>4</td>
-<td>manual(m6)</td>
-<td>f</td>
-<td>20</td>
-<td>31</td>
-<td>p</td>
-<td>compact</td>
-</tr>
-<tr class="even">
-<td>audi</td>
-<td>a4</td>
-<td>2.0</td>
-<td>2008</td>
-<td>4</td>
-<td>auto(av)</td>
-<td>f</td>
-<td>21</td>
-<td>30</td>
-<td>p</td>
-<td>compact</td>
-</tr>
-<tr class="odd">
-<td>audi</td>
-<td>a4</td>
-<td>2.8</td>
-<td>1999</td>
-<td>6</td>
-<td>auto(l5)</td>
-<td>f</td>
-<td>16</td>
-<td>26</td>
-<td>p</td>
-<td>compact</td>
-</tr>
-<tr class="even">
-<td>audi</td>
-<td>a4</td>
-<td>2.8</td>
-<td>1999</td>
-<td>6</td>
-<td>manual(m5)</td>
-<td>f</td>
-<td>18</td>
-<td>26</td>
-<td>p</td>
-<td>compact</td>
-</tr>
-</tbody>
-</table>
-<div class="quarto-table-caption margin-caption">A tibble: 6 × 11</div></div>
-</div>
-<p>아래부터 데이터 출처 : https://github.com/nickhould/tidy-data-python</p>
-<div id="1e5dd32d-9b46-4848-b8bb-757725a4fe72" class="cell page-columns page-full" data-execution_count="130">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>pew <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'./data/pew-raw.csv'</span>);<span class="fu">head</span>(pew)</span></code></pre></div>
-<div class="cell-output cell-output-display page-columns page-full">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">religion</th>
-<th data-quarto-table-cell-role="th" scope="col">X..10k</th>
-<th data-quarto-table-cell-role="th" scope="col">X.10.20k</th>
-<th data-quarto-table-cell-role="th" scope="col">X.20.30k</th>
-<th data-quarto-table-cell-role="th" scope="col">X.30.40k</th>
-<th data-quarto-table-cell-role="th" scope="col">X.40.50k</th>
-<th data-quarto-table-cell-role="th" scope="col">X.50.75k</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">1</td>
-<td>Agnostic</td>
-<td>27</td>
-<td>34</td>
-<td>60</td>
-<td>81</td>
-<td>76</td>
-<td>137</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">2</td>
-<td>Atheist</td>
-<td>12</td>
-<td>27</td>
-<td>37</td>
-<td>52</td>
-<td>35</td>
-<td>70</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">3</td>
-<td>Buddhist</td>
-<td>27</td>
-<td>21</td>
-<td>30</td>
-<td>34</td>
-<td>33</td>
-<td>58</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">4</td>
-<td>Catholic</td>
-<td>418</td>
-<td>617</td>
-<td>732</td>
-<td>670</td>
-<td>638</td>
-<td>1116</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">5</td>
-<td>Dont know/refused</td>
-<td>15</td>
-<td>14</td>
-<td>15</td>
-<td>11</td>
-<td>10</td>
-<td>35</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">6</td>
-<td>Evangelical Prot</td>
-<td>575</td>
-<td>869</td>
-<td>1064</td>
-<td>982</td>
-<td>881</td>
-<td>1486</td>
-</tr>
-</tbody>
-</table>
-<div class="quarto-table-caption margin-caption">A data.frame: 6 × 7</div></div>
-</div>
-<div id="5a5b51db-babe-4327-9c92-fcf9a7e485bd" class="cell page-columns page-full" data-execution_count="220">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>billboard <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'./data/billboard.csv'</span>);<span class="fu">head</span>(billboard)</span></code></pre></div>
-<div class="cell-output cell-output-display page-columns page-full">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">year</th>
-<th data-quarto-table-cell-role="th" scope="col">artist.inverted</th>
-<th data-quarto-table-cell-role="th" scope="col">track</th>
-<th data-quarto-table-cell-role="th" scope="col">time</th>
-<th data-quarto-table-cell-role="th" scope="col">genre</th>
-<th data-quarto-table-cell-role="th" scope="col">date.entered</th>
-<th data-quarto-table-cell-role="th" scope="col">date.peaked</th>
-<th data-quarto-table-cell-role="th" scope="col">x1st.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x2nd.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x3rd.week</th>
-<th data-quarto-table-cell-role="th" scope="col">⋯</th>
-<th data-quarto-table-cell-role="th" scope="col">x67th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x68th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x69th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x70th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x71st.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x72nd.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x73rd.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x74th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x75th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x76th.week</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">⋯</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">1</td>
-<td>2000</td>
-<td>Destiny's Child</td>
-<td>Independent Women Part I</td>
-<td>3:38</td>
-<td>Rock</td>
-<td>2000-09-23</td>
-<td>2000-11-18</td>
-<td>78</td>
-<td>63</td>
-<td>49</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">2</td>
-<td>2000</td>
-<td>Santana</td>
-<td>Maria, Maria</td>
-<td>4:18</td>
-<td>Rock</td>
-<td>2000-02-12</td>
-<td>2000-04-08</td>
-<td>15</td>
-<td>8</td>
-<td>6</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">3</td>
-<td>2000</td>
-<td>Savage Garden</td>
-<td>I Knew I Loved You</td>
-<td>4:07</td>
-<td>Rock</td>
-<td>1999-10-23</td>
-<td>2000-01-29</td>
-<td>71</td>
-<td>48</td>
-<td>43</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">4</td>
-<td>2000</td>
-<td>Madonna</td>
-<td>Music</td>
-<td>3:45</td>
-<td>Rock</td>
-<td>2000-08-12</td>
-<td>2000-09-16</td>
-<td>41</td>
-<td>23</td>
-<td>18</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">5</td>
-<td>2000</td>
-<td>Aguilera, Christina</td>
-<td>Come On Over Baby (All I Want Is You)</td>
-<td>3:38</td>
-<td>Rock</td>
-<td>2000-08-05</td>
-<td>2000-10-14</td>
-<td>57</td>
-<td>47</td>
-<td>45</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">6</td>
-<td>2000</td>
-<td>Janet</td>
-<td>Doesn't Really Matter</td>
-<td>4:17</td>
-<td>Rock</td>
-<td>2000-06-17</td>
-<td>2000-08-26</td>
-<td>59</td>
-<td>52</td>
-<td>43</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-</tbody>
-</table>
-<div class="quarto-table-caption margin-caption">A data.frame: 6 × 83</div></div>
-</div>
-<div id="05066026-7189-47b1-80f4-0be8da47d42f" class="cell page-columns page-full" data-execution_count="298">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tb <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'./data/tb-raw.csv'</span>);<span class="fu">head</span>(tb)</span></code></pre></div>
-<div class="cell-output cell-output-display page-columns page-full">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">country</th>
-<th data-quarto-table-cell-role="th" scope="col">year</th>
-<th data-quarto-table-cell-role="th" scope="col">m014</th>
-<th data-quarto-table-cell-role="th" scope="col">m1524</th>
-<th data-quarto-table-cell-role="th" scope="col">m2534</th>
-<th data-quarto-table-cell-role="th" scope="col">m3544</th>
-<th data-quarto-table-cell-role="th" scope="col">m4554</th>
-<th data-quarto-table-cell-role="th" scope="col">m5564</th>
-<th data-quarto-table-cell-role="th" scope="col">m65</th>
-<th data-quarto-table-cell-role="th" scope="col">mu</th>
-<th data-quarto-table-cell-role="th" scope="col">f014</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">1</td>
-<td>AD</td>
-<td>2000</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">2</td>
-<td>AE</td>
-<td>2000</td>
-<td>2</td>
-<td>4</td>
-<td>4</td>
-<td>6</td>
-<td>5</td>
-<td>12</td>
-<td>10</td>
-<td>NA</td>
-<td>3</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">3</td>
-<td>AF</td>
-<td>2000</td>
-<td>52</td>
-<td>228</td>
-<td>183</td>
-<td>149</td>
-<td>129</td>
-<td>94</td>
-<td>80</td>
-<td>NA</td>
-<td>93</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">4</td>
-<td>AG</td>
-<td>2000</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>1</td>
-<td>NA</td>
-<td>1</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">5</td>
-<td>AL</td>
-<td>2000</td>
-<td>2</td>
-<td>19</td>
-<td>21</td>
-<td>14</td>
-<td>24</td>
-<td>19</td>
-<td>16</td>
-<td>NA</td>
-<td>3</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">6</td>
-<td>AM</td>
-<td>2000</td>
-<td>2</td>
-<td>152</td>
-<td>130</td>
-<td>131</td>
-<td>63</td>
-<td>26</td>
-<td>21</td>
-<td>NA</td>
-<td>1</td>
-</tr>
-</tbody>
-</table>
-<div class="quarto-table-caption margin-caption">A data.frame: 6 × 11</div></div>
-</div>
-<p>https://partrita.github.io/posts/tidy-data/</p>
 </section>
 <section id="tidydata" class="level1">
 <h1>Tidydata</h1>
@@ -904,9 +357,9 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 <h2 class="anchored" data-anchor-id="try1">try1</h2>
 <p>condition 부여 후 색 구분</p>
 <div id="9cebbc08-a611-4483-bcff-f62312daa2a0" class="cell" data-execution_count="106">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ,<span class="at">col=</span><span class="st">'black'</span>) <span class="sc">+</span> <span class="fu">point</span>(mpg[(mpg<span class="sc">$</span>displ<span class="sc">&lt;</span><span class="dv">5</span><span class="sc">&amp;</span>mpg<span class="sc">$</span>displ<span class="sc">&gt;</span><span class="dv">1</span>),]<span class="sc">$</span>displ,<span class="at">col=</span><span class="st">'red'</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ,<span class="at">col=</span><span class="st">'black'</span>) <span class="sc">+</span> <span class="fu">point</span>(mpg[(mpg<span class="sc">$</span>displ<span class="sc">&lt;</span><span class="dv">5</span><span class="sc">&amp;</span>mpg<span class="sc">$</span>displ<span class="sc">&gt;</span><span class="dv">1</span>),]<span class="sc">$</span>displ,<span class="at">col=</span><span class="st">'red'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -914,9 +367,9 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 <h2 class="anchored" data-anchor-id="try2">try2</h2>
 <p>condition 부여 후 절단</p>
 <div id="659c183a-f77a-4536-82d8-b889658aabb1" class="cell" data-execution_count="113">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">line</span>(mpg<span class="sc">$</span>displ,<span class="at">col=</span><span class="dv">2</span>,<span class="at">label=</span><span class="st">'a'</span>) <span class="sc">+</span> <span class="fu">line</span>(mpg[mpg<span class="sc">$</span>hwy<span class="sc">&gt;</span><span class="dv">20</span>,]<span class="sc">$</span>hwy,<span class="at">col=</span><span class="dv">3</span>,<span class="at">label=</span><span class="st">'b'</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">line</span>(mpg<span class="sc">$</span>displ,<span class="at">col=</span><span class="dv">2</span>,<span class="at">label=</span><span class="st">'a'</span>) <span class="sc">+</span> <span class="fu">line</span>(mpg[mpg<span class="sc">$</span>hwy<span class="sc">&gt;</span><span class="dv">20</span>,]<span class="sc">$</span>hwy,<span class="at">col=</span><span class="dv">3</span>,<span class="at">label=</span><span class="st">'b'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-5-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -924,22 +377,16 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 <h2 class="anchored" data-anchor-id="try3">try3</h2>
 <p>색 자동 지정은 label의 알파벳 순 혹은 그려진 순</p>
 <div id="38d86c5e-79fd-46b5-af15-7a720a1f65d1" class="cell" data-execution_count="131">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="at">label=</span><span class="st">'blue'</span>,mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy)<span class="sc">|</span><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy,<span class="at">label=</span><span class="st">'clue'</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="at">label=</span><span class="st">'blue'</span>,mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy)<span class="sc">|</span><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy,<span class="at">label=</span><span class="st">'clue'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-10-output-1.png" class="img-fluid"></p>
-</div>
-</div>
-<div id="259c85ba-0216-4624-a283-582cf30f527a" class="cell" data-execution_count="132">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="at">label=</span><span class="st">'clue'</span>,mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy)<span class="sc">|</span><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy,<span class="at">label=</span><span class="st">'blue'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-6-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
 <section id="try4-열-이름이-값인-데이터" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="try4-열-이름이-값인-데이터">try4 열 이름이 값인 데이터</h2>
 <div id="ddee686c-2da9-4517-8f75-7574213b4a74" class="cell page-columns page-full" data-execution_count="185">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pew)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(pew)</span></code></pre></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
 
@@ -1031,19 +478,22 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 <div class="quarto-table-caption margin-caption">A data.frame: 6 × 7</div></div>
 </div>
 <div id="aff82450-cc6b-47e2-8bb0-38210e2864e0" class="cell" data-execution_count="223">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Agnostic'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Agnostic'</span>) <span class="sc">+</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Atheist'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Atheist'</span>) <span class="sc">+</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Buddhist'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Buddhist'</span>) <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Catholic'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Catholic'</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Agnostic'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Agnostic'</span>) <span class="sc">+</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>           <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Atheist'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Atheist'</span>) <span class="sc">+</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Buddhist'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Buddhist'</span>) <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Catholic'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Catholic'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-13-output-1.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
 </div>
+</div>
+<div id="192f0dae-d2da-4d17-8663-07a4066f2850" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Agnostic'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Agnostic'</span>)<span class="sc">|</span><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Atheist'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Atheist'</span>) </span></code></pre></div>
 </div>
 </section>
-<section id="try5-하나의-표에-여러가지-타입-존재하는-데이터" class="level2 page-columns page-full">
+<section id="try5-하나의-표에-여러가지-타입-존재하는-데이터" class="level2">
 <h2 class="anchored" data-anchor-id="try5-하나의-표에-여러가지-타입-존재하는-데이터">try5 하나의 표에 여러가지 타입 존재하는 데이터</h2>
 <div id="70cabddf-b072-45e8-82aa-8104d4093dbf" class="cell" data-execution_count="256">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(billboard<span class="sc">$</span>genre)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(billboard<span class="sc">$</span>genre)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <style>
 .list-inline {list-style: none; margin:0; padding: 0}
@@ -1055,222 +505,21 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 </div>
 <p>장르 별 1주차 빌보드 순위</p>
 <div id="56c01528-30ca-412f-845d-8ae2bcc3dc8e" class="cell" data-execution_count="260">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(billboard<span class="sc">$</span>x1st.week,<span class="at">label=</span><span class="st">'all'</span>) <span class="sc">+</span> <span class="fu">point</span>(billboard[billboard<span class="sc">$</span>genre<span class="sc">==</span><span class="st">'Rock'</span>,]<span class="sc">$</span>x1st.week,<span class="at">label=</span><span class="st">'Rock'</span>) <span class="sc">+</span> <span class="fu">point</span>(billboard[billboard<span class="sc">$</span>genre<span class="sc">==</span><span class="st">'Country'</span>,]<span class="sc">$</span>x1st.week,<span class="at">label=</span><span class="st">'Country'</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(billboard<span class="sc">$</span>x1st.week,<span class="at">label=</span><span class="st">'all'</span>) <span class="sc">+</span> <span class="fu">point</span>(billboard[billboard<span class="sc">$</span>genre<span class="sc">==</span><span class="st">'Rock'</span>,]<span class="sc">$</span>x1st.week,<span class="at">label=</span><span class="st">'Rock'</span>) <span class="sc">+</span> <span class="fu">point</span>(billboard[billboard<span class="sc">$</span>genre<span class="sc">==</span><span class="st">'Country'</span>,]<span class="sc">$</span>x1st.week,<span class="at">label=</span><span class="st">'Country'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
 </div>
 </div>
-<div id="a79f1eee-a0f7-4334-801b-ce82eda4b399" class="cell page-columns page-full" data-execution_count="279">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(billboard)</span></code></pre></div>
-<div class="cell-output cell-output-display page-columns page-full">
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
-
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">year</th>
-<th data-quarto-table-cell-role="th" scope="col">artist.inverted</th>
-<th data-quarto-table-cell-role="th" scope="col">track</th>
-<th data-quarto-table-cell-role="th" scope="col">time</th>
-<th data-quarto-table-cell-role="th" scope="col">genre</th>
-<th data-quarto-table-cell-role="th" scope="col">date.entered</th>
-<th data-quarto-table-cell-role="th" scope="col">date.peaked</th>
-<th data-quarto-table-cell-role="th" scope="col">x1st.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x2nd.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x3rd.week</th>
-<th data-quarto-table-cell-role="th" scope="col">⋯</th>
-<th data-quarto-table-cell-role="th" scope="col">x67th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x68th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x69th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x70th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x71st.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x72nd.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x73rd.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x74th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x75th.week</th>
-<th data-quarto-table-cell-role="th" scope="col">x76th.week</th>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;chr&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;int&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">⋯</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-<th data-quarto-table-cell-role="th" scope="col">&lt;lgl&gt;</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">1</td>
-<td>2000</td>
-<td>Destiny's Child</td>
-<td>Independent Women Part I</td>
-<td>3:38</td>
-<td>Rock</td>
-<td>2000-09-23</td>
-<td>2000-11-18</td>
-<td>78</td>
-<td>63</td>
-<td>49</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">2</td>
-<td>2000</td>
-<td>Santana</td>
-<td>Maria, Maria</td>
-<td>4:18</td>
-<td>Rock</td>
-<td>2000-02-12</td>
-<td>2000-04-08</td>
-<td>15</td>
-<td>8</td>
-<td>6</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">3</td>
-<td>2000</td>
-<td>Savage Garden</td>
-<td>I Knew I Loved You</td>
-<td>4:07</td>
-<td>Rock</td>
-<td>1999-10-23</td>
-<td>2000-01-29</td>
-<td>71</td>
-<td>48</td>
-<td>43</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">4</td>
-<td>2000</td>
-<td>Madonna</td>
-<td>Music</td>
-<td>3:45</td>
-<td>Rock</td>
-<td>2000-08-12</td>
-<td>2000-09-16</td>
-<td>41</td>
-<td>23</td>
-<td>18</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th" scope="row">5</td>
-<td>2000</td>
-<td>Aguilera, Christina</td>
-<td>Come On Over Baby (All I Want Is You)</td>
-<td>3:38</td>
-<td>Rock</td>
-<td>2000-08-05</td>
-<td>2000-10-14</td>
-<td>57</td>
-<td>47</td>
-<td>45</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th" scope="row">6</td>
-<td>2000</td>
-<td>Janet</td>
-<td>Doesn't Really Matter</td>
-<td>4:17</td>
-<td>Rock</td>
-<td>2000-06-17</td>
-<td>2000-08-26</td>
-<td>59</td>
-<td>52</td>
-<td>43</td>
-<td>⋯</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-<td>NA</td>
-</tr>
-</tbody>
-</table>
-<div class="quarto-table-caption margin-caption">A data.frame: 6 × 83</div></div>
+<div id="a79f1eee-a0f7-4334-801b-ce82eda4b399" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(billboard)</span></code></pre></div>
 </div>
 <p>곡 별로 빌보드 차트에 얼마나 있었나 line</p>
 <div id="08034694-f494-4209-8209-321fbb0fa67e" class="cell" data-execution_count="289">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">1</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">1</span>]) <span class="sc">+</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">2</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">2</span>]) <span class="sc">+</span> </span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">3</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">3</span>]) <span class="sc">+</span> </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">4</span>]) <span class="sc">+</span> </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">5</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">5</span>])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">1</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">1</span>]) <span class="sc">+</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">2</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">2</span>]) <span class="sc">+</span> </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">3</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">3</span>]) <span class="sc">+</span> </span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">4</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">4</span>]) <span class="sc">+</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">line</span>(<span class="fu">t</span>(billboard[<span class="dv">5</span>,<span class="fu">c</span>(<span class="dv">8</span><span class="sc">:</span><span class="fu">length</span>(billboard))])[,<span class="dv">1</span>], <span class="at">label=</span>billboard<span class="sc">$</span>track[<span class="dv">5</span>])</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning message:
 “Removed 48 rows containing missing values (`geom_line()`).”
@@ -1284,15 +533,18 @@ Warning message:
 “Removed 55 rows containing missing values (`geom_line()`).”</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-13-output-2.png" class="img-fluid"></p>
 </div>
+</div>
+<div id="b429d6d5-bf48-4ddc-ac85-ed368d4d0553" class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>billboard</span></code></pre></div>
 </div>
 </section>
 <section id="try6-다양한-변수가-하나의-열에-있는-데이터" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="try6-다양한-변수가-하나의-열에-있는-데이터">try6 다양한 변수가 하나의 열에 있는 데이터</h2>
 <p>WHO의 결핵환자 기록, m/f는 성별 슛저눈 나이대를 의미</p>
 <div id="4ddb206e-8bd5-4804-aa8e-c66c6949bef7" class="cell page-columns page-full" data-execution_count="299">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tb)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tb)</span></code></pre></div>
 <div class="cell-output cell-output-display page-columns page-full">
 <table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true">
 
@@ -1416,13 +668,13 @@ Warning message:
 <div class="quarto-table-caption margin-caption">A data.frame: 6 × 11</div></div>
 </div>
 <div id="e8b2d621-b60a-4dbb-82a9-8be9c36d3fb2" class="cell" data-execution_count="306">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(tb<span class="sc">$</span>country,<span class="fu">subset</span>(tb, <span class="at">select =</span> <span class="fu">grep</span>(<span class="st">"m"</span>, <span class="fu">names</span>(tb))))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(tb<span class="sc">$</span>country,<span class="fu">subset</span>(tb, <span class="at">select =</span> <span class="fu">grep</span>(<span class="st">"m"</span>, <span class="fu">names</span>(tb))))</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning message:
 “Removed 15 rows containing missing values (`geom_point()`).”</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-19-output-2.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
@@ -1432,24 +684,24 @@ Warning message:
 <section id="section" class="level2">
 <h2 class="anchored" data-anchor-id="section">1.</h2>
 <div id="0e98b999-fd40-4e2f-a25f-f4060d207d62" class="cell" data-execution_count="64">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ,<span class="at">label=</span><span class="st">'a'</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ,<span class="at">label=</span><span class="st">'a'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-17-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <div id="59e755f5-a5c2-48bf-b7da-5ff4083a1201" class="cell" data-execution_count="65">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ,<span class="at">label=</span><span class="st">'a'</span>,<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ,<span class="at">label=</span><span class="st">'a'</span>,<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 </section>
 <section id="section-1" class="level2">
 <h2 class="anchored" data-anchor-id="section-1">2.</h2>
 <div id="ae0c03d9-2fd0-4f6e-b435-2d7276da5430" class="cell" data-execution_count="126">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="at">label=</span><span class="st">'blue'</span>,mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy)<span class="sc">|</span><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy, <span class="at">col=</span><span class="st">'blue'</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="at">label=</span><span class="st">'blue'</span>,mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy)<span class="sc">|</span><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy, <span class="at">col=</span><span class="st">'blue'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 
@@ -1478,6 +730,150 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {

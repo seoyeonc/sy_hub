@@ -31,7 +31,6 @@ website:
       - section: "**Studies**"
         contents:
           - 2_graph.qmd
-          - 2_ml.qmd
           - 2_quantum.qmd
           - 2_pyg.qmd
       - section: "**Researches**"
@@ -42,7 +41,8 @@ website:
 format:
   html:
     theme: 
-        light: journal
+        light: Sketchy
+        dark: default
     css: styles.css
     toc: true
     code-fold: false

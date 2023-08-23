@@ -513,63 +513,63 @@
   {
     "objectID": "posts/1_Note/2023-08-25-ggplot3_comparison.html",
     "href": "posts/1_Note/2023-08-25-ggplot3_comparison.html",
-    "title": "[ggplot3]ggplot2 vs ggplot3",
+    "title": "[ggplot3]With Non tidy Data",
     "section": "",
-    "text": "ggplot2 book"
+    "text": "데이터 출처 : https://github.com/nickhould/tidy-data-python\nhttps://partrita.github.io/posts/tidy-data/"
   },
   {
     "objectID": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try1",
     "href": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try1",
-    "title": "[ggplot3]ggplot2 vs ggplot3",
+    "title": "[ggplot3]With Non tidy Data",
     "section": "try1",
     "text": "try1\ncondition 부여 후 색 구분\n\nggplot() + point(mpg$displ,col='black') + point(mpg[(mpg$displ&lt;5&mpg$displ&gt;1),]$displ,col='red')"
   },
   {
     "objectID": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try2",
     "href": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try2",
-    "title": "[ggplot3]ggplot2 vs ggplot3",
+    "title": "[ggplot3]With Non tidy Data",
     "section": "try2",
     "text": "try2\ncondition 부여 후 절단\n\nggplot() + line(mpg$displ,col=2,label='a') + line(mpg[mpg$hwy&gt;20,]$hwy,col=3,label='b')"
   },
   {
     "objectID": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try3",
     "href": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try3",
-    "title": "[ggplot3]ggplot2 vs ggplot3",
+    "title": "[ggplot3]With Non tidy Data",
     "section": "try3",
-    "text": "try3\n색 자동 지정은 label의 알파벳 순 혹은 그려진 순\n\nggplot() + point(label='blue',mpg$displ, mpg$hwy)|ggplot() + point(mpg$displ, mpg$hwy,label='clue')\n\n\n\n\n\nggplot() + point(label='clue',mpg$displ, mpg$hwy)|ggplot() + point(mpg$displ, mpg$hwy,label='blue')"
+    "text": "try3\n색 자동 지정은 label의 알파벳 순 혹은 그려진 순\n\nggplot() + point(label='blue',mpg$displ, mpg$hwy)|ggplot() + point(mpg$displ, mpg$hwy,label='clue')"
   },
   {
     "objectID": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try4-열-이름이-값인-데이터",
     "href": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try4-열-이름이-값인-데이터",
-    "title": "[ggplot3]ggplot2 vs ggplot3",
+    "title": "[ggplot3]With Non tidy Data",
     "section": "try4 열 이름이 값인 데이터",
-    "text": "try4 열 이름이 값인 데이터\n\nhead(pew)\n\n\n\n\n\n\nreligion\nX..10k\nX.10.20k\nX.20.30k\nX.30.40k\nX.40.50k\nX.50.75k\n\n\n\n&lt;chr&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n\n\n\n\n1\nAgnostic\n27\n34\n60\n81\n76\n137\n\n\n2\nAtheist\n12\n27\n37\n52\n35\n70\n\n\n3\nBuddhist\n27\n21\n30\n34\n33\n58\n\n\n4\nCatholic\n418\n617\n732\n670\n638\n1116\n\n\n5\nDont know/refused\n15\n14\n15\n11\n10\n35\n\n\n6\nEvangelical Prot\n575\n869\n1064\n982\n881\n1486\n\n\n\nA data.frame: 6 × 7\n\n\nggplot() + point(colnames(pew)[2:7],t(pew[pew$religion=='Agnostic',])[2:7],label = 'Agnostic') +\n           point(colnames(pew)[2:7],t(pew[pew$religion=='Atheist',])[2:7],label = 'Atheist') +\n           point(colnames(pew)[2:7],t(pew[pew$religion=='Buddhist',])[2:7],label = 'Buddhist') +\n           point(colnames(pew)[2:7],t(pew[pew$religion=='Catholic',])[2:7],label = 'Catholic')"
+    "text": "try4 열 이름이 값인 데이터\n\nhead(pew)\n\n\n\n\n\n\nreligion\nX..10k\nX.10.20k\nX.20.30k\nX.30.40k\nX.40.50k\nX.50.75k\n\n\n\n&lt;chr&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n\n\n\n\n1\nAgnostic\n27\n34\n60\n81\n76\n137\n\n\n2\nAtheist\n12\n27\n37\n52\n35\n70\n\n\n3\nBuddhist\n27\n21\n30\n34\n33\n58\n\n\n4\nCatholic\n418\n617\n732\n670\n638\n1116\n\n\n5\nDont know/refused\n15\n14\n15\n11\n10\n35\n\n\n6\nEvangelical Prot\n575\n869\n1064\n982\n881\n1486\n\n\n\nA data.frame: 6 × 7\n\n\nggplot() + point(colnames(pew)[2:7],t(pew[pew$religion=='Agnostic',])[2:7],label = 'Agnostic') +\n           point(colnames(pew)[2:7],t(pew[pew$religion=='Atheist',])[2:7],label = 'Atheist') +\n           point(colnames(pew)[2:7],t(pew[pew$religion=='Buddhist',])[2:7],label = 'Buddhist') +\n           point(colnames(pew)[2:7],t(pew[pew$religion=='Catholic',])[2:7],label = 'Catholic')\n\n\n\n\n\nggplot() + point(colnames(pew)[2:7],t(pew[pew$religion=='Agnostic',])[2:7],label = 'Agnostic')|ggplot() + point(colnames(pew)[2:7],t(pew[pew$religion=='Atheist',])[2:7],label = 'Atheist')"
   },
   {
     "objectID": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try5-하나의-표에-여러가지-타입-존재하는-데이터",
     "href": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try5-하나의-표에-여러가지-타입-존재하는-데이터",
-    "title": "[ggplot3]ggplot2 vs ggplot3",
+    "title": "[ggplot3]With Non tidy Data",
     "section": "try5 하나의 표에 여러가지 타입 존재하는 데이터",
-    "text": "try5 하나의 표에 여러가지 타입 존재하는 데이터\n\nunique(billboard$genre)\n\n\n'Rock''Latin''Country''Rap''Pop''Electronica''Jazz''R&B''Reggae''Gospel'\n\n\n장르 별 1주차 빌보드 순위\n\nggplot() + point(billboard$x1st.week,label='all') + point(billboard[billboard$genre=='Rock',]$x1st.week,label='Rock') + point(billboard[billboard$genre=='Country',]$x1st.week,label='Country')\n\n\n\n\n\nhead(billboard)\n\n\n\n\n\n\nyear\nartist.inverted\ntrack\ntime\ngenre\ndate.entered\ndate.peaked\nx1st.week\nx2nd.week\nx3rd.week\n⋯\nx67th.week\nx68th.week\nx69th.week\nx70th.week\nx71st.week\nx72nd.week\nx73rd.week\nx74th.week\nx75th.week\nx76th.week\n\n\n\n&lt;int&gt;\n&lt;chr&gt;\n&lt;chr&gt;\n&lt;chr&gt;\n&lt;chr&gt;\n&lt;chr&gt;\n&lt;chr&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n⋯\n&lt;lgl&gt;\n&lt;lgl&gt;\n&lt;lgl&gt;\n&lt;lgl&gt;\n&lt;lgl&gt;\n&lt;lgl&gt;\n&lt;lgl&gt;\n&lt;lgl&gt;\n&lt;lgl&gt;\n&lt;lgl&gt;\n\n\n\n\n1\n2000\nDestiny's Child\nIndependent Women Part I\n3:38\nRock\n2000-09-23\n2000-11-18\n78\n63\n49\n⋯\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\n\n\n2\n2000\nSantana\nMaria, Maria\n4:18\nRock\n2000-02-12\n2000-04-08\n15\n8\n6\n⋯\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\n\n\n3\n2000\nSavage Garden\nI Knew I Loved You\n4:07\nRock\n1999-10-23\n2000-01-29\n71\n48\n43\n⋯\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\n\n\n4\n2000\nMadonna\nMusic\n3:45\nRock\n2000-08-12\n2000-09-16\n41\n23\n18\n⋯\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\n\n\n5\n2000\nAguilera, Christina\nCome On Over Baby (All I Want Is You)\n3:38\nRock\n2000-08-05\n2000-10-14\n57\n47\n45\n⋯\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\n\n\n6\n2000\nJanet\nDoesn't Really Matter\n4:17\nRock\n2000-06-17\n2000-08-26\n59\n52\n43\n⋯\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\nNA\n\n\n\nA data.frame: 6 × 83\n\n곡 별로 빌보드 차트에 얼마나 있었나 line\n\nggplot() + line(t(billboard[1,c(8:length(billboard))])[,1], label=billboard$track[1]) +\nline(t(billboard[2,c(8:length(billboard))])[,1], label=billboard$track[2]) + \nline(t(billboard[3,c(8:length(billboard))])[,1], label=billboard$track[3]) + \nline(t(billboard[4,c(8:length(billboard))])[,1], label=billboard$track[4]) + \nline(t(billboard[5,c(8:length(billboard))])[,1], label=billboard$track[5])\n\nWarning message:\n“Removed 48 rows containing missing values (`geom_line()`).”\nWarning message:\n“Removed 50 rows containing missing values (`geom_line()`).”\nWarning message:\n“Removed 43 rows containing missing values (`geom_line()`).”\nWarning message:\n“Removed 52 rows containing missing values (`geom_line()`).”\nWarning message:\n“Removed 55 rows containing missing values (`geom_line()`).”"
+    "text": "try5 하나의 표에 여러가지 타입 존재하는 데이터\n\nunique(billboard$genre)\n\n\n'Rock''Latin''Country''Rap''Pop''Electronica''Jazz''R&B''Reggae''Gospel'\n\n\n장르 별 1주차 빌보드 순위\n\nggplot() + point(billboard$x1st.week,label='all') + point(billboard[billboard$genre=='Rock',]$x1st.week,label='Rock') + point(billboard[billboard$genre=='Country',]$x1st.week,label='Country')\n\n\n\n\n\nhead(billboard)\n\n곡 별로 빌보드 차트에 얼마나 있었나 line\n\nggplot() + line(t(billboard[1,c(8:length(billboard))])[,1], label=billboard$track[1]) +\nline(t(billboard[2,c(8:length(billboard))])[,1], label=billboard$track[2]) + \nline(t(billboard[3,c(8:length(billboard))])[,1], label=billboard$track[3]) + \nline(t(billboard[4,c(8:length(billboard))])[,1], label=billboard$track[4]) + \nline(t(billboard[5,c(8:length(billboard))])[,1], label=billboard$track[5])\n\nWarning message:\n“Removed 48 rows containing missing values (`geom_line()`).”\nWarning message:\n“Removed 50 rows containing missing values (`geom_line()`).”\nWarning message:\n“Removed 43 rows containing missing values (`geom_line()`).”\nWarning message:\n“Removed 52 rows containing missing values (`geom_line()`).”\nWarning message:\n“Removed 55 rows containing missing values (`geom_line()`).”\n\n\n\n\n\n\nbillboard"
   },
   {
     "objectID": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try6-다양한-변수가-하나의-열에-있는-데이터",
     "href": "posts/1_Note/2023-08-25-ggplot3_comparison.html#try6-다양한-변수가-하나의-열에-있는-데이터",
-    "title": "[ggplot3]ggplot2 vs ggplot3",
+    "title": "[ggplot3]With Non tidy Data",
     "section": "try6 다양한 변수가 하나의 열에 있는 데이터",
     "text": "try6 다양한 변수가 하나의 열에 있는 데이터\nWHO의 결핵환자 기록, m/f는 성별 슛저눈 나이대를 의미\n\nhead(tb)\n\n\n\n\n\n\ncountry\nyear\nm014\nm1524\nm2534\nm3544\nm4554\nm5564\nm65\nmu\nf014\n\n\n\n&lt;chr&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;int&gt;\n&lt;lgl&gt;\n&lt;int&gt;\n\n\n\n\n1\nAD\n2000\n0\n0\n1\n0\n0\n0\n0\nNA\nNA\n\n\n2\nAE\n2000\n2\n4\n4\n6\n5\n12\n10\nNA\n3\n\n\n3\nAF\n2000\n52\n228\n183\n149\n129\n94\n80\nNA\n93\n\n\n4\nAG\n2000\n0\n0\n0\n0\n0\n0\n1\nNA\n1\n\n\n5\nAL\n2000\n2\n19\n21\n14\n24\n19\n16\nNA\n3\n\n\n6\nAM\n2000\n2\n152\n130\n131\n63\n26\n21\nNA\n1\n\n\n\nA data.frame: 6 × 11\n\n\nggplot() + point(tb$country,subset(tb, select = grep(\"m\", names(tb))))\n\nWarning message:\n“Removed 15 rows containing missing values (`geom_point()`).”"
   },
   {
     "objectID": "posts/1_Note/2023-08-25-ggplot3_comparison.html#section",
     "href": "posts/1_Note/2023-08-25-ggplot3_comparison.html#section",
-    "title": "[ggplot3]ggplot2 vs ggplot3",
+    "title": "[ggplot3]With Non tidy Data",
     "section": "1.",
     "text": "1.\n\nggplot() + point(mpg$displ,label='a')\n\n\n\n\n\nggplot() + point(mpg$displ,label='a',col=2)"
   },
   {
     "objectID": "posts/1_Note/2023-08-25-ggplot3_comparison.html#section-1",
     "href": "posts/1_Note/2023-08-25-ggplot3_comparison.html#section-1",
-    "title": "[ggplot3]ggplot2 vs ggplot3",
+    "title": "[ggplot3]With Non tidy Data",
     "section": "2.",
     "text": "2.\n\nggplot() + point(label='blue',mpg$displ, mpg$hwy)|ggplot() + point(mpg$displ, mpg$hwy, col='blue')"
   },
