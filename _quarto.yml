@@ -41,7 +41,7 @@ website:
 format:
   html:
     theme: 
-        light: United
+        light: Simplex
         dark: cosmo
     css: styles.css
     toc: true
