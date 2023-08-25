@@ -41,8 +41,7 @@ website:
 format:
   html:
     theme: 
-        light: Simplex
-        dark: cosmo
+        light: Journal
     css: styles.css
     toc: true
     code-fold: false
