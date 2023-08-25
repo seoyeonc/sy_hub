@@ -40,8 +40,7 @@ website:
       
 format:
   html:
-    theme: 
-        light: Journal
+    theme: Journal
     css: styles.css
     toc: true
     code-fold: false
