@@ -41,8 +41,8 @@ website:
 format:
   html:
     theme: 
-        light: slate
-        dark: slate
+        light: United
+        dark: cosmo
     css: styles.css
     toc: true
     code-fold: false
