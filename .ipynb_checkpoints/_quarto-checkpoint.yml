@@ -41,8 +41,8 @@ website:
 format:
   html:
     theme: 
-        light: default
-        dark: default
+        light: slate
+        dark: slate
     css: styles.css
     toc: true
     code-fold: false
