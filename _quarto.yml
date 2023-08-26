@@ -41,7 +41,8 @@ website:
 format:
   html:
     theme: 
-        light: Journal
+        light: cosmo
+        dark: cosmo
     css: styles.css
     toc: true
     code-fold: false
