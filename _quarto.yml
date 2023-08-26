@@ -42,7 +42,6 @@ format:
   html:
     theme: 
         light: cosmo
-        dark: cosmo
     css: styles.css
     toc: true
     code-fold: false
