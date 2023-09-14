@@ -1,5 +1,5 @@
 /.quarto/
-/nogit
+/posts/nogit
 *.csv 
 *.npy
 *.pickle
