@@ -1,4 +1,5 @@
 /.quarto/
+/nogit
 *.csv 
 *.npy
 *.pickle
