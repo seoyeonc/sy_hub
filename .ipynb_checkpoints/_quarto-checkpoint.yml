@@ -9,7 +9,7 @@ website:
     
   navbar:
     left:
-      - text: Lectures
+      - text: Lectures_ing
         href: https://seoyeonc.github.io/md/
       - text: Lectures_fastai
         href: https://seoyeonc.github.io/chch/
@@ -37,6 +37,7 @@ website:
         contents:
           - 3_ittgnn.qmd
           - 3_gode.qmd
+          - 3_hcam.qmd
       
 format:
   html:

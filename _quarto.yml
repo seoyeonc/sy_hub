@@ -9,7 +9,7 @@ website:
     
   navbar:
     left:
-      - text: Lectures
+      - text: Lectures_ing
         href: https://seoyeonc.github.io/md/
       - text: Lectures_fastai
         href: https://seoyeonc.github.io/chch/
