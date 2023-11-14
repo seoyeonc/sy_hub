@@ -31,8 +31,6 @@ website:
       - section: "**Studies**"
         contents:
           - 2_graph.qmd
-          - 2_quantum.qmd
-          - 2_pyg.qmd
       - section: "**Researches**"
         contents:
           - 3_ittgnn.qmd
