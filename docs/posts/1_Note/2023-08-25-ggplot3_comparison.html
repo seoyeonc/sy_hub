@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.315">
+<meta name="generator" content="quarto-1.4.527">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +59,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -81,12 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -95,13 +96,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
@@ -111,8 +113,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body class="nav-sidebar docked nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
@@ -134,12 +136,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span class="menu-text">Lectures_fastai</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://seoyeonc.github.io/blog/"> 
+    <a class="nav-link" href="https://seoyeonc.github.io/Research_area/"> 
 <span class="menu-text">Research_ing</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://seoyeonc.github.io/ms/"> 
 <span class="menu-text">Research_fastai</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/GODE_blog/"> 
+<span class="menu-text">GODE</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/HCAM_blog/"> 
+<span class="menu-text">HCAM</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/ITTGNN_blog/"> 
+<span class="menu-text">ITTGNN</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -160,11 +174,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><strong>[ggplot3]</strong>With Non tidy Data</li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -203,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -266,7 +280,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -294,6 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -353,7 +368,11 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 <div id="9cebbc08-a611-4483-bcff-f62312daa2a0" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ,<span class="at">col=</span><span class="st">'black'</span>) <span class="sc">+</span> <span class="fu">point</span>(mpg[(mpg<span class="sc">$</span>displ<span class="sc">&lt;</span><span class="dv">5</span><span class="sc">&amp;</span>mpg<span class="sc">$</span>displ<span class="sc">&gt;</span><span class="dv">1</span>),]<span class="sc">$</span>displ,<span class="at">col=</span><span class="st">'red'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-7-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-7-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -363,7 +382,11 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 <div id="659c183a-f77a-4536-82d8-b889658aabb1" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">line</span>(mpg<span class="sc">$</span>displ,<span class="at">col=</span><span class="dv">2</span>,<span class="at">label=</span><span class="st">'a'</span>) <span class="sc">+</span> <span class="fu">line</span>(mpg[mpg<span class="sc">$</span>hwy<span class="sc">&gt;</span><span class="dv">20</span>,]<span class="sc">$</span>hwy,<span class="at">col=</span><span class="dv">3</span>,<span class="at">label=</span><span class="st">'b'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-8-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-8-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -373,7 +396,11 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 <div id="38d86c5e-79fd-46b5-af15-7a720a1f65d1" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="at">label=</span><span class="st">'blue'</span>,mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy)<span class="sc">|</span><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy,<span class="at">label=</span><span class="st">'clue'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-9-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -477,13 +504,21 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>           <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Buddhist'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Buddhist'</span>) <span class="sc">+</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>           <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Catholic'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Catholic'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="192f0dae-d2da-4d17-8663-07a4066f2850" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Agnostic'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Agnostic'</span>)<span class="sc">|</span><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="fu">colnames</span>(pew)[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="fu">t</span>(pew[pew<span class="sc">$</span>religion<span class="sc">==</span><span class="st">'Atheist'</span>,])[<span class="dv">2</span><span class="sc">:</span><span class="dv">7</span>],<span class="at">label =</span> <span class="st">'Atheist'</span>) </span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -504,7 +539,11 @@ This is mgcv 1.9-0. For overview type 'help("mgcv-package")'.
 <div id="56c01528-30ca-412f-845d-8ae2bcc3dc8e" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(billboard<span class="sc">$</span>x1st.week,<span class="at">label=</span><span class="st">'all'</span>) <span class="sc">+</span> <span class="fu">point</span>(billboard[billboard<span class="sc">$</span>genre<span class="sc">==</span><span class="st">'Rock'</span>,]<span class="sc">$</span>x1st.week,<span class="at">label=</span><span class="st">'Rock'</span>) <span class="sc">+</span> <span class="fu">point</span>(billboard[billboard<span class="sc">$</span>genre<span class="sc">==</span><span class="st">'Country'</span>,]<span class="sc">$</span>x1st.week,<span class="at">label=</span><span class="st">'Country'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="a79f1eee-a0f7-4334-801b-ce82eda4b399" class="cell page-columns page-full" data-execution_count="22">
@@ -731,7 +770,11 @@ Warning message:
 “Removed 55 rows containing missing values (`geom_line()`).”</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-16-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-16-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="184ffcd2-bfba-4ca0-8a52-f6130699fc65" class="cell" data-execution_count="7">
@@ -741,7 +784,11 @@ Warning message:
 “Removed 48 rows containing missing values (`geom_point()`).”</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-17-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-17-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="f63667e7-f1e5-4f90-bbeb-b3115c98c81a" class="cell" data-execution_count="1">
@@ -885,7 +932,11 @@ Warning message:
 “Removed 15 rows containing missing values (`geom_point()`).”</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-20-output-2.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-20-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -897,13 +948,21 @@ Warning message:
 <div id="0e98b999-fd40-4e2f-a25f-f4060d207d62" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ,<span class="at">label=</span><span class="st">'a'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="59e755f5-a5c2-48bf-b7da-5ff4083a1201" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ,<span class="at">label=</span><span class="st">'a'</span>,<span class="at">col=</span><span class="dv">2</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -912,7 +971,11 @@ Warning message:
 <div id="ae0c03d9-2fd0-4f6e-b435-2d7276da5430" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(<span class="at">label=</span><span class="st">'blue'</span>,mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy)<span class="sc">|</span><span class="fu">ggplot</span>() <span class="sc">+</span> <span class="fu">point</span>(mpg<span class="sc">$</span>displ, mpg<span class="sc">$</span>hwy, <span class="at">col=</span><span class="st">'blue'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-23-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-08-25-ggplot3_comparison_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 
@@ -997,15 +1060,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
-    if (id.startsWith('sec-')) {
+    if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
         }
         return container.innerHTML
       } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
@@ -1013,6 +1089,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const anchorLink = note.querySelector('a.anchorjs-link');
       if (anchorLink) {
         anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
       }
       return note.innerHTML;
     }
@@ -1056,6 +1135,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
       }
     }, function(instance) {
     });
@@ -1131,7 +1233,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     window.addEventListener(
       "resize",
       throttle(() => {
-        console.log("RESIZE");
         elRect = undefined;
         if (selectedAnnoteEl) {
           selectCodeLines(selectedAnnoteEl);

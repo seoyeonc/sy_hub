@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.315">
+<meta name="generator" content="quarto-1.4.527">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -60,6 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,12 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -114,6 +116,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -123,14 +126,41 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
@@ -152,12 +182,24 @@ div.csl-indent {
 <span class="menu-text">Lectures_fastai</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://seoyeonc.github.io/blog/"> 
+    <a class="nav-link" href="https://seoyeonc.github.io/Research_area/"> 
 <span class="menu-text">Research_ing</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://seoyeonc.github.io/ms/"> 
 <span class="menu-text">Research_fastai</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/GODE_blog/"> 
+<span class="menu-text">GODE</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/HCAM_blog/"> 
+<span class="menu-text">HCAM</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/ITTGNN_blog/"> 
+<span class="menu-text">ITTGNN</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -178,11 +220,11 @@ div.csl-indent {
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">EbayesThresh Toy ex</li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -224,7 +266,7 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -287,7 +329,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -304,6 +346,7 @@ div.csl-indent {
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -336,7 +379,7 @@ Djuric, Petar, and Cédric Richard. 2018. <em>Cooperative and Graph Signal Proce
 </div><div id="ref-johnstone2004needles" class="csl-entry" role="listitem">
 Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in Haystacks: Empirical Bayes Estimates of Possibly Sparse Sequences.”</span>
 </div></div></section>
-<section id="bayesian-model" class="level1 page-columns page-full">
+<section id="bayesian-model" class="level1">
 <h1>Bayesian Model</h1>
 <p><span class="math inline">\(x_i \sim N(\mu_i,1)\)</span></p>
 <p><a href="https://guebin.github.io/AP2023/posts/II.%20%ED%99%95%EB%A5%A0%EB%A1%A0%EA%B8%B0%EC%B4%88/2023-05-02-09wk.html">확률변수</a>가 잘 정의되어 있을때, 여기서 <span class="math inline">\(\mu_i\)</span>를 정하는 Baysian.</p>
@@ -363,10 +406,10 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 </ul>
 <p>Ebayes는 사전분포를 Heavy-tail으로 정의했다.</p>
 <p><strong>heavy tail?</strong></p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/ae7604a7-3ffd-4374-8640-097dfc92061c-1-9c4b08eb-c3d0-4414-960e-f5a50b79799f.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">image.png</figcaption>
+<figcaption>image.png</figcaption>
 </figure>
 </div>
 <p><span class="math inline">\(\mu_x \sim\)</span> Double Exponential <span class="math inline">\(= p_{pp} + p_{ac}\)</span> -&gt; 혼합형(misture) = pure point + absolutely continuous</p>
@@ -408,7 +451,11 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-11-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><code>-</code> 관찰한 신호</p>
@@ -416,7 +463,11 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'o'</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><code>-</code> 퓨리에 변환</p>
@@ -430,7 +481,11 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 <div id="894e4e22-80dc-4d23-9a68-7de6d211c77e" class="cell" data-execution_count="57">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>plt.plot(t,fbar<span class="op">**</span><span class="dv">2</span>) <span class="co"># periodogram </span></span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-14-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><code>-</code> threshed</p>
@@ -439,14 +494,22 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)) <span class="co"># periodogram </span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)) </span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-15-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="8a4b57da-0121-43ee-bd8f-ae3726757b91" class="cell" data-execution_count="59">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) <span class="co"># periodogram </span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) </span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-16-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p><code>-</code> 역퓨리에변환</p>
@@ -459,7 +522,11 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>plt.plot(t,yhat)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-18-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="4434b135-080e-450f-9f16-ab6d668e4c86" class="cell" data-execution_count="62">
@@ -467,7 +534,11 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>plt.plot(y,<span class="st">'.'</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>plt.plot(y_true)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-19-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -507,7 +578,11 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 <span id="cb20-31"><a href="#cb20-31" aria-hidden="true" tabindex="-1"></a>    ax4.tick_params(axis<span class="op">=</span><span class="st">'y'</span>, labelsize<span class="op">=</span><span class="dv">20</span>)</span>
 <span id="cb20-32"><a href="#cb20-32" aria-hidden="true" tabindex="-1"></a>    ax4.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">20</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-20-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="de103a14-098f-49be-833b-cd425b30f957" class="cell" data-execution_count="64">
@@ -530,7 +605,11 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 <span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>axins.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">15</span>)</span>
 <span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('Ebayes_Toy.png')</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-21-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-21-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="378a8ba8-ce36-4a5c-adb0-8d867c4d3f12" class="cell" data-execution_count="65">
@@ -563,7 +642,11 @@ Johnstone, Iain M, and Bernard W Silverman. 2004. <span>“Needles and Straw in 
 <span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>fig.add_artist(conn2)</span>
 <span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-22-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -641,7 +724,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>plot(ebayesthresh(x, sdev<span class="op">=</span><span class="dv">1</span>),<span class="bu">type</span><span class="op">=</span><span class="st">'l'</span>, xlab<span class="op">=</span><span class="st">"Estimate"</span>, ylab<span class="op">=</span><span class="st">""</span>)</span>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a><span class="co"># dev.off()</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-31-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-31-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="3ef8793e-5c26-4dc4-91a3-126c94119a1f" class="cell" data-execution_count="89">
@@ -677,25 +764,41 @@ R[write to console]: Loading required package: RColorBrewer
 <div id="492851a8-eda9-4fb7-b27e-eb7609b4fe06" class="cell" data-execution_count="84">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>plt.plot(y)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-34-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-34-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="604668af-cbf8-4726-ac52-9d0e71283d9c" class="cell" data-execution_count="80">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>plt.plot(itstgcn.make_Psi(T).T<span class="op">@</span>y)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-35-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-35-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="f581a47e-fc77-453f-bf73-763545ea2319" class="cell" data-execution_count="178">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>plt.plot(ebayesthresh(FloatVector(itstgcn.make_Psi(T).T<span class="op">@</span>y)))</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-36-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-36-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="473277c8-1861-4a31-a473-9e554f61e39e" class="cell" data-execution_count="179">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>plt.plot(itstgcn.make_Psi(T)<span class="op">@</span>ebayesthresh(FloatVector(itstgcn.make_Psi(T).T<span class="op">@</span>y)))</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-37-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-37-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="06a46bbf-f4ed-4070-bc53-4e686e6d5f3c" class="cell" data-execution_count="358">
@@ -708,7 +811,11 @@ R[write to console]: Loading required package: RColorBrewer
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>_x <span class="op">=</span> <span class="fl">1.5</span><span class="op">*</span>np.sin(<span class="dv">2</span><span class="op">*</span>_t)<span class="op">+</span><span class="dv">2</span><span class="op">*</span>np.random.rand(_T)<span class="op">+</span><span class="fl">1.5</span><span class="op">*</span>np.sin(<span class="dv">4</span><span class="op">*</span>_t)<span class="op">+</span><span class="fl">1.5</span><span class="op">*</span>np.sin(<span class="dv">8</span><span class="op">*</span>_t)</span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>plt.plot(_x)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-40-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-40-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="43148e67-8e62-4b0f-8a1f-36c663839f44" class="cell" data-execution_count="406">
@@ -789,7 +896,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    ax1.set_ylim(<span class="op">-</span><span class="dv">6</span>,<span class="dv">6</span>)</span>
 <span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'Ebayes_fst.pdf'</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'pdf'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-57-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-57-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>fourier transform</p>
@@ -803,7 +914,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    ax1.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">40</span>)</span>
 <span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'Ebayes_snd.pdf'</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'pdf'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-58-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-58-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="0b445086-900e-4b51-beff-32dfd67ee589" class="cell" data-execution_count="400">
@@ -816,7 +931,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>    ax1.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">40</span>)</span>
 <span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'Ebayes_snd_zin.pdf'</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'pdf'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-59-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-59-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Ebayesthresh/trim</p>
@@ -830,7 +949,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>    ax1.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">40</span>)</span>
 <span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'Ebayes_trd.pdf'</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'pdf'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-60-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-60-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="704c38e7-3937-4255-9c1e-c6bbcb316ca5" class="cell" data-execution_count="402">
@@ -843,7 +966,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>    ax1.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">40</span>)</span>
 <span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'Ebayes_trd_zout.pdf'</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'pdf'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-61-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-61-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>fhat</p>
@@ -858,7 +985,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>    ax1.set_ylim(<span class="op">-</span><span class="dv">6</span>,<span class="dv">6</span>)</span>
 <span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">'Ebayes_fth.pdf'</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'pdf'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-62-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-62-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="ce21bdb5-1f00-4e3f-ba3c-e543ad3b5f18" class="cell" data-execution_count="450">
@@ -871,7 +1002,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a>    ax1.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">40</span>)</span>
 <span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('node1_fst.png')</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-63-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-63-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="f39e4382-99f1-4436-9d90-c3975965c726" class="cell" data-execution_count="451">
@@ -885,7 +1020,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb66-8"><a href="#cb66-8" aria-hidden="true" tabindex="-1"></a>    ax2.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">40</span>)</span>
 <span id="cb66-9"><a href="#cb66-9" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('node1_snd.png')</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-64-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-64-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="d9e22949-8e00-4287-a79c-f0d4c2ce48b1" class="cell" data-execution_count="452">
@@ -899,7 +1038,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb67-8"><a href="#cb67-8" aria-hidden="true" tabindex="-1"></a>    ax3.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">40</span>)</span>
 <span id="cb67-9"><a href="#cb67-9" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('node1_3rd.png')</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-65-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-65-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 <div id="09bcea8f-fda2-4462-a18f-63800efba2df" class="cell" data-execution_count="453">
@@ -918,7 +1061,11 @@ R[write to console]: Loading required package: RColorBrewer
 <span id="cb68-13"><a href="#cb68-13" aria-hidden="true" tabindex="-1"></a>    ax4.tick_params(axis<span class="op">=</span><span class="st">'x'</span>, labelsize<span class="op">=</span><span class="dv">40</span>)</span>
 <span id="cb68-14"><a href="#cb68-14" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('node1_4th_1.png')</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-66-output-1.png" class="img-fluid"></p>
+<div>
+<figure class="figure">
+<p><img src="2023-05-20-EbayesThresh toy ex_files/figure-html/cell-66-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
 </div>
 </div>
 
@@ -1003,15 +1150,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
-    if (id.startsWith('sec-')) {
+    if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
         }
         return container.innerHTML
       } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
@@ -1019,6 +1179,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const anchorLink = note.querySelector('a.anchorjs-link');
       if (anchorLink) {
         anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
       }
       return note.innerHTML;
     }
@@ -1062,6 +1225,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
       }
     }, function(instance) {
     });
@@ -1137,7 +1323,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     window.addEventListener(
       "resize",
       throttle(() => {
-        console.log("RESIZE");
         elRect = undefined;
         if (selectedAnnoteEl) {
           selectCodeLines(selectedAnnoteEl);

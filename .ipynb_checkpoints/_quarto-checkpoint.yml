@@ -1,5 +1,6 @@
 project:
   type: website
+  output-dir: docs
 
 website:
   title: "Seoyeon's Blog"
@@ -14,9 +15,15 @@ website:
       - text: Lectures_fastai
         href: https://seoyeonc.github.io/chch/
       - text: Research_ing
-        href: https://seoyeonc.github.io/blog/
+        href: https://seoyeonc.github.io/Research_area/
       - text: Research_fastai
         href: https://seoyeonc.github.io/ms/
+      - text: GODE
+        href: https://seoyeonc.github.io/GODE_blog/
+      - text: HCAM
+        href: https://seoyeonc.github.io/HCAM_blog/
+      - text: ITTGNN
+        href: https://seoyeonc.github.io/ITTGNN_blog/
         
     right:
       - about.qmd

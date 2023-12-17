@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.315">
+<meta name="generator" content="quarto-1.4.527">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -47,12 +47,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -61,6 +62,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -70,14 +72,41 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed slimcontent">
+<body class="nav-sidebar docked nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
@@ -99,12 +128,24 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Lectures_fastai</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://seoyeonc.github.io/blog/"> 
+    <a class="nav-link" href="https://seoyeonc.github.io/Research_area/"> 
 <span class="menu-text">Research_ing</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://seoyeonc.github.io/ms/"> 
 <span class="menu-text">Research_fastai</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/GODE_blog/"> 
+<span class="menu-text">GODE</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/HCAM_blog/"> 
+<span class="menu-text">HCAM</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/ITTGNN_blog/"> 
+<span class="menu-text">ITTGNN</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -125,11 +166,11 @@ ul.task-list li input[type="checkbox"] {
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><strong>[IT-STGCN]</strong>논문리비전_수정</li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -168,7 +209,7 @@ ul.task-list li input[type="checkbox"] {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -231,7 +272,7 @@ ul.task-list li input[type="checkbox"] {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -247,12 +288,13 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2023-09-20-논문리비전_수정.out.out.ipynb" download="2023-09-20-논문리비전_수정.out.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
-<section id="intro" class="level1 page-columns page-full">
+
+<section id="intro" class="level1">
 <h1>1. intro</h1>
 <p><code>-</code> 초록색은 나쁘지 않음. 하지만 아래의 내용을 보완하는게 좋음.</p>
 <ul>
@@ -317,10 +359,10 @@ ul.task-list li input[type="checkbox"] {
 <p>Before move on to introduce our purpose, we need a definition of graph signal. To describe the geometric structures of data domain, graphs are well known as generic data representation forms(Shuman et al., 2013). So in this paper, we interpret data as Gt = (Vt,Et), V means ver- tics and E means edges. On specific Gt, it has a finite collection of samples and we call it as a graph signal(Shuman et al., 2013). Now, we would like to show the purpose of this paper that is mak- ing complete data when we approach the irregularly data. To satisfy this condition, we recognize the data not the heterogeneous graph, but the homogeneous graph by interpolation. Homogeneous graphs have same types of nodes and edges, and hetero geneous graphs have different types of them(Zhou et al., 2020). In a method of learning spatiotemporal data, Bai et al.&nbsp;(2020); Zhao et al.&nbsp;(2019); Yu et al.&nbsp;(2017); Guo et al.&nbsp;(2019) try to learn data after making it to be complete, i.e., allocate to other values from missing data with linear interpolation. In our proposed method, it is crucial to rightly estimate the underlying function when training spatiotemporal dataset because the functions define the expected pattern of the data. And that pattern would affect to read the trend of datasets. However it can be hard to estimate when it has many percentage of missing date.</p>
 <hr>
 <p><code>-</code> 아래식은 틀렸음. 이건 회귀모형이 아님.. GNAR의 notation을 사용하여 모형을 다시표현해볼것..</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="attachment:2023-09-14-논문리비전_files/figure-ipynb/1f340f80-39bb-472a-9e0e-580bd25d4923-1-c5fb64d9-d118-4471-8fe0-aae33707f34b.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">image.png</figcaption>
+<figcaption>image.png</figcaption>
 </figure>
 </div>
 <ul>
@@ -330,17 +372,17 @@ ul.task-list li input[type="checkbox"] {
 <li>뒤에 self consistence estimator에 사용할 Notation을 함께 고려</li>
 </ul>
 <p><code>-</code> 빨간부분 삭제후 다시 작성 (혹은 공부할 것)</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="attachment:2023-09-14-논문리비전_files/figure-ipynb/df78f19b-d302-4397-b41e-fc5d667d348c-1-47f23b5c-8859-4c66-9a4e-9ce9a22e7ae7.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">image.png</figcaption>
+<figcaption>image.png</figcaption>
 </figure>
 </div>
 <p><code>-</code> 초록색부분은 나쁘지 않음</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="attachment:2023-09-14-논문리비전_files/figure-ipynb/8db3d5da-fff0-4ad3-b1d6-e7c4c3991f77-1-d1c03028-6fdf-42f6-9c7d-d7d73158310b.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">image.png</figcaption>
+<figcaption>image.png</figcaption>
 </figure>
 </div>
 <p><code>기존</code></p>
@@ -403,14 +445,14 @@ ul.task-list li input[type="checkbox"] {
 <p><code>-</code> 좋아요</p>
 <p><code>-</code> 자잘한건 제가 수정하면 될 듯합니다.</p>
 </section>
-<section id="section" class="level1 page-columns page-full">
+<section id="section" class="level1">
 <h1>4.</h1>
 <p><code>-</code> 내용을 좀 더 팬시하게 쓸 필요가 있어보임</p>
 <p><code>-</code> 아래부분을 정리하여 알고리즘화 해야함.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="2023-09-20-논문리비전_수정.out_files/figure-html/7f30d76f-2ff9-41ea-9a74-170dc6d2bd78-1-2023-09-14-논문리비전_files/figure-ipynb/cb8b7d22-d4b4-4633-aa8c-a30e2d18fdfd-1-359a9447-a5b6-43bc-b490-f2a8bc2e404f.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">image.png</figcaption>
+<figcaption>image.png</figcaption>
 </figure>
 </div>
 <p><code>-</code> 기존</p>
@@ -501,15 +543,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
-    if (id.startsWith('sec-')) {
+    if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
         }
         return container.innerHTML
       } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
@@ -517,6 +572,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const anchorLink = note.querySelector('a.anchorjs-link');
       if (anchorLink) {
         anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
       }
       return note.innerHTML;
     }
@@ -560,6 +618,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
       }
     }, function(instance) {
     });
@@ -635,7 +716,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     window.addEventListener(
       "resize",
       throttle(() => {
-        console.log("RESIZE");
         elRect = undefined;
         if (selectedAnnoteEl) {
           selectCodeLines(selectedAnnoteEl);

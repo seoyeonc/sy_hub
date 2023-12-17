@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.315">
+<meta name="generator" content="quarto-1.4.527">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -24,7 +24,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -60,6 +60,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -100,12 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
   "keyboard-shortcut": [
     "f",
     "/",
     "s"
   ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -114,6 +116,7 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -123,14 +126,41 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
 <body class="nav-sidebar docked nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../../index.html">
@@ -152,12 +182,24 @@ div.csl-indent {
 <span class="menu-text">Lectures_fastai</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="https://seoyeonc.github.io/blog/"> 
+    <a class="nav-link" href="https://seoyeonc.github.io/Research_area/"> 
 <span class="menu-text">Research_ing</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="https://seoyeonc.github.io/ms/"> 
 <span class="menu-text">Research_fastai</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/GODE_blog/"> 
+<span class="menu-text">GODE</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/HCAM_blog/"> 
+<span class="menu-text">HCAM</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/ITTGNN_blog/"> 
+<span class="menu-text">ITTGNN</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -178,11 +220,11 @@ div.csl-indent {
     </nav>
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><strong>[CGSP]</strong> Chap 12.2: Weakly Stationary Graph Processes</li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
@@ -221,7 +263,7 @@ div.csl-indent {
   
   </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
@@ -284,7 +326,7 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -307,6 +349,7 @@ div.csl-indent {
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
 
 
 
@@ -464,10 +507,10 @@ Djuric, Petar, and Cédric Richard. 2018. <em>Cooperative and Graph Signal Proce
 <div class="no-row-height column-margin column-container"><div id="ref-marques2017stationary" class="csl-entry" role="listitem">
 Marques, Antonio G, Santiago Segarra, Geert Leus, and Alejandro Ribeiro. 2017. <span>“Stationary Graph Processes and Spectral Estimation.”</span> <em>IEEE Transactions on Signal Processing</em> 65 (22): 5911–26.
 </div></div><p>Thus far, we have presented three extensions of the concept of stationarity into the realm of graph processes, two of which are equivalent and, hence, grouped in Definition 12.2. At this point, the attentive reader might have a natural inquiry. Are Definitions 12.1 and 12.2 equivalent for general graphs, as they are for stationarity in time? In fact, it can be shown that Definitions 12.1 and 12.2 are equivalent for any graph <span class="math inline">\({\bf S}\)</span> that is normal and whose eigenvalues are all distinct <span class="citation" data-cites="marques2017stationary">(<a href="#ref-marques2017stationary" role="doc-biblioref">Marques et al. 2017</a>)</span>. Follwing figure presents a concise summary of the definitions discussed in this section.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="2022-12-26-Chap-12.2_files/figure-html/2bacb792-6dad-4d86-a9d0-1130727b88d1-1-fcc7a188-7a4c-4e41-b896-f1b6a1f6f87d.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">그림1: 교재에서 긁어온 다이어그램.</figcaption>
+<figcaption>그림1: 교재에서 긁어온 다이어그램.</figcaption>
 </figure>
 </div>
 <section id="coexisting-approaches" class="level2 page-columns page-full">
@@ -504,10 +547,10 @@ Segarra, Santiago, Antonio G Marques, Gonzalo Mateos, and Alejandro Ribeiro. 201
 <p>이러한 직관에서 아래와 같이 시계열의 정상성에 대한 세번째 정의를 이해할 수 있다.</p>
 <p>(정의3) <span class="math inline">\({\bf x}\)</span>가 정상시계열이다. <span class="math inline">\(\overset{def}{\Longleftrightarrow}\)</span> <span class="math inline">\({\bf C}_{\bf x}\)</span>는 <span class="math inline">\({\bf DFT}\)</span> 행렬로 대각화 가능하다. (<span class="math inline">\({\bf C}_{\bf x}\)</span>와 <span class="math inline">\({\bf B}\)</span>는 같은 고유벡터 행렬을 가진다.)</p>
 <p>정상시계열에 대한 세가지 정의는 아래와 같이 정상 그래프신호로 확장가능하다.</p>
-<div class="quarto-figure quarto-figure-center page-columns page-full">
-<figure class="figure page-columns page-full">
+<div class="img-fluid quarto-figure quarto-figure-center">
+<figure class="figure">
 <p><img src="2022-12-26-Chap-12.2_files/figure-html/39a41707-b306-4492-a0b5-e02b4d7d7591-1-fcc7a188-7a4c-4e41-b896-f1b6a1f6f87d.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption margin-caption">그림1: 교재에서 긁어온 다이어그램.</figcaption>
+<figcaption>그림1: 교재에서 긁어온 다이어그램.</figcaption>
 </figure>
 </div>
 <p>차이점은 Wold’s theorem 이 성립하기 위해서 <span class="math inline">\(\lambda_i \neq \lambda_j, \forall i\neq j\)</span> 조건이 추가된다는 것이다.</p>
@@ -594,15 +637,28 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
     }
     stripColumnClz(note)
-    if (id.startsWith('sec-')) {
+    if (id === null || id.startsWith('sec-')) {
       // Special case sections, only their first couple elements
       const container = document.createElement("div");
       if (note.children && note.children.length > 2) {
-        for (let i = 0; i < 2; i++) {
-          container.appendChild(note.children[i].cloneNode(true));
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
         }
         return container.innerHTML
       } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
         return note.innerHTML;
       }
     } else {
@@ -610,6 +666,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const anchorLink = note.querySelector('a.anchorjs-link');
       if (anchorLink) {
         anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
       }
       return note.innerHTML;
     }
@@ -653,6 +712,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
       }
     }, function(instance) {
     });
@@ -728,7 +810,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     window.addEventListener(
       "resize",
       throttle(() => {
-        console.log("RESIZE");
         elRect = undefined;
         if (selectedAnnoteEl) {
           selectCodeLines(selectedAnnoteEl);
