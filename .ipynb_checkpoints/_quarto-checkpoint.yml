@@ -38,11 +38,6 @@ website:
       - section: "**Studies**"
         contents:
           - 2_graph.qmd
-      - section: "**Researches**"
-        contents:
-          - 3_ittgnn.qmd
-          - 3_gode.qmd
-          - 3_hcam.qmd
       
 format:
   html:
