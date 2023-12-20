@@ -24,6 +24,9 @@ website:
         href: https://seoyeonc.github.io/HCAM_blog/
       - text: ITTGNN
         href: https://seoyeonc.github.io/ITTGNN_blog/
+      - text: Julia
+        href: https://seoyeonc.github.io/julia/
+        
         
     right:
       - about.qmd
