@@ -41,6 +41,8 @@ website:
       - section: "**Studies**"
         contents:
           - 2_graph.qmd
+          - 2_ept.qmd
+          - 2_gpt.qmd
       
 format:
   html:
