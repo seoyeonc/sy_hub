@@ -9,7 +9,7 @@
 <meta name="author" content="SEOYEON CHOI">
 <meta name="dcterms.date" content="2024-01-07">
 
-<title>Seoyeon’s Blog - [EPT]Review</title>
+<title>Seoyeon’s Blog - [EPT]Review(EPT: An R package for ensemble patch transform)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -144,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[EPT]Review</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[EPT]Review(EPT: An R package for ensemble patch transform)</li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -157,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">[EPT]Review</h1>
+      <h1 class="title">[EPT]Review(EPT: An R package for ensemble patch transform)</h1>
                       </div>
   </div>
     
@@ -242,7 +276,38 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<p>ss</p>
+<p><a href="https://cran.r-project.org/web/packages/EPT/EPT.pdf">R</a></p>
+<div id="49afb748-0ec9-4926-9343-fa9242c01377" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.</span>(EPT)</span></code></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ERROR: Error in library(EPT): there is no package called ‘EPT’</code></pre>
+</div>
+</div>
+<p>다변량 신호의 다중척도 분석을 위한 새로운 방법론 제시</p>
+<p>one-dimensional signals 및 two-dimensional images에 대한 다중척도 분석을 위해 제안</p>
+<ul>
+<li>patch process
+<ul>
+<li>다양한 패치 크기에 따라 데이터의 로컬 특성을 추출하고 요약하는 역할</li>
+</ul></li>
+<li>ensemble process.
+<ul>
+<li>신호의 시간적 변동을 효과적으로 나타내기 위해 패치의 위치를 변환</li>
+<li>원래 다중 스케일 특성을 가지고 있음.</li>
+</ul></li>
+</ul>
+<p>두 프로세스로 구성됌.</p>
+<p><em>다양한 필터(비선형 필터 포함)를 디자인할 수 있어 로컬 특성 및 스케일 패턴을 식별하는 데 유용</em></p>
+<p><em>유연한 필터 디자인을 통해 신호 분해에 적용 가능</em></p>
+<p>R packag 내용</p>
+<ul>
+<li><code>eptransf()</code></li>
+<li><code>meptransf()</code></li>
+<li><code>eptplot()</code></li>
+<li><code>eptdecomp()</code></li>
+<li><code>eptransf2d()</code></li>
+<li><code>meptransf2d()</code></li>
+</ul>
 
 
 
