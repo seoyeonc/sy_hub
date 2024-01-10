@@ -2,6 +2,7 @@
   {
     "listing": "/1_note.html",
     "items": [
+      "/posts/1_Note/2024-01-10-DSTBX2023(5).html",
       "/posts/1_Note/2024-01-05-DSTBX2023(4).html",
       "/posts/1_Note/2024-01-04-DSTBX2023(3).html",
       "/posts/1_Note/2024-01-03-DSTBX2023(2).html",
@@ -16,15 +17,10 @@
     ]
   },
   {
-    "listing": "/2_gpt.html",
-    "items": [
-      "/posts/2_Studies/GPT/2024-01-03-GPT_study.html"
-    ]
-  },
-  {
     "listing": "/index.html",
     "items": [
       "/posts/2_Studies/GPT/2024-01-03-GPT_study.html",
+      "/posts/1_Note/2024-01-10-DSTBX2023(5).html",
       "/posts/2_Studies/EPT/2024-01-07-EPT_review.html",
       "/posts/1_Note/2024-01-05-DSTBX2023(4).html",
       "/posts/1_Note/2024-01-04-DSTBX2023(3).html",
@@ -45,6 +41,12 @@
       "/posts/1_Note/2022-04-03-(5주차) 4월2일.html",
       "/posts/1_Note/2022-03-28-(4주차) 3월28일.html",
       "/posts/1_Note/2019-04-26-퓨리에 변환.html"
+    ]
+  },
+  {
+    "listing": "/2_gpt.html",
+    "items": [
+      "/posts/2_Studies/GPT/2024-01-03-GPT_study.html"
     ]
   },
   {
