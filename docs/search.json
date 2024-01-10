@@ -11,7 +11,7 @@
     "href": "1_note.html",
     "title": "Note",
     "section": "",
-    "text": "Date\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nJan 10, 2024\n\n\nDay5: 실습64 - 실습??\n\n\n최규빈 \n\n\n\n\nJan 5, 2024\n\n\nDSTBX2023(4)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 4, 2024\n\n\nDSTBX2023(3)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 3, 2024\n\n\nDSTBX2023(2)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 2, 2024\n\n\nDSTBX2023(1)\n\n\nSEOYEON CHOI\n\n\n\n\nDec 31, 2023\n\n\n[Note] Tips of Linux, Git and Blog\n\n\nSEOYEON CHOI\n\n\n\n\nNov 22, 2023\n\n\n[Note] DGX station 설정_메모 추가\n\n\nGUEBIN CHOI\n\n\n\n\nDec 31, 2022\n\n\nStudy for Spaces\n\n\nSEOYEON CHOI\n\n\n\n\nDec 7, 2022\n\n\nA1: 깊은복사와 얕은복사 (12주차)\n\n\nSEOYEON CHOI\n\n\n\n\nApr 4, 2022\n\n\nIntroduction to Python 5wk\n\n\nSEOYEON CHOI\n\n\n\n\nMar 23, 2022\n\n\nIntroduction to Python 4wk\n\n\nSEOYEON CHOI\n\n\n\n\nApr 26, 2019\n\n\n[Essays] 퓨리에 변환\n\n\n신록예찬 \n\n\n\n\n\nNo matching items",
+    "text": "Date\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nJan 10, 2024\n\n\nDSTBX2023(5)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 5, 2024\n\n\nDSTBX2023(4)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 4, 2024\n\n\nDSTBX2023(3)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 3, 2024\n\n\nDSTBX2023(2)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 2, 2024\n\n\nDSTBX2023(1)\n\n\nSEOYEON CHOI\n\n\n\n\nDec 31, 2023\n\n\n[Note] Tips of Linux, Git and Blog\n\n\nSEOYEON CHOI\n\n\n\n\nNov 22, 2023\n\n\n[Note] DGX station 설정_메모 추가\n\n\nGUEBIN CHOI\n\n\n\n\nDec 31, 2022\n\n\nStudy for Spaces\n\n\nSEOYEON CHOI\n\n\n\n\nDec 7, 2022\n\n\nA1: 깊은복사와 얕은복사 (12주차)\n\n\nSEOYEON CHOI\n\n\n\n\nApr 4, 2022\n\n\nIntroduction to Python 5wk\n\n\nSEOYEON CHOI\n\n\n\n\nMar 23, 2022\n\n\nIntroduction to Python 4wk\n\n\nSEOYEON CHOI\n\n\n\n\nApr 26, 2019\n\n\n[Essays] 퓨리에 변환\n\n\n신록예찬 \n\n\n\n\n\nNo matching items",
     "crumbs": [
       "Lectures_ing",
       "**Note**"
@@ -391,42 +391,42 @@
   {
     "objectID": "posts/1_Note/2024-01-10-DSTBX2023(5).html",
     "href": "posts/1_Note/2024-01-10-DSTBX2023(5).html",
-    "title": "Day5: 실습64 - 실습??",
+    "title": "DSTBX2023(5)",
     "section": "",
     "text": "ref: https://rocker-project.org/\n- 다커실행파일 다운로드\n\nhttps://docs.docker.com/desktop/install/windows-install/\n\n- docker 이미지 다운로드\n방법1\ndocker pull rocker/rstudio\n방법2\n\n사실 잘 몰라요 ㅎㅎ\n\n- 다운받은 이미지 확인하기\n방법1\ndocker images\n방법2\n\nGUI\n\n- 이미지에서 컨테이너생성 (컨테이너는 인스턴스라고 생각하자..)\n방법1\ndocker run -ti -e PASSWORD=\"jbnu\" -p 8787:8787 rocker/rstudio\n방법2\n\nGUI\n\n\n\n\n\n\n\nNote\n\n\n\nrocker/rstudio\n이게 이미지\n비밀번호는 큰 따옴표로 하거나 아예 안 쓰기\n\n\n\n\n\n\n\n\nTip\n\n\n\n이미지는 python의 class\n컨테이너는 python의 함수\n\n\n\n\n\n\n\n\nTip\n\n\n\ndocker run: Docker 컨테이너를 실행하는 명령어.\n-ti: 터미널 상호작용을 가능하게 하는 옵션으로, 이 옵션을 사용하면 컨테이너가 실행되면서 사용자와 상호작용할 수 있습니다.\n-e PASSWORD=“jbnu”: 컨테이너 내부에서 사용할 RStudio Server의 비밀번호를 설정하는 옵션입니다. 이 예제에서는 “jbnu”로 비밀번호를 설정했습니다.\n-p 8787:8787: 호스트 머신의 8787 포트를 컨테이너의 8787 포트와 연결하는 옵션입니다. RStudio Server는 기본적으로 8787 포트에서 실행됩니다.\nrocker/rstudio: Docker 이미지의 이름입니다. rocker는 R언어 및 RStudio를 설치하고 설정한 이미지입니다.\n\n\n\n\n\n\n\n\nTip\n\n\n\ndocker ps -a\n실행했던 ( 과거의 히스토리까지) 모든 결과 보여줌\ndocker ps\n현재 실행하는 컨테이너 보여줌\ndocker images\n현재 있는 이미지 보여줌\n\n\n\n\n\n\n\n\nTip\n\n\n\n이미지의 컨테이너에 들어가서 r 작업하면\n컨테이너 꺼도 다시 시작하면 히스토리가 남아있음\n–&gt; 이 말은 컨테이너 끄고 컨테이너 삭제해야 이미지도 삭제할 수 있다는 뜻\n\n\n\n\n\n\n\n\nNote\n\n\n\n어떻게 돌아가느냐 - 컨테이너에 패키지 다 설치해서 그걸 share 해 그 share 한 공간에서 추가 패키지 설치하든 알아서 사용 가능\n\n\n- Rstudio 사용"
   },
   {
     "objectID": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습64-docker로-rstudio-실행하기실습실-컴퓨터",
     "href": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습64-docker로-rstudio-실행하기실습실-컴퓨터",
-    "title": "Day5: 실습64 - 실습??",
+    "title": "DSTBX2023(5)",
     "section": "",
     "text": "ref: https://rocker-project.org/\n- 다커실행파일 다운로드\n\nhttps://docs.docker.com/desktop/install/windows-install/\n\n- docker 이미지 다운로드\n방법1\ndocker pull rocker/rstudio\n방법2\n\n사실 잘 몰라요 ㅎㅎ\n\n- 다운받은 이미지 확인하기\n방법1\ndocker images\n방법2\n\nGUI\n\n- 이미지에서 컨테이너생성 (컨테이너는 인스턴스라고 생각하자..)\n방법1\ndocker run -ti -e PASSWORD=\"jbnu\" -p 8787:8787 rocker/rstudio\n방법2\n\nGUI\n\n\n\n\n\n\n\nNote\n\n\n\nrocker/rstudio\n이게 이미지\n비밀번호는 큰 따옴표로 하거나 아예 안 쓰기\n\n\n\n\n\n\n\n\nTip\n\n\n\n이미지는 python의 class\n컨테이너는 python의 함수\n\n\n\n\n\n\n\n\nTip\n\n\n\ndocker run: Docker 컨테이너를 실행하는 명령어.\n-ti: 터미널 상호작용을 가능하게 하는 옵션으로, 이 옵션을 사용하면 컨테이너가 실행되면서 사용자와 상호작용할 수 있습니다.\n-e PASSWORD=“jbnu”: 컨테이너 내부에서 사용할 RStudio Server의 비밀번호를 설정하는 옵션입니다. 이 예제에서는 “jbnu”로 비밀번호를 설정했습니다.\n-p 8787:8787: 호스트 머신의 8787 포트를 컨테이너의 8787 포트와 연결하는 옵션입니다. RStudio Server는 기본적으로 8787 포트에서 실행됩니다.\nrocker/rstudio: Docker 이미지의 이름입니다. rocker는 R언어 및 RStudio를 설치하고 설정한 이미지입니다.\n\n\n\n\n\n\n\n\nTip\n\n\n\ndocker ps -a\n실행했던 ( 과거의 히스토리까지) 모든 결과 보여줌\ndocker ps\n현재 실행하는 컨테이너 보여줌\ndocker images\n현재 있는 이미지 보여줌\n\n\n\n\n\n\n\n\nTip\n\n\n\n이미지의 컨테이너에 들어가서 r 작업하면\n컨테이너 꺼도 다시 시작하면 히스토리가 남아있음\n–&gt; 이 말은 컨테이너 끄고 컨테이너 삭제해야 이미지도 삭제할 수 있다는 뜻\n\n\n\n\n\n\n\n\nNote\n\n\n\n어떻게 돌아가느냐 - 컨테이너에 패키지 다 설치해서 그걸 share 해 그 share 한 공간에서 추가 패키지 설치하든 알아서 사용 가능\n\n\n- Rstudio 사용"
   },
   {
     "objectID": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습65-docker로-ubuntu-실행하기실습실-컴퓨터",
     "href": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습65-docker로-ubuntu-실행하기실습실-컴퓨터",
-    "title": "Day5: 실습64 - 실습??",
+    "title": "DSTBX2023(5)",
     "section": "실습65: docker로 ubuntu 실행하기(실습실 컴퓨터)",
     "text": "실습65: docker로 ubuntu 실행하기(실습실 컴퓨터)\n- 우분투 이미지 다운로드\ndocker pull ubuntu\n- 실행\ndocker run -ti -d -t ubuntu /bin/bash\ndocker exec -ti {넣고 싶은 name 쓰기} bash"
   },
   {
     "objectID": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습65-docker로-ubuntu-실행하기-183컴퓨터",
     "href": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습65-docker로-ubuntu-실행하기-183컴퓨터",
-    "title": "Day5: 실습64 - 실습??",
+    "title": "DSTBX2023(5)",
     "section": "실습65: docker로 ubuntu 실행하기 (183컴퓨터)",
     "text": "실습65: docker로 ubuntu 실행하기 (183컴퓨터)\n- 우분투안에서 우분투 실행\ndocker run -ti -d -t -p ?????:????? --name guebin ubuntu /bin/bash\ndocker exec -ti guebin bash \n- 아래를 수행\npasswd root\napt update \napt install gcc\napt install build-essential\napt install vim"
   },
   {
     "objectID": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습66-코드스페이스-사용하기",
     "href": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습66-코드스페이스-사용하기",
-    "title": "Day5: 실습64 - 실습??",
+    "title": "DSTBX2023(5)",
     "section": "실습66: 코드스페이스 사용하기",
     "text": "실습66: 코드스페이스 사용하기\n- 아래를 이용하여 코드스페이스 설치\napt-get install curl\ncurl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz\ntar -xf vscode_cli.tar.gz\n- 아래를 이용하여 초기설정\n./code tunnel \n\n컴퓨터 이름 잘 써야해요…\n외워야 하는 이름이에요..\n\n\n\n\n\n\n\nNote\n\n\n\n두 개 선택하라고 나오는데 여기서 Github Account 선택하고 터미널에서 나온 코드 입력\n\n\n- 코드스페이스 평생켜놓기\nnohup ./code tunnel &gt; /dev/null 2&gt;&1 &\n- 코드스페이스의 장점\n\n별도의 포트를 먹지 않는다.\n하나의 창에서 모든 가상환경을 동시에 이용할 수 있다. &lt;– 제가 이거때문에 씁니당..\n보안접속이 가능하다."
   },
   {
     "objectID": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습67-rstudio-사용하기",
     "href": "posts/1_Note/2024-01-10-DSTBX2023(5).html#실습67-rstudio-사용하기",
-    "title": "Day5: 실습64 - 실습??",
+    "title": "DSTBX2023(5)",
     "section": "실습67: Rstudio 사용하기",
     "text": "실습67: Rstudio 사용하기\n- 아래를 이용하여 Rstudio를 설치 (base환경인지 r환경인지는 무의미)\nsudo apt-get install gdebi-core\nwget https://download2.rstudio.org/server/jammy/amd64/rstudio-server-2022.12.0-353-amd64.deb\nsudo gdebi rstudio-server-2022.12.0-353-amd64.deb\n- grst가 만든 rstudio-server-conda를 클론\ngit clone https://github.com/grst/rstudio-server-conda.git\n\n\n\n\n\n\nNote\n\n\n\nlocal 파일 들어가서\nstart_rstudio_server.sh 를 vi로 보기\n--www-port=$1 \\\n를\n--www-port=8888\n원하는 주소로 설정\n그 밑에\n--auth-minimum-user-id=0\n추가\n\n\n- 내용을 수정\n{.bash filename= \"~/rstudio-server-conda/local/start_rstudio_server.sh\"} ... blalba ... /usr/lib/rstudio-server/bin/rserver --server-daemonize=0 \\   --www-port=????? \\ ### &lt;--- 여기 수정!!!!!   --auth-minimum-user-id=0 \\ ### &lt;--- 여기 추가!!!!!   --secure-cookie-key-file=$COOKIE_KEY_PATH \\   --server-pid-file=\"$CWD/rstudio-server.pid\" \\   --server-data-dir=\"$CWD/rstudio-server\" \\   --rsession-which-r=$(which R) \\   --rsession-ld-library-path=$CONDA_PREFIX/lib \\   --rsession-path=\"$CWD/rsession.sh\" \\   --server-user $USER \\   --database-config-file \"$CWD/database.conf\" \\   $REVOCATION_LIST_PAR\n- start_rstudio_server.sh를 실행"
   },
@@ -645,7 +645,7 @@
     "href": "index.html",
     "title": "Seoyeon",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nMar 1, 2024\n\n\n[GPT] Models\n\n\nSEOYEON CHOI\n\n\n\n\nJan 10, 2024\n\n\nDay5: 실습64 - 실습??\n\n\n최규빈 \n\n\n\n\nJan 7, 2024\n\n\n[EPT]Review(EPT: An R package for ensemble patch transform)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 5, 2024\n\n\nDSTBX2023(4)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 4, 2024\n\n\nDSTBX2023(3)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 3, 2024\n\n\nDSTBX2023(2)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 2, 2024\n\n\nDSTBX2023(1)\n\n\nSEOYEON CHOI\n\n\n\n\nDec 31, 2023\n\n\n[Note] Tips of Linux, Git and Blog\n\n\nSEOYEON CHOI\n\n\n\n\nNov 22, 2023\n\n\n[Note] DGX station 설정_메모 추가\n\n\nGUEBIN CHOI\n\n\n\n\nJul 2, 2023\n\n\nGraph Shift Operator\n\n\nSEOYEON CHOI\n\n\n\n\nJul 1, 2023\n\n\nNon-Euclidean vs Euclidean\n\n\nSEOYEON CHOI\n\n\n\n\nJun 30, 2023\n\n\nGraph Signal\n\n\nSEOYEON CHOI\n\n\n\n\nJun 30, 2023\n\n\nRegular Graph\n\n\nSEOYEON CHOI\n\n\n\n\nJan 15, 2023\n\n\n[CGSP] Chap 12.4: Node Subsampling for PSD Estimation\n\n\n신록예찬 \n\n\n\n\nDec 31, 2022\n\n\nStudy for Spaces\n\n\nSEOYEON CHOI\n\n\n\n\nDec 27, 2022\n\n\n[CGSP] Chap 12.2 ~ 3: Power Spectral Density and its Estimators\n\n\n신록예찬 \n\n\n\n\nDec 26, 2022\n\n\n[CGSP] Chap 12.2: Weakly Stationary Graph Processes\n\n\n신록예찬 \n\n\n\n\nDec 24, 2022\n\n\n[CGSP] Chap 8.3: Discrete Fourier Transform\n\n\n신록예찬 \n\n\n\n\nDec 7, 2022\n\n\nA1: 깊은복사와 얕은복사 (12주차)\n\n\nSEOYEON CHOI\n\n\n\n\nApr 4, 2022\n\n\nIntroduction to Python 5wk\n\n\nSEOYEON CHOI\n\n\n\n\nMar 23, 2022\n\n\nIntroduction to Python 4wk\n\n\nSEOYEON CHOI\n\n\n\n\nApr 26, 2019\n\n\n[Essays] 퓨리에 변환\n\n\n신록예찬 \n\n\n\n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Date - Oldest\n        \n         \n          Date - Newest\n        \n         \n          Title\n        \n         \n          Author\n        \n     \n  \n    \n      \n      \n    \n\n\n\n\n\nDate\n\n\nTitle\n\n\nAuthor\n\n\n\n\n\n\nMar 1, 2024\n\n\n[GPT] Models\n\n\nSEOYEON CHOI\n\n\n\n\nJan 10, 2024\n\n\nDSTBX2023(5)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 7, 2024\n\n\n[EPT]Review(EPT: An R package for ensemble patch transform)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 5, 2024\n\n\nDSTBX2023(4)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 4, 2024\n\n\nDSTBX2023(3)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 3, 2024\n\n\nDSTBX2023(2)\n\n\nSEOYEON CHOI\n\n\n\n\nJan 2, 2024\n\n\nDSTBX2023(1)\n\n\nSEOYEON CHOI\n\n\n\n\nDec 31, 2023\n\n\n[Note] Tips of Linux, Git and Blog\n\n\nSEOYEON CHOI\n\n\n\n\nNov 22, 2023\n\n\n[Note] DGX station 설정_메모 추가\n\n\nGUEBIN CHOI\n\n\n\n\nJul 2, 2023\n\n\nGraph Shift Operator\n\n\nSEOYEON CHOI\n\n\n\n\nJul 1, 2023\n\n\nNon-Euclidean vs Euclidean\n\n\nSEOYEON CHOI\n\n\n\n\nJun 30, 2023\n\n\nGraph Signal\n\n\nSEOYEON CHOI\n\n\n\n\nJun 30, 2023\n\n\nRegular Graph\n\n\nSEOYEON CHOI\n\n\n\n\nJan 15, 2023\n\n\n[CGSP] Chap 12.4: Node Subsampling for PSD Estimation\n\n\n신록예찬 \n\n\n\n\nDec 31, 2022\n\n\nStudy for Spaces\n\n\nSEOYEON CHOI\n\n\n\n\nDec 27, 2022\n\n\n[CGSP] Chap 12.2 ~ 3: Power Spectral Density and its Estimators\n\n\n신록예찬 \n\n\n\n\nDec 26, 2022\n\n\n[CGSP] Chap 12.2: Weakly Stationary Graph Processes\n\n\n신록예찬 \n\n\n\n\nDec 24, 2022\n\n\n[CGSP] Chap 8.3: Discrete Fourier Transform\n\n\n신록예찬 \n\n\n\n\nDec 7, 2022\n\n\nA1: 깊은복사와 얕은복사 (12주차)\n\n\nSEOYEON CHOI\n\n\n\n\nApr 4, 2022\n\n\nIntroduction to Python 5wk\n\n\nSEOYEON CHOI\n\n\n\n\nMar 23, 2022\n\n\nIntroduction to Python 4wk\n\n\nSEOYEON CHOI\n\n\n\n\nApr 26, 2019\n\n\n[Essays] 퓨리에 변환\n\n\n신록예찬 \n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "2_gpt.html",
