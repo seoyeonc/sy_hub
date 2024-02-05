@@ -1,7 +1,7 @@
 ---
-title: "GPT"
+title: "Related to STGCN"
 listing:
-  contents: posts/2_Studies/GPT
+  contents: posts/2_Studies/STGCN
   sort: "date desc"
   type: table
   categories: false

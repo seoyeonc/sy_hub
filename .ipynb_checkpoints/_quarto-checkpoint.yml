@@ -42,7 +42,7 @@ website:
         contents:
           - 2_graph.qmd
           - 2_ept.qmd
-          - 2_gpt.qmd
+          - 2_stgcn.qmd
       
 format:
   html:
