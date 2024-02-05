@@ -18,15 +18,15 @@
     ]
   },
   {
-    "listing": "/2_gpt.html",
+    "listing": "/2_stgcn.html",
     "items": [
-      "/posts/2_Studies/GPT/2024-01-03-GPT_study.html"
+      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html"
     ]
   },
   {
     "listing": "/index.html",
     "items": [
-      "/posts/2_Studies/GPT/2024-01-03-GPT_study.html",
+      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html",
       "/posts/1_Note/2024-01-12-DSTBX2023(6).html",
       "/posts/1_Note/2024-01-10-DSTBX2023(5).html",
       "/posts/2_Studies/EPT/2024-01-07-EPT_review.html",
