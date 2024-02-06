@@ -389,13 +389,159 @@ Note
 <p>다음 예제에서 확률 변수 <span class="math inline">\(\bf{X}\)</span>의 support(모든 값?)가 두 개의 반 평면으로 나뉜다.(x1&gt;0,x1&lt;=0인듯?)</p>
 <p><span style="background-color:#9966FF"> <strong>EXAMPLE 2.2.</strong> </span> <em>Two principal points.</em> Let <span class="math inline">\(\bf{X} = (X_1, X_2)' \sim N_2(0, I_2)\)</span>. Note that <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([X_1|X_1 \ge 0] = \sqrt{2/\pi}\)</span>. Let <span class="math inline">\(\bf{Y} = (-\sqrt{2/\pi}, 0)'\)</span> if <span class="math inline">\(X_1 &lt; 0\)</span> and <span class="math inline">\(\bf{Y} = (\sqrt{2/\pi}, 0)'\)</span> if <span class="math inline">\(X_1 &gt; 0\)</span>. Then <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>.</p>
 <p><span class="math inline">\(\bf{Y} = \begin{cases}(-\sqrt{\frac{2}{\pi}}, 0)' &amp; if X_1 &lt; 0 \\ (\sqrt{\frac{2}{\pi}}, 0)' &amp; if X_1 \ge 0 \end{cases}\)</span>, <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([X_1|X_1 \ge 0] = \sqrt{\frac{2}{\pi}}\)</span></p>
+<div id="30449b01-5c0c-4c18-b9d9-c49e9ae9043f" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Given values</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>mean <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>covariance_matrix <span class="op">=</span> np.eye(<span class="dv">2</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>conditional_expectation_positive <span class="op">=</span> np.sqrt(<span class="dv">2</span><span class="op">/</span>np.pi)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the random vector X from a bivariate normal distribution</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.random.multivariate_normal(mean, covariance_matrix, size<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the points Y based on the conditions mentioned in the example</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Y_positive <span class="op">=</span> np.array([np.sqrt(<span class="dv">2</span><span class="op">/</span>np.pi), <span class="dv">0</span>])</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Y_negative <span class="op">=</span> np.array([<span class="op">-</span>np.sqrt(<span class="dv">2</span><span class="op">/</span>np.pi), <span class="dv">0</span>])</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the points X and Y</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(X[:, <span class="dv">0</span>], X[:, <span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.5</span>, label<span class="op">=</span><span class="st">'X ~ N(0, I)'</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.scatter(Y_positive[<span class="dv">0</span>], Y_positive[<span class="dv">1</span>], color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Y (X1 &gt;= 0)'</span>, marker<span class="op">=</span><span class="st">'o'</span>, s<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.scatter(Y_negative[<span class="dv">0</span>], Y_negative[<span class="dv">1</span>], color<span class="op">=</span><span class="st">'blue'</span>, label<span class="op">=</span><span class="st">'Y (X1 &lt; 0)'</span>, marker<span class="op">=</span><span class="st">'o'</span>, s<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the conditional expectation line</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plt.axvline(x<span class="op">=</span>conditional_expectation_positive, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'green'</span>, label<span class="op">=</span><span class="st">'E[X1|X1 &gt;= 0]'</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Set labels and legend</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Example 2.2: Two Principal Points'</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X1'</span>)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'X2'</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2024-02-05-Self-Consistency Review_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>See Section 6 for a definition of principal points, and see Figure 7 for a generalization of this example.</p>
-<div id="45f4efb6-8e08-41c6-b288-1a955074f72d" class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>span style<span class="op">=</span><span class="st">"background-color:#9966FF"</span><span class="op">&gt;</span> <span class="op">&lt;/</span>span<span class="op">&gt;</span></span></code></pre></div>
+<div id="0385748b-bddb-4fcd-9f68-7027fef0e1bb" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_points_on_circle(k):</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span><span class="op">*</span>np.pi, k, endpoint<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.cos(theta)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.sin(theta)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x, y</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_circle_points_subplot(k_values):</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    fig, axs <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">10</span>))</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    fig.suptitle(<span class="st">'Figure 7'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i, k <span class="kw">in</span> <span class="bu">enumerate</span>(k_values, <span class="dv">1</span>):</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        x, y <span class="op">=</span> generate_points_on_circle(k)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        ax <span class="op">=</span> axs[(i<span class="op">-</span><span class="dv">1</span>)<span class="op">//</span><span class="dv">3</span>, (i<span class="op">-</span><span class="dv">1</span>)<span class="op">%</span><span class="dv">3</span>]</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Plot the limiting circle</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        theta_limiting <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span><span class="op">*</span>np.pi, <span class="dv">1000</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        x_limiting <span class="op">=</span> np.cos(theta_limiting)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        y_limiting <span class="op">=</span> np.sin(theta_limiting)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        ax.plot(x_limiting, y_limiting, linestyle<span class="op">=</span><span class="st">'--'</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Plot points for current k value</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        ax.scatter(x, y, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        ax.set_title(<span class="ss">f'k=</span><span class="sc">{</span>k<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>        ax.set_xticks([])  <span class="co"># Remove x-axis ticks</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        ax.set_yticks([])  <span class="co"># Remove y-axis ticks</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>        ax.legend().set_visible(<span class="va">False</span>)  <span class="co"># Remove legend</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>        ax.grid(<span class="va">False</span>)  <span class="co"># Remove grid lines</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>        ax.axis(<span class="st">'equal'</span>)  <span class="co"># Ensure equal scaling for X and Y axes</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout(rect<span class="op">=</span>[<span class="dv">0</span>, <span class="fl">0.03</span>, <span class="dv">1</span>, <span class="fl">0.95</span>])</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Set of k values</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>k_values <span class="op">=</span> [<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>]</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the circles and points using subplot with removed legend, grid, and axis lines</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>plot_circle_points_subplot(k_values)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.
+No artists with labels found to put in legend.  Note that artists whose label start with an underscore are ignored when legend() is called with no argument.</code></pre>
 </div>
-<div id="ff036d02-4623-4911-b16f-4652f7b997b0" class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">&lt;</span>span style<span class="op">=</span><span class="st">"background-color:#9966FF"</span><span class="op">&gt;</span> <span class="op">&lt;/</span>span<span class="op">&gt;</span></span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2024-02-05-Self-Consistency Review_files/figure-html/cell-3-output-2.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
+</div>
+</div>
+<p>The preceding example illustrates the purpose of self-consistency quite well.</p>
+<p>다음 예제는 self-consistency의 목적을 잘 나타낸다.</p>
+<p>It is actually an application of our first lemma.</p>
+<p>첫번째 lemma를 응용한 것이다.</p>
+<p><span style="background-color:#E0CCEF"> <strong>Lemma 2.1.</strong> </span> <em>For a <span class="math inline">\(p\)</span>-variate random vector</em> <span class="math inline">\(\bf{X}\)</span>, <em>suppose</em> <span class="math inline">\(\mathcal{S} \subset \mathbb{R}^p\)</span> <em>is a measurable set such that</em> <span class="math inline">\(\forall \bf{y} \in \mathcal{S}, \bf{y} = \cal{E}[\bf{X} | \bf{X} \in \mathbb{D_y}]\)</span>, <em>where</em> <span class="math inline">\(\mathbb{D}_y\)</span> <em>is the domain of attraction of</em> <span class="math inline">\(\bf{y}\)</span>, <em>that is,</em> <span class="math inline">\(\mathbb{D}_y = \{\bf{x} \in \mathbb{R}^p: ||\bf{x} - \bf{y}|| &lt; ||\bf{x} - \bf{y}^*||, \forall \bf{y}^* \in \cal{s} \}\)</span>.</p>
+<p>p변량 랜덤 벡터 X에 대해서 p차원의 실수 집합의 부분집합인 S가 측정 가능한 집합일때, y가 모두 S에 속하고, y에 수렴하는 도메인인 D에 X가 속하는 조건부 기댓값은 y와 같다.</p>
+<p>x는 p차원의 실수집합에 속하고, p차원의 실수집합 p차원의 실수집합에 속하는 모든 y * 에 대해 x,y 의 거리가 x,y * 의 거리보다 짧다면, x는 Dy에 속한다.</p>
+<p>Defne <span class="math inline">\(\bf{Y} = \bf{y}\)</span> if <span class="math inline">\(\bf{X} \in \mathbb{D}_y\)</span>: Then <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>.</p>
+<p>X가 y의 domain of attration에 속한다면, Y=y라고 정의하며, Y는 X에 대해 self-consistent 하다.</p>
+<p><span style="background-color:#F5F1F8"> <strong>Proof.</strong> </span> <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X} | \bf{Y}=\bf{y}] =\)</span><span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{X} \in \mathbb{D}_y] = \bf{y}\)</span>.</p>
+<p>In Example 2.2, <span class="math inline">\(\cal{S}\)</span> consists of only two points, and the associated domains of attraction are the half-planes given by <span class="math inline">\(x_1 &lt; 0\)</span> and <span class="math inline">\(x_1 &gt; 0\)</span>.</p>
+<p>예제 2.2에서 S는 두 점으로 구성되어 있고, associated domain of attraction은 x_1&lt;0이거나 x_1&gt;0인 half-plane이다.</p>
+<p>The following three lemmas give elementary properties of self-consistent random vectors.</p>
+<p>다음 세 개의 lemma는 self-consistent한 랜덤 벧터의 기본적인 특성을 제시한다.</p>
+<p><span style="background-color:#E0CCEF"> <strong>Lemma 2.2.</strong> </span> If <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>, then <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([\bf{Y}]=\)</span><span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}]\)</span>.</p>
+<p>X에 대해 Y가 self-consistent하다면, Y의 기댓값은 X의 기댓값과 같다.</p>
+<p><span style="background-color:#F5F1F8"> <strong>Proof.</strong> </span> The lemma follows from <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]]=\)</span><span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}]\)</span></p>
+<p>We now introduce notation for the mean squared error (MSE) of a random vector <span class="math inline">\(\bf{Y}\)</span> for <span class="math inline">\(\bf{X}\)</span>,</p>
+<p><span class="math inline">\(MSE(\bf{Y};\bf{X})=\cal{E}\)</span><span class="math inline">\(||\bf{X}-\bf{Y}||^2\)</span></p>
+<p>The next lemma relates the MSE of a selfconsistent Y for X in terms of their respective covariance matrices.</p>
+<p>다음 lemma는 X에 대해 self-consistent한 Y의 MSE와 관련있는데, 이를 공분산 행렬로 각각 나타낼 것이다.</p>
+<p>Here, <span class="math inline">\(\Psi_\bf{X}\)</span> and <span class="math inline">\(\Psi_\bf{Y}\)</span> denote the covariance matrices of <span class="math inline">\(\bf{X}\)</span> and <span class="math inline">\(\bf{Y}\)</span>, respectively.</p>
+<p>공분산 X,Y를 쓰는 법 각각</p>
+<p><span style="background-color:#E0CCEF"> <strong>Lemma 2.3.</strong> </span> If <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>, then the following hold: (i) <span class="math inline">\(\Psi_\bf{X} \ge \Psi_\bf{Y}\)</span>, that is, <span class="math inline">\(\Psi_{\bf{X}} - \Psi_{\bf{Y}}\)</span> is positive semidenite; (ii) <span class="math inline">\(MSE(\bf{Y};\bf{X})= tr(\Psi_{\bf{X}}) - tr(\Psi_\bf{Y})\)</span>:</p>
+<p>See the Appendix for a proof.</p>
+<p><span style="background-color:#F5F05E"> <em>appendix</em> </span> Proof of Lemma 2.3. Without loss of generality assume <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}] = 0\)</span>. For part (i), by self-consistency of <span class="math inline">\(\bf{Y}\)</span> for <span class="math inline">\(\bf{X}\)</span> and using the conditional variance formula <span class="math inline">\(Cov[\bf{X}] = Cov[\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]]+ \cal{E}\)</span><span class="math inline">\([Cov[\bf{X}|\bf{Y}]\)</span>, we have <span class="math inline">\(Cov[\bf{X} = Cov[\bf{Y}] + \cal{E}\)</span><span class="math inline">\([Cov[\bf{X}|\bf{Y}]]\)</span>. But <span class="math inline">\(Cov[\bf{X}|\bf{Y}]\)</span> is positive semidefinite almost surely, and hence (i) follows. For part (ii) we have</p>
+<p><span class="math inline">\(\cal{E}\)</span><span class="math inline">\(||\bf{X}-\bf{Y}||^2 =\)</span> <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}'\bf{X}] -\)</span> <span class="math inline">\(2\cal{E}\)</span><span class="math inline">\([\bf{Y'X}] +\)</span> <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{Y'Y}]\)</span></p>
+<p><span class="math inline">\(= tr(\Psi_\bf{X})-\)</span> <span class="math inline">\(2\cal{E}[\cal{E}\)</span><span class="math inline">\([\bf{Y'X|Y}]]+\)</span> <span class="math inline">\(tr(\Psi_\bf{Y})\)</span>.</p>
+<p><span class="math inline">\(= tr(\Psi_\bf{X})-\)</span> <span class="math inline">\(2\cal{E}\)</span><span class="math inline">\(\bf{Y'}\cal{E}\)</span><span class="math inline">\([\bf{X|Y}]]+\)</span> <span class="math inline">\(tr(\Psi_\bf{Y})\)</span>.</p>
+<p><span class="math inline">\(= tr(\Psi_\bf{X})-\)</span> <span class="math inline">\(2\cal{E}\)</span><span class="math inline">\([\bf{Y'Y}]+\)</span> C <span class="math inline">\(tr(\Psi_\bf{Y})\)</span>.</p>
+<p><span class="math inline">\(= tr(\Psi_\bf{X})-tr(\Psi_\bf{Y})\)</span>.</p>
+<p>It follows from Lemma 2.3 that <span class="math inline">\(Cov[\bf{Y}] =\)</span><span class="math inline">\(Cov[\bf{X}]\)</span> exactly if <span class="math inline">\(Cov[\bf{X}|\bf{Y}] = 0\)</span> a.s., that is, if <span class="math inline">\(\bf{Y} = \bf{X}\)</span> a.s.</p>
+<p>For one-dimensional random variables <span class="math inline">\(\bf{X}\)</span> and <span class="math inline">\(\bf{Y}\)</span>, if <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>, then <span class="math inline">\(var[\bf{Y}]\)</span> <span class="math inline">\(\le var[\bf{X}]\)</span>, with equality exactly if <span class="math inline">\(\bf{Y}\)</span><span class="math inline">\(=\bf{X}\)</span> a.s.</p>
+<p>There is a similarity between the two preceding lemmas and the Rao{Blackwell theorem (Casella and Berger, 1990, page 316), which in a simplied version states the following.</p>
+<p>If <span class="math inline">\(\bf{X}\)</span> is an unbiased estimator of a parameter <span class="math inline">\(\theta\)</span>, and if <span class="math inline">\(\bf{Y}\)</span> is a sufcient statistic for <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]\)</span> is an unbiased estimator of <span class="math inline">\(\theta\)</span>, and <span class="math inline">\(var[\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]\)</span><span class="math inline">\(\ge var[\bf{X}]\)</span>. If <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}\)</span><span class="math inline">\(] = \bf{Y}\)</span>, then Lemma 2.2 gives <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{Y}\)</span><span class="math inline">\(] = \cal{E}\)</span><span class="math inline">\([\bf{X}]\)</span>, and part (i) of Lemma 2.3 gives <span class="math inline">\(var[\bf{Y}]\ge var[\bf{X}]\)</span>.</p>
+<p>The next lemma demonstrates a dimensionalityreducing property of self-consistent random variables.</p>
+<p>Here, <span class="math inline">\(\cal{S}\)</span><span class="math inline">\((\bf{Y})\)</span> denotes the support of <span class="math inline">\(\bf{Y}\)</span>.</p>
+<p><span style="background-color:#E0CCEF"> <strong>Lemma 2.4.</strong> </span> Suppose <span class="math inline">\(\bf{Y}\)</span> is self-consistent for a <span class="math inline">\(p\)</span>-variate random vector <span class="math inline">\(\bf{X}\)</span> with <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}] = 0\)</span>, and <span class="math inline">\(\cal{S}\)</span><span class="math inline">\((\bf{Y})\)</span> is contained in a linear subspace spanned by <span class="math inline">\(q\)</span> orthonormal column vectors in the <span class="math inline">\(p \times q\)</span> matrix A.</p>
+<p>Let <span class="math inline">\(P = AA'\)</span> denote the associated projection matrix.</p>
+<p>Then <span class="math inline">\(\bf{Y}\)</span> and <span class="math inline">\(\bf{A'Y}\)</span> are self-consistent for <span class="math inline">\(\bf{PX}\)</span> and <span class="math inline">\(\bf{A'X}\)</span>, respectively.</p>
+<p>See the Appendix for a proof.</p>
+<p><span style="background-color:#F5F05E"> <em>appendix</em> </span> Proof of Lemma 2.4. Since <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>, <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{PX|Y}] = \bf{P}\cal{E}\)</span><span class="math inline">\([\bf{X|Y}] = \bf{PY} = \bf{Y}\)</span> a.s.</p>
+<p>For a given <span class="math inline">\(y \in \mathbb{R}^p\)</span>, let <span class="math inline">\(w = A^{'}_{1} y\)</span>.</p>
+<p>Then <span class="math inline">\(\{ \bf{Y} = \bf{y} = \{A^{'}_{1} Y = w\}\)</span>.</p>
+<p>Multiplying both sides of the equation <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X|Y = y] = y}\)</span> on the left by <span class="math inline">\(A^{'}_{1}\)</span> gives <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{A^{'}_{1} X|A^{'}_{1} Y} = w] = w\)</span>.</p>
+<p>Lemma 2.4 means that the marginal distribution of a self-consistent <span class="math inline">\(\bf{Y}\)</span> in the linear subspace spanned by its support is self-consistent for the marginal distribution of <span class="math inline">\(\bf{X}\)</span> in the same subspace.</p>
+<p>For example, a self-consistent distribution for <span class="math inline">\(\bf{X}\)</span> whose support consists of a circle (see Section 6) is determined by the bivariate marginal distribution of <span class="math inline">\(\bf{X}\)</span> in the subspace containing the circle.</p>
+<p>In Example 2.2, the linear subspace spanned by the support of <span class="math inline">\(\bf{Y}\)</span> is the <span class="math inline">\(x_1\)</span>-axis, the marginal distribution of <span class="math inline">\(\bf{X}\)</span> in this subspace is standard normal, and the random variable <span class="math inline">\(\bf{Y}_1 = sgn(\bf{X}_1)\sqrt{2/\pi}\)</span> is self-consistent for <span class="math inline">\(\bf{X}_1\)</span>.</p>
+<p>We conclude this section with a general method of finding self-consistent random variables.</p>
+<p><span style="background-color:#E0CCEF"> <strong>Lemma 2.5.</strong> </span> Let <span class="math inline">\(\bf{X}\)</span> and <span class="math inline">\(\bf{Y}\)</span> denote two jointly distributed random vectors, not necessarily of the same dimension.</p>
+<p>Then <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>.</p>
+<p><span style="background-color:#F5F1F8"> <strong>Proof.</strong> </span> Let <span class="math inline">\(\bf{Z} = \cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]\)</span>. Then <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Z}] = \cal{E}[\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]|\bf{Z}] = \cal{E}[\bf{Z}|\bf{Z}] =\bf{Z}\)</span></p>
+<p>In particular, setting <span class="math inline">\(\bf{Y} = \bf{X}\)</span> in Lemma 2.5 gives again self-consistency of <span class="math inline">\(\bf{X}\)</span> for itself.</p>
+<p>If <span class="math inline">\(\bf{Y}\)</span> is independent of <span class="math inline">\(\bf{X}\)</span>, then it follows that <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}]\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>.</p>
 
 
 </section>
