@@ -501,6 +501,24 @@ No artists with labels found to put in legend.  Note that artists whose label st
 <p><span class="math inline">\(= tr(\Psi_\bf{X})-\)</span> <span class="math inline">\(2\cal{E}\)</span><span class="math inline">\([\bf{Y'}\cal{E}\)</span><span class="math inline">\([\bf{X|Y}]]+\)</span> <span class="math inline">\(tr(\Psi_\bf{Y})\)</span>.</p>
 <p><span class="math inline">\(= tr(\Psi_\bf{X})-\)</span> <span class="math inline">\(2\cal{E}\)</span><span class="math inline">\([\bf{Y'Y}]+\)</span> <span class="math inline">\(tr(\Psi_\bf{Y})\)</span>.</p>
 <p><span class="math inline">\(= tr(\Psi_\bf{X})-\)</span><span class="math inline">\(tr(\Psi_\bf{Y})\)</span>.</p>
+<blockquote class="blockquote">
+<p><span class="math inline">\(E||X - Y||^2 = E(XX' - X'Y - Y'X + YY') = E(X^2 - 2Y'X + Y^2) = tr(\Psi_X) - 2 E(E(Y'X|Y)) + tr(\Psi_Y) = tr(\Psi_X) - 2 E(Y'E(X|Y)) + tr(\Psi_Y) = tr(\Psi_X) - 2 E(Y'Y) + tr(\Psi_Y) =tr(\Psi_X) - 2tr(\Psi_Y) + tr(\Psi_Y) =tr(\Psi_X) - tr(\Psi_Y)\)</span></p>
+</blockquote>
+<p><code>-</code> <span class="math inline">\(E(Y'X) = E(E(Y'X|Y))\)</span> -&gt; 전체 기댓값의 법칙</p>
+<div class="callout callout-style-default callout-note callout-titled" title="전체 기댓값의 법칙 증명(이산확률변수에서)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+전체 기댓값의 법칙 증명(이산확률변수에서)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(E(E(X|Y)) = E(X)\)</span> 일때,</p>
+<p><span class="math inline">\(E(E(X|Y)) = \sum_{y \in Y} p(y)E(X|Y) = \sum_{y \in Y} p(y) \sum_{x \in X} p(x|y) x = \sum_{y \in Y} \sum_{x \in X} p(y) p(x|y) x = \sum_{y \in Y} \sum_{x \in X} p(x,y) x = \sum_{x \in X} p(x) x = E(X)\)</span></p>
+</div>
+</div>
 <p>It follows from Lemma 2.3 that <span class="math inline">\(Cov[\bf{Y}] =\)</span><span class="math inline">\(Cov[\bf{X}]\)</span> exactly if <span class="math inline">\(Cov[\bf{X}|\bf{Y}] = 0\)</span> a.s., that is, if <span class="math inline">\(\bf{Y} = \bf{X}\)</span> a.s.</p>
 <p>For one-dimensional random variables <span class="math inline">\(\bf{X}\)</span> and <span class="math inline">\(\bf{Y}\)</span>, if <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>, then <span class="math inline">\(var[\bf{Y}]\)</span> <span class="math inline">\(\le var[\bf{X}]\)</span>, with equality exactly if <span class="math inline">\(\bf{Y}\)</span><span class="math inline">\(=\bf{X}\)</span> a.s.</p>
 <p>There is a similarity between the two preceding lemmas and the Rao{Blackwell theorem (Casella and Berger, 1990, page 316), which in a simplied version states the following.</p>
