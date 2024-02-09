@@ -588,12 +588,54 @@ Projection Matrix 투영행렬
 <p>예를 들어, support가 원으로 구성된 X에 대해 self-consistent한 분포는 원을 포함한 부분 공간에서 X의 이변량 주변 분포에 의해 결정된다.</p>
 <p>In Example 2.2, the linear subspace spanned by the support of <span class="math inline">\(\bf{Y}\)</span> is the <span class="math inline">\(x_1\)</span>-axis, the marginal distribution of <span class="math inline">\(\bf{X}\)</span> in this subspace is standard normal, and the random variable <span class="math inline">\(\bf{Y}_1 = sgn(\bf{X}_1)\sqrt{2/\pi}\)</span> is self-consistent for <span class="math inline">\(\bf{X}_1\)</span>.</p>
 <p>예제 2.2에서 Y의 support에 의해 생성된 선형 부분 공간은 x1축이고, 부분 공간에서 X의 주변 분포는 표준정규분포이고, X1의 값에 따라 바꿔는 확률변수 Y1은 X1에 대해 self-consistent하다.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Sign Function 부호 함수">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Sign Function 부호 함수
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>기호는 <strong>sgn</strong>로 표현, 수의 부호 판별하는 함수</p>
+<p>example 2.2처럼 y를 x를 기준으로 나눠서 함수 쓸때 사용할 수 있음.</p>
+</div>
+</div>
+<div id="a28a6599-1ba3-478a-8ab7-502ad9705bb8" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x 값의 범위 설정</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1000</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 부호 함수 정의</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sign_function(x):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sign(x)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 그래프 그리기</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x, sign_function(x), label<span class="op">=</span><span class="st">'sign(x)'</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'sign(x)'</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">1.5</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="op">-</span><span class="dv">4</span>,<span class="dv">4</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Sign Function'</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2024-02-05-Self-Consistency Review_files/figure-html/cell-4-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>We conclude this section with a general method of finding self-consistent random variables.</p>
 <p><span style="background-color:#E0CCEF"> <strong>Lemma 2.5.</strong> </span> Let <span class="math inline">\(\bf{X}\)</span> and <span class="math inline">\(\bf{Y}\)</span> denote two jointly distributed random vectors, not necessarily of the same dimension.</p>
 <p>Then <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>.</p>
 <p><span style="background-color:#F5F1F8"> <strong>Proof.</strong> </span> Let <span class="math inline">\(\bf{Z} = \cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]\)</span>. Then <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Z}] = \cal{E}[\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]|\bf{Z}] = \cal{E}[\bf{Z}|\bf{Z}] =\bf{Z}\)</span></p>
 <p>In particular, setting <span class="math inline">\(\bf{Y} = \bf{X}\)</span> in Lemma 2.5 gives again self-consistency of <span class="math inline">\(\bf{X}\)</span> for itself.</p>
 <p>If <span class="math inline">\(\bf{Y}\)</span> is independent of <span class="math inline">\(\bf{X}\)</span>, then it follows that <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}]\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>.</p>
+<p>X와 Y가 결합 확률 벡터일때, Y를 고려한 X의 기댓값은 X에 대해 self-consistent 하며, 특히 Y가 X와 같을 때 lemma 2.5에 나온 E(X|Y)는 X에 대해 self-consistent하다는 것에 의해 X는 자기 자신에 대해 self-consistency하다는 것을 얻을 수 있다.</p>
+<p>만약 Y가 X에 대해 독립이라면 X의 기댓값은 X에 대해 self-consistent하다.</p>
 
 
 </section>
