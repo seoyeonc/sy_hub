@@ -501,9 +501,8 @@ No artists with labels found to put in legend.  Note that artists whose label st
 <p><span class="math inline">\(= tr(\Psi_\bf{X})-\)</span> <span class="math inline">\(2\cal{E}\)</span><span class="math inline">\([\bf{Y'}\cal{E}\)</span><span class="math inline">\([\bf{X|Y}]]+\)</span> <span class="math inline">\(tr(\Psi_\bf{Y})\)</span>.</p>
 <p><span class="math inline">\(= tr(\Psi_\bf{X})-\)</span> <span class="math inline">\(2\cal{E}\)</span><span class="math inline">\([\bf{Y'Y}]+\)</span> <span class="math inline">\(tr(\Psi_\bf{Y})\)</span>.</p>
 <p><span class="math inline">\(= tr(\Psi_\bf{X})-\)</span><span class="math inline">\(tr(\Psi_\bf{Y})\)</span>.</p>
-<blockquote class="blockquote">
+<p><em>다시 써보기</em></p>
 <p><span class="math inline">\(E||X - Y||^2 = E(XX' - X'Y - Y'X + YY')\)</span></p>
-</blockquote>
 <p><span class="math inline">\(= E(X^2 - 2Y'X + Y^2)\)</span></p>
 <p><span class="math inline">\(= tr(\Psi_X) - 2 E(E(Y'X|Y)) + tr(\Psi_Y)\)</span></p>
 <p><span class="math inline">\(= tr(\Psi_X) - 2 E(Y'E(X|Y)) + tr(\Psi_Y)\)</span></p>
@@ -551,20 +550,44 @@ No artists with labels found to put in legend.  Note that artists whose label st
 <li>lemma 2.3에서 Y의 분산이 X의 분산보다 작거나 같다고 할 수 있다.</li>
 </ul>
 <p>The next lemma demonstrates a dimensionality reducing property of self-consistent random variables.</p>
+<p>다음 lemma는 self-consistent 확률 변수의 차원적으로 감소하는 특징에 대해 설명한다.</p>
 <p>Here, <span class="math inline">\(\cal{S}\)</span><span class="math inline">\((\bf{Y})\)</span> denotes the support of <span class="math inline">\(\bf{Y}\)</span>.</p>
-<p>S(Y)는 Y의 support를 의미하는데.. support…?</p>
+<p>S(Y)는 Y의 support를 의미</p>
+<blockquote class="blockquote">
+<p>Y의 support = Y의 집합?</p>
+</blockquote>
 <p><span style="background-color:#E0CCEF"> <strong>Lemma 2.4.</strong> </span> Suppose <span class="math inline">\(\bf{Y}\)</span> is self-consistent for a <span class="math inline">\(p\)</span>-variate random vector <span class="math inline">\(\bf{X}\)</span> with <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}] = 0\)</span>, and <span class="math inline">\(\cal{S}\)</span><span class="math inline">\((\bf{Y})\)</span> is contained in a linear subspace spanned by <span class="math inline">\(q\)</span> orthonormal column vectors in the <span class="math inline">\(p \times q\)</span> matrix A.</p>
 <p>X의 기댓값이 0일때, Y를 p 변량 확률 벡터 X에 대해 self-consistent 하다고 가정하면, S(Y) 는 p행 q열 행렬 A에서 q열이 직교한 벡터는 생성된 선형 부분 공간에 포함된다.</p>
 <p>Let <span class="math inline">\(P = AA'\)</span> denote the associated projection matrix.</p>
 <p>Then <span class="math inline">\(\bf{Y}\)</span> and <span class="math inline">\(\bf{A'Y}\)</span> are self-consistent for <span class="math inline">\(\bf{PX}\)</span> and <span class="math inline">\(\bf{A'X}\)</span>, respectively.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Projection Matrix 투영행렬">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Projection Matrix 투영행렬
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>투영행렬의 특징</p>
+<ul>
+<li><span class="math inline">\(P\)</span>는 대칭 행렬</li>
+<li><span class="math inline">\(P^2 = P\)</span></li>
+</ul>
+</div>
+</div>
 <p>See the Appendix for a proof.</p>
 <p><span style="background-color:#F5F05E"> <em>appendix</em> </span> Proof of Lemma 2.4. Since <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>, <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{PX|Y}] = \bf{P}\cal{E}\)</span><span class="math inline">\([\bf{X|Y}] = \bf{PY} = \bf{Y}\)</span> a.s.</p>
-<p>For a given <span class="math inline">\(y \in \mathbb{R}^p\)</span>, let <span class="math inline">\(w = A^{'}_{1} y\)</span>.</p>
-<p>Then <span class="math inline">\(\{ \bf{Y} = \bf{y} = \{A^{'}_{1} Y = w\}\)</span>.</p>
+<p>For a given <span class="math inline">\(\bf{y} \in \mathbb{R}^p\)</span>, let <span class="math inline">\(\bf{w = A^{'}_{1} y}\)</span>.</p>
+<p>Then <span class="math inline">\(\{ \bf{Y} = \bf{y} \} = \{A^{'}_{1} Y = w\}\)</span>.</p>
 <p>Multiplying both sides of the equation <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X|Y = y] = y}\)</span> on the left by <span class="math inline">\(A^{'}_{1}\)</span> gives <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{A^{'}_{1} X|A^{'}_{1} Y} = w] = w\)</span>.</p>
 <p>Lemma 2.4 means that the marginal distribution of a self-consistent <span class="math inline">\(\bf{Y}\)</span> in the linear subspace spanned by its support is self-consistent for the marginal distribution of <span class="math inline">\(\bf{X}\)</span> in the same subspace.</p>
+<p>lemma 2.4가 의미하는 것은 그 support에 의해 생성된 선형 부분공간에서 self-consistent한 Y의 주변 분포는 같은 부분공간에서 X의 주변 분포에 대해 self-consistent한 것이다.</p>
 <p>For example, a self-consistent distribution for <span class="math inline">\(\bf{X}\)</span> whose support consists of a circle (see Section 6) is determined by the bivariate marginal distribution of <span class="math inline">\(\bf{X}\)</span> in the subspace containing the circle.</p>
+<p>예를 들어, support가 원으로 구성된 X에 대해 self-consistent한 분포는 원을 포함한 부분 공간에서 X의 이변량 주변 분포에 의해 결정된다.</p>
 <p>In Example 2.2, the linear subspace spanned by the support of <span class="math inline">\(\bf{Y}\)</span> is the <span class="math inline">\(x_1\)</span>-axis, the marginal distribution of <span class="math inline">\(\bf{X}\)</span> in this subspace is standard normal, and the random variable <span class="math inline">\(\bf{Y}_1 = sgn(\bf{X}_1)\sqrt{2/\pi}\)</span> is self-consistent for <span class="math inline">\(\bf{X}_1\)</span>.</p>
+<p>예제 2.2에서 Y의 support에 의해 생성된 선형 부분 공간은 x1축이고, 부분 공간에서 X의 주변 분포는 표준정규분포이고, X1의 값에 따라 바꿔는 확률변수 Y1은 X1에 대해 self-consistent하다.</p>
 <p>We conclude this section with a general method of finding self-consistent random variables.</p>
 <p><span style="background-color:#E0CCEF"> <strong>Lemma 2.5.</strong> </span> Let <span class="math inline">\(\bf{X}\)</span> and <span class="math inline">\(\bf{Y}\)</span> denote two jointly distributed random vectors, not necessarily of the same dimension.</p>
 <p>Then <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>.</p>
