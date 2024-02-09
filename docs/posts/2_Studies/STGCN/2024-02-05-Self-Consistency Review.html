@@ -558,6 +558,22 @@ No artists with labels found to put in legend.  Note that artists whose label st
 </blockquote>
 <p><span style="background-color:#E0CCEF"> <strong>Lemma 2.4.</strong> </span> Suppose <span class="math inline">\(\bf{Y}\)</span> is self-consistent for a <span class="math inline">\(p\)</span>-variate random vector <span class="math inline">\(\bf{X}\)</span> with <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}] = 0\)</span>, and <span class="math inline">\(\cal{S}\)</span><span class="math inline">\((\bf{Y})\)</span> is contained in a linear subspace spanned by <span class="math inline">\(q\)</span> orthonormal column vectors in the <span class="math inline">\(p \times q\)</span> matrix A.</p>
 <p>X의 기댓값이 0일때, Y를 p 변량 확률 벡터 X에 대해 self-consistent 하다고 가정하면, S(Y) 는 p행 q열 행렬 A에서 q열이 직교한 벡터는 생성된 선형 부분 공간에 포함된다.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\to\)</span> q열이 직교한다 <span class="math inline">\(\to\)</span> q열끼리 곱하면 0이 된다. <span class="math inline">\(\to\)</span> q열은 서로 독립이다.</p>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>선형 공간 linear space = 벡터 공간 vector space</p>
+</blockquote>
 <p>Let <span class="math inline">\(P = AA'\)</span> denote the associated projection matrix.</p>
 <p>Then <span class="math inline">\(\bf{Y}\)</span> and <span class="math inline">\(\bf{A'Y}\)</span> are self-consistent for <span class="math inline">\(\bf{PX}\)</span> and <span class="math inline">\(\bf{A'X}\)</span>, respectively.</p>
 <div class="callout callout-style-default callout-tip callout-titled" title="Projection Matrix 투영행렬">
@@ -599,27 +615,33 @@ Sign Function 부호 함수
 </div>
 <div class="callout-body-container callout-body">
 <p>기호는 <strong>sgn</strong>로 표현, 수의 부호 판별하는 함수</p>
-<p>example 2.2처럼 y를 x를 기준으로 나눠서 함수 쓸때 사용할 수 있음.</p>
+<p>example 2.2처럼 y를 x를 기준으로 나눠서 함수 쓸 때 사용할 수 있음.</p>
 </div>
 </div>
-<div id="a28a6599-1ba3-478a-8ab7-502ad9705bb8" class="cell" data-execution_count="37">
+<div id="a28a6599-1ba3-478a-8ab7-502ad9705bb8" class="cell" data-execution_count="63">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x 값의 범위 설정</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">1000</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">100</span>)</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 부호 함수 정의</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sign_function(x):</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sign(x)</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 그래프 그리기</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>plt.plot(x, sign_function(x), label<span class="op">=</span><span class="st">'sign(x)'</span>)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'sign(x)'</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">1.5</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="op">-</span><span class="dv">4</span>,<span class="dv">4</span>)</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Sign Function'</span>)</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sgn(x):</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x <span class="op">&gt;</span> <span class="dv">0</span> :</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> x <span class="op">&lt;</span> <span class="dv">0</span> :</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> x <span class="op">==</span> <span class="dv">0</span> :</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> y</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 그래프 그리기</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>plt.plot(x, [sgn(x[i]) <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x))], label<span class="op">=</span><span class="st">'sgn(x)'</span>)</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'sgn(x)'</span>)</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="fl">1.5</span>,<span class="fl">1.5</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="op">-</span><span class="dv">4</span>,<span class="dv">4</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Sign Function'</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">False</span>)</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
