@@ -511,22 +511,8 @@ No artists with labels found to put in legend.  Note that artists whose label st
 <p>다음 lemma는 X에 대해 self-consistent한 Y의 MSE와 관련있는데, 이를 공분산 행렬로 각각 나타낼 것이다.</p>
 <p>Here, <span class="math inline">\(\Psi_\bf{X}\)</span> and <span class="math inline">\(\Psi_\bf{Y}\)</span> denote the covariance matrices of <span class="math inline">\(\bf{X}\)</span> and <span class="math inline">\(\bf{Y}\)</span>, respectively.</p>
 <p>공분산 X,Y를 쓰는 법</p>
-$ _{X} = (X) =
-<span class="math display">\[\begin{bmatrix}
-\text{Cov}(X_1, X_1) &amp; \text{Cov}(X_1, X_2) &amp; \cdots &amp; \text{Cov}(X_1, X_p) \\
-\text{Cov}(X_2, X_1) &amp; \text{Cov}(X_2, X_2) &amp; \cdots &amp; \text{Cov}(X_2, X_p) \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-\text{Cov}(X_p, X_1) &amp; \text{Cov}(X_p, X_2) &amp; \cdots &amp; \text{Cov}(X_p, X_p) \\
-\end{bmatrix}\]</span>
-<p>$</p>
-$ _{Y} = (Y) =
-<span class="math display">\[\begin{bmatrix}
-\text{Cov}(Y_1, Y_1) &amp; \text{Cov}(Y_1, Y_2) &amp; \cdots &amp; \text{Cov}(Y_1, Y_p) \\
-\text{Cov}(Y_2, Y_1) &amp; \text{Cov}(Y_2, Y_2) &amp; \cdots &amp; \text{Cov}(Y_2, Y_p) \\
-\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
-\text{Cov}(Y_p, Y_1) &amp; \text{Cov}(Y_p, Y_2) &amp; \cdots &amp; \text{Cov}(Y_p, Y_p) \\
-\end{bmatrix}\]</span>
-<p>$</p>
+<p><span class="math inline">\(\Psi_{X} = \text{Cov}(X) = \begin{bmatrix} \text{Cov}(X_1, X_1) &amp; \text{Cov}(X_1, X_2) &amp; \cdots &amp; \text{Cov}(X_1, X_p) \\ \text{Cov}(X_2, X_1) &amp; \text{Cov}(X_2, X_2) &amp; \cdots &amp; \text{Cov}(X_2, X_p) \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ \text{Cov}(X_p, X_1) &amp; \text{Cov}(X_p, X_2) &amp; \cdots &amp; \text{Cov}(X_p, X_p) \\ \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(\Psi_{Y} = \text{Cov}(Y) = \begin{bmatrix} \text{Cov}(Y_1, Y_1) &amp; \text{Cov}(Y_1, Y_2) &amp; \cdots &amp; \text{Cov}(Y_1, Y_p) \\ \text{Cov}(Y_2, Y_1) &amp; \text{Cov}(Y_2, Y_2) &amp; \cdots &amp; \text{Cov}(Y_2, Y_p) \\ \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ \text{Cov}(Y_p, Y_1) &amp; \text{Cov}(Y_p, Y_2) &amp; \cdots &amp; \text{Cov}(Y_p, Y_p) \\ \end{bmatrix}\)</span></p>
 <p><span style="background-color:#E0CCEF"> <strong>Lemma 2.3.</strong> </span> If <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>, then the following hold: (i) <span class="math inline">\(\Psi_\bf{X}\)</span> <span class="math inline">\(\ge \Psi_\bf{Y}\)</span>, that is, <span class="math inline">\(\Psi_{\bf{X}} - \Psi_{\bf{Y}}\)</span> is positive semidenite; (ii) <span class="math inline">\(MSE(\bf{Y};\bf{X})= tr(\Psi_{\bf{X}}) - tr(\Psi_\bf{Y})\)</span>:</p>
 <p>Y가 X에 대해 self-consistent하다면, X의 공분산행렬은 Y의 공분산행렬보다 크다. MSE는 X의 공분상행렬의 대각행렬에서 Y의 공분산 행렬의 대각 행렬을 뺀 것과 같다.(X의 분산 - Y의 분산 과 같다.)</p>
 <p><span class="math inline">\(\text{tr}(\Psi_{X}) = \text{Cov}(X_1, X_1) + \text{Cov}(X_2, X_2) + \cdots + \text{Cov}(X_p, X_p) = Var(X)\)</span></p>
