@@ -473,14 +473,33 @@ No artists with labels found to put in legend.  Note that artists whose label st
 <p>다음 예제는 self-consistency의 목적을 잘 나타낸다.</p>
 <p>It is actually an application of our first lemma.</p>
 <p>첫번째 lemma를 응용한 것이다.</p>
-<p><span style="background-color:#E0CCEF"> <strong>Lemma 2.1.</strong> </span> <em>For a <span class="math inline">\(p\)</span>-variate random vector</em> <span class="math inline">\(\bf{X}\)</span>, <em>suppose</em> <span class="math inline">\(\mathcal{S} \subset \mathbb{R}^p\)</span> <em>is a measurable set such that</em> <span class="math inline">\(\forall \bf{y} \in \mathcal{S}, \bf{y} = \cal{E}[\bf{X} | \bf{X} \in \mathbb{D_y}]\)</span>, <em>where</em> <span class="math inline">\(\mathbb{D}_y\)</span> <em>is the domain of attraction of</em> <span class="math inline">\(\bf{y}\)</span>, <em>that is,</em> <span class="math inline">\(\mathbb{D}_y = \{\bf{x} \in \mathbb{R}^p: ||\bf{x} - \bf{y}|| &lt; ||\bf{x} - \bf{y}^*||, \forall \bf{y}^* \in \mathcal{S} \}\)</span>.</p>
-<p>p변량 랜덤 벡터 X에 대해 p차원의 실수 집합의 부분 집합인 S가 측정 가능한 집합이고, y가 모두 S에 속할때, y는 y에 수렴하는 도메인 Dy에 X가 속할때 X의 기댓값과 같다.</p>
+<p><span style="background-color:#E0CCEF"> <strong>Lemma 2.1.</strong> </span> <em>For a <span class="math inline">\(p\)</span>-variate random vector</em> <span class="math inline">\(\bf{X}\)</span>, <em>suppose</em> <span class="math inline">\(\mathcal{S} \subset \mathbb{R}^p\)</span> <em>is a measurable set such that</em> <span class="math inline">\(\forall \bf{y} \in \mathcal{S}, \bf{y} = \cal{E}\)</span><span class="math inline">\([\bf{X} | \bf{X} \in \mathbb{D_y}]\)</span>, <em>where</em> <span class="math inline">\(\mathbb{D}_y\)</span> <em>is the domain of attraction of</em> <span class="math inline">\(\bf{y}\)</span>, <em>that is,</em> <span class="math inline">\(\mathbb{D}_y = \{\bf{x} \in \mathbb{R}^p: ||\bf{x} - \bf{y}|| &lt; ||\bf{x} - \bf{y}^*||, \forall \bf{y}^* \in \mathcal{S} \}\)</span>.</p>
+<p>p변량 랜덤 벡터 X에 대해 p차원의 실수 집합의 부분 집합인 S가 측정 가능한 집합이고, 모든 y가 S에 속할때, y는 y에 수렴하는 도메인 Dy에 X가 속하는 조건에서 X의 기댓값과 같다.</p>
 <p>Dy(the domain of attraction) = x는 p차원의 실수 집합(R^p)에 속하는 값이고, p차원의 실수 집합(R^p)의 부분 집합(S)에 속하는 모든 y * 에 대해 x,y 의 거리가 x,y * 의 거리보다 짧은 값들의 집합</p>
 <p>Defne <span class="math inline">\(\bf{Y} = \bf{y}\)</span> if <span class="math inline">\(\bf{X} \in \mathbb{D}_y\)</span>: Then <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>.</p>
 <p>X가 y의 domain of attration에 속한다면, Y=y라고 정의하며, Y는 X에 대해 self-consistent 하다.</p>
 <p><span style="background-color:#F5F1F8"> <strong>Proof.</strong> </span> <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X} | \bf{Y}=\bf{y}] =\)</span><span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{X} \in \mathbb{D}_y] = \bf{y}\)</span>.</p>
 <p>In Example 2.2, <span class="math inline">\(\cal{S}\)</span> consists of only two points, and the associated domains of attraction are the half-planes given by <span class="math inline">\(x_1 &lt; 0\)</span> and <span class="math inline">\(x_1 &gt; 0\)</span>.</p>
 <p>예제 2.2에서 S는 두 점으로 구성되어 있고, associated domain of attraction은 x_1&lt;0이거나 x_1&gt;0인 half-plane이다.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="예제 2.2에서 lemma2.1 찾기">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+예제 2.2에서 lemma2.1 찾기
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><span class="math inline">\(p = 2\)</span>, p 변량 확률 벡터 <span class="math inline">\(\bf{X} = (X_1, X_2)' \sim N_2(0, I_2)\)</span> 에 대해</li>
+<li>p차원 실수 집합의 부분 집합인 <span class="math inline">\(S = \{ (-\sqrt{2/\pi}, 0)', (\sqrt{2/\pi}, 0)' \}\)</span>가 모든 y가 S에 속한다는 조건 아래 측정 가능한 집합일때,</li>
+<li><span class="math inline">\(y = E(X|X \in D_y)\)</span> 이다.</li>
+<li>The domain of attraction은 <span class="math inline">\(X_1 \ge 0\)</span>, <span class="math inline">\(X_1 &lt; 0\)</span>인 half-plane</li>
+</ul>
+<p><code>-</code> <span class="math inline">\(X\)</span>가 <span class="math inline">\(D_y\)</span>에 속한다면, <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([X_1|X_1 \ge 0] = \sqrt{2/\pi}\)</span> 여기서 <span class="math inline">\(X_1 \ge 0\)</span> 조건이 <span class="math inline">\(X\in \mathbb{D}_y\)</span>와 동등한 개념으로 보인다.</p>
+</div>
+</div>
 <p>The following three lemmas give elementary properties of self-consistent random vectors.</p>
 <p>다음 세 개의 lemma는 self-consistent한 랜덤 벡터의 기본적인 특성을 제시한다.</p>
 <p><span style="background-color:#E0CCEF"> <strong>Lemma 2.2.</strong> </span> If <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>, then <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([\bf{Y}]=\)</span><span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}]\)</span>.</p>
