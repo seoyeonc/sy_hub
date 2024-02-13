@@ -43,6 +43,7 @@ website:
           - 2_graph.qmd
           - 2_ept.qmd
           - 2_stgcn.qmd
+          - 2_linearalgebra.qmd
       
 format:
   html:
