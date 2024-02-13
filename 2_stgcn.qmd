@@ -1,5 +1,5 @@
 ---
-title: "Related to STGCN"
+title: "STGCN"
 listing:
   contents: posts/2_Studies/STGCN
   sort: "date desc"
