@@ -11,3 +11,23 @@ listing:
 page-layout: full
 title-block-banner: true
 ---
+
+::: {.panel-tabset} 
+
+## 공부 또는 정리 목표
+
+1. Linear Algebra(MIT)
+2. 확률과 통계 / 랜덤변수
+3. 수리통계
+4. 다변량 분석
+5. 최적화이론(CMU/Boyd)
+6. 랜덤 프로세스
+
+## list
+
+- Anomaly Detection? Detection?
+- Estimate
+- Signal? Signal Processing?
+- Wavelet
+
+:::
