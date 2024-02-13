@@ -9,7 +9,7 @@
 <meta name="author" content="SEOYEON CHOI">
 <meta name="dcterms.date" content="2024-02-13">
 
-<title>Seoyeon’s Blog - Linear Algebra(MIT) - Lecture 1</title>
+<title>Seoyeon’s Blog - Linear Algebra - Lecture 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -207,7 +207,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Linear Algebra(MIT) - Lecture 1</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Linear Algebra - Lecture 1</li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -220,7 +220,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Linear Algebra(MIT) - Lecture 1</h1>
+      <h1 class="title">Linear Algebra - Lecture 1</h1>
                       </div>
   </div>
     
@@ -308,6 +308,7 @@ window.Quarto = {
   <ul>
   <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">Import</a></li>
   <li><a href="#lecture-1" id="toc-lecture-1" class="nav-link" data-scroll-target="#lecture-1">Lecture 1</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">?</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-02-13-MIT_Linear_Algebra_1.out.ipynb" download="2024-02-13-MIT_Linear_Algebra_1.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -321,9 +322,10 @@ window.Quarto = {
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/ZK3O402wf1c" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <section id="import" class="level1">
 <h1>Import</h1>
-<div id="66577e6d-1945-4a57-ae9a-f47adf552bdb" class="cell" data-execution_count="2">
+<div id="66577e6d-1945-4a57-ae9a-f47adf552bdb" class="cell" data-execution_count="52">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mpl_toolkits.mplot3d <span class="im">import</span> Axes3D</span></code></pre></div>
 </div>
 </section>
 <section id="lecture-1" class="level1 page-columns page-full">
@@ -386,36 +388,30 @@ window.Quarto = {
 </ul>
 <p><span class="math inline">\(x\begin{bmatrix} 2 \\ -1 \end{bmatrix} + y \begin{bmatrix} -1 \\ 2 \end{bmatrix} = \begin{bmatrix} 0 \\ 3 \end{bmatrix}\)</span></p>
 <p>It is linear combination of columns.</p>
-<div id="95ef128d-53b3-431c-988b-792cddf26b6b" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 방정식의 계수 설정</span></span>
+<p>우리는 이미 Row Picture에서 선형 결합 결과가 <span class="math inline">\(\{ x=1, y=2 \}\)</span>라는 것을 아니까 대입해보면,</p>
+<div id="5c786a68-f205-4494-8bea-4c34b79f0b6a" class="cell" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 해벡터 계산</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>]])</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">3</span>])</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 열 벡터 정의</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>col_vectors <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">0</span>], [<span class="dv">0</span>, <span class="dv">0</span>]])</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> np.linalg.solve(A, b)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> solution[<span class="dv">0</span>]</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> solution[<span class="dv">1</span>]</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 해 구하기</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> np.linalg.solve(A, b)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 열 벡터 설정</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>col_vectors[:, <span class="dv">0</span>] <span class="op">=</span> A[:, <span class="dv">0</span>]  <span class="co"># 첫 번째 열 벡터</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>col_vectors[:, <span class="dv">1</span>] <span class="op">=</span> A[:, <span class="dv">1</span>]  <span class="co"># 두 번째 열 벡터</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># 그래프 그리기</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.quiver(<span class="op">*</span>col_vectors[:, <span class="dv">0</span>], angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>, scale<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span><span class="st">'r'</span>, label<span class="op">=</span><span class="st">'2x - y = 0, col1'</span>)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.quiver(<span class="op">*</span>col_vectors[:, <span class="dv">1</span>], angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>, scale<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span><span class="st">'b'</span>, label<span class="op">=</span><span class="st">'-x + 2y = 3, col2'</span>)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt.quiver(<span class="dv">0</span>, <span class="dv">0</span>, solution[<span class="dv">0</span>], solution[<span class="dv">1</span>], angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>, scale<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span><span class="st">'g'</span>, label<span class="op">=</span><span class="st">'col1 + 2*col2'</span>)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Column Picture of the Equations'</span>)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)  <span class="co"># y=0</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)  <span class="co"># x=0</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># col picture 그리기</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>plt.quiver(<span class="dv">0</span>, <span class="dv">0</span>, A[<span class="dv">0</span>][<span class="dv">0</span>], A[<span class="dv">1</span>][<span class="dv">0</span>], angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>, scale<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span><span class="st">'m'</span>, label<span class="op">=</span><span class="st">'col1'</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plt.quiver(<span class="dv">0</span>, <span class="dv">0</span>, A[<span class="dv">0</span>][<span class="dv">1</span>], A[<span class="dv">1</span>][<span class="dv">1</span>], angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>, scale<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span><span class="st">'c'</span>, label<span class="op">=</span><span class="st">'col2'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.quiver(<span class="dv">0</span>, <span class="dv">0</span>, x<span class="op">*</span>A[<span class="dv">0</span>][<span class="dv">0</span>] <span class="op">+</span> y<span class="op">*</span>A[<span class="dv">0</span>][<span class="dv">1</span>], x<span class="op">*</span>A[<span class="dv">1</span>][<span class="dv">0</span>] <span class="op">+</span> y<span class="op">*</span>A[<span class="dv">1</span>][<span class="dv">1</span>], angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>, scale<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'col1 + 2col2'</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.quiver(x<span class="op">*</span>A[<span class="dv">0</span>][<span class="dv">0</span>], x<span class="op">*</span>A[<span class="dv">1</span>][<span class="dv">0</span>], y<span class="op">*</span>A[<span class="dv">0</span>][<span class="dv">1</span>], y<span class="op">*</span>A[<span class="dv">1</span>][<span class="dv">1</span>], angles<span class="op">=</span><span class="st">'xy'</span>, scale_units<span class="op">=</span><span class="st">'xy'</span>, scale<span class="op">=</span><span class="dv">1</span>, color<span class="op">=</span><span class="st">'b'</span>, label<span class="op">=</span><span class="st">'route'</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.xlim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.ylim(<span class="op">-</span><span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'x'</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'y'</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>,linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>plt.grid(color <span class="op">=</span> <span class="st">'gray'</span>, linestyle <span class="op">=</span> <span class="st">'--'</span>, linewidth <span class="op">=</span> <span class="fl">0.5</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Column Picture of the Equations'</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -424,7 +420,148 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>우리는 이미 Row Picture에서 선형 결합 결과가 <span class="math inline">\(\{ x=1, y=2 \}\)</span>라는 것을 아니까 대입해보면,</p>
+<p><span class="math inline">\(b\)</span>인 <span class="math inline">\(x = 0, y = 3\)</span>을 얻었다.</p>
+<p><code>example</code> 3 equations and 3 unknowns 이 있다면?</p>
+<p><em>3 equations</em></p>
+<p><span class="math inline">\(2x - y = 0\)</span></p>
+<p><span class="math inline">\(-x + 2y - z = -1\)</span></p>
+<p><span class="math inline">\(-3y + 4z = 4\)</span></p>
+<p><em>3 unknowns</em></p>
+<p><span class="math inline">\(x,y,z\)</span></p>
+<span class="math inline">\(A = \begin{bmatrix} 2 &amp; -1 &amp; 0 \\ -1 &amp; 2 &amp; -1 \\ 0 &amp; -3 &amp; 4 \end{bmatrix}, \bf{X}\)</span> $
+<span class="math display">\[\begin{bmatrix}x \\ y \\ z \end{bmatrix}\]</span>
+, b =
+<span class="math display">\[\begin{bmatrix} 0 \\ -1 \\ 4 \end{bmatrix}\]</span>
+<p>$</p>
+<ul>
+<li>Row Picture</li>
+</ul>
+<p>3개의 different plane이 생성된다.</p>
+<div id="91ae839e-4b7a-4e93-80e9-2ee921b68d0c" class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 행렬과 벡터 정의</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>A <span class="op">=</span> np.array([[<span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>], [<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>], [<span class="dv">0</span>, <span class="op">-</span><span class="dv">3</span>, <span class="dv">4</span>]])</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 해벡터 계산</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>solution <span class="op">=</span> np.linalg.solve(A, b)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># 방정식을 풀어서 세 개의 평면을 정의</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>X, Y <span class="op">=</span> np.meshgrid(x, y)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 방정식들을 표현</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>Z1 <span class="op">=</span> (<span class="dv">2</span><span class="op">*</span>X <span class="op">-</span> Y) <span class="op">/</span> <span class="dv">1</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>Z2 <span class="op">=</span> (<span class="op">-</span>X <span class="op">+</span> <span class="dv">2</span><span class="op">*</span>Y <span class="op">+</span> <span class="dv">1</span>) <span class="op">/</span> <span class="dv">1</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>Z3 <span class="op">=</span> (<span class="dv">4</span><span class="op">/</span><span class="dv">3</span>)<span class="op">*</span>Y <span class="op">+</span> (<span class="dv">4</span><span class="op">/</span><span class="dv">3</span>)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting row picture</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting planes</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>ax.plot_surface(X, Y, Z1, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>ax.plot_surface(X, Y, Z2, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>ax.plot_surface(X, Y, Z3, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting solution vector</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>ax.scatter(solution[<span class="dv">0</span>], solution[<span class="dv">1</span>], solution[<span class="dv">2</span>], color<span class="op">=</span><span class="st">'r'</span>, s<span class="op">=</span><span class="dv">100</span>, label<span class="op">=</span><span class="st">'Combination'</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Labels and legends</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'X-axis'</span>)</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Y-axis'</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">'Z-axis'</span>)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Row Picture'</span>)</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2024-02-13-MIT_Linear_Algebra_1_files/figure-html/cell-5-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>Column Picture</li>
+</ul>
+<p>각각 3 dimensional vector.</p>
+<p><span class="math inline">\(x\begin{bmatrix} 2 \\ -1 \\ 0 \end{bmatrix} + y \begin{bmatrix} -1 \\ 2 \\ -3 \end{bmatrix} + z \begin{bmatrix} 0 \\ -1 \\ 4 \end{bmatrix} = \begin{bmatrix} 0 \\ -1 \\ 4 \end{bmatrix}\)</span></p>
+<ol type="1">
+<li><span class="math inline">\(x=0,y=0,z=1\)</span>하면 b가 나오지 않아? 왜냐하면 col3은 b와 같으니까.</li>
+<li><span class="math inline">\(b\)</span>가 <span class="math inline">\(\begin{bmatrix} 1 \\ 1 \\ -3 \end{bmatrix}\)</span>이라면? <span class="math inline">\(x=1,y=1,z=0\)</span>이겠지?</li>
+</ol>
+<div id="f3800032-f6ba-429f-9fc5-7fd474303ec0" class="cell" data-execution_count="74">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 주어진 벡터와 결과 벡터 정의</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>v1 <span class="op">=</span> np.array([<span class="dv">2</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">0</span>])</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>v2 <span class="op">=</span> np.array([<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>, <span class="op">-</span><span class="dv">3</span>])</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>v3 <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>])</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>result_vector <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>, <span class="dv">4</span>])</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># 그래프 생성</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># 벡터 그리기</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>ax.quiver(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, v1[<span class="dv">0</span>], v1[<span class="dv">1</span>], v1[<span class="dv">2</span>], color<span class="op">=</span><span class="st">'r'</span>, label<span class="op">=</span><span class="st">'v1'</span>, arrow_length_ratio<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>ax.quiver(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, v2[<span class="dv">0</span>], v2[<span class="dv">1</span>], v2[<span class="dv">2</span>], color<span class="op">=</span><span class="st">'g'</span>, label<span class="op">=</span><span class="st">'v2'</span>, arrow_length_ratio<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>ax.quiver(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, v3[<span class="dv">0</span>], v3[<span class="dv">1</span>], v3[<span class="dv">2</span>], color<span class="op">=</span><span class="st">'b'</span>, label<span class="op">=</span><span class="st">'v3'</span>, arrow_length_ratio<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 결과 벡터 그리기</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>ax.quiver(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, result_vector[<span class="dv">0</span>], result_vector[<span class="dv">1</span>], result_vector[<span class="dv">2</span>], color<span class="op">=</span><span class="st">'k'</span>, label<span class="op">=</span><span class="st">'Result'</span>, arrow_length_ratio<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 축 범위 설정</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>ax.set_xlim([<span class="op">-</span><span class="dv">1</span>, <span class="dv">2</span>])</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>ax.set_ylim([<span class="op">-</span><span class="dv">1</span>, <span class="dv">3</span>])</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>ax.set_zlim([<span class="op">-</span><span class="dv">4</span>, <span class="dv">2</span>])</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 축 레이블</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'X-axis'</span>)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Y-axis'</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">'Z-axis'</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a><span class="co"># 그래프 표시</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Column Picture'</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2024-02-13-MIT_Linear_Algebra_1_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section" class="level1">
+<h1>?</h1>
+<ol type="1">
+<li>Can I solve <span class="math inline">\(A\bf{X}\)</span> <span class="math inline">\(=b\)</span> for every <span class="math inline">\(b\)</span>?</li>
+</ol>
+<ul>
+<li>아닌듯, 예, unknowns가 서로 연관있다면?</li>
+</ul>
+<ol start="2" type="1">
+<li>만약 이 3 equations 3 unknows에서 이 세 columns가 same plane에 놓여있다면, 그들의 combination도 same plane에 놓일 것이다. -&gt; 문제 발생!</li>
+</ol>
+<ul>
+<li>col1 = col2 = col3 이렇게 같은 plane이면 새로운 값 b를 얻지 못한다.</li>
+</ul>
+<p>대부분의 right hand side는 out pf plane 이거나 unreachable 하다. -&gt; singular case , not invertible</p>
+<ul>
+<li>There would not be a solution for every b</li>
+</ul>
+<p><code>example</code> 9 dimensions 라면?</p>
+<ul>
+<li>9 vectors, 9 dimensional space 나오겠지.</li>
+</ul>
+<p>Can we get every right hand side?</p>
+<ul>
+<li><p>depending on those nine columns</p></li>
+<li><p>columns가 independent 하지 않다묜 new b를 얻지 못해서 b를 못 구한다.</p></li>
+</ul>
+<p><strong><span class="math inline">\(AX\)</span>is a combination of columns of <span class="math inline">\(A\)</span></strong></p>
 
 
 </section>
