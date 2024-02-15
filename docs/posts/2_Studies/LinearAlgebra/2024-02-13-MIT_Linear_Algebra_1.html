@@ -9,7 +9,7 @@
 <meta name="author" content="SEOYEON CHOI">
 <meta name="dcterms.date" content="2024-02-13">
 
-<title>Seoyeon’s Blog - Linear Algebra - Lecture 1</title>
+<title>Seoyeon’s Blog - [Linear Algebra] Lecture 1</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -207,7 +207,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Linear Algebra - Lecture 1</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[Linear Algebra] Lecture 1</li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -220,7 +220,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Linear Algebra - Lecture 1</h1>
+      <h1 class="title">[Linear Algebra] Lecture 1</h1>
                       </div>
   </div>
     
@@ -308,7 +308,6 @@ window.Quarto = {
   <ul>
   <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">Import</a></li>
   <li><a href="#lecture-1" id="toc-lecture-1" class="nav-link" data-scroll-target="#lecture-1">Lecture 1</a></li>
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section">?</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-02-13-MIT_Linear_Algebra_1.out.ipynb" download="2024-02-13-MIT_Linear_Algebra_1.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -333,11 +332,11 @@ window.Quarto = {
 <p>The fundamental Problem of Linear Algebra</p>
 <p><code>n</code> equations and <code>n</code> unknowns 특징 세 가지</p>
 <ol type="1">
-<li>Row Picture(The Picture of one equation at a time)</li>
-<li><span class="math inline">\(\star\)</span> Colums Picture</li>
-<li>Matrix form<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li>Row Picture(The Picture of one equation at a time)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li><span class="math inline">\(\star\)</span> Colums Picture<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
+<li>Matrix form<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
 </ol>
-<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;A라고 부를거야</p></li></div><p><code>example</code> 2 equations and 2 unknowns 이 있다면?</p>
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;행의 관점에서 바라보자</p></li><li id="fn2"><p><sup>2</sup>&nbsp;열의 관점에서 바라보자</p></li><li id="fn3"><p><sup>3</sup>&nbsp;A라고 부를거야</p></li></div><p><code>example</code> 2 equations and 2 unknowns 이 있다면?</p>
 <p><em>2 equations</em></p>
 <p><span class="math inline">\(2x - y = 0\)</span></p>
 <p><span class="math inline">\(-x + 2y =3\)</span></p>
@@ -529,9 +528,7 @@ window.Quarto = {
 </div>
 </div>
 </div>
-</section>
-<section id="section" class="level1">
-<h1>?</h1>
+<p><code>-</code></p>
 <ol type="1">
 <li>Can I solve <span class="math inline">\(A\bf{X}\)</span> <span class="math inline">\(=b\)</span> for every <span class="math inline">\(b\)</span>?</li>
 </ol>
@@ -557,7 +554,12 @@ window.Quarto = {
 <li><p>depending on those nine columns</p></li>
 <li><p>columns가 independent 하지 않다면 new b를 얻지 못해서 b를 못 구한다.</p></li>
 </ul>
-<p>결국, <strong><span class="math inline">\(AX\)</span> is a combination of columns of <span class="math inline">\(A\)</span></strong></p>
+<p><code>-</code> check</p>
+<ul>
+<li><p>dimension이 점점 커지면 row picture는 어떻게 표현할 것인가?</p></li>
+<li><p>column picture 는 벡터로 표현하는 것이기 때문에 어려움 없이 선형 결합 linear combination 표현 가능.</p></li>
+<li><p><strong><span class="math inline">\(AX\)</span> is a combination of columns of <span class="math inline">\(A\)</span></strong></p></li>
+</ul>
 
 
 </section>
