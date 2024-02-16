@@ -540,7 +540,7 @@ Important
 <p>There is a similarity between the two preceding lemmas and the Rao{Blackwell theorem (Casella and Berger, 1990, page 316), which in a simplied version states the following.</p>
 <p>If <span class="math inline">\(\bf{X}\)</span> is an unbiased estimator of a parameter <span class="math inline">\(\theta\)</span>, and if <span class="math inline">\(\bf{Y}\)</span> is a sufcient statistic for <span class="math inline">\(\theta\)</span>, then <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]\)</span> is an unbiased estimator of <span class="math inline">\(\theta\)</span>, and <span class="math inline">\(var[\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}]\)</span><span class="math inline">\(\le var[\bf{X}]\)</span>. If <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{X}|\bf{Y}\)</span><span class="math inline">\(] = \bf{Y}\)</span>, then Lemma 2.2 gives <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{Y}\)</span><span class="math inline">\(] = \cal{E}\)</span><span class="math inline">\([\bf{X}]\)</span>, and part (i) of Lemma 2.3 gives <span class="math inline">\(var[\bf{Y}]\le var[\bf{X}]\)</span>.</p>
 <ul>
-<li>1차원 확률 벡터 X,Y에 대해 Y가 X에 대해 self-consistent하다면, Y의 분산은 X의 분산보다 작거나 같다.(단, Y=X로 정확이 일치할때만??)</li>
+<li>1차원 확률 벡터 X,Y에 대해 Y가 X에 대해 self-consistent하다면, Y의 분산은 X의 분산보다 작거나 같다.(단, Y=X로 정확히 일치할때만??)</li>
 </ul>
 <ol type="1">
 <li>만일 X가 세타에 대한 비편향 추정량이고(<span class="math inline">\(E(X)=\theta\)</span>, That is,<span class="math inline">\(X=\hat{\theta}\)</span>,X의 기댓값이 세타와 같다면),</li>
@@ -606,18 +606,18 @@ Projection Matrix 투영행렬
 </ul>
 </div>
 </div>
-<blockquote class="blockquote">
-<p>PCA로 이해해보자..<span class="math inline">\(X = n \times d\)</span> matrix , <span class="math inline">\(P = d \times k\)</span> matrix</p>
-</blockquote>
-<p><span class="math inline">\(X\)</span>의 공분산 행렬 C를 이용한 고유값 분해 <span class="math inline">\(C = V \Lambda V^T\)</span></p>
-<p>차원 축소하면 <span class="math inline">\(Y = XP\)</span></p>
-<blockquote class="blockquote">
-<p>특이값 분해로 이해해보자.. <span class="math inline">\(A = U \sum V^T\)</span></p>
-</blockquote>
-<p>여기서 U,V는 직교 행렬으로 <span class="math inline">\(I = U^T U\)</span>, <span class="math inline">\(I = V^V V\)</span>을 만족</p>
+<p><code>-</code> PCA로 이해해보자..<span class="math inline">\(X = n \times d\)</span> matrix , <span class="math inline">\(P = d \times k\)</span> matrix</p>
+<ul>
+<li><span class="math inline">\(X\)</span>의 공분산 행렬 C를 이용한 고유값 분해 <span class="math inline">\(C = V \Lambda V^T\)</span></li>
+<li>차원 축소하면 <span class="math inline">\(Y = XP\)</span></li>
+</ul>
+<p><code>-</code> 특이값 분해로 이해해보자.. <span class="math inline">\(A = U \sum V^T\)</span></p>
+<ul>
+<li>여기서 U,V는 직교 행렬으로 <span class="math inline">\(I = U^T U\)</span>, <span class="math inline">\(I = V^V V\)</span>을 만족
 <ul>
 <li><span class="math inline">\(U = m \times m\)</span>, <span class="math inline">\(\sum=m \times n\)</span>, <span class="math inline">\(V = n \times n\)</span></li>
 <li>U, V는 P 투영 행랼?</li>
+</ul></li>
 </ul>
 <p>See the Appendix for a proof.</p>
 <p><span style="background-color:#F5F05E"> <em>appendix</em> </span> Proof of Lemma 2.4. Since <span class="math inline">\(\bf{Y}\)</span> is self-consistent for <span class="math inline">\(\bf{X}\)</span>, <span class="math inline">\(\cal{E}\)</span><span class="math inline">\([\bf{PX|Y}] = \bf{P}\cal{E}\)</span><span class="math inline">\([\bf{X|Y}] = \bf{PY} = \bf{Y}\)</span> a.s.</p>

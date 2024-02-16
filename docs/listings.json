@@ -20,13 +20,21 @@
   {
     "listing": "/2_linearalgebra.html",
     "items": [
+      "/posts/2_Studies/LinearAlgebra/2024-02-16-MIT_Linear_Algebra_3.html",
       "/posts/2_Studies/LinearAlgebra/2024-02-15-MIT_Linear_Algebra_2.html",
       "/posts/2_Studies/LinearAlgebra/2024-02-13-MIT_Linear_Algebra_1.html"
     ]
   },
   {
+    "listing": "/2_stgcn.html",
+    "items": [
+      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
+      "/posts/2_Studies/LinearAlgebra/2024-02-16-MIT_Linear_Algebra_3.html",
       "/posts/2_Studies/LinearAlgebra/2024-02-15-MIT_Linear_Algebra_2.html",
       "/posts/2_Studies/LinearAlgebra/2024-02-13-MIT_Linear_Algebra_1.html",
       "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html",
@@ -52,12 +60,6 @@
       "/posts/1_Note/2022-04-03-(5주차) 4월2일.html",
       "/posts/1_Note/2022-03-28-(4주차) 3월28일.html",
       "/posts/1_Note/2019-04-26-퓨리에 변환.html"
-    ]
-  },
-  {
-    "listing": "/2_stgcn.html",
-    "items": [
-      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html"
     ]
   },
   {
