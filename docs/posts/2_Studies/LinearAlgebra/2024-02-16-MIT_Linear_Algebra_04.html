@@ -9,7 +9,7 @@
 <meta name="author" content="SEOYEON CHOI">
 <meta name="dcterms.date" content="2024-02-16">
 
-<title>Seoyeon’s Blog - [Linear Algebra] Lecture 3</title>
+<title>Seoyeon’s Blog - [Linear Algebra] Lecture 4</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -69,11 +69,40 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="nav-sidebar docked nav-fixed slimcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top quarto-banner">
@@ -144,7 +173,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[Linear Algebra] Lecture 3</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[Linear Algebra] Lecture 4</li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -157,7 +186,7 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">[Linear Algebra] Lecture 3</h1>
+      <h1 class="title">[Linear Algebra] Lecture 4</h1>
                       </div>
   </div>
     
@@ -242,13 +271,77 @@ ul.task-list li input[type="checkbox"] {
         
     <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-02-16-MIT_Linear_Algebra_04.out.ipynb" download="2024-02-16-MIT_Linear_Algebra_04.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
 
 
 
 
 
 <div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/5hO3MrzPa0A" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<blockquote class="blockquote">
+<p>학습 목표</p>
+</blockquote>
+<p>Inverse of <span class="math inline">\(AB, A^{T}\)</span></p>
+<p>Product of elimination matrices</p>
+<p><span class="math inline">\(A = Lu\)</span> (no row exchange)</p>
+<ul>
+<li><span class="math inline">\(A^T\)</span>의 Inverse는 무엇일까?</li>
+</ul>
+<p><span class="math inline">\((A^{-1})^T A^T = I\)</span></p>
+<p><span class="math inline">\((A^{-1})^T\)</span> <span class="math inline">\(\to\)</span> This is inverse of <span class="math inline">\(A^T\)</span>.</p>
+<ul>
+<li>2X2라면</li>
+</ul>
+<p><code>1</code></p>
+<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 \\ -4 &amp; 1 \end{bmatrix} \begin{bmatrix} 2 &amp; 1 \\ 8 &amp; 7 \end{bmatrix} = \begin{bmatrix} 2 &amp; 1 \\ 0 &amp; 3 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(E_{21} A = u\)</span></p>
+<p><code>-</code> 위에서 아래로 표현하는 방법(역취하는 거)을 <span class="math inline">\(E_{21}\)</span>을 canceling한다고 표현함</p>
+<p><code>2</code></p>
+<p><span class="math inline">\(\begin{bmatrix} 2 &amp; 1 \\ 8 &amp; 7 \end{bmatrix} = \begin{bmatrix} 1 &amp; 0 \\ 4 &amp; 1 \end{bmatrix} \begin{bmatrix} 2 &amp; 1 \\ 0 &amp; 3 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(A = Lu\)</span></p>
+<p><span class="math inline">\(\begin{bmatrix} 2 &amp; 1 \\ 8 &amp; 7 \end{bmatrix} = \begin{bmatrix} 1 &amp; 0 \\ 4 &amp; 1 \end{bmatrix} \begin{bmatrix} 2 &amp; 0 \\ 0 &amp; 3 \end{bmatrix} \begin{bmatrix} 1 &amp; \frac{1}{2} \\ 0 &amp; 1 \end{bmatrix}\)</span></p>
+<ul>
+<li><p><code>1</code> <span class="math inline">\(E_{32}E_{31} E_{21} A = u\)</span> (no row exchanges)</p></li>
+<li><p><code>2</code> <span class="math inline">\(A = E_{21}^{-1} E_{31}^{-1} E_{32}^{-1} u = Lu\)</span></p></li>
+<li><p>왜 <code>1</code> 보다 <code>2</code> 가 좋을까?</p></li>
+</ul>
+<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; -5 &amp; 1 \end{bmatrix} \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ -2 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix} = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ -2&amp; 1 &amp; 0 \\ 10 &amp; -5 &amp; 1\end{bmatrix}\)</span></p>
+<p><span class="math inline">\(E_{31} E_{21} =\)</span> left of <span class="math inline">\(A\)</span></p>
+<ul>
+<li>reverses (reverse order)</li>
+</ul>
+<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 2 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix} \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 5 &amp; 1 \end{bmatrix} = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 2 &amp; 1 &amp; 0 \\ 0 &amp; 5 &amp; 1\end{bmatrix}\)</span></p>
+<p><span class="math inline">\(E_{21}^{-1}E_{31}^{-1} =\)</span> left of <span class="math inline">\(u\)</span></p>
+<p><span class="math inline">\(A = Lu\)</span></p>
+<p><code>-</code> 3행 1열의 10이 없어졌다!</p>
+<p><em>If no row exchanges, multiples go directly into L.</em></p>
+<ul>
+<li><p>How many operations on <span class="math inline">\(n \times n\)</span> matrix A?</p>
+<ul>
+<li>operations = multiples + shorttrack</li>
+</ul></li>
+<li><p>number of operation = count</p>
+<ul>
+<li><span class="math inline">\(n^2 + (n-1)^2 \dots + 3^2 +2^2 + 1^2\)</span></li>
+</ul></li>
+<li><p>Permutation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
+</ul>
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;A permutation matrix exchanges two rows of a matrix</p></li></div><p>ex) <span class="math inline">\(3 \times 3\)</span></p>
+<ul>
+<li>3 * 2 * 1 = 6</li>
+</ul>
+<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(\begin{bmatrix} 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 1 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(\begin{bmatrix} 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\)</span></p>
+<p>ex) <span class="math inline">\(4 \times 4\)</span></p>
+<ul>
+<li>4 * 3 * 2 * 1 = 24</li>
+</ul>
+<p>https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/c5961452fbb31f8a0b34ecd0ffc5cdc4_MIT18_06SCF11_Ses1.4sum.pdf</p>
+
 
 
 
