@@ -324,26 +324,44 @@ window.Quarto = {
 <ul>
 <li><span class="math inline">\(n^2 + (n-1)^2 \dots + 3^2 +2^2 + 1^2\)</span></li>
 </ul></li>
-<li><p>Permutation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p></li>
 </ul>
-<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;A permutation matrix exchanges two rows of a matrix</p></li></div><p>ex) <span class="math inline">\(3 \times 3\)</span></p>
+<p><span class="math inline">\(\to\)</span> Permutation 행렬이 최대로 가질 수 있는 개수 계산하는 법 n팩토리얼</p>
+<ul>
+<li>Permutation<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+</ul>
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;A permutation matrix exchanges two rows of a matrix</p></li></div><p>단위행렬에서 행끼리 교환한 것 목록</p>
+<p>ex) <span class="math inline">\(3 \times 3\)</span></p>
 <ul>
 <li>3 * 2 * 1 = 6</li>
 </ul>
-<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span></p>
-<p><span class="math inline">\(\begin{bmatrix} 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span></p>
-<p><span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}\)</span></p>
-<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 1 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\)</span></p>
-<p><span class="math inline">\(\begin{bmatrix} 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}\)</span></p>
-<p><span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(I = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(P_{12} = \begin{bmatrix} 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(P_{13} = \begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(P_{23} = \begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(P_{13}P_{23} = \begin{bmatrix} 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(P_{12}P_{23} = \begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\)</span></p>
 <p>ex) <span class="math inline">\(4 \times 4\)</span></p>
 <ul>
 <li>4 * 3 * 2 * 1 = 24</li>
 </ul>
 <p>https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/c5961452fbb31f8a0b34ecd0ffc5cdc4_MIT18_06SCF11_Ses1.4sum.pdf</p>
+<hr>
+<p>역행렬이 필요한 이유를 조건을 따져가며 이해해보기</p>
+<p>matrix <span class="math inline">\(A(n \times n)\)</span>이 있을때, 역행렬이 존재한다면</p>
+<ol type="1">
+<li><span class="math inline">\(A\)</span>가 invertible 하다 = <span class="math inline">\(A\)</span>가 가역행렬이다.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
+<li><span class="math inline">\(A\)</span>의 열, 행은 n이다.</li>
+<li><span class="math inline">\(A\)</span>의 열columns와 행rows가 모두 선형적으로 독립이다 linearly independent하다.</li>
+<li><span class="math inline">\(A\)</span>의 rank가 full rank이고, rank(A) = n이다.</li>
+<li><span class="math inline">\(A\)</span>의 Pivot은 0이 없다.</li>
+<li><span class="math inline">\(AX=0\)</span>의 해가 유일한 하나가 있다.</li>
+<li><span class="math inline">\(AX=B\)</span>의 해는 <span class="math inline">\(A^{-1}B\)</span>로 유일한 하나가 있다.</li>
+<li><span class="math inline">\(A\)</span>의 determinant가 0이 아니다(det(A) !=0)</li>
+<li>Non-singular</li>
+</ol>
 
 
-
+<div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;그렇지 않으면 특이행렬singular matrix</p></li></div>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
