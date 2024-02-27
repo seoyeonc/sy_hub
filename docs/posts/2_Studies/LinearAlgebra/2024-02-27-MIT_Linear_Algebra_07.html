@@ -312,7 +312,7 @@ Echelon form
 <p>사다리꼴 행렬이라고도 부르는 Echelon form, 이는 특정한 조건을 따른다.</p>
 <ul>
 <li>0이 아닌 행(nonzero row)이 항상 모두 0인 행의 위에 있어야 한다.</li>
-<li>leading entry(=pivot?)의 위치가 위에 행의 leading entry보다 오른쪽에 있어야합니다.</li>
+<li>leading entry(=pivot?)의 위치가 위에 행의 leading entry보다 오른쪽에 있어야 한다.</li>
 </ul>
 <p><span class="math inline">\(A(u)\)</span>를 예로 들면,</p>
 <ul>
@@ -357,7 +357,7 @@ Echelon form
 </ul>
 <div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;the number of pivot variables</p></li></div><p>When we set a row of zeros, that is telliing us that original row that was a combination of other rows and elimination knocked it out.</p>
 <ul>
-<li>A만 해도 u로 변할 수 있다는 것은 행렬을 가우스 소거나 다른 연산을 사용하여 원래의 행이 다른 행들의 선형 조합으로 나타냏 수 있음을 의미함.</li>
+<li>A만 해도 u로 변할 수 있다는 것은 행렬을 가우스 소거나 다른 연산을 사용하여 원래의 행이 다른 행들의 선형 조합으로 나타낼 수 있음을 의미함.</li>
 </ul>
 <p>즉, 이 <span class="math inline">\(u\)</span>처럼 어떤 행에 0 자체로 elimination 된다면, <span class="math inline">\(u = \begin{bmatrix} 1 &amp; 2 &amp; 2 &amp; 2 \\ 0 &amp; 0 &amp; 2 &amp; 4 \\ 0 &amp; 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span></p>
 <p><span class="math inline">\(R\)</span> = reduced row echelon form = zero above + below pivots</p>
@@ -449,6 +449,16 @@ Echelon form
 <li>nullspace를 만들어주는 <span class="math inline">\(x \sim N\)</span>
 <ul>
 <li>nullspace matrix whose columns are the special solutions</li>
+</ul></li>
+</ul>
+<hr>
+<ul>
+<li>nullspace를 만드는 <span class="math inline">\(x\)</span>는 어떤 값을 곱해도 벡터가 표현되는 그 공간 자체임.</li>
+<li>rank는 무조건 행의 개수가 아님. pivot의 개수로 이해하기
+<ul>
+<li>pivot의 개수를 찾는 쉬운방법 = independent한 행이 몇 개인가?, free(dependent)한 행은 몇 개인가?<br>
+</li>
+<li>행의 수에서 pivot 수(rank 수) 뺴면 free 수임</li>
 </ul></li>
 </ul>
 
