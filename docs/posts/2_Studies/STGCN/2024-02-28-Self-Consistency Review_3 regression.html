@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.527">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="SEOYEON CHOI">
+<meta name="dcterms.date" content="2024-02-28">
+
+<title>Seoyeon’s Blog - Review: Self-Consistency: A Fundamental Concept in Statistics(3)</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Seoyeon’s Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/md/"> 
+<span class="menu-text">Lectures_ing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/chch/"> 
+<span class="menu-text">Lectures_fastai</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/Research_area/"> 
+<span class="menu-text">Research_ing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/ms/"> 
+<span class="menu-text">Research_fastai</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/GODE_blog/"> 
+<span class="menu-text">GODE</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/HCAM_blog/"> 
+<span class="menu-text">HCAM</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/ITTGNN_blog/"> 
+<span class="menu-text">ITTGNN</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/julia/"> 
+<span class="menu-text">Julia</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/seoyeonc"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Review: Self-Consistency: A Fundamental Concept in Statistics(3)</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Review: Self-Consistency: A Fundamental Concept in Statistics(3)</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>SEOYEON CHOI </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 28, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../1_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><strong>Note</strong></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>Studies</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_graph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graph</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_ept.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EPT</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_stgcn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STGCN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_linearalgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Algebra</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#regression-and-principal-variables" id="toc-regression-and-principal-variables" class="nav-link active" data-scroll-target="#regression-and-principal-variables">3. Regression and Principal Variables</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-02-28-Self-Consistency Review_3 regression.out.ipynb" download="2024-02-28-Self-Consistency Review_3 regression.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+
+<section id="regression-and-principal-variables" class="level1 page-columns page-full">
+<h1>3. Regression and Principal Variables</h1>
+<p>For jointly distributed random vectors <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span>, the conditional expectation <span class="math inline">\(E[X_2|X_1]\)</span> is called the regression of <span class="math inline">\(X_2\)</span> on <span class="math inline">\(X_1\)</span>. Not surprisingly, there are close connections to self-consistency.</p>
+<p>결합확률벡터 x_1,x_2에 대해 조건부 기대값 E(x_2|x_1)운 x_1에서 x_2의 regression이라 부른다. 이는 self-consistency와 연관성이 있다.</p>
+<p>In a classical regression setup, let <span class="math inline">\(X_1\)</span> denote an <span class="math inline">\(m\)</span>-variate random vector, <span class="math inline">\(f(\dot)\)</span> a function from <span class="math inline">\(\mathbb{R}^m\)</span> to <span class="math inline">\(\mathbb{R}^k\)</span>, and define <span class="math inline">\(X_2 = f(X_1) + \epsilon\)</span>, where <span class="math inline">\(\epsilon\)</span> is a <span class="math inline">\(k\)</span>-variate random vector, independant of <span class="math inline">\(X_1\)</span>, with <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([\epsilon] = 0\)</span>.</p>
+<p>x_2 f(x_1)+epsilon을 정의할때, 고전적인 회귀 설정에서 x_1을 m변량 확률 벡터라고 하고, f()를 m변량~k변량 실수 집합의 함수라고하자.여기서 x_1에 대해 독립인 epsilon의 기댓값은 0이고, k변량 확률 벡터이다.</p>
+<p>Then <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X_2 | f(X_1)] = f(X_1)\)</span>; that is, <span class="math inline">\(f(X_1)\)</span> is self-consistent for <span class="math inline">\(X_2\)</span>. The mean <span class="math inline">\(f(X_1) =\)</span> <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X_2]\)</span> is a special case.</p>
+<p>그렇다면 E[x_2|f(x_1)]은 f(x_1)과 같고, 즉 f(x_1)은 x_2에 대해 self-consistent 하다. f(x_1)의 평균이 E(x_2)와 같다는 것은 특별한 경우이다.</p>
+<p>However, in this section we will be interested in the problem of approximating a <span class="math inline">\(p\)</span>-variate random vector <span class="math inline">\(X\)</span> by a self consistent <span class="math inline">\(Y\)</span>, where some <span class="math inline">\(q\)</span> of the variables are replaced by their conditional means, as illustrated by our firrst theorem.</p>
+<p>하지만 이 섹션에서는 self consistent한 Y가 p변량 확률 벡터 X에 근사하는 문제에 관심을 갖고자 한다. Y는 우리 첫번째 이론에 의해 설명된 조건부 평균에 의해 어떤 q변량이 대체된다.</p>
+<p>Theorem 3.1. Suppose the <span class="math inline">\(p\)</span>-variate random vector <span class="math inline">\(X\)</span> is partitioned into <span class="math inline">\(q\)</span> and <span class="math inline">\(p - q\)</span> components as <span class="math inline">\(X = \begin{pmatrix} X_1 \\ X_2 \end{pmatrix}\)</span>.</p>
+<p>이론 3.1 p변량 확률 벡터 X는 q와 p-q 로 구성되어 있는데, x_1,x_2로 구성되어 있다.</p>
+<p>Then the random vector <span class="math inline">\(Y= \begin{bmatrix} Y_1 \\ Y_2 \end{bmatrix} = \begin{bmatrix} X_1 \\ E[X_2|X_1] \end{bmatrix}\)</span> is self-consistent for <span class="math inline">\(X\)</span>.</p>
+<p>그러면 확률 벡터 Y는 X에 대해 self-consistent하다. 이때, Y는 Y1,Y2로 구성되어 있고, 이는 각각 X1,E(X2|X1)과 같다.</p>
+<p><span style="background-color:#F5F1F8"> <strong>Proof.</strong> </span> <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X|Y] = \begin{pmatrix} E(X_1 | Y] \\ E(X_2 | Y] \end{pmatrix}\)</span>. Then <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X_1|Y] =\)</span> <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X_1|X_1,\)</span> <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X_2|X_1]] =\)</span> <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X_1|X_1] =X_1 = Y_1\)</span>, and <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X_2|Y] =\)</span> <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X_2|X_1] = Y_2\)</span>. Hence <span class="math inline">\(Y\)</span> is self-consistent for <span class="math inline">\(X\)</span>.</p>
+<p>Theorem 3.1 has an important interpretation in view of the aspect of distributions being “summarized by simpler ones,” according to the criterion of self-consistency.</p>
+<p>정리 3.1은 self-consistenct 의 영역에 따라 더 단순한 분포로 요약되는 측면에서 중요한 해석이다.</p>
+<p>It states that the <span class="math inline">\(q\)</span> regressor variables <span class="math inline">\(X_1\)</span>, along with the regression of <span class="math inline">\(X_2\)</span> on <span class="math inline">\(X_1\)</span>, are self-consistent for <span class="math inline">\(X\)</span>.</p>
+<p>이 정리는 x1에 대한 x2의 regression에 따라 q개의 회귀변수를 가진 x1이 X에 대해 self-consistent하다는 것을 의미한다.</p>
+<p><span style="background-color:#9966FF"> <strong>EXAMPLE 3.1.</strong> </span> Suppose <span class="math inline">\(X\)</span> is bivrate normal with mean <span class="math inline">\(0\)</span> and covariance matrix <span class="math inline">\(\begin{pmatrix} 1 &amp; \rho \\ \rho &amp; 1 \end{pmatrix}\)</span>.</p>
+<p>예제 3.1. X가 평균이 0이고, 공변량 행렬을 가진 이변량 정규 분포라고 가정하자.</p>
+<p>Then <span class="math inline">\(Y = \begin{pmatrix} X_1 \\ E[X_2 | X_1] \end{pmatrix} = \begin{pmatrix} X_1 \\ \rho X_1 \end{pmatrix}\)</span> is self-consistent for <span class="math inline">\(X\)</span>.</p>
+<p>그럼 x1은 x1에 대해 self-consistent하고, x2는 x1에 대해 self-consistent 하다.</p>
+<p>This is a bivarate normal but singular random vector, with <span class="math inline">\(MSE[Y;X] = 1- \rho^2\)</span>.</p>
+<p>이것은 이변량 정규분포를 따르지만 singular 확률 벡터이다.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="proof">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+proof
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(MSE[Y;X] = 1- \rho^2\)</span>, <span class="math inline">\(Cov(X_1,X_2) = 1\)</span></p>
+<p>2장에 따르면, <span class="math inline">\(MSE[Y;X] = E||X-Y||^2\)</span></p>
+<p><span class="math inline">\(= E||(X_1 - X_1)^2 + (X_2-\rho X_1)^2|| = E||(X_2 - \rho X_1)^2 || = 1- \rho^2\)</span></p>
+</div>
+</div>
+<p>In regression, the partition of <span class="math inline">\(X\)</span> into “independent” variavle <span class="math inline">\(X_1\)</span> and “dependent” variables <span class="math inline">\(X_2\)</span> is usually given by the setup of the analysis.</p>
+<p>회귀에서 x를 독립변수 x1과 종속변수 x2로 나누는 것은 보통 분석의 설정에 의해 주어진다.</p>
+<p>However, for given(fixed) <span class="math inline">\(q\)</span>, <span class="math inline">\(1\le q \le p-1\)</span>, one may ask for the subset of variables which in some sense to be defined, gives the best summary of the <span class="math inline">\(p\)</span>-variate distribution.</p>
+<p>하지만, q에 대해서 어떤 맥락에서 정의되는 변수들의 부분 집합은 p변량 분포를 최적으로 요약하는 법에 대해 의문이 있을 수 있다.</p>
+<p>This problem has been studied by McCabe(1984), who called the “best” subset of <span class="math inline">\(q\)</span> variables the principal variables of <span class="math inline">\(X\)</span>.</p>
+<p>이 문제는 McCabe에 의해 연구되었고, 그는 x의 <strong>주변량</strong>을 q변량 최적의 부분집합으로 정의했다.</p>
+<p>Suppose all conditional means of a subset of variables, given the remaining variables, are linear, as in the case of elliptical distributions.</p>
+<p>변수들을 유지하면서 변수의 부분집합의 모든 조건부 평균을 가정할때, 이는 선형이고, 타원형 분포라고 가정할 것이다.</p>
+<p>Let <span class="math inline">\(\Psi := Cov[X]\)</span>, and denote by <span class="math inline">\(P\)</span> a permutation matrix of dimension <span class="math inline">\(p \times p\)</span>.</p>
+<p>psi는 cov(x)이고, pxp 의 permutation 행렬로 보겠다.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="permutation matrix">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+permutation matrix
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>permutation matrix: 치환 행렬, 행을 서로 교환해줌</p>
+</div>
+</div>
+<p>Set <span class="math inline">\(X^* = PX = \begin{pmatrix} X_1^* \\ X_2^* \end{pmatrix}\)</span>, where <span class="math inline">\(X^*\)</span> has <span class="math inline">\(q\)</span> components and <span class="math inline">\(X_2^*\)</span> has <span class="math inline">\(p-q\)</span> components.</p>
+<p>x* 는 q개의 component를 가지고 있고, x2* 는 p-q개의 component를 가지고 있다. -&gt; x* 는 q변량 이것은 x안 p변량에서 요약되어서 줄어든 값임!! 그러니까 x_2* 는 줄어든 변량의 개수만큼 가지고 있다는 말이 되네?</p>
+<p>Partition the mean vector and the covariance matrix of <span class="math inline">\(X^*\)</span> analogously<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> as <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X^*] = \begin{bmatrix} \mu_1^* \\ \mu_2^* \end{bmatrix}, Cov[X^{*}] = \begin{bmatrix} \Psi^*_{11} &amp; \Psi_{12}^* \\ \Psi^*_{21} &amp; \Psi^*_{22} \end{bmatrix}\)</span>.</p>
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;유사하게</p></li></div><p>평균 벡터와 공변량 벡터</p>
+<p>Then, assuming nonsingularity of <span class="math inline">\(\Psi\)</span>, <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X_2^* | X_1^*] = \mu_2^* + (\Psi^*_{21})(\Psi^*_{11})^{-1}(X_1^* -\mu^*_1)\)</span>, and the conditional variance formula (see the proof of Lemma 2.3) gives <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([Cov(X_2^* | X_1^*)] = \Psi^*_{22} - \Psi^*_{21}(\Psi^*_{11})^{-1} \Psi^*_{12} =: \Psi^*_{22 \cdot 1}\)</span>.</p>
+<p>조건부 변수의 정의</p>
+<p>An intuitively reasonable optimality criterion is to choose <span class="math inline">\(P\)</span> such that <span class="math inline">\(tr(\Psi^*_{22 \cdot 1})\)</span> is as small as possible.</p>
+<p>This can be motivated as follows.</p>
+<p>If we set <span class="math inline">\(Y^* = \begin{bmatrix} Y^*_1 \\ Y^*_2 \end{bmatrix} = \begin{bmatrix} X^*_1 \\ E[X_2^* | X^*_1] \end{bmatrix}\)</span>, then <span class="math inline">\(Y^*\)</span> is self-consistent for <span class="math inline">\(X^*\)</span> and can be regarded as a good approximation to <span class="math inline">\(X^*\)</span> if <span class="math inline">\(MSE(Y^*;X^*)\)</span> is as small as possible.</p>
+<p>y* 를 위와 같이 정의한다면 y* 는 x* 에 대해 self-consistent 하고, 만약 mse값이 가능한한 작다면, y* 는 x* 에 대한 좋은 추정치로 여겨질 수 있다.</p>
+<p>Assuming linearity of the conditional mean of <span class="math inline">\(X^*_2\)</span>, given <span class="math inline">\(X_1^*\)</span>, and setting <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\([X^*]=0\)</span> without loss of generality, we obtain <span class="math inline">\(\cal{E}\)</span> <span class="math inline">\(||X^* - Y^* ||^2 = tr(\Psi^*) - tr(Cov(Y^*))\)</span> (by Lemma 2.3) <span class="math inline">\(= tr(\Psi^*_{22}) - tr(\Psi^*_{21}(\Psi^*_{11})^{-1}\Psi^*_{12}) = tr(\Psi^*_{22 \cdot 1})\)</span>.</p>
+<p>E(x2* | x1* )의 선형성을 가정하고, x* 의 평균이 0이라고 설정하여 loss가 없도록 하면 MSE는 tr(psi22 1)이 됌</p>
+<p>Hence, for given <span class="math inline">\(q\)</span>, principal variables identify an optimal subset of <span class="math inline">\(q\)</span> variables <span class="math inline">\(X_1^*\)</span>, which (along with the regression of <span class="math inline">\(X^*_2\)</span> on <span class="math inline">\(X^*_1\)</span>) defines a self-consistent approximation <span class="math inline">\(Y^* = \begin{pmatrix} X^*_1 \\ E[X^*_2 | X^*_1] \end{pmatrix}\)</span> to <span class="math inline">\(X^*\)</span>.</p>
+<p>q가 주어졌을때, 주변량은 q개 변수 x1의 최적의 subset으로 식별할 수 있으며, 이는 y* 가 x* 에 대해 self-consistent한 근사치로 정의한다.</p>
+<p>Returning to the original order of variables, <span class="math inline">\(Y = P^{'} Y^*\)</span> is then self-consistent for <span class="math inline">\(X\)</span>.</p>
+<p>결국 original order보면, y는 x에 대해 self-consistent 하다.</p>
+<p>Finding principal variables is computationally intensive because, for a <span class="math inline">\(p\)</span>-dimensional random vector <span class="math inline">\(X\)</span> and <span class="math inline">\(q\)</span> principal variables, there are <span class="math inline">\(\begin{pmatrix} p\\q \end{pmatrix}\)</span> ways to select <span class="math inline">\(q\)</span> candidates.</p>
+<p>If the assumption of linearity of the conditional means is dropped, one may of course still search for the “best” partition of <span class="math inline">\(X\)</span> into <span class="math inline">\(q\)</span> of the original variables and <span class="math inline">\(p - q\)</span> conditional means, according to the criterion of minimizing <span class="math inline">\(MSE(Y^*; X^*)\)</span>, but the problem becomes intractable without making further assumptions.”</p>
+
+
+</section>
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="seoyeonc/sy_hub" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
