@@ -304,9 +304,9 @@ Note
 </div>
 <p>For all censored observations the function <span class="math inline">\(I[x_i &lt; t]\)</span> cannot be evaluated.</p>
 <p>모든 censored 관찰값에서 I는 evaluate될 수 없다.</p>
-<p>If <span class="math inline">\(y\)</span> denotes the observed data, including censoring times for the censored observations, and <span class="math inline">\(F*\)</span> denotes a distribution function, then <span class="math inline">\(\cal{P}(x_i \le t | y, F * ) = E(I[ x_i \le t ] | y, F * )\)</span> may be used to estimate <span class="math inline">\(I[x_i \le t]\)</span> for all censored observations.</p>
+<p>If <span class="math inline">\(y\)</span> denotes the observed data, including censoring times for the censored observations, and <span class="math inline">\(F*\)</span> denotes a distribution function, then <span class="math inline">\(\cal{P}\)</span> <span class="math inline">\((x_i \le t | y, F * ) = E(I[ x_i \le t ] | y, F * )\)</span> may be used to estimate <span class="math inline">\(I[x_i \le t]\)</span> for all censored observations.</p>
 <p>만약 y를 중단된 관찰값(결측값)에 대한 중단된 시간을 포함한 관찰값이라고 놓고, F * 를 distribution function 으로 보면, p=E는 <em>모든 censored 관찰값에 대한 추정치로 사용</em>될 것이다.</p>
-<p>A distribution function <span class="math inline">\(F *(t)\)</span> is called a self-consistent estimate of the unknown distribution function <span class="math inline">\(F(t)\)</span> if <span class="math inline">\(F * (t) = \frac{1}{N} \sum^N_{i=1} \cal{P} (x_i \le t | y, F * )\)</span> for all <span class="math inline">\(t\)</span> (Efron, 1967; Laird, 1988).</p>
+<p>A distribution function <span class="math inline">\(F *(t)\)</span> is called a self-consistent estimate of the unknown distribution function <span class="math inline">\(F(t)\)</span> if <span class="math inline">\(F * (t) = \frac{1}{N} \sum^N_{i=1} \cal{P}\)</span> <span class="math inline">\((x_i \le t | y, F * )\)</span> for all <span class="math inline">\(t\)</span> (Efron, 1967; Laird, 1988).</p>
 <p>distribution function F * 는 만약 F * 가 모든 t에 대해서 조건을 만족할때, 알려지지 않은 distribution function F의 self-consistent 추정값이라고 부른다.</p>
 <p>That is, if we substitute the estimate <span class="math inline">\(F *\)</span> in the calculation of the expected values, we obtain the same estimate <span class="math inline">\(F *\)</span>.</p>
 <p><strong>즉, 만약 기댓값으로 F * 의 추정값을 대체한다면, F * 의 같은 추정치를 얻을 수 있다.</strong></p>
@@ -369,7 +369,7 @@ Note
 <p>The M step determines the updated estimate <span class="math inline">\(\theta^{(t+1)}\)</span> as the solution of the equation <span class="math inline">\(E[s(X); \theta] = s^{(t)}\)</span>, based on which the next conditional expectation is taken.</p>
 <p>M 단계는 다음 조건부 기댓값을 적용하기 위한 equation의 solution으로 업데이트된 theta 값을 결정한다.</p>
 <p>Convergence is reached when the sequence <span class="math inline">\(\{ s^{(t)} \}_{t \ge 1}\)</span> of self-consistent random variables has stabilized, that is, <span class="math inline">\(s^{(t+l)} = s^{(t)}\)</span>.</p>
-<p>self-consistent 확률 변수 순열 s(t)이 변화가 거의 없는 안정화stablize 상태가 되었을때, 즉 s(t+1) = s(t)가 되었을때 수렴했다고 말한다.</p>
+<p>self-consistent 확률 변수 순열 s(t)이 업데이트 해도 변화가 거의 없는 안정화stablize 상태가 되었을때, 즉 s(t+1) = s(t)가 되었을때 수렴했다고 말한다.</p>
 <p><strong>Thus the EM algorithm generates a sequence of self-consistent random variables for a sufficient statistic <span class="math inline">\(s(X)\)</span>, and the maximum likelihood estimator, which corresponds to a stationary point in the sequence, satisfies the self-consistency condition as defined in Cox and Oakes(1984).</strong></p>
 <p>그러면 EM 알고리즘은 충분 통계량 s(x)에 대한 self-consistent 확률 변수의 순열로 일반화되고, 순열에서 stationary point와 상응하는 최대 우도 추정치는 self-consistency 조건을 만족한다.</p>
 <hr>
