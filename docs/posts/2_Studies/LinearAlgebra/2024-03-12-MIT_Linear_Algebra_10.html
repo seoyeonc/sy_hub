@@ -9,7 +9,7 @@
 <meta name="author" content="SEOYEON CHOI">
 <meta name="dcterms.date" content="2024-03-12">
 
-<title>Seoyeon’s Blog - [Linear Algebra] Lecture 9</title>
+<title>Seoyeon’s Blog - [Linear Algebra] Lecture 10</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -173,7 +173,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[Linear Algebra] Lecture 9</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[Linear Algebra] Lecture 10</li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -186,7 +186,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">[Linear Algebra] Lecture 9</h1>
+      <h1 class="title">[Linear Algebra] Lecture 10</h1>
                       </div>
   </div>
     
@@ -277,7 +277,7 @@ window.Quarto = {
 
 
 
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/yjBerM5jWsc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/nHlE7EgJFds" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
 <blockquote class="blockquote">
 <p>목표</p>
 </blockquote>
@@ -444,6 +444,47 @@ window.Quarto = {
 <li>어느 대각 행렬도 이 3개의 행렬로 표현 가능</li>
 </ul></li>
 </ul>
+<table class="table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;"></th>
+<th style="text-align: center;"><span class="math inline">\(C(A)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(N(A)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(C(A^\top)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(N(A^\top)\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;">Column Space</td>
+<td style="text-align: center;">Null Space</td>
+<td style="text-align: center;">Row Space</td>
+<td style="text-align: center;">Left Null Space</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">basis</td>
+<td style="text-align: center;">pivot columns of <span class="math inline">\(A\)</span></td>
+<td style="text-align: center;">special solutions of <span class="math inline">\(Ax=0\)</span></td>
+<td style="text-align: center;">Pivot columns of <span class="math inline">\(A^\top\)</span></td>
+<td style="text-align: center;">Special Solutions of <span class="math inline">\(A^\top x = 0\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">demension</td>
+<td style="text-align: center;"><span class="math inline">\(r\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(n-r\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(r\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(m-r\)</span></td>
+</tr>
+</tbody>
+</table>
 
 
 
