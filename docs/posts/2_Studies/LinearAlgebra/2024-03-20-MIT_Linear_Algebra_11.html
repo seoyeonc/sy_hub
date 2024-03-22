@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.527">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="SEOYEON CHOI">
+<meta name="dcterms.date" content="2024-03-20">
+
+<title>Seoyeon’s Blog - [Linear Algebra] Lecture 11</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-sidebar docked nav-fixed slimcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Seoyeon’s Blog</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/md/"> 
+<span class="menu-text">Lectures_ing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/chch/"> 
+<span class="menu-text">Lectures_fastai</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/Research_area/"> 
+<span class="menu-text">Research_ing</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/ms/"> 
+<span class="menu-text">Research_fastai</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/GODE_blog/"> 
+<span class="menu-text">GODE</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/HCAM_blog/"> 
+<span class="menu-text">HCAM</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/ITTGNN_blog/"> 
+<span class="menu-text">ITTGNN</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="https://seoyeonc.github.io/julia/"> 
+<span class="menu-text">Julia</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/seoyeonc"> <i class="bi bi-github" role="img">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[Linear Algebra] Lecture 11</li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[Linear Algebra] Lecture 11</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>SEOYEON CHOI </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 20, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../1_note.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><strong>Note</strong></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text"><strong>Studies</strong></span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_graph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Graph</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_ept.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">EPT</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_stgcn.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">STGCN</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../../2_linearalgebra.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Linear Algebra</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-03-20-MIT_Linear_Algebra_11.out.ipynb" download="2024-03-20-MIT_Linear_Algebra_11.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/2IdtqGM6KWU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<blockquote class="blockquote">
+<p>학습 목표</p>
+</blockquote>
+<ul>
+<li>Bases of New Vector Spaces</li>
+<li>Rank one matrices</li>
+<li>small world graphs</li>
+</ul>
+<p><code>-</code> Bases of all vector spaces</p>
+<p><span class="math inline">\(3 \times 3\)</span> 행렬의 부분 공간 1. <span class="math inline">\(3 \times 3\)</span> symmetric matrix 대칭 행렬 2. <span class="math inline">\(3 \times 3\)</span> upper triangular matrix 상삼각행렬 3. <span class="math inline">\(3 \times 3\)</span> diagonal matrix 대각 행렬</p>
+<p><code>-</code> basis of <span class="math inline">\(M\)</span></p>
+<p>$M = $ all 3 bt 3 matrices, dim(M) = 9</p>
+<ul>
+<li><span class="math inline">\(\to\)</span> 이를 하나의 벡터로 간주하고 표현할 수 있는 공간을 알고자 한다면, 원소의 개수가 차원이 됌</li>
+</ul>
+<p>Symmetric <span class="math inline">\(3 \times 3\)</span>, dim(S) = 6(diagonal = 3, 3 entries)</p>
+<p>matrices upper triangular <span class="math inline">\(3 \times 3\)</span> dim(U)=6</p>
+<p>Basis for <span class="math inline">\(M=\)</span> all <span class="math inline">\(3 \times 3\)</span>’s</p>
+<p><span class="math inline">\(\to\)</span> standard basis<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> for <span class="math inline">\(M\)</span>, 9개</p>
+<div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup>&nbsp;1과 0으로만 구성된 basis</p></li></div><p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span></p>
+<p><code>-</code> symmetric matrix as a subspace of <span class="math inline">\(M\)</span></p>
+<p><span class="math inline">\(S\)</span>, symmetrix matrix의 basis에 포함되는 <span class="math inline">\(M\)</span>의 기저 행렬들, 3개</p>
+<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span></p>
+<p>symmetrix matrix의 basis인 나머지 3개</p>
+<p><span class="math inline">\(\begin{bmatrix} 0 &amp; 1 &amp; 0 \\ 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 \\ 1 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 0 &amp; 1 &amp; 0 \end{bmatrix}\)</span></p>
+<p>즉, symmetric matrix의 dimension은 6</p>
+<p><code>-</code>upper triangular matrix as a subspace of <span class="math inline">\(M\)</span></p>
+<p><span class="math inline">\(U\)</span>, Upper truangular matrix, 상삼각행렬의 basis, 기저는 6개</p>
+<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \\ 0 &amp; 0 &amp; 0 \end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; 1 \end{bmatrix}\)</span></p>
+<p>즉, 차원은 6</p>
+<p><code>-</code> diagonal matrix as a subspace of <span class="math inline">\(M\)</span></p>
+<p><span class="math inline">\(S \cap U\)</span> = symmetric and upper triangular</p>
+<p>= diagonal <span class="math inline">\(3 \times 3\)</span>’s</p>
+<p>= dim(<span class="math inline">\(A \cap U\)</span>) = 3</p>
+<ul>
+<li><span class="math inline">\(\cap\)</span> = innerset</li>
+</ul>
+<p><span class="math inline">\(S \cap U = D \to\)</span> <span class="math inline">\(\begin{bmatrix} 1 &amp; 1&amp; 1 \\1 &amp; 1&amp; 1 \\1 &amp; 1&amp; 1\end{bmatrix}\)</span> $$ <span class="math inline">\(\begin{bmatrix}1 &amp; 1&amp; 1 \\ 0 &amp; 1&amp; 1 \\ 0 &amp; 0&amp; 1 \\\end{bmatrix}\)</span>=<span class="math inline">\(\begin{bmatrix} 1 &amp; 0&amp;0 \\0 &amp; 1&amp; 0 \\ 0 &amp; 0&amp; 1 \end{bmatrix}\)</span></p>
+<p>즉, 대각행렬의 차원이 3이다.</p>
+<p><span class="math inline">\(S \cup U\)</span> <span class="math inline">\(S,U\)</span> have different direction, respectively.</p>
+<ul>
+<li><span class="math inline">\(\cup\)</span> = union</li>
+<li>9차원인 symmetric과 6차원의 upper triangular는 합집합을 못하는데, 각각 다른 방향으로 존재하기 때문이다.
+<ul>
+<li><span class="math inline">\(\therefore\)</span> 부분공간이 아니다.</li>
+</ul></li>
+<li>해결책!</li>
+</ul>
+<p><span class="math inline">\(S + U\)</span> = any element of <span class="math inline">\(S\)</span> + any element of <span class="math inline">\(U\)</span> = all <span class="math inline">\(3 \times 3\)</span>’s</p>
+<ul>
+<li>모든 <span class="math inline">\(3 \times 3\)</span> 크기의 모든 행렬 <span class="math inline">\(M\)</span> 만들기 가능해졌다.</li>
+</ul>
+<p>dim(<span class="math inline">\(S+U\)</span>) = 9</p>
+<p>dim S = 6 <code>+</code> dim <span class="math inline">\(U\)</span> = 6</p>
+<p>sum of dimension = 6 + 6 <code>=</code> 3 + 9 (<span class="math inline">\(\cap + \cup\)</span>)</p>
+<p>-&gt; 따라서 부분공간으로 정의하는 차원이나 기저 등의 연산이 자연스럽게 산출된다는 증거로 볼 수 있다.</p>
+<p><code>Example</code></p>
+<p>미분 방정식을 예로 들자면,</p>
+<p><span class="math inline">\(\frac{d^2 y}{d x^2} + y = 0\)</span></p>
+<p>이 basis는</p>
+<ul>
+<li><ol type="1">
+<li></li>
+</ol>
+<ul>
+<li><span class="math inline">\(y= \cos(x)\)</span></li>
+<li><span class="math inline">\(y= \sin(x)\)</span></li>
+<li><span class="math inline">\(y= e^{ix}\)</span></li>
+<li><span class="math inline">\(\cdots\)</span></li>
+</ul></li>
+</ul>
+<p><span class="math inline">\(\frac{d^2 y}{d x^2} + y = y^{''} + y = 0\)</span></p>
+<ul>
+<li><ol start="2" type="1">
+<li></li>
+</ol>
+<ul>
+<li><span class="math inline">\(-\cos(x)+\cos(x)=0\)</span></li>
+<li><span class="math inline">\(-\sin(x)+\sin(x)=0\)</span></li>
+<li><span class="math inline">\(e^{ix} + e^{ix} = 0\)</span></li>
+<li><span class="math inline">\(\cdots\)</span></li>
+</ul></li>
+</ul>
+<p>이렇게 보니, 풀어쓴 해는 basis의 영공간nullspace를 나타낸 것으로도 볼 수 있다.</p>
+<p>complete solution, 즉 완전해를 정의하자면?</p>
+<ul>
+<li><ol start="3" type="1">
+<li></li>
+</ol>
+<ul>
+<li><span class="math inline">\(y = c_1 \cos x + c_2\sin x\)</span> (each element is basis)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
+</ul></li>
+<li>위와 같은 벡터공간vector space 로 정의 가능 미분 방정식의 basis를 이용하여 선형결합하여 표현하였기 때문이고,</li>
+<li>여기서 <span class="math inline">\(\cos\)</span>, <span class="math inline">\(\sin\)</span>은 basis가 되겠다.</li>
+</ul>
+<div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup>&nbsp;all combination 표현할 수 있으면 basis로 보기로 했잖아</p></li></div><p>즉, 미분방정식은 <span class="math inline">\(Ax=0\)</span>의 solution으로 해석 가능하고, 선형 조합한 결과(3)는 영공간nullspace를 정의하기 위한 special solution으로 볼 수 있다.</p>
+<ul>
+<li>special solution = 2</li>
+<li>dimension = 2
+<ul>
+<li>미분 방정식이 2차라서 차원은 사실 2일 수밖에 없음.</li>
+</ul></li>
+</ul>
+<p>dim(solution space) = 2</p>
+<p><code>-</code> Rank one matrices</p>
+<p>Suppose rank = 1, this is the exmaple.</p>
+<p><span class="math inline">\(A = \begin{bmatrix} 1 &amp; 4 &amp; 5 \\ 2 &amp; 8 &amp; 10 \end{bmatrix}\)</span>, 2 by 3 matrix</p>
+<ul>
+<li><p>dim <span class="math inline">\(C(A)\)</span> = rank = dim <span class="math inline">\(C(A^T)\)</span> = 1</p></li>
+<li><p>basis of <span class="math inline">\(C(A)\)</span> = <span class="math inline">\(\begin{bmatrix} 1 \\ 2\end{bmatrix}\)</span></p></li>
+<li><p>basis of <span class="math inline">\(C(A)^T\)</span> = <span class="math inline">\(\begin{bmatrix} 1 &amp; 4 &amp; 5 \end{bmatrix}\)</span></p></li>
+</ul>
+<blockquote class="blockquote">
+<p>row 2가 row 1의 두 배가 되어 서로 종속인 상태가 되기 때문에 rank 1인 예시로 가능하다. col 2도 col 1에 4배를 한 것과 같고, col 3도 col 1에 5배를 한 것과 같아 종속 상태에 있다.</p>
+</blockquote>
+<ul>
+<li>따라서 rank 1 인 행렬이 표현할 수 있는 공간은 <strong>1차원이고 직선이다.</strong></li>
+</ul>
+<p><span class="math inline">\(\begin{bmatrix} 1 \\ 2 \end{bmatrix}\)</span> <span class="math inline">\(\times\)</span> <span class="math inline">\(\begin{bmatrix} 1 &amp; 4 &amp; 5\end{bmatrix}\)</span> = <span class="math inline">\(\begin{bmatrix} 1 &amp; 4 &amp; 5 \\ 2 &amp; 8 &amp; 10 \end{bmatrix}\)</span> = <span class="math inline">\(A\)</span></p>
+<p><span class="math inline">\(C(A) \times C(A)^T = A\)</span></p>
+<p><span class="math inline">\(\therefore\)</span> Rank 1 matrix: <span class="math inline">\(A = uv^T\)</span></p>
+<blockquote class="blockquote">
+<p>column vector <span class="math inline">\(\times\)</span> row vector 를 곱하면 꼭 rank 1 행렬 A 가 만들어진다.</p>
+</blockquote>
+<p>-&gt; rank 1 의 조합으로 행렬 표현 가능</p>
+<p><code>-</code> Subspaces for rank 1 matrices</p>
+<p><span class="math inline">\(M =\)</span> all <span class="math inline">\(5 \times 14\)</span> matrices</p>
+<ul>
+<li>rank 4인 행렬 A는 <span class="math inline">\(5 \times 14\)</span> <span class="math inline">\(M\)</span> 행렬의 부분공간이 아니다.
+<ul>
+<li>조건 필요:
+<ul>
+<li>closed summation operater between scalar multiplication and matrices<br>
+</li>
+<li>including zero vector</li>
+<li>행렬과 스칼라곱 간 덧셈 연산에 갇혀 있어야 하고, 영벡터를 포함해야 한다.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><span class="math inline">\(\begin{bmatrix} 1 &amp; 4 &amp; 5 \\ 2 &amp; 8 &amp; 10 \end{bmatrix}\)</span> + <span class="math inline">\(\begin{bmatrix} 4 &amp; 4 &amp; 2 \\ 2 &amp; 1 &amp; 10 \end{bmatrix}\)</span> = <span class="math inline">\(\begin{bmatrix} 5 &amp; 8 &amp; 7 \\ 4 &amp; 9 &amp; 20 \end{bmatrix}\)</span></p>
+<p>rank 1 + rank 2 = rank 2</p>
+<ul>
+<li>rank가 달라졌지.</li>
+</ul>
+<p><code>-</code> in <span class="math inline">\(R^4\)</span> cases</p>
+<p><span class="math inline">\(v = \begin{bmatrix} v_1 \\ v_2 \\ v_3 \\ v_4\end{bmatrix}\)</span></p>
+<ul>
+<li><span class="math inline">\(R^4\)</span> 공간의 모든 벡터는 위와 같이 4개의 원소를 가지는 벡터로 표현가능</li>
+</ul>
+<p><span class="math inline">\(R^4\)</span>의 부분공간 <span class="math inline">\(S\)</span> = all <span class="math inline">\(v\)</span> in <span class="math inline">\(R^4\)</span> with <span class="math inline">\(v_1 + v_2 + v_3 + v_4 = 0\)</span>을 정의해보면 이렇다.</p>
+<ul>
+<li>이 말은 <span class="math inline">\(v\)</span>가 어떤 행렬 A의 null space라는 것이다.</li>
+</ul>
+<p><span class="math inline">\(A = \begin{bmatrix} 1 &amp; 1 &amp; 1 &amp; 1\end{bmatrix}\)</span></p>
+<p><span class="math inline">\(Av=0\)</span></p>
+<ul>
+<li><p>rank = <span class="math inline">\(r\)</span> = 1</p></li>
+<li><p>row space = <span class="math inline">\(r\)</span> = 1</p></li>
+<li><p>column space = <span class="math inline">\(r\)</span> = 1</p></li>
+<li><p>null space = <span class="math inline">\(n - r\)</span> = 4 - 1 = 3</p></li>
+<li><p>left null space = <span class="math inline">\(m - r\)</span> = 1 - 1 = 0</p></li>
+<li><p>basis of row space = <span class="math inline">\(\begin{bmatrix} 1 &amp; 1 &amp; 1 &amp; 1\end{bmatrix}\)</span></p></li>
+</ul>
+<p>special soultions of null space</p>
+<p><span class="math inline">\(\begin{bmatrix} -1 \\ 1 \\ 0 \\ 0\end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} -1 \\ 0 \\ 1 \\ 0\end{bmatrix}\)</span>, <span class="math inline">\(\begin{bmatrix} -1 \\ 0 \\ 0 \\ 1\end{bmatrix}\)</span></p>
+<ul>
+<li><p>null space를 만드는 v값(<span class="math inline">\(Av=0\)</span>)</p></li>
+<li><p>basis of column spaces = <span class="math inline">\(\begin{bmatrix} 1 \end{bmatrix}\)</span>,<span class="math inline">\(\begin{bmatrix} 1 \end{bmatrix}\)</span>,<span class="math inline">\(\begin{bmatrix} 1 \end{bmatrix}\)</span>,<span class="math inline">\(\begin{bmatrix} 1 \end{bmatrix}\)</span> = <span class="math inline">\(R^1\)</span></p>
+<ul>
+<li><span class="math inline">\(1 \times 1\)</span>, 즉 <span class="math inline">\(R^1\)</span>이라 어떤 상수를 곱해도 상수의 결과로 나옴.</li>
+</ul></li>
+</ul>
+<p><span class="math inline">\(Ax = 0\)</span>, <span class="math inline">\(\begin{bmatrix} 1\\1\\1\\1 \end{bmatrix}\)</span> <span class="math inline">\(\begin{bmatrix} x \end{bmatrix}\)</span> = <span class="math inline">\(\begin{bmatrix} 0\\0\\0\\0 \end{bmatrix}\)</span></p>
+<ul>
+<li>이를 만족하는 값 x는 없다. 따라서 left null space는 0 밖에 존재하지 않는다(0차원의 공간이다.)</li>
+<li>basis of left null space = <span class="math inline">\(\begin{bmatrix} 0 \end{bmatrix}\)</span>, empty</li>
+</ul>
+<blockquote class="blockquote">
+<p>row space(1) + left null space(0) <span class="math inline">\(\times\)</span> column space(1) + null space(3) = 1 <span class="math inline">\(\times\)</span> 4 <span class="math inline">\(\to\)</span> A 행렬의 차원이 됌</p>
+</blockquote>
+
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://utteranc.es/client.js" repo="seoyeonc/sy_hub" issue-term="pathname" theme="github-light" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
