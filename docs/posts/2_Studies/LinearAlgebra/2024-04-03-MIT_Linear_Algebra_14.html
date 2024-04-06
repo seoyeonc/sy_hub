@@ -336,7 +336,8 @@ Note
 <p><span class="math inline">\(||x+y||^2 = 19\)</span></p>
 <p>Subspace <span class="math inline">\(S\)</span> is orthogonal to subspace <span class="math inline">\(T\)</span>.</p>
 <p>means: every vector in <span class="math inline">\(S\)</span> is orthogonalto every vector in <span class="math inline">\(T\)</span></p>
-<p><span class="math inline">\(Ax = \begin{bmatrix} \text{row 1 &amp;}A \\ \text{row 2 &amp;} A\\ \vdots\end{bmatrix} \begin{bmatrix}x_1\\ \vdots\\ x_n \end{bmatrix} = \begin{bmatrix} b_1 \\ \vdots \\ b_n\end{bmatrix}\)</span></p>
+<p><span class="math inline">\(Ax = b\)</span></p>
+<p><span class="math inline">\(\begin{bmatrix} \text{row 1}A \\ \text{row 2} A\\ \vdots\end{bmatrix} \begin{bmatrix}x_1\\ \vdots\\ x_n \end{bmatrix} = \begin{bmatrix} b_1 \\ \vdots \\ b_n\end{bmatrix}\)</span></p>
 <p>row space is orthogonal to nullspace.</p>
 <p><code>Ex</code></p>
 <p><span class="math inline">\(A = \begin{bmatrix} 1&amp;2&amp;5\\2&amp;4&amp;10\end{bmatrix}\)</span>, <span class="math inline">\(m=3, r=1\)</span></p>
@@ -364,10 +365,13 @@ Note
 <blockquote class="blockquote">
 <p><span class="math inline">\(Ax = b\)</span> When there is no solution (<span class="math inline">\(m&gt;n\)</span>),</p>
 </blockquote>
-<p><span class="math inline">\(A^T A\)</span></p>
+<p>determinded matrix 미지수와 방정식의 수가 같을 때</p>
+<p>overdetermined matrix 미지수와 방정식의 수가 같지 않을 때</p>
+<p><span class="math inline">\(A^T A\)</span> overdetermined matrix A에 transpose한 것과 A를 곱한 것의 특징 세 가지</p>
 <ul>
 <li><span class="math inline">\(n \times m\)</span> and <span class="math inline">\(m \times n\)</span> = <span class="math inline">\(n \times n\)</span> -&gt; square matrix</li>
 <li>symmetric metrix ((<span class="math inline">\(A^T A)^T = A^T A\)</span>)</li>
+<li>invertible(단, full rank 이어야 함)</li>
 </ul>
 <p>When there is no solution of <span class="math inline">\(Ax=b\)</span></p>
 <ul>
@@ -383,6 +387,7 @@ Note
 <p>::: {.callout-tip} 역행렬은 항상 가능한 것이 아니기 때문에 이 방법으로 solution 찾지 못하는 경우도 있음</p>
 <p>example</p>
 <p><span class="math inline">\(\begin{bmatrix}1 &amp;1&amp;1\\3&amp;3&amp;3 \end{bmatrix} \begin{bmatrix}1&amp;3\\1&amp;3\\1&amp;3 \end{bmatrix} = \begin{bmatrix}3&amp;9\\9&amp;27 \end{bmatrix}\)</span> ::</p>
+<p>solution을 구하기 위해 전치를 해주자 <span class="math inline">\(\to\)</span> 근사하는 해를 구할 수 있음</p>
 <p><span class="math inline">\(N(A^T A) = N(A)\)</span></p>
 <ul>
 <li>rank of <span class="math inline">\(A^T A\)</span> = rnak of <span class="math inline">\(A\)</span></li>
