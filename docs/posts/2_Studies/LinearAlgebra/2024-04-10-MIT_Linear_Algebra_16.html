@@ -22,6 +22,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -69,6 +103,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -239,8 +302,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-04-10-MIT_Linear_Algebra_16.out.ipynb" download="2024-04-10-MIT_Linear_Algebra_16.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">Import</a></li>
+  <li><a href="#lecture" id="toc-lecture" class="nav-link" data-scroll-target="#lecture">Lecture</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-04-10-MIT_Linear_Algebra_16.out.ipynb" download="2024-04-10-MIT_Linear_Algebra_16.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -248,10 +318,127 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Y_Ac6KiQ1t0" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>https://twlab.tistory.com/35</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/osh80YCg_GM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="import" class="level1">
+<h1>Import</h1>
+<p>import numpy as np import matplotlib.pyplot as plt</p>
+</section>
+<section id="lecture" class="level1">
+<h1>Lecture</h1>
+<blockquote class="blockquote">
+<p>학습 목표</p>
+</blockquote>
+<ul>
+<li>Projections</li>
+<li>Least Squares and best straight line</li>
+</ul>
+<p><span class="math inline">\(P = A(A^T A)^{-1} A^T\)</span></p>
+<ul>
+<li>If <span class="math inline">\(b\)</span> in column space <span class="math inline">\(Pb = b\)</span>
+<ul>
+<li>민약 <span class="math inline">\(b\)</span>가 컬럼 스페이스에 존재한다면 프로젝션 매트릭스에 곱해도 그대로 <span class="math inline">\(b\)</span>가 나옴</li>
+<li><span class="math inline">\(P = A(A^T A)^{-1} A^T b = A(A^T A)^{-1} A^T Ax = b\)</span></li>
+<li><span class="math inline">\(b\)</span>는 컬럼 스페이스 위에 존재하는 벡터이므로 위와 같이 계산된다.</li>
+</ul></li>
+<li>If <span class="math inline">\(b\)</span> <span class="math inline">\(\perp\)</span> column space <span class="math inline">\(Pb = 0\)</span>
+<ul>
+<li>만약 <span class="math inline">\(b\)</span>가 컬럼 스페이스랑 수직을 이루면 프로젝션 매트릭스에 곱하면 <span class="math inline">\(0\)</span>이 나옴</li>
+<li><span class="math inline">\(P = Pb = A(A^T A)^{-1} A^T b = 0\)</span></li>
+<li><span class="math inline">\(b\)</span>가 컬럼 스페이스가 아닌 다른 공간인 left null space에 존재하면 <span class="math inline">\(0\)</span>이 된다.</li>
+</ul></li>
+<li><span class="math inline">\(p\)</span> = projection, <span class="math inline">\(e\)</span> = error, <span class="math inline">\(b\)</span> = a vector
+<ul>
+<li><span class="math inline">\(p\)</span>는 columns space 에 있고</li>
+<li><span class="math inline">\(e\)</span>는 left null space 에 있다.</li>
+</ul></li>
+<li><span class="math inline">\(P\)</span> = symmetric <span class="math inline">\(\to\)</span> <span class="math inline">\((I-P)\)</span> = symmetric</li>
+<li><span class="math inline">\(P\)</span> = projection <span class="math inline">\(\to\)</span> <span class="math inline">\((I-P)\)</span> = projection</li>
+</ul>
+<p><code>-</code> Least Square Method</p>
+<div id="9fcd8869-4bf8-4246-94da-b0b4ecff7d58" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 주어진 데이터 포인트</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> [(<span class="dv">1</span>, <span class="dv">1</span>), (<span class="dv">2</span>, <span class="dv">2</span>), (<span class="dv">3</span>, <span class="dv">2</span>)]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x_data <span class="op">=</span> [d[<span class="dv">0</span>] <span class="cf">for</span> d <span class="kw">in</span> data]</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>y_data <span class="op">=</span> [d[<span class="dv">1</span>] <span class="cf">for</span> d <span class="kw">in</span> data]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 다항 회귀를 위해 데이터를 변형합니다.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array(x_data)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.array(y_data)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 다항 회귀를 위한 최소자승법을 사용하여 회귀선을 구합니다.</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>coefficients <span class="op">=</span> np.polyfit(x, y, <span class="dv">1</span>)  <span class="co"># 1차 다항식을 사용합니다.</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># 다항식 생성</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>p <span class="op">=</span> np.poly1d(coefficients)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># 회귀선 그리기</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>plt.scatter(x, y, label<span class="op">=</span><span class="st">'Data Points'</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.plot(x, p(x), color<span class="op">=</span><span class="st">'red'</span>, label<span class="op">=</span><span class="st">'Regression Line'</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'X'</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Y'</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Linear Regression'</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2024-04-10-MIT_Linear_Algebra_16_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="math inline">\(Ax = b\)</span> <span class="math inline">\(\to\)</span> <span class="math inline">\(\begin{bmatrix} 1 &amp; 1 \\ 1 &amp; 2 \\ 1&amp;3 \end{bmatrix} \begin{bmatrix} C \\ D \end{bmatrix} \begin{bmatrix} 1 \\ 2 \\ 2 \end{bmatrix}\)</span></p>
+<ul>
+<li><span class="math inline">\(y = C + Dt\)</span> 식을 찾아본다고 할 때,
+<ul>
+<li><span class="math inline">\(C + D = 1\)</span></li>
+<li><span class="math inline">\(C + 2D = 2\)</span></li>
+<li><span class="math inline">\(C + 3D = 2\)</span>
+<ul>
+<li>Don’t have a solution.</li>
+</ul></li>
+</ul></li>
+<li>best solution 찾기
+<ul>
+<li><span class="math inline">\(A^T A{\hat x} = A^T b\)</span></li>
+</ul></li>
+<li><span class="math inline">\(||Ax - b||^2 = ||e||^2\)</span>
+<ul>
+<li><span class="math inline">\(e_1^2 + e_2^2 + e_3^2\)</span></li>
+<li>각 <span class="math inline">\(x\)</span> 점에서 projection 한 값들</li>
+</ul></li>
+<li>I want to minimized the sum of error.</li>
+</ul>
+<p>Find <span class="math inline">\({\hat x} = \begin{bmatrix} {\hat c} \\ {\hat p} \end{bmatrix}, P\)</span></p>
+<ul>
+<li><p><span class="math inline">\(b\)</span> normal wquations(=eqnas)</p>
+<ul>
+<li><span class="math inline">\(3C + 6D = 5\)</span></li>
+<li><span class="math inline">\(6C + 14D = 15\)</span></li>
+<li><span class="math inline">\(2D = 1\)</span> <span class="math inline">\(\therefore D = \frac{1}{2}, C = \frac{2}{3}\)</span></li>
+</ul></li>
+<li><p>best line <span class="math inline">\(\frac{1}{2}t + \frac{2}{3}\)</span></p>
+<ul>
+<li><span class="math inline">\(e_1 = - \frac{1}{6}, ex_2 = \frac{2}{6}, e_3 = - \frac{1}{6}\)</span></li>
+</ul></li>
+<li><p><span class="math inline">\((C+D-1)^2\)</span> + <span class="math inline">\((C+2D-2)^2 + (-3D - 2^2)\)</span></p></li>
+<li><p>$A^T A = A^T b $</p></li>
+<li><p><span class="math inline">\(P = A {\hat x}\)</span></p></li>
+<li><p>If <span class="math inline">\(A\)</span> has independant columns then <span class="math inline">\(A^TA\)</span> is invertible.</p>
+<ul>
+<li>Suppose <span class="math inline">\(A^T A x = 0\)</span></li>
+<li><span class="math inline">\(X\)</span> must be <span class="math inline">\(0\)</span></li>
+</ul></li>
+<li><p>Idea</p>
+<ul>
+<li>$X^T A^T A x = 0 = (A_x)^T Ax <span class="math inline">\(\to\)</span> <span class="math inline">\(Ax = 0, X+0\)</span></li>
+</ul></li>
+<li><p>columns definitely independent if they are perp unit vectors or thomominal vectores</p></li>
+</ul>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
