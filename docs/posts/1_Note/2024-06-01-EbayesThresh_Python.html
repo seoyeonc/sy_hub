@@ -339,7 +339,7 @@ window.Quarto = {
 <div id="bb4b9c53-44e8-45a2-9eb9-abc205f9729e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.beta_cauchy(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/home/csy/Dropbox/sy_hub/posts/1_Note/EbayesThresh/utils.py:25: RuntimeWarning: divide by zero encountered in divide
+<pre><code>/home/csy/Dropbox/sy_hub/posts/1_Note/EbayesThresh/utils.py:26: RuntimeWarning: divide by zero encountered in divide
   beta[j] = (norm.pdf(0) / phix[j] - 1) / (x[j] ** 2) - 1</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -397,7 +397,7 @@ window.Quarto = {
   1.85602410e-02  1.12493577e+02]</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>/home/csy/Dropbox/sy_hub/posts/1_Note/EbayesThresh/utils.py:46: RuntimeWarning: divide by zero encountered in divide
+<pre><code>/home/csy/Dropbox/sy_hub/posts/1_Note/EbayesThresh/utils.py:52: RuntimeWarning: divide by zero encountered in divide
   rat2 = 1/np.abs(xma)</code></pre>
 </div>
 </div>
@@ -429,21 +429,21 @@ window.Quarto = {
 <p>Suppose the vector <span class="math inline">\((x_1, \cdots, x_n)\)</span> is such that <span class="math inline">\(x_i\)</span> is drawn independently from a normal distribution with mean <span class="math inline">\(\theta_i\)</span> and standard deviation <span class="math inline">\(s_i\)</span> (<span class="math inline">\(s_i\)</span> equals <span class="math inline">\(1\)</span> for Cauchy prior). The prior distribution of the <span class="math inline">\(\theta_i\)</span> is a mixture with probability <span class="math inline">\(1 − w\)</span> of zero and probability <span class="math inline">\(w\)</span> of a given symmetric heavy-tailed distribution. This routine finds the marginal maximum likelihood estimate of the parameter <span class="math inline">\(w\)</span>.</p>
 </blockquote>
 <p><em>주어진 정규 분포 데이터에 대해 <span class="math inline">\(\theta_𝑖\)</span>의 사전 분포가 주어진 상황에서, 모수 <span class="math inline">\(w\)</span>의 최대우도 추정치를 계산하는 방법을 제공한다</em></p>
-<div id="314626a3-6dc7-419e-a17a-b4e9b17bb98e" class="cell" data-execution_count="20">
+<div id="314626a3-6dc7-419e-a17a-b4e9b17bb98e" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> np.array([<span class="dv">0</span>] <span class="op">*</span> <span class="dv">90</span> <span class="op">+</span> [<span class="dv">5</span>] <span class="op">*</span> <span class="dv">10</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(<span class="dv">0</span>, s, size<span class="op">=</span><span class="dv">100</span>)</span></code></pre></div>
 </div>
-<div id="fc57fdd3-8daf-4885-8e93-6d2b0a9a2bda" class="cell" data-execution_count="21">
+<div id="fc57fdd3-8daf-4885-8e93-6d2b0a9a2bda" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wfromx(x, prior <span class="op">=</span> <span class="st">"cauchy"</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="21">
-<pre><code>0.09217971869856076</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>0.08644292644513768</code></pre>
 </div>
 </div>
 <p><code>isotone</code></p>
 <blockquote class="blockquote">
 <p>Isotonic Regression은 입력 변수에 따른 출력 변수의 단조 증가(monotonic increasing) 또는 감소(monotonic decreasing) 패턴을 찾는 방법</p>
 </blockquote>
-<div id="50d3f97e-3039-4325-98ab-205c5eacc612" class="cell" data-execution_count="9">
+<div id="50d3f97e-3039-4325-98ab-205c5eacc612" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> EbayesThresh.beta_cauchy(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>]))</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.ones(<span class="bu">len</span>(beta))</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>aa <span class="op">=</span> w <span class="op">+</span> <span class="dv">1</span><span class="op">/</span>beta</span>
@@ -451,7 +451,7 @@ window.Quarto = {
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>ww <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>aa<span class="op">**</span><span class="dv">2</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>wnew <span class="op">=</span> EbayesThresh.isotone(ps, ww, increasing <span class="op">=</span> <span class="va">False</span>)</span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>wnew</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>[3.67430141208924,
  -0.8467422493615953,
  -0.8467422493615953,
@@ -463,13 +463,13 @@ window.Quarto = {
 <p>Given a vector of data, find the marginal maximum likelihood choice of weight sequence subject to the constraints that the weights are monotone decreasing</p>
 </blockquote>
 <p><em>데이터에 대해 가중치 시퀀스를 선택하는 과정에서 조건이 주어지는데, 이 가중치 시퀀스는 각각의 가중치 값이 단조 감소해야 하며, 주어진 데이터에 대한 최대 우도를 갖도록 선택되어야 함.</em></p>
-<div id="b87a21a1-0929-4cfa-b457-289b75d9afdf" class="cell" data-execution_count="8">
+<div id="b87a21a1-0929-4cfa-b457-289b75d9afdf" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> np.array([<span class="dv">0</span>] <span class="op">*</span> <span class="dv">30</span> <span class="op">+</span> [<span class="dv">5</span>] <span class="op">*</span> <span class="dv">10</span>)</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(<span class="dv">0</span>, s, size<span class="op">=</span><span class="dv">40</span>)</span></code></pre></div>
 </div>
-<div id="97c98c4a-4cd9-454c-877d-5f6a381ca9c4" class="cell" data-execution_count="9">
+<div id="97c98c4a-4cd9-454c-877d-5f6a381ca9c4" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wmonfromx(x, prior <span class="op">=</span> <span class="st">"cauchy"</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>array([0.16414571, 0.16414571, 0.16414571, 0.16414571, 0.16414571,
        0.16414571, 0.16414571, 0.16414571, 0.16414571, 0.16414571,
        0.16414571, 0.16414571, 0.16414571, 0.16414571, 0.16414571,
@@ -484,9 +484,9 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>임계값 t를 이용해서 데이터 조정</p>
 </blockquote>
-<div id="78e57bc7-116c-4d3d-aa30-f1ba9e579a28" class="cell" data-execution_count="6">
+<div id="78e57bc7-116c-4d3d-aa30-f1ba9e579a28" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.threshold(np.array(<span class="bu">range</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">5</span>)), t<span class="op">=</span><span class="fl">1.4</span>, hard<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>array([-3.6, -2.6, -1.6, -0.6, -0. ,  0. ,  0. ,  0.6,  1.6,  2.6])</code></pre>
 </div>
 </div>
@@ -497,34 +497,89 @@ window.Quarto = {
 <ul>
 <li>라플라스 프라이어에 대한 한계음의로그우도함수 계산</li>
 </ul>
-<div id="3920cd55-f85f-4125-9344-b76df91dd1d6" class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">&lt;-</span> xpar[<span class="dv">2</span>]</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate the range of w given a, using negative monotonicity</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># between w and t</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    wlo <span class="op">&lt;-</span> wfromt(thi, ss, a <span class="op">=</span> a)</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    whi <span class="op">&lt;-</span> wfromt(tlo, ss, a <span class="op">=</span> a)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    wlo <span class="op">&lt;-</span> <span class="bu">max</span>(wlo)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    whi <span class="op">&lt;-</span> <span class="bu">min</span>(whi)</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>    loglik <span class="op">&lt;-</span> <span class="bu">sum</span>(log(<span class="dv">1</span> <span class="op">+</span> (xpar[<span class="dv">1</span>] <span class="op">*</span> (whi <span class="op">-</span> wlo) <span class="op">+</span> wlo) <span class="op">*</span></span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>                          beta.laplace(xx, ss, a)))</span></code></pre></div>
+<div id="fa6f36cd-c343-4a35-8e77-bdb85fd10f44" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>xpar <span class="op">=</span> np.array([<span class="fl">0.5</span>,<span class="fl">0.6</span>,<span class="fl">0.3</span>])</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>xx <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>ss <span class="op">=</span> np.array([<span class="dv">1</span>])</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>tlo <span class="op">=</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">len</span>(np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])))) <span class="op">*</span> <span class="dv">1</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>thi <span class="op">=</span> np.array([<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>])</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> xpar[<span class="dv">1</span>]</span></code></pre></div>
 </div>
-<div id="fa6f36cd-c343-4a35-8e77-bdb85fd10f44" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.negloglik_laplace(np.array([<span class="fl">0.5</span>,<span class="fl">0.5</span>,<span class="fl">0.3</span>]),np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]),<span class="dv">1</span>,np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">len</span>(np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])))) <span class="op">*</span> <span class="dv">1</span>,np.array([<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>]))</span></code></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>TypeError: object of type 'numpy.float64' has no len()</code></pre>
+<div id="9afd8514-1c47-4e5d-b70f-a94490fd04a2" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.negloglik_laplace(xpar, xx, ss, tlo, thi)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>-16.797273710172206</code></pre>
 </div>
 </div>
-<div id="a6a8c4ae-564f-41e6-a218-17d6cae2c897" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(np.array([np.array([<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])]))</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>1</code></pre>
+<p><code>postmean.cauchy</code></p>
+<blockquote class="blockquote">
+<p>Find the posterior mean for the quasi-Cauchy prior with mixing weight w given data x, which may be a scalar or a vector.</p>
+</blockquote>
+<ul>
+<li>quasi-Cauch에 대한 사후 평균 구하기</li>
+</ul>
+<div id="e30de365-f9cf-45bc-87a6-b7b9d89ab545" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.postmean_cauchy(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]),<span class="fl">0.5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>array([ 0,  0,  0, -3,  7, 49])</code></pre>
 </div>
 </div>
-<p>`wanda</p>
+<p><code>wpost.laplace</code></p>
+<blockquote class="blockquote">
+<p>Calculate the posterior weight for non-zero effect</p>
+</blockquote>
+<ul>
+<li>0이 아닌 효과에 대한 사후 가중치 계산</li>
+</ul>
+<div id="def1cb56-68a3-4b8d-9b26-4f0b41967eb6" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wpost_laplace(<span class="fl">0.5</span>,np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<pre><code>array([0.65396152, 0.38270015, 0.30467782, 0.99652125, 1.        ,
+       1.        ])</code></pre>
+</div>
+</div>
+<p><code>postmean.laplace</code></p>
+<blockquote class="blockquote">
+<p>Find the posterior mean for the double exponential prior for given <span class="math inline">\(x, s (sd), w\)</span>, and <span class="math inline">\(a\)</span>.</p>
+</blockquote>
+<ul>
+<li>이전 지수 분포에 대한 사후 평균</li>
+</ul>
+<div id="82b4fc5b-6d08-44d8-bc18-ba08d4f510c4" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.postmean_laplace(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>array([-1.63431541,  0.56091461,  0.        , -4.48434556,  8.5       ,
+       50.5       ])</code></pre>
+</div>
+</div>
+<p><code>postmean</code></p>
+<blockquote class="blockquote">
+<p>Given a single value or a vector of data and sampling standard deviations (sd equals 1 for Cauchy prior), find the corresponding posterior mean estimate(s) of the underlying signal value(s).</p>
+</blockquote>
+<ul>
+<li>적절한 사후 평균 찾기</li>
+</ul>
+<div id="4f6ec048-878a-4dde-bbd2-bcaefbd09b1c" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.postmean(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]), s<span class="op">=</span><span class="dv">1</span>, w <span class="op">=</span> <span class="fl">0.5</span>, prior <span class="op">=</span> <span class="st">"laplace"</span>, a <span class="op">=</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>array([-1.63431541,  0.56091461,  0.        , -4.48434556,  8.5       ,
+       50.5       ])</code></pre>
+</div>
+</div>
+<p><code>wandafromx</code></p>
 <blockquote class="blockquote">
 <p>Given a vector of data and a single value or vector of sampling standard deviations, find the marginal maximum likelihood choice of both weight and scale factor under the Laplace prior</p>
 </blockquote>
+<div id="a7131cbd-1729-4ec7-a77d-6906a49c29f2" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wandafromx(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/csy/Dropbox/sy_hub/posts/1_Note/EbayesThresh/utils.py:318: RuntimeWarning: invalid value encountered in log
+  loglik = np.sum(np.log(1 + (xpar[0] * (whi - wlo) + wlo) *</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>{'w': -1.491836784542754, 'a': 0.5}</code></pre>
+</div>
+</div>
 
 
 </section>

@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.stats import norm, cauchy, laplace
-from scipy.optimize import minimize_scalar
+from scipy.optimize import minimize
 
 
 def beta_cauchy(x):
@@ -40,18 +40,33 @@ def beta_laplace(x, s=1, a=0.5):
     xma = x/s - s*a
     
     rat1 = 1/xpa
-    for i in range(len(xpa)):
-        if xpa[i] < 35:
-            rat1[i] = norm.cdf(-xpa[i]) / norm.pdf(xpa[i])
     
+    if isinstance(xpa, np.ndarray):
+        for i in range(len(xpa)):
+            if xpa[i] < 35:
+                rat1[i] = norm.cdf(-xpa[i]) / norm.pdf(xpa[i])
+    else:
+        if xpa < 35:
+            rat1 = norm.cdf(-xpa) / norm.pdf(xpa)
+
     rat2 = 1/np.abs(xma)
-    for i in range(len(xma)):
-        if xma[i] > 35:
-            xma[i] = 35
-    for i in range(len(xma)):
-        if xma[i] > -35:
-            rat2[i] = norm.cdf(xma[i])/norm.pdf(xma[i])   
     
+    if isinstance(xma, np.ndarray):
+        for i in range(len(xma)):
+            if xma[i] > 35:
+                xma[i] = 35
+    else:
+         if xma > 35:
+                xma = 35
+                
+    if isinstance(xma, np.ndarray):
+        for i in range(len(xma)):
+            if xma[i] > -35:
+                rat2[i] = norm.cdf(xma[i])/norm.pdf(xma[i])   
+    else:
+        if xma > -35:
+            rat2 = norm.cdf(xma)/norm.pdf(xma)   
+
     beta = (a * s) / 2 * (rat1 + rat2) - 1
     
     return beta
@@ -301,6 +316,118 @@ def negloglik_laplace(xpar, xx, ss, tlo, thi):
     whi = np.min(whi)
     
     loglik = np.sum(np.log(1 + (xpar[0] * (whi - wlo) + wlo) *
-                           laplace.pdf(xx, scale=ss/a)))
+                           beta_laplace(xx, ss, a)))
     
     return -loglik
+
+
+def postmean_cauchy(x, w):
+    """
+    Find the posterior mean for the quasi-Cauchy prior with mixing
+    weight w given data x, which may be a scalar or a vector.
+    """
+    muhat = x.copy()  # Ensure x is a numpy array
+    ind = (x == 0)
+    x = x[~ind]  # Remove zeros from x
+    ex = np.exp(-x**2/2)
+    z = w * (x - (2 * (1 - ex))/x)
+    z = z / (w * (1 - ex) + (1 - w) * ex * x**2)
+    muhat[~ind] = z
+    return muhat
+
+
+def wpost_laplace(w, x, s=1, a=0.5):
+    # Calculate the posterior weight for non-zero effect
+    laplace_beta = beta_laplace(x, s, a)
+    return 1 - (1 - w) / (1 + w * laplace_beta)
+
+
+def postmean_laplace(x, s=1, w=0.5, a=0.5):
+    """
+    Find the posterior mean for the double exponential prior for
+    given x, s (sd), w, and a.
+
+    Args:
+        x (float or numpy array): Input data.
+        s (float): Standard deviation.
+        w (float): Parameter.
+        a (float): Parameter.
+
+    Returns:
+        float or numpy array: Posterior mean.
+    """
+    # Only allow a < 20 for input value.
+    a = min(a, 20)
+    
+    # First find the probability of being non-zero
+    w_post = wpost_laplace(w, x, s, a)
+    
+    # Now find the posterior mean conditional on being non-zero
+    sx = np.sign(x)
+    x = np.abs(x)
+    xpa = x/s + s*a
+    xma = x/s - s*a
+    xpa[xpa > 35] = 35
+    xma[xma < -35] = -35
+    
+    cp1 = norm.cdf(-xpa)
+    cp2 = norm.cdf(xma)
+    ef = np.exp(np.minimum(2 * a * x, 100))
+    postmean_cond = x - a * s**2 * (2 * cp1 / (cp1 + ef * cp2) - 1)
+    
+    # Calculate posterior mean and return
+    return sx * w_post * postmean_cond
+
+def postmean(x, s=1, w=0.5, prior="laplace", a=0.5):
+    """
+    Find the posterior mean for the appropriate prior for given x, s (sd), w, and a.
+    """
+    pr = prior[0:1]
+    if pr == "l":
+        mutilde = postmean_laplace(x, s, w, a=a)
+    elif pr == "c":
+        if np.any(s != 1):
+            raise ValueError("Only standard deviation of 1 is allowed for Cauchy prior.")
+        mutilde = postmean_cauchy(x, w)
+    else:
+        raise ValueError("Unknown prior type.")
+    return mutilde
+
+
+def wandafromx(x, s=1, universalthresh=True):
+    """
+    Find the marginal max lik estimators of w and a given standard  deviation s,
+    using a bivariate optimization; If universalthresh=TRUE, the thresholds will 
+    be upper bounded by universal threshold adjusted by standard deviation. 
+    The threshold is constrained to lie between 0 and sqrt ( 2 log (n)) *   s. 
+    Otherwise, threshold can take any nonnegative value;  If running R, 
+    the routine optim is used; in S-PLUS the routine is nlminb.
+    """
+    # Range for thresholds
+    if universalthresh:
+        thi = np.sqrt(2 * np.log(len(x))) * s
+    else:
+        thi = np.inf
+
+    if isinstance(s, int):
+        tlo = np.zeros(len(str(s)))
+    else:
+        tlo = np.zeros(len(s))
+    lo = np.array([0, 0.04])
+    hi = np.array([1, 3])
+    startpar = np.array([0.5, 0.5])
+
+    if 'optim' in globals():
+        result = minimize(negloglik_laplace, startpar, method='L-BFGS-B', bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, thi, tlo))
+        uu = result.x
+    else:
+        result = minimize(negloglik_laplace, startpar, bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, thi, tlo))
+        uu = result.x
+
+    a = uu[1]
+    wlo = wfromt(thi, s, a=a)
+    whi = wfromt(tlo, s, a=a)
+    wlo = np.max(wlo)
+    whi = np.min(whi)
+    w = uu[0] * (whi - wlo) + wlo
+    return {'w': w, 'a': a}
