@@ -2,6 +2,7 @@ import numpy as np
 from scipy.stats import norm, cauchy, laplace
 from scipy.optimize import minimize_scalar
 
+
 def beta_cauchy(x):
     """
     Find the function beta for the mixed normal prior with Cauchy
@@ -92,8 +93,10 @@ def wfromt(tt, s=1, prior="laplace", a=0.5):
     if pr == "l":
         tma = tt / s - s * a
         wi = 1 / np.abs(tma)
-        wi[tma > -35] = norm.cdf(tma[tma > -35]) / norm.pdf(tma[tma > -35])
+        if isinstance(wi, (int, np.integer, np.ndarray)):
+            wi[tma > -35] = norm.cdf(tma[tma > -35]) / norm.pdf(tma[tma > -35])
         wi = a * s * wi - beta_laplace(tt, s, a)
+        
     if pr == "c":
         dnz = norm.pdf(tt)
         wi = 1 + (norm.cdf(tt) - tt * dnz - 1/2) / (np.sqrt(np.pi/2) * dnz * tt**2)
@@ -190,11 +193,11 @@ def isotone(x, wt=None, increasing=False):
         jmin = np.where(np.concatenate((dx > 0, [True])) & np.concatenate(([False], dx <= 0)))[0] + 1
 
         for jb in range(len(jmax)):
-            ind = np.arange([jmax[jb-1], jmin[jb-1]])
+            ind = np.arange(jmax[jb], jmin[jb])
             wtn = np.sum(wt[ind])
             x[jmax[jb]] = np.sum(wt[ind] * x[ind]) / wtn
             wt[jmax[jb]] = wtn
-            x[jmax[jb] + 1:jmin[jb] + 1] = np.nan
+            x[jmax[jb]:jmin[jb]] = np.nan
 
         # Clean up within iteration, eliminating the parts of sequences that
         # were set to NA
@@ -212,26 +215,92 @@ def isotone(x, wt=None, increasing=False):
     z = x[np.cumsum(jj) - 1]
 
     if not increasing:
-        z = -z
+        z = -z.copy()
 
     return z.tolist()
 
+def wmonfromx(xd, prior="laplace", a=0.5, tol=1e-08, maxits=20):
+    """
+    Find the monotone marginal maximum likelihood estimate of the
+    mixing weights for the Laplace prior with parameter a.  It is
+    assumed that the noise variance is equal to one.
+    Find the beta values and the minimum weight
+    Current version allows for standard deviation of 1 only.
+    """
+    pr = prior[0:1]
+    nx = len(xd)
+    wmin = wfromt(np.sqrt(2 * np.log(len(xd))), prior=prior, a=a)
+    winit = 1
+    if pr == "l":
+        beta = beta_laplace(xd, a=a)
+    if pr == "c":
+        beta = beta_cauchy(xd)
+    """
+    now conduct iterated weighted least squares isotone regression
+    """
+    w = np.repeat(winit, len(beta))
+    for j in range(maxits):
+        aa = w + 1 / beta
+        ps = w + aa
+        ww = 1 / aa ** 2
+        wnew = isotone(ps, ww, increasing=False)
+        wnew = np.maximum(wmin, wnew)
+        wnew = np.minimum(1, wnew)
+        zinc = np.max(np.abs(np.diff(wnew)))
+        w = wnew
+        if zinc < tol:
+            return w
+
+    warning("More iterations required to achieve convergence")
+    return w
 
 
-# def threshold(x, t, hard=True):
-#     """
-#     Threshold the data x using threshold t.
+def threshold(x, t, hard=True):
+    """
+    Threshold the data x using threshold t.
+    If hard=True, use hard thresholding.
+    If hard=False, use soft thresholding.
+    """
+    if hard:
+        z = x * (np.abs(x) >= t)
+    else:
+        z = np.sign(x) * np.maximum(0, np.abs(x) - t)
+    return z
+
+
+def negloglik_laplace(xpar, xx, ss, tlo, thi):
+    """
+    Marginal negative log likelihood function for Laplace prior. 
+    Constraints for thresholds need to be passed externally.
+
+    Parameters:
+    xpar : array-like, shape (2,)
+        Vector of two parameters:
+        xpar[0]: a value between [0, 1] which will be adjusted to range of w 
+        xpar[1]: inverse scale (rate) parameter ("a")
+    xx : array-like
+        Data
+    ss : array-like
+        Vector of standard deviations
+    tlo : array-like
+        Lower bound of thresholds
+    thi : array-like
+        Upper bound of thresholds
+
+    Returns:
+    neg_loglik : float
+        Negative log likelihood
+    """
+    a = xpar[1]
     
-#     Parameters:
-#         x (array-like): Input data.
-#         t (float): Threshold value.
-#         hard (bool, optional): If True, use hard thresholding. If False, use soft thresholding.
+    # Calculate the range of w given a, using negative monotonicity
+    # between w and t
+    wlo = wfromt(thi, ss, a=a)
+    whi = wfromt(tlo, ss, a=a)
+    wlo = np.max(wlo)
+    whi = np.min(whi)
     
-#     Returns:
-#         array-like: Thresholded data.
-#     """
-#     if hard:
-#         z = x * (np.abs(x) >= t)
-#     else:
-#         z = np.sign(x) * np.maximum(0, np.abs(x) - t)
-#     return z
+    loglik = np.sum(np.log(1 + (xpar[0] * (whi - wlo) + wlo) *
+                           laplace.pdf(xx, scale=ss/a)))
+    
+    return -loglik

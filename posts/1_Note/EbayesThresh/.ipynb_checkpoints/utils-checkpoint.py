@@ -2,6 +2,7 @@ import numpy as np
 from scipy.stats import norm, cauchy, laplace
 from scipy.optimize import minimize_scalar
 
+
 def beta_cauchy(x):
     """
     Find the function beta for the mixed normal prior with Cauchy
@@ -92,8 +93,10 @@ def wfromt(tt, s=1, prior="laplace", a=0.5):
     if pr == "l":
         tma = tt / s - s * a
         wi = 1 / np.abs(tma)
-        wi[tma > -35] = norm.cdf(tma[tma > -35]) / norm.pdf(tma[tma > -35])
+        if isinstance(wi, (int, np.integer, np.ndarray)):
+            wi[tma > -35] = norm.cdf(tma[tma > -35]) / norm.pdf(tma[tma > -35])
         wi = a * s * wi - beta_laplace(tt, s, a)
+        
     if pr == "c":
         dnz = norm.pdf(tt)
         wi = 1 + (norm.cdf(tt) - tt * dnz - 1/2) / (np.sqrt(np.pi/2) * dnz * tt**2)
@@ -174,19 +177,11 @@ def isotone(x, wt=None, increasing=False):
     Returns:
         list: Isotonic fit to the input sequence x.
     """
-    import numpy as np
-
     nn = len(x)
     if nn == 1:
-        return x.copy()
-
-    if wt is None:
-        wt = np.ones_like(x)
-    else:
-        wt = np.array(wt)
-
+        x = x.copy()
     if not increasing:
-        x = -x
+        x = -(x.copy())
 
     ip = np.arange(1, nn+1)
     dx = np.diff(x)
@@ -194,15 +189,15 @@ def isotone(x, wt=None, increasing=False):
 
     while nx > 1 and np.min(dx) < 0:
         # Find all local minima and maxima
-        jmax = np.where(np.concatenate((dx <= 0, [False])) & np.concatenate(([True], dx > 0)))[0]
-        jmin = np.where(np.concatenate((dx > 0, [True])) & np.concatenate(([False], dx <= 0)))[0]
+        jmax = np.where(np.concatenate((dx <= 0, [False])) & np.concatenate(([True], dx > 0)))[0] + 1
+        jmin = np.where(np.concatenate((dx > 0, [True])) & np.concatenate(([False], dx <= 0)))[0] + 1
 
         for jb in range(len(jmax)):
-            ind = np.arange(jmax[jb], jmin[jb] + 1)
+            ind = np.arange(jmax[jb], jmin[jb])
             wtn = np.sum(wt[ind])
             x[jmax[jb]] = np.sum(wt[ind] * x[ind]) / wtn
             wt[jmax[jb]] = wtn
-            x[jmax[jb] + 1:jmin[jb] + 1] = np.nan
+            x[jmax[jb]:jmin[jb]] = np.nan
 
         # Clean up within iteration, eliminating the parts of sequences that
         # were set to NA
@@ -217,71 +212,95 @@ def isotone(x, wt=None, increasing=False):
     # values the appropriate number of times
     jj = np.zeros(nn, dtype=int)
     jj[ip - 1] = 1
-    z = np.repeat(x, jj)
+    z = x[np.cumsum(jj) - 1]
 
     if not increasing:
-        z = -z
+        z = -z.copy()
 
     return z.tolist()
 
+def wmonfromx(xd, prior="laplace", a=0.5, tol=1e-08, maxits=20):
+    """
+    Find the monotone marginal maximum likelihood estimate of the
+    mixing weights for the Laplace prior with parameter a.  It is
+    assumed that the noise variance is equal to one.
+    Find the beta values and the minimum weight
+    Current version allows for standard deviation of 1 only.
+    """
+    pr = prior[0:1]
+    nx = len(xd)
+    wmin = wfromt(np.sqrt(2 * np.log(len(xd))), prior=prior, a=a)
+    winit = 1
+    if pr == "l":
+        beta = beta_laplace(xd, a=a)
+    if pr == "c":
+        beta = beta_cauchy(xd)
+    """
+    now conduct iterated weighted least squares isotone regression
+    """
+    w = np.repeat(winit, len(beta))
+    for j in range(maxits):
+        aa = w + 1 / beta
+        ps = w + aa
+        ww = 1 / aa ** 2
+        wnew = isotone(ps, ww, increasing=False)
+        wnew = np.maximum(wmin, wnew)
+        wnew = np.minimum(1, wnew)
+        zinc = np.max(np.abs(np.diff(wnew)))
+        w = wnew
+        if zinc < tol:
+            return w
+
+    warning("More iterations required to achieve convergence")
+    return w
 
 
-# def threshold(x, t, hard=True):
-#     """
-#     Threshold the data x using threshold t.
-    
-#     Parameters:
-#         x (array-like): Input data.
-#         t (float): Threshold value.
-#         hard (bool, optional): If True, use hard thresholding. If False, use soft thresholding.
-    
-#     Returns:
-#         array-like: Thresholded data.
-#     """
-#     if hard:
-#         z = x * (np.abs(x) >= t)
-#     else:
-#         z = np.sign(x) * np.maximum(0, np.abs(x) - t)
-#     return z
+def threshold(x, t, hard=True):
+    """
+    Threshold the data x using threshold t.
+    If hard=True, use hard thresholding.
+    If hard=False, use soft thresholding.
+    """
+    if hard:
+        z = x * (np.abs(x) >= t)
+    else:
+        z = np.sign(x) * np.maximum(0, np.abs(x) - t)
+    return z
 
-# def isotone(x, wt=None, increasing=False):
-#     if wt is None:
-#         wt = [1] * len(x)
-        
-#     nn = len(x)
-#     if nn == 1:
-#         return x
+
+def negloglik_laplace(xpar, xx, ss, tlo, thi):
+    """
+    Marginal negative log likelihood function for Laplace prior. 
+    Constraints for thresholds need to be passed externally.
+
+    Parameters:
+    xpar : array-like, shape (2,)
+        Vector of two parameters:
+        xpar[0]: a value between [0, 1] which will be adjusted to range of w 
+        xpar[1]: inverse scale (rate) parameter ("a")
+    xx : array-like
+        Data
+    ss : array-like
+        Vector of standard deviations
+    tlo : array-like
+        Lower bound of thresholds
+    thi : array-like
+        Upper bound of thresholds
+
+    Returns:
+    neg_loglik : float
+        Negative log likelihood
+    """
+    a = xpar[1]
     
-#     if not increasing:
-#         x = [-val for val in x]
+    # Calculate the range of w given a, using negative monotonicity
+    # between w and t
+    wlo = wfromt(thi, ss, a=a)
+    whi = wfromt(tlo, ss, a=a)
+    wlo = np.max(wlo)
+    whi = np.min(whi)
     
-#     ip = list(range(1, nn+1))
-#     dx = [x[i] - x[i-1] for i in range(1, nn)]
-#     nx = len(x)
+    loglik = np.sum(np.log(1 + (xpar[0] * (whi - wlo) + wlo) *
+                           laplace.pdf(xx, scale=ss/a)))
     
-#     while nx > 1 and min(dx) < 0:
-#         jmax = [i+1 for i in range(nx-1) if dx[i] <= 0] + [nx]
-#         jmin = [i+1 for i in range(nx-1) if dx[i] > 0] + [nx]
-        
-#         for jb in range(len(jmax)):
-#             ind = list(range(jmax[jb]-1, jmin[jb]))
-#             wtn = sum(wt[i] for i in ind)
-#             x[jmax[jb]-1] = sum(wt[i] * x[i] for i in ind) / wtn
-#             wt[jmax[jb]-1] = wtn
-#             x[jmax[jb]:jmin[jb]] = [None] * (jmin[jb] - jmax[jb])
-        
-#         x = [val for val in x if val is not None]
-#         wt = [val for val in wt if val is not None]
-#         ip = [ip[i] for i in range(len(x))]
-#         dx = [x[i] - x[i-1] for i in range(1, len(x))]
-#         nx = len(x)
-    
-#     jj = [0] * nn
-#     for i in range(nn):
-#         jj[ip[i]-1] = 1
-#     z = [x[sum(jj[:i])] for i in range(1, nn+1)]
-    
-#     if not increasing:
-#         z = [-val for val in z]
-    
-#     return z
+    return -loglik

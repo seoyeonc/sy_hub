@@ -14,6 +14,17 @@ title-block-banner: true
 
 ::: {.panel-tabset} 
 
+## 할 것들
+
+- 이베이즈 파이썬화?
+- 논문 코드 레이어화
+    - 코드 이해..
+- 튜토리얼 완성 pip으로 가능하게 github 파서
+- 그림 고민
+    - 연구/논문 조정
+- 논리 전개(논문) - 개요
+- cam 논문 라이팅
+
 ## 공부 또는 정리 목표
 
 1. Linear Algebra(MIT)
