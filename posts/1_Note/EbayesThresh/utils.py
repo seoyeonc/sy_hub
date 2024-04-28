@@ -157,6 +157,65 @@ def wfromx(x, s=1, prior="laplace", a=0.5, universalthresh=True):
             
     return np.sqrt(wlo * whi)
 
+def isotone(x, wt=None, increasing=False):
+    """
+    Find the weighted least squares isotone fit to the sequence x,
+    the weights given by the sequence wt. If increasing == True,
+    the curve is set to be increasing, otherwise to be decreasing.
+    The vector ip contains the indices on the original scale of the
+    breaks in the regression at each stage.
+
+    Parameters:
+        x (list or numpy.ndarray): Input sequence.
+        wt (list or numpy.ndarray, optional): Weights for the sequence x. Defaults to None.
+        increasing (bool, optional): If True, the curve is set to be increasing, otherwise decreasing.
+            Defaults to False.
+
+    Returns:
+        list: Isotonic fit to the input sequence x.
+    """
+    nn = len(x)
+    if nn == 1:
+        x = x.copy()
+    if not increasing:
+        x = -(x.copy())
+
+    ip = np.arange(1, nn+1)
+    dx = np.diff(x)
+    nx = len(x)
+
+    while nx > 1 and np.min(dx) < 0:
+        # Find all local minima and maxima
+        jmax = np.where(np.concatenate((dx <= 0, [False])) & np.concatenate(([True], dx > 0)))[0] + 1
+        jmin = np.where(np.concatenate((dx > 0, [True])) & np.concatenate(([False], dx <= 0)))[0] + 1
+
+        for jb in range(len(jmax)):
+            ind = np.arange([jmax[jb-1], jmin[jb-1]])
+            wtn = np.sum(wt[ind])
+            x[jmax[jb]] = np.sum(wt[ind] * x[ind]) / wtn
+            wt[jmax[jb]] = wtn
+            x[jmax[jb] + 1:jmin[jb] + 1] = np.nan
+
+        # Clean up within iteration, eliminating the parts of sequences that
+        # were set to NA
+        ind = ~np.isnan(x)
+        x = x[ind]
+        wt = wt[ind]
+        ip = ip[ind]
+        dx = np.diff(x)
+        nx = len(x)
+
+    # Final cleanup: reconstruct z at all points by repeating the pooled
+    # values the appropriate number of times
+    jj = np.zeros(nn, dtype=int)
+    jj[ip - 1] = 1
+    z = x[np.cumsum(jj) - 1]
+
+    if not increasing:
+        z = -z
+
+    return z.tolist()
+
 
 
 # def threshold(x, t, hard=True):
@@ -175,46 +234,4 @@ def wfromx(x, s=1, prior="laplace", a=0.5, universalthresh=True):
 #         z = x * (np.abs(x) >= t)
 #     else:
 #         z = np.sign(x) * np.maximum(0, np.abs(x) - t)
-#     return z
-
-# def isotone(x, wt=None, increasing=False):
-#     if wt is None:
-#         wt = [1] * len(x)
-        
-#     nn = len(x)
-#     if nn == 1:
-#         return x
-    
-#     if not increasing:
-#         x = [-val for val in x]
-    
-#     ip = list(range(1, nn+1))
-#     dx = [x[i] - x[i-1] for i in range(1, nn)]
-#     nx = len(x)
-    
-#     while nx > 1 and min(dx) < 0:
-#         jmax = [i+1 for i in range(nx-1) if dx[i] <= 0] + [nx]
-#         jmin = [i+1 for i in range(nx-1) if dx[i] > 0] + [nx]
-        
-#         for jb in range(len(jmax)):
-#             ind = list(range(jmax[jb]-1, jmin[jb]))
-#             wtn = sum(wt[i] for i in ind)
-#             x[jmax[jb]-1] = sum(wt[i] * x[i] for i in ind) / wtn
-#             wt[jmax[jb]-1] = wtn
-#             x[jmax[jb]:jmin[jb]] = [None] * (jmin[jb] - jmax[jb])
-        
-#         x = [val for val in x if val is not None]
-#         wt = [val for val in wt if val is not None]
-#         ip = [ip[i] for i in range(len(x))]
-#         dx = [x[i] - x[i-1] for i in range(1, len(x))]
-#         nx = len(x)
-    
-#     jj = [0] * nn
-#     for i in range(nn):
-#         jj[ip[i]-1] = 1
-#     z = [x[sum(jj[:i])] for i in range(1, nn+1)]
-    
-#     if not increasing:
-#         z = [-val for val in z]
-    
 #     return z

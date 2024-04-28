@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -248,8 +277,98 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/uNsCkP9mgRk" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>https://twlab.tistory.com/40</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/srxexLishgY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<blockquote class="blockquote">
+<p>학습목표</p>
+</blockquote>
+<ul>
+<li>Determinant <span class="math inline">\(det\)</span> <span class="math inline">\(A = |A|\)</span></li>
+<li>properties <span class="math inline">\(1,2,3,4\)</span>-<span class="math inline">\(10\pm\)</span> signs</li>
+</ul>
+<blockquote class="blockquote">
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(\begin{vmatrix} a&amp; b \\ c &amp; d\end{vmatrix} = ad-bc\)</span></p>
+</blockquote>
+<p><strong>determinent의 특징</strong></p>
+<p><code>1</code> <span class="math inline">\(det\)</span> <span class="math inline">\(I=1\)</span></p>
+<p><span class="math inline">\(\begin{vmatrix} 1&amp; 0 \\ 0 &amp; 1\end{vmatrix} = 1\)</span></p>
+<ul>
+<li>단위행렬의 determinant는 1</li>
+</ul>
+<p><code>2</code> Exchange rows: reverse sighn of <span class="math inline">\(det\)</span></p>
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(p = \begin{cases} 1 &amp; \text{even # of row exchange} \\ -1 &amp; \text{odd # of row exchange}\end{cases}\)</span></p>
+<ul>
+<li>Purmutation의 p</li>
+</ul>
+<p><span class="math inline">\(\begin{vmatrix} 0&amp; 1 \\ 1 &amp; 0\end{vmatrix} = -1\)</span></p>
+<ul>
+<li>행을 바꾸면 determinant의 부호가 바뀌는데 짝수 바뀌면 1, 홀수 바뀌면 -1</li>
+</ul>
+<p><code>3a</code> <span class="math inline">\(\begin{vmatrix} ta&amp; tb \\ c &amp; d\end{vmatrix} = t \begin{vmatrix} a&amp; b \\ c &amp; d\end{vmatrix}\)</span></p>
+<ul>
+<li>행렬 중 하나의 row에 곱해진 상수는 밖으로 나올 수 있음</li>
+</ul>
+<p><code>3b</code> <span class="math inline">\(\begin{vmatrix} a + a^{'} &amp; b + b^{'} \\ c &amp; d\end{vmatrix} = \begin{vmatrix} a &amp; b \\ c &amp; d\end{vmatrix} + \begin{vmatrix} a^{'} &amp; b^{'} \\ c &amp; d\end{vmatrix}\)</span></p>
+<ul>
+<li>행렬 중 하나의 row는 분리하여 정리 가능</li>
+</ul>
+<p>Linear each row</p>
+<p><em>단, <span class="math inline">\(det\)</span> <span class="math inline">\((A+B) \ne\)</span> <span class="math inline">\(det\)</span> <span class="math inline">\(A\)</span> + <span class="math inline">\(det\)</span> <span class="math inline">\(B\)</span></em></p>
+<p><code>4</code> <span class="math inline">\(2\)</span> equal rows <span class="math inline">\(\to\)</span> <span class="math inline">\(det\)</span> <span class="math inline">\(=0\)</span></p>
+<p>Exchange the rows <span class="math inline">\(\to\)</span> same matrix</p>
+<p><span class="math inline">\(A = \begin{vmatrix}a &amp; b \\ a&amp;b \end{vmatrix}\)</span> 일 때, <span class="math inline">\(det\)</span> <span class="math inline">\(A = ab-ab = 0\)</span></p>
+<ul>
+<li>행렬에 두 개의 같은 row가 존재하면 determinant는 0</li>
+</ul>
+<p><code>5</code> subtract <span class="math inline">\(l\)</span> <span class="math inline">\(\times\)</span> row <span class="math inline">\(i\)</span> from row <span class="math inline">\(k\)</span></p>
+<p><span class="math inline">\(det\)</span> dosen’t change</p>
+<p><span class="math inline">\(\begin{vmatrix} a &amp; b \\ c -la &amp; d-lb \end{vmatrix} = \begin{vmatrix} a &amp; b \\ c &amp; d\end{vmatrix} + \begin{vmatrix} a &amp; b \\ -la &amp; -lb \end{vmatrix}\)</span></p>
+<p>or <span class="math inline">\(= \begin{vmatrix} a &amp; b \\ c &amp; d\end{vmatrix} - l \begin{vmatrix} a &amp; b \\ c &amp; d\end{vmatrix}\)</span> by <code>3</code></p>
+<p>소거과정 거쳐도 <span class="math inline">\(det\)</span>는 변하지 않음</p>
+<ul>
+<li>행렬이 gauss 소거법으로 정리해도 determinant는 변하지 않음</li>
+</ul>
+<p><code>6</code> Row of zeros <span class="math inline">\(\to\)</span> <span class="math inline">\(det\)</span> <span class="math inline">\(A = 0\)</span></p>
+<p><span class="math inline">\(5 \begin{vmatrix} 0 &amp; 0 \\ c &amp; d\end{vmatrix} = \begin{vmatrix} 5 \times 0 &amp; 5 \times 0 \\ c &amp; d\end{vmatrix}\)</span></p>
+<ul>
+<li>모든 원소가 0인 row가 하나라도 존재하면 determinant는 0</li>
+</ul>
+<p><code>7</code> <span class="math inline">\(det\)</span> <span class="math inline">\(U = \begin{vmatrix} d_1 &amp; * &amp; * &amp; * \\ 0 &amp; d_2 &amp; * &amp; * \\ \vdots &amp; \ddots &amp; \ddots &amp; \vdots \\ 0 &amp; 0 &amp; 0 &amp; d_N\end{vmatrix} = (d_1)(d_2)\cdots (d_N)\)</span></p>
+<p>product of pivots</p>
+<ul>
+<li>상삼각행려릐 <span class="math inline">\(det\)</span>는 대각원소들의 곱으로 구할 수 있음</li>
+</ul>
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(D= d_n \cdots d_2d_1\begin{vmatrix} 1 &amp; 0 &amp; 0 &amp; 0 \\ 0 &amp; 1 &amp; 0 &amp; 0 \\ \vdots &amp; \ddots &amp; \ddots &amp; \vdots \\ 0 &amp; 0 &amp; 0 &amp; 1\end{vmatrix} = d_n \cdots d_2d_1\)</span></p>
+<ul>
+<li>삼각행렬의 determinant는 대각 원소들의 곱으로 구할 수 있으며, 이 대각 원소들이 0이 아니어야 가능</li>
+</ul>
+<p><code>8</code> <span class="math inline">\(det\)</span> <span class="math inline">\(A=0\)</span></p>
+<p>When <span class="math inline">\(A\)</span> is singular <span class="math inline">\(\to\)</span> rows of zeros</p>
+<ul>
+<li>특이행렬이면 determinant는 0</li>
+</ul>
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(A \ne 0\)</span> <span class="math inline">\(\to\)</span> <span class="math inline">\(U\)</span></p>
+<p>When <span class="math inline">\(A\)</span> is invertible <span class="math inline">\(\to\)</span> <span class="math inline">\(d_1,d_2,,\cdots,d_n\)</span></p>
+<p><span class="math inline">\(\begin{vmatrix}a &amp; b \\ c&amp;d \end{vmatrix} \to \begin{vmatrix} a &amp; b \\ 0 &amp; d - \frac{c}{d} b\end{vmatrix} = ad-bc\)</span></p>
+<ul>
+<li>역행렬이 존재하면 determinant는 0이 아님</li>
+</ul>
+<p><code>9</code> <span class="math inline">\(det\)</span> <span class="math inline">\(AB =\)</span> ( <span class="math inline">\(det\)</span> <span class="math inline">\(A\)</span> ) (<span class="math inline">\(det\)</span> <span class="math inline">\(B\)</span> )</p>
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(A^{-1} = \frac{1}{det A}\)</span></p>
+<p><span class="math inline">\(A^{-1} A = I\)</span></p>
+<p>A 의 역행렬의 determinant는 A의 determinant의 역수</p>
+<p>(<span class="math inline">\(det\)</span> <span class="math inline">\(A^{-1}\)</span> ) ( <span class="math inline">\(det\)</span> <span class="math inline">\(A\)</span> ) = 1</p>
+<p><span class="math inline">\(A = \begin{bmatrix} 2 &amp; 0 \\ 0 &amp; 3\end{bmatrix}\)</span></p>
+<p><span class="math inline">\(A^{-1} = \begin{bmatrix} \frac{1}{2} &amp; 0 \\ 0 &amp; \frac{1}{3}\end{bmatrix}\)</span></p>
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(A = 6\)</span></p>
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(A^{-1} = \frac{1}{6}\)</span></p>
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(A^2\)</span> = (<span class="math inline">\(det\)</span> <span class="math inline">\(A)^2\)</span></p>
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(2A\)</span> = <span class="math inline">\(2^n\)</span> <span class="math inline">\(det\)</span> <span class="math inline">\(A\)</span></p>
+<p><code>10</code> <span class="math inline">\(det\)</span> <span class="math inline">\(A^T\)</span> = <span class="math inline">\(det\)</span> <span class="math inline">\(A\)</span></p>
+<p><span class="math inline">\(\begin{vmatrix} a &amp; b \\ c &amp; d\end{vmatrix} = \begin{vmatrix} a &amp; c \\\ b &amp; d \end{vmatrix}\)</span></p>
+<p>Prove <code>10</code> using <code>1</code>~<code>9</code></p>
+<p><span class="math inline">\(|A^T| = |A|\)</span></p>
+<p><span class="math inline">\(|U^T L^T| = |LU|\)</span></p>
+<p><span class="math inline">\(|U^T| |L^T| = |L| |U|\)</span></p>
 
 
 

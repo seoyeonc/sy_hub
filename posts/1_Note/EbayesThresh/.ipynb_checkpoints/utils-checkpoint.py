@@ -157,6 +157,73 @@ def wfromx(x, s=1, prior="laplace", a=0.5, universalthresh=True):
             
     return np.sqrt(wlo * whi)
 
+def isotone(x, wt=None, increasing=False):
+    """
+    Find the weighted least squares isotone fit to the sequence x,
+    the weights given by the sequence wt. If increasing == True,
+    the curve is set to be increasing, otherwise to be decreasing.
+    The vector ip contains the indices on the original scale of the
+    breaks in the regression at each stage.
+
+    Parameters:
+        x (list or numpy.ndarray): Input sequence.
+        wt (list or numpy.ndarray, optional): Weights for the sequence x. Defaults to None.
+        increasing (bool, optional): If True, the curve is set to be increasing, otherwise decreasing.
+            Defaults to False.
+
+    Returns:
+        list: Isotonic fit to the input sequence x.
+    """
+    import numpy as np
+
+    nn = len(x)
+    if nn == 1:
+        return x.copy()
+
+    if wt is None:
+        wt = np.ones_like(x)
+    else:
+        wt = np.array(wt)
+
+    if not increasing:
+        x = -x
+
+    ip = np.arange(1, nn+1)
+    dx = np.diff(x)
+    nx = len(x)
+
+    while nx > 1 and np.min(dx) < 0:
+        # Find all local minima and maxima
+        jmax = np.where(np.concatenate((dx <= 0, [False])) & np.concatenate(([True], dx > 0)))[0]
+        jmin = np.where(np.concatenate((dx > 0, [True])) & np.concatenate(([False], dx <= 0)))[0]
+
+        for jb in range(len(jmax)):
+            ind = np.arange(jmax[jb], jmin[jb] + 1)
+            wtn = np.sum(wt[ind])
+            x[jmax[jb]] = np.sum(wt[ind] * x[ind]) / wtn
+            wt[jmax[jb]] = wtn
+            x[jmax[jb] + 1:jmin[jb] + 1] = np.nan
+
+        # Clean up within iteration, eliminating the parts of sequences that
+        # were set to NA
+        ind = ~np.isnan(x)
+        x = x[ind]
+        wt = wt[ind]
+        ip = ip[ind]
+        dx = np.diff(x)
+        nx = len(x)
+
+    # Final cleanup: reconstruct z at all points by repeating the pooled
+    # values the appropriate number of times
+    jj = np.zeros(nn, dtype=int)
+    jj[ip - 1] = 1
+    z = np.repeat(x, jj)
+
+    if not increasing:
+        z = -z
+
+    return z.tolist()
+
 
 
 # def threshold(x, t, hard=True):
