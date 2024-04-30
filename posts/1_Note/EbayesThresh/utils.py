@@ -7,16 +7,9 @@ def beta_cauchy(x):
     """
     Find the function beta for the mixed normal prior with Cauchy
     tails.  It is assumed that the noise variance is equal to one.
-    Calculate the function beta for the mixed normal prior with Cauchy tails.
-    It is assumed that the noise variance is equal to one.
     
     Parameters:
-    x : array-like
-        Input values
-        
-    Returns:
-    beta : array-like
-        Calculated beta values
+    x - a real value or vector
     """
     
     phix = norm.pdf(x)
@@ -32,9 +25,13 @@ def beta_cauchy(x):
 def beta_laplace(x, s=1, a=0.5):
     """
     The function beta for the Laplace prior given parameter a and s (sd)
+    
+    x - the value or vector of data values
+    s - the value or vector of standard deviations; if vector, must have the same length as x
+    a - the scale parameter of the Laplace distribution
     """
     
-    x = np.abs(x)
+    x = abs(x)
     
     xpa = x/s + s*a
     xma = x/s - s*a
