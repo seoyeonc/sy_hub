@@ -431,3 +431,47 @@ def wandafromx(x, s=1, universalthresh=True):
     whi = np.min(whi)
     w = uu[0] * (whi - wlo) + wlo
     return {'w': w, 'a': a}
+
+def threshld(x, t, hard=True):
+    """
+    Threshold the data x using threshold t.
+    If hard=True, use hard thresholding.
+    If hard=False, use soft thresholding.
+    x - a data value or a vector of data
+    t - value of threshold to be used
+    hard - specifies whether hard or soft thresholding is applied
+    """
+    if hard:
+        z = x * (abs(x) >= t)
+    else:
+        z = np.sign(x) * np.maximum(0, abs(x) - t)
+    return z
+
+
+
+def tfromx(x, s=1, prior="laplace", bayesfac=False, a=0.5, universalthresh=True):
+    """
+    Given the data x, the prior, and any other parameters, find the
+    threshold corresponding to the marginal maximum likelihood
+    estimator of the mixing weight.
+    
+    x - Vector of data.
+    s - A single value or a vector of standard deviations if the Laplace prior is used. If
+    a vector, must have the same length as x. Ignored if Cauchy prior is used.
+    prior - Specification of prior to be used; can be "cauchy" or "laplace".
+    bayesfac - Specifies whether Bayes factor threshold should be used instead of posterior
+    median threshold.
+    a - Scale factor if Laplace prior is used. Ignored if Cauchy prior is used.
+    universalthresh - If universalthresh = TRUE, the thresholds will be upper bounded by universal
+    threshold; otherwise, the thresholds can take any non-negative values.
+    """
+    pr = prior[0:1]
+    if pr == "c":
+        s = 1
+    if pr == "l" and np.isnan(a):
+        wa = wandafromx(x, s, universalthresh)
+        w = wa['w']
+        a = wa['a']
+    else:
+        w = wfromx(x, s, prior=prior, a=a)
+    return tfromw(w, s, prior=prior, bayesfac=bayesfac, a=a)
