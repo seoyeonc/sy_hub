@@ -32,41 +32,29 @@ def beta_laplace(x, s=1, a=0.5):
     """
     
     x = np.abs(x)
-    
     xpa = x/s + s*a
     xma = x/s - s*a
-    
     rat1 = 1/xpa
-    
-    if isinstance(xpa, np.ndarray):
-        for i in range(len(xpa)):
-            if xpa[i] < 35:
-                rat1[i] = norm.cdf(-xpa[i]) / norm.pdf(xpa[i])
-    else:
-        if xpa < 35:
-            rat1 = norm.cdf(-xpa) / norm.pdf(xpa)
-
+    xpa < 35
+    rat1[xpa < 35] = norm.cdf(-xpa[xpa < 35]) / norm.pdf(xpa[xpa < 35])
     rat2 = 1/np.abs(xma)
-    
-    if isinstance(xma, np.ndarray):
-        for i in range(len(xma)):
-            if xma[i] > 35:
-                xma[i] = 35
-    else:
-         if xma > 35:
-                xma = 35
-                
-    if isinstance(xma, np.ndarray):
-        for i in range(len(xma)):
-            if xma[i] > -35:
-                rat2[i] = norm.cdf(xma[i])/norm.pdf(xma[i])   
-    else:
-        if xma > -35:
-            rat2 = norm.cdf(xma)/norm.pdf(xma)   
-
+    xma[xma > 35] = 35
+    rat2[xma > -35] = norm.cdf(xma[xma > -35]) / norm.pdf(xma[xma > -35])
     beta = (a * s) / 2 * (rat1 + rat2) - 1
     
     return beta
+
+def cauchy_medzero(x, z, w):
+    hh = z - x
+    dnhh = norm.pdf(hh)
+    yleft = norm.cdf(hh) - z * dnhh + ((z * x - 1) * dnhh * norm.cdf(-x)) / norm.pdf(x)
+    yright2 = 1 + np.exp(-z**2 / 2) * (z**2 * (1 / w - 1) - 1)
+    return yright2 / 2 - yleft
+
+
+def cauchy_threshzero(z, w):
+    y = norm.cdf(z) - z * norm.pdf(z) - 1/2 - (z**2 * np.exp(-z**2/2) * (1/w - 1))/2
+    return y
 
 
 def mad(x, center=None, constant=1.4826, na_rm=False, low=False, high=False):
@@ -124,6 +112,11 @@ def wfromt(tt, s=1, prior="laplace", a=0.5):
 
 def wfromx(x, s=1, prior="laplace", a=0.5, universalthresh=True):
     """
+    Given the vector of data x and s (sd),
+    find the value of w that zeroes S(w) in the
+    range by successive bisection, carrying out nits harmonic bisections
+    of the original interval between wlo and 1.  
+  
     x - Vector of data.
     s - A single value or a vector of standard deviations if the Laplace prior is used. If
     a vector, must have the same length as x. Ignored if Cauchy prior is used.
@@ -231,7 +224,7 @@ def isotone(x, wt=None, increasing=False):
 
     return z.tolist()
 
-def wmonfromx(xd, prior="laplace", a=0.5, tol=1e-08, maxits=20):
+def wmonfromx(xd, prior="laplace", a=0.5,  tol=1e-08, maxits=20):
     """
     Find the monotone marginal maximum likelihood estimate of the
     mixing weights for the Laplace prior with parameter a.  It is

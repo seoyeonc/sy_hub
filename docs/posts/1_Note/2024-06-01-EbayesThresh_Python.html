@@ -308,9 +308,15 @@ window.Quarto = {
   <ul>
   <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">Import</a>
   <ul class="collapse">
-  <li><a href="#package-확인용-import" id="toc-package-확인용-import" class="nav-link" data-scroll-target="#package-확인용-import">Package 확인용 import</a></li>
+  <li><a href="#확인용-import" id="toc-확인용-import" class="nav-link" data-scroll-target="#확인용-import">확인용 import</a></li>
   </ul></li>
   <li><a href="#beta.cauchy" id="toc-beta.cauchy" class="nav-link" data-scroll-target="#beta.cauchy">beta.cauchy</a></li>
+  <li><a href="#beta.laplace" id="toc-beta.laplace" class="nav-link" data-scroll-target="#beta.laplace">beta.laplace</a></li>
+  <li><a href="#cauchy_medzero" id="toc-cauchy_medzero" class="nav-link" data-scroll-target="#cauchy_medzero">cauchy_medzero</a></li>
+  <li><a href="#cauchy_threshzero" id="toc-cauchy_threshzero" class="nav-link" data-scroll-target="#cauchy_threshzero">cauchy_threshzero</a></li>
+  <li><a href="#madmedian-absolute-deviation" id="toc-madmedian-absolute-deviation" class="nav-link" data-scroll-target="#madmedian-absolute-deviation">Mad(Median Absolute Deviation)</a></li>
+  <li><a href="#wfromt" id="toc-wfromt" class="nav-link" data-scroll-target="#wfromt">wfromt</a></li>
+  <li><a href="#wfromx" id="toc-wfromx" class="nav-link" data-scroll-target="#wfromx">wfromx</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-06-01-EbayesThresh_Python.out.ipynb" download="2024-06-01-EbayesThresh_Python.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -335,9 +341,9 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> EbayesThresh</span></code></pre></div>
 </div>
-<section id="package-확인용-import" class="level2">
-<h2 class="anchored" data-anchor-id="package-확인용-import">Package 확인용 import</h2>
-<div id="5f0a2e3e-bef8-48a9-af05-343378f104f4" class="cell" data-execution_count="10">
+<section id="확인용-import" class="level2">
+<h2 class="anchored" data-anchor-id="확인용-import">확인용 import</h2>
+<div id="5f0a2e3e-bef8-48a9-af05-343378f104f4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span></code></pre></div>
 </div>
 </section>
@@ -345,27 +351,21 @@ window.Quarto = {
 <section id="beta.cauchy" class="level1">
 <h1>beta.cauchy</h1>
 <blockquote class="blockquote">
+<p>Function beta for the quasi-Cauchy prior</p>
+</blockquote>
+<ul>
+<li>Description</li>
+</ul>
+<blockquote class="blockquote">
 <p>Given a value or vector x of values, find the value(s) of the function <span class="math inline">\(\beta(x) = g(x)/\phi(x) − 1\)</span>, where <span class="math inline">\(g\)</span> is the convolution of the quasi-Cauchy with the normal density <span class="math inline">\(\phi(x)\)</span>.</p>
 </blockquote>
 <p><em>x가 입력되면 코시 분포와 정규 분포를 혼합해서 함수 베타 구하기</em></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>beta.cauchy <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   Find the function beta for the mixed normal prior with Cauchy</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   tails.  It is assumed that the noise variance is equal to one.</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    phix <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    j <span class="ot">&lt;-</span> (x <span class="sc">!=</span> <span class="dv">0</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    beta <span class="ot">&lt;-</span> x</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    beta[<span class="sc">!</span>j] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    beta[j] <span class="ot">&lt;-</span> (<span class="fu">dnorm</span>(<span class="dv">0</span>)<span class="sc">/</span>phix[j] <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>x[j]<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(beta)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div id="6eda332f-56ae-45e3-83d0-60372bbb189d" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>])</span></code></pre></div>
 </div>
 <div id="83d2e100-7eea-4c67-9555-62c667a9f3c1" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>phix <span class="op">=</span> norm.pdf(x)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>phix</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>phix <span class="op">=</span> norm.pdf(x)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>phix</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>array([5.39909665e-02, 2.41970725e-01, 3.98942280e-01, 1.33830226e-04,
        5.05227108e-15, 0.00000000e+00])</code></pre>
@@ -375,8 +375,8 @@ window.Quarto = {
 <li>x의 확률밀도함수pdf 구하기</li>
 </ul>
 <div id="e98f276c-5326-4b4d-ae44-eea140d80241" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>j <span class="op">=</span> (x <span class="op">!=</span> <span class="dv">0</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>j</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>j <span class="op">=</span> (x <span class="op">!=</span> <span class="dv">0</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>j</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>array([ True,  True, False,  True,  True,  True])</code></pre>
 </div>
@@ -385,15 +385,15 @@ window.Quarto = {
 <li>0이 아닌 인덱스만 얻기</li>
 </ul>
 <div id="6bc89b87-9433-411a-b959-429335f4b423" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> x</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> x</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>array([-2,  1,  0, -4,  8, 50])</code></pre>
 </div>
 </div>
 <div id="94a4ea29-d8b9-4f25-967a-67ba7e963640" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> np.where(j <span class="op">==</span> <span class="va">False</span>, <span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, beta)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> np.where(j <span class="op">==</span> <span class="va">False</span>, <span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="dv">2</span>, beta)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>array([-2. ,  1. , -0.5, -4. ,  8. , 50. ])</code></pre>
 </div>
@@ -402,8 +402,8 @@ window.Quarto = {
 <li>j가 False 즉 0이면 -1/2를 넣고 아니면 beta값 그대로 넣기</li>
 </ul>
 <div id="884e614d-7a6c-427f-864e-81f099a0a873" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>beta[j] <span class="op">=</span> (norm.pdf(<span class="dv">0</span>) <span class="op">/</span> phix[j] <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> (x[j] <span class="op">**</span> <span class="dv">2</span>) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>beta[j] <span class="op">=</span> (norm.pdf(<span class="dv">0</span>) <span class="op">/</span> phix[j] <span class="op">-</span> <span class="dv">1</span>) <span class="op">/</span> (x[j] <span class="op">**</span> <span class="dv">2</span>) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>RuntimeWarning: divide by zero encountered in divide
   beta[j] = (norm.pdf(0) / phix[j] - 1) / (x[j] ** 2) - 1</code></pre>
@@ -414,10 +414,26 @@ window.Quarto = {
 </div>
 </div>
 <ul>
-<li>0의 확률밀도함수pdf에서 x의 확률밀도함수phix로 나누어서 1을 빼고 그것을 x 중 0이 아닌 값들에 제곱한 값으로 나눠 1을 빼기</li>
-<li><span class="math inline">\(\beta(x) = \begin{cases} x &amp; \text{ if } x = 0 \\ \frac{\frac{\phi(0)}{\phi(x)}-1}{x^2} - 1 &amp; \\ \text{ if } x \ne 0\end{cases}\)</span></li>
+<li><p>0의 확률밀도함수pdf에서 x의 확률밀도함수phix로 나누어서 1을 빼고 그것을 x 중 0이 아닌 값들에 제곱한 값으로 나눠 1을 빼기</p></li>
+<li><p><span class="math inline">\(\beta(x) = \begin{cases} x &amp; \text{ if } x = 0 \\ \frac{\frac{\phi(0)}{\phi(x)}-1}{x^2} - 1 &amp; \\ \text{ if } x \ne 0\end{cases}\)</span></p></li>
+<li><p>R code</p></li>
 </ul>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>beta.cauchy <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   Find the function beta for the mixed normal prior with Cauchy</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   tails.  It is assumed that the noise variance is equal to one.</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    phix <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    j <span class="ot">&lt;-</span> (x <span class="sc">!=</span> <span class="dv">0</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    beta <span class="ot">&lt;-</span> x</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    beta[<span class="sc">!</span>j] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span><span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    beta[j] <span class="ot">&lt;-</span> (<span class="fu">dnorm</span>(<span class="dv">0</span>)<span class="sc">/</span>phix[j] <span class="sc">-</span> <span class="dv">1</span>)<span class="sc">/</span>x[j]<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(beta)</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>결과</strong></p>
+<ul>
+<li>Python</li>
+</ul>
 <div id="bb4b9c53-44e8-45a2-9eb9-abc205f9729e" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.beta_cauchy(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -429,106 +445,566 @@ window.Quarto = {
         1.23379625e+12,             inf])</code></pre>
 </div>
 </div>
-<div id="cc2dcfa6-7be4-4f88-b3d6-d97c8a420941" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>plt.plot(EbayesThresh.beta_cauchy(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>])))</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><code>beta.laplace</code></p>
+<ul>
+<li>R</li>
+</ul>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">beta.cauchy</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>))</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]  <span class="fl">5.972640e-01</span> <span class="sc">-</span><span class="fl">3.512787e-01</span> <span class="sc">-</span><span class="fl">5.000000e-01</span>  <span class="fl">1.852474e+02</span>  <span class="fl">1.233796e+12</span>           <span class="cn">Inf</span></span></code></pre></div>
+</section>
+<section id="beta.laplace" class="level1">
+<h1>beta.laplace</h1>
+<blockquote class="blockquote">
+<p>Function beta for the Laplace prior</p>
+</blockquote>
+<ul>
+<li>Description</li>
+</ul>
 <blockquote class="blockquote">
 <p>Given a single value or a vector of <span class="math inline">\(x\)</span> and <span class="math inline">\(s\)</span>, find the value(s) of the function <span class="math inline">\(\beta(x; s, a) = \frac{g(x; s, a)}{f_n(x; 0, s)}−1\)</span>, where <span class="math inline">\(f_n(x; 0, s)\)</span> is the normal density with mean <span class="math inline">\(0\)</span> and standard deviation <span class="math inline">\(s\)</span>, and <span class="math inline">\(g\)</span> is the convolution of the Laplace density with scale parameter a, <span class="math inline">\(γa(\mu)\)</span>, with the normal density <span class="math inline">\(f_n(x; µ, s)\)</span> with mean mu and standard deviation <span class="math inline">\(s\)</span>.</p>
 </blockquote>
 <p><em>평균이 <span class="math inline">\(\mu\)</span>이며, 스케일 파라메터 a를 가진 라플라스와 정규분포의 합성함수 <span class="math inline">\(g\)</span>와 평균이 0이고 표준편차가s인 f로 계산되는 함수 베타</em></p>
-<div id="bb7f3af1-e452-4b76-ab27-56d9c1c2c5a8" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.beta_laplace(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]),s<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div id="231edf1b-c02e-4e9d-bbeb-084b7b5a168e" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>])</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># s = np.arange(1, 7)</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="fl">0.5</span></span></code></pre></div>
+</div>
+<ul>
+<li>s는 표준편차</li>
+<li>a는 Laplaxe prior모수, 이 값이 클수록 부포 모양이 뾰족해진다.</li>
+</ul>
+<div id="9ca7e9a4-0f51-4e36-acfd-c4689279d2b9" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.<span class="bu">abs</span>(x)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>x</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>array([ 2,  1,  0,  4,  8, 50])</code></pre>
+</div>
+</div>
+<ul>
+<li>확률변수 x에 절대값 취하고</li>
+</ul>
+<div id="454bc930-e458-4000-88c8-c99f7de6cd0e" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>xpa <span class="op">=</span> x<span class="op">/</span>s <span class="op">+</span> s<span class="op">*</span>a</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>xpa</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>array([ 2.5,  1.5,  0.5,  4.5,  8.5, 50.5])</code></pre>
+</div>
+</div>
+<div id="9f7bc2af-c859-495e-87bb-9f67f4fdf9f9" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>xma <span class="op">=</span> x<span class="op">/</span>s <span class="op">-</span> s<span class="op">*</span>a</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>xma</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>array([ 1.5,  0.5, -0.5,  3.5,  7.5, 49.5])</code></pre>
+</div>
+</div>
+<div id="5120e231-310e-42c3-a6af-d3da2676434e" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>rat1 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>xpa</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>rat1</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>array([0.4       , 0.66666667, 2.        , 0.22222222, 0.11764706,
+       0.01980198])</code></pre>
+</div>
+</div>
+<div id="b6fbb6b1-3138-44de-ac43-b417c2268de1" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>xpa <span class="op">&lt;</span> <span class="dv">35</span></span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>array([ True,  True,  True,  True,  True, False])</code></pre>
+</div>
+</div>
+<div id="b6ea5bbc-0265-4f86-9f81-9778149cc739" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>rat1[xpa <span class="op">&lt;</span> <span class="dv">35</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>array([0.4       , 0.66666667, 2.        , 0.22222222, 0.11764706])</code></pre>
+</div>
+</div>
+<ul>
+<li>표준정규분포 누적 분포 함수cdf / 표준정규분포 밀도함수 pdf</li>
+</ul>
+<div id="1b628426-0452-4d79-94fe-7b90a5e95721" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>rat1[xpa <span class="op">&lt;</span> <span class="dv">35</span>] <span class="op">=</span> norm.cdf(<span class="op">-</span>xpa[xpa <span class="op">&lt;</span> <span class="dv">35</span>]) <span class="op">/</span> norm.pdf(xpa[xpa <span class="op">&lt;</span> <span class="dv">35</span>])</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>rat1</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>array([0.35426511, 0.51581564, 0.87636446, 0.21257058, 0.11608206,
+       0.01980198])</code></pre>
+</div>
+</div>
+<div id="e1f472e7-14ce-4c37-83e6-c01e228ee835" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>rat2 <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>np.<span class="bu">abs</span>(xma)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>rat2</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>array([0.66666667, 2.        , 2.        , 0.28571429, 0.13333333,
+       0.02020202])</code></pre>
+</div>
+</div>
+<div id="350404f0-3aff-4849-bd4c-f598187041f1" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>xma[xma <span class="op">&gt;</span> <span class="dv">35</span>] <span class="op">=</span> <span class="dv">35</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>xma</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>array([ 1.5,  0.5, -0.5,  3.5,  7.5, 35. ])</code></pre>
+</div>
+</div>
+<div id="cef4aca1-a2df-469d-9b6e-ef13d9845f25" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>rat2[xma <span class="op">&gt;</span> <span class="op">-</span><span class="dv">35</span>] <span class="op">=</span> norm.cdf(xma[xma <span class="op">&gt;</span> <span class="op">-</span><span class="dv">35</span>]) <span class="op">/</span> norm.pdf(xma[xma <span class="op">&gt;</span> <span class="op">-</span><span class="dv">35</span>])</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>rat2</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>array([7.20514301e+000, 1.96401750e+000, 8.76364456e-001, 1.14562530e+003,
+       4.10792246e+012, 2.53781582e+266])</code></pre>
+</div>
+</div>
+<ul>
+<li>beta = <span class="math inline">\(\frac{g(x; s, a)}{f_n(x; 0, s)}−1\)</span></li>
+<li>g = 스케일 파라메터 a를 가진 라플라스 밀도의 convolution + <span class="math inline">\(\gamma (u ; a)\)</span>
+<ul>
+<li>단, The Laplace density is given by <span class="math inline">\(\gamma (u ; a) = \frac{1}{2} a e^{-a |u|}\)</span> and is also known as the double exponential density.</li>
+</ul></li>
+</ul>
+<div id="ef888a8d-1a39-49f5-a905-306bdb87cc03" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> (a <span class="op">*</span> s) <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> (rat1 <span class="op">+</span> rat2) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>beta</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>array([ 8.89852030e-001, -3.80041717e-001, -5.61817772e-001,
         2.85459467e+002,  1.02698062e+012,  6.34453954e+265])</code></pre>
 </div>
 </div>
-<div id="19367d57-8773-42af-9231-9bece6af27dd" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>plt.plot(EbayesThresh.beta_laplace(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]),s<span class="op">=</span><span class="dv">1</span>))</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
-</figure>
+<ul>
+<li>R code</li>
+</ul>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>beta.laplace <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">s =</span> <span class="dv">1</span>, <span class="at">a =</span> <span class="fl">0.5</span>) {</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  The function beta for the Laplace prior given parameter a and s (sd)</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">abs</span>(x)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    xpa <span class="ot">&lt;-</span> x<span class="sc">/</span>s <span class="sc">+</span> s<span class="sc">*</span>a</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    xma <span class="ot">&lt;-</span> x<span class="sc">/</span>s <span class="sc">-</span> s<span class="sc">*</span>a</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>    rat1 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>xpa</span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>    rat1[xpa <span class="sc">&lt;</span> <span class="dv">35</span>] <span class="ot">&lt;-</span> <span class="fu">pnorm</span>( <span class="sc">-</span> xpa[xpa <span class="sc">&lt;</span> <span class="dv">35</span>])<span class="sc">/</span><span class="fu">dnorm</span>(xpa[xpa <span class="sc">&lt;</span> <span class="dv">35</span>])</span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>    rat2 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">abs</span>(xma)</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>    xma[xma <span class="sc">&gt;</span> <span class="dv">35</span>] <span class="ot">&lt;-</span> <span class="dv">35</span></span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>    rat2[xma <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">35</span>] <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(xma[xma <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">35</span>])<span class="sc">/</span><span class="fu">dnorm</span>(xma[xma <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">35</span>])</span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>    beta <span class="ot">&lt;-</span> (a <span class="sc">*</span> s) <span class="sc">/</span> <span class="dv">2</span> <span class="sc">*</span> (rat1 <span class="sc">+</span> rat2) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(beta)</span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>결과</strong></p>
+<ul>
+<li>Python</li>
+</ul>
+<div id="bb7f3af1-e452-4b76-ab27-56d9c1c2c5a8" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.beta_laplace(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]),s<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>array([ 8.89852030e-001, -3.80041717e-001, -5.61817772e-001,
+        2.85459467e+002,  1.02698062e+012,  6.34453954e+265])</code></pre>
 </div>
 </div>
-</div>
-<div id="aa84d058-0b5e-4d2f-a152-410f7da2f78b" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">7</span>):</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(EbayesThresh.beta_laplace(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]),s<span class="op">=</span>i,a<span class="op">=</span><span class="dv">1</span>))</span></code></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[ 8.90821055e-001 -1.62658317e-001 -3.44320458e-001  1.11763852e+002
-  5.47362128e+010  1.26890791e+266]
-[-3.97301589e-002 -1.29919250e-001 -1.57261541e-001  4.89966520e-001
-  1.72626254e+001  1.86200309e+115]
-[-5.47817038e-02 -7.85266727e-02 -8.62291039e-02  5.07055851e-02
-  7.25566365e-01  1.35975389e+41]
-[-4.17233012e-02 -5.04965878e-02 -5.33904683e-02 -5.20319315e-03
-  1.67493780e-01  2.44910886e+16]
-[-3.07299814e-02 -3.46568340e-02 -3.59594764e-02 -1.47336507e-02
-  5.42137177e-02  1.68155326e+06]
-[-2.30695463e-02 -2.50691640e-02 -2.57340346e-02 -1.49952854e-02
-  1.85602410e-02  1.12493577e+02]</code></pre>
+<div id="032868a9-2856-4554-89af-3d63a0a30d85" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.beta_laplace(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]),s<span class="op">=</span>np.arange(<span class="dv">1</span>, <span class="dv">7</span>))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>array([ 8.89852030e-01, -3.03909953e-01, -2.26276543e-01, -3.97301589e-02,
+        1.53950123e-01,  5.64694733e+06])</code></pre>
 </div>
 </div>
-<p><code>-</code> R 결과 비교</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]   <span class="fl">0.890821055</span>  <span class="sc">-</span><span class="fl">0.129919250</span>  <span class="sc">-</span><span class="fl">0.086229104</span>  <span class="sc">-</span><span class="fl">0.005203193</span>   <span class="fl">0.054213718</span> <span class="fl">112.493576777</span></span></code></pre></div>
-<p><code>Mad(Median Absolute Deviation)</code></p>
+<ul>
+<li>R</li>
+</ul>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">beta.laplace</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>), <span class="at">s=</span><span class="dv">1</span>)</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]   <span class="fl">8.898520e-01</span>  <span class="sc">-</span><span class="fl">3.800417e-01</span>  <span class="sc">-</span><span class="fl">5.618178e-01</span>   <span class="fl">2.854595e+02</span>   <span class="fl">1.026981e+12</span>  <span class="fl">6.344540e+265</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">beta.laplace</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>), <span class="at">s=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">a=</span><span class="dv">1</span>)</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>]   <span class="fl">0.890821055</span>  <span class="sc">-</span><span class="fl">0.129919250</span>  <span class="sc">-</span><span class="fl">0.086229104</span>  <span class="sc">-</span><span class="fl">0.005203193</span>   <span class="fl">0.054213718</span> <span class="fl">112.493576777</span></span></code></pre></div>
+</section>
+<section id="cauchy_medzero" class="level1">
+<h1>cauchy_medzero</h1>
+<blockquote class="blockquote">
+<p>the objective function that has to be zeroed, component by component, to find the posterior median when the quasi-Cauchy prior is used. x is the parameter vector, z is the data vector, w is the weight x and z may be scalars</p>
+</blockquote>
+<ul>
+<li>quasi-Cauchy prior에서 사후 중앙값 찾기 위한 함수</li>
+<li>x,z는 벡터일수도 있고, 스칼라일 수 도 있다.</li>
+</ul>
+<div id="110b1f7b-25e8-4439-b088-769895d8782c" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># x = np.array([-2,1,0,-4,8,50])</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> <span class="dv">4</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="co"># z = np.array([1,0,2,3,-1,-1])</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> <span class="dv">5</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="fl">0.5</span></span></code></pre></div>
+</div>
+<div id="54e20a49-11c3-47f5-9445-8dd770805f20" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>hh <span class="op">=</span> z <span class="op">-</span> x</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>hh</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<pre><code>1</code></pre>
+</div>
+</div>
+<div id="a5a8b009-9314-4172-998c-a556c360699a" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>dnhh <span class="op">=</span> norm.pdf(hh)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>dnhh</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<pre><code>0.24197072451914337</code></pre>
+</div>
+</div>
+<div id="8a3d63c3-c0af-4185-8737-f6e655087e1d" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>yleft <span class="op">=</span> norm.cdf(hh) <span class="op">-</span> z <span class="op">*</span> dnhh <span class="op">+</span> ((z <span class="op">*</span> x <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> dnhh <span class="op">*</span> norm.cdf(<span class="op">-</span>x)) <span class="op">/</span> norm.pdf(x)</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>yleft</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<pre><code>0.7194871459755684</code></pre>
+</div>
+</div>
+<div id="e941f9c1-f260-473e-8a4c-75a635bf8f76" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>yright2 <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> np.exp(<span class="op">-</span>z<span class="op">**</span><span class="dv">2</span> <span class="op">/</span> <span class="dv">2</span>) <span class="op">*</span> (z<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">/</span> w <span class="op">-</span> <span class="dv">1</span>) <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>yright2</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>1.00008943967613</code></pre>
+</div>
+</div>
+<div id="f33f3337-989a-4d7c-b3c0-4ee15d0f0653" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>yright2 <span class="op">/</span> <span class="dv">2</span> <span class="op">-</span> yleft</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<pre><code>-0.21944242613750342</code></pre>
+</div>
+</div>
+<ul>
+<li>R코드</li>
+</ul>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>cauchy.medzero <span class="ot">&lt;-</span> <span class="cf">function</span>(x, z, w) {</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="co">#    </span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># the objective function that has to be zeroed, component by</span></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># component, to find the posterior median when the quasi-Cauchy prior</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co"># is used.  x is the parameter vector, z is the data vector, w is the</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a><span class="co"># weight x and z may be scalars</span></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>    hh <span class="ot">&lt;-</span> z <span class="sc">-</span> x</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>    dnhh <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(hh)</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    yleft <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(hh) <span class="sc">-</span> z <span class="sc">*</span> dnhh <span class="sc">+</span> ((z <span class="sc">*</span> x <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> dnhh <span class="sc">*</span> <span class="fu">pnorm</span>( <span class="sc">-</span> x))<span class="sc">/</span></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">dnorm</span>(x)</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    yright2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">exp</span>( <span class="sc">-</span> z<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> (z<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>w <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(yright2<span class="sc">/</span><span class="dv">2</span> <span class="sc">-</span> yleft)</span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>결과</strong></p>
+<ul>
+<li>Python</li>
+</ul>
+<div id="33c5dc9e-402b-4973-af51-f7e503a389a6" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.cauchy_medzero(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]),np.array([<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>]),<span class="fl">0.5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/csy/Dropbox/sy_hub/posts/1_Note/EbayesThresh/utils.py:50: RuntimeWarning: invalid value encountered in divide
+  yleft = norm.cdf(hh) - z * dnhh + ((z * x - 1) * dnhh * norm.cdf(-x)) / norm.pdf(x)</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>array([-0.25356559,  0.        , -0.09859737, -0.45556313,  0.5       ,
+               nan])</code></pre>
+</div>
+</div>
+<div id="b0033926-f009-4149-8701-c52b1a4fe29a" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.cauchy_medzero(<span class="dv">4</span>,<span class="dv">5</span>,<span class="fl">0.5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>-0.21944242613750342</code></pre>
+</div>
+</div>
+<ul>
+<li>R</li>
+</ul>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cauchy.medzero</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>),<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>),<span class="fl">0.5</span>)</span>
+<span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="sc">-</span><span class="fl">0.25356559</span>  <span class="fl">0.00000000</span> <span class="sc">-</span><span class="fl">0.09859737</span> <span class="sc">-</span><span class="fl">0.45556313</span>  <span class="fl">0.50000000</span>         <span class="cn">NaN</span></span>
+<span id="cb66-3"><a href="#cb66-3" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cauchy.medzero</span>(<span class="dv">4</span>,<span class="dv">5</span>,<span class="fl">0.5</span>)</span>
+<span id="cb66-4"><a href="#cb66-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="sc">-</span><span class="fl">0.2194424</span></span></code></pre></div>
+</section>
+<section id="cauchy_threshzero" class="level1">
+<h1>cauchy_threshzero</h1>
+<ul>
+<li>cauchy 임계값 찾기 위한 것</li>
+<li>아래에서 반환되는 y가 0에 가깝도록 만들어주는 z를 찾는 과정</li>
+</ul>
+<div id="36371433-adf0-4635-9714-e244292d1e13" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>z <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> <span class="fl">0.5</span></span></code></pre></div>
+</div>
+<div id="0a51bc70-37fd-43e2-8382-e8e35a7c02b4" class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> norm.cdf(z) <span class="op">-</span> z <span class="op">*</span> norm.pdf(z) <span class="op">-</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span> <span class="op">-</span> (z<span class="op">**</span><span class="dv">2</span> <span class="op">*</span> np.exp(<span class="op">-</span>z<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span>) <span class="op">*</span> (<span class="dv">1</span><span class="op">/</span>w <span class="op">-</span> <span class="dv">1</span>))<span class="op">/</span><span class="dv">2</span></span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>y</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>array([-0.20389131,  0.        ,  0.09859737,  0.43536407, -0.40263935,
+       -0.40263935])</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(y = pnorm(z) - z \times dnorm(z) - \frac{1}{2} - \frac{z^2 \exp (\frac{z^2}{2})(\frac{1}{w} - 1)}{2}\)</span></p>
+<ul>
+<li>R 코드</li>
+</ul>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>cauchy.threshzero <span class="ot">&lt;-</span> <span class="cf">function</span>(z, w) {</span>
+<span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a><span class="co">#    </span></span>
+<span id="cb70-3"><a href="#cb70-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The objective function that has to be zeroed to find the Cauchy</span></span>
+<span id="cb70-4"><a href="#cb70-4" aria-hidden="true" tabindex="-1"></a><span class="co"># threshold. z is the putative threshold vector, w is the weight w</span></span>
+<span id="cb70-5"><a href="#cb70-5" aria-hidden="true" tabindex="-1"></a><span class="co"># can be a vector</span></span>
+<span id="cb70-6"><a href="#cb70-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb70-7"><a href="#cb70-7" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(z) <span class="sc">-</span> z <span class="sc">*</span> <span class="fu">dnorm</span>(z) <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span> <span class="sc">-</span></span>
+<span id="cb70-8"><a href="#cb70-8" aria-hidden="true" tabindex="-1"></a>         (z<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> <span class="fu">exp</span>( <span class="sc">-</span> z<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> (<span class="dv">1</span><span class="sc">/</span>w <span class="sc">-</span> <span class="dv">1</span>))<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb70-9"><a href="#cb70-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(y)</span>
+<span id="cb70-10"><a href="#cb70-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>결과</strong></p>
+<ul>
+<li>Python</li>
+</ul>
+<div id="5096b23d-3dac-4a36-968b-ac979e3a9b9c" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.cauchy_threshzero(np.array([<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>]),<span class="fl">0.5</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([-0.20389131,  0.        ,  0.09859737,  0.43536407, -0.40263935,
+       -0.40263935])</code></pre>
+</div>
+</div>
+<div id="8760aa06-b8c9-416e-9f54-6ab88be1496e" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.cauchy_threshzero(np.array([<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="op">-</span><span class="dv">1</span>,<span class="op">-</span><span class="dv">1</span>]),np.array([<span class="fl">0.5</span>,<span class="fl">0.4</span>,<span class="fl">0.3</span>,<span class="fl">0.2</span>,<span class="dv">0</span>,<span class="fl">0.1</span>]))</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>/home/csy/Dropbox/sy_hub/posts/1_Note/EbayesThresh/utils.py:56: RuntimeWarning: divide by zero encountered in divide
+  y = norm.cdf(z) - z * norm.pdf(z) - 1/2 - (z**2 * np.exp(-z**2/2) * (1/w - 1))/2</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>array([-0.20389131,  0.        , -0.26229672,  0.28539262,        -inf,
+       -2.82876199])</code></pre>
+</div>
+</div>
+<ul>
+<li>R</li>
+</ul>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">cauchy.threshzero</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>),<span class="fl">0.5</span>)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="sc">-</span><span class="fl">0.20389131</span>  <span class="fl">0.00000000</span>  <span class="fl">0.09859737</span>  <span class="fl">0.43536407</span> <span class="sc">-</span><span class="fl">0.40263935</span> <span class="sc">-</span><span class="fl">0.40263935</span></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cauchy.threshzero</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">0</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="sc">-</span><span class="dv">1</span>,<span class="sc">-</span><span class="dv">1</span>), <span class="fu">c</span>(<span class="fl">0.5</span>,<span class="fl">0.4</span>,<span class="fl">0.3</span>,<span class="fl">0.2</span>,<span class="dv">0</span>,<span class="fl">0.1</span>))</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="sc">-</span><span class="fl">0.2038913</span>  <span class="fl">0.0000000</span> <span class="sc">-</span><span class="fl">0.2622967</span>  <span class="fl">0.2853926</span>       <span class="sc">-</span><span class="cn">Inf</span> <span class="sc">-</span><span class="fl">2.8287620</span></span></code></pre></div>
+</section>
+<section id="madmedian-absolute-deviation" class="level1">
+<h1>Mad(Median Absolute Deviation)</h1>
 <blockquote class="blockquote">
 <p>중앙값 절대 편차, 분산이나 퍼진 정도 확인 가능</p>
 </blockquote>
-<div id="96c83ff1-b6fa-412a-abea-7dd9726c7431" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.mad(np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="fl">6.5</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="fl">7.5</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">52</span>, <span class="dv">90</span>]))</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
+<p>결과</p>
+<ul>
+<li>Python</li>
+</ul>
+<div id="96c83ff1-b6fa-412a-abea-7dd9726c7431" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.mad(np.array([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="fl">6.5</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="fl">7.5</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">52</span>, <span class="dv">90</span>]))</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>2.9652</code></pre>
 </div>
 </div>
-<p><code>wfromt</code></p>
+<ul>
+<li>R</li>
+</ul>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">mad</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="fl">5.5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="fl">6.5</span>, <span class="dv">7</span>, <span class="dv">7</span>, <span class="fl">7.5</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">52</span>, <span class="dv">90</span>))</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">2.9652</span></span></code></pre></div>
+</section>
+<section id="wfromt" class="level1">
+<h1>wfromt</h1>
+<p>Description</p>
 <blockquote class="blockquote">
 <p>Given a value or vector of thresholds and sampling standard deviations (sd equals 1 for Cauchy prior), find the mixing weight for which this is(these are) the threshold(s) of the posterior median estimator. If a vector of threshold values is provided, the vector of corresponding weights is returned.</p>
 </blockquote>
 <p><em>주어진 임계값과 표준편차에 대해, posterior median estimator에서 이 임계값이 나오도록 하는 혼합 가중치를 계산하는 함수가 제공된다.</em></p>
-<div id="73b44642-ca91-4f3a-a22b-1e8e52944e63" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wfromt(np.array([<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>]),prior<span class="op">=</span><span class="st">'cachy'</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<div id="75b9fdf5-3249-4c43-8b3f-7af41d8a1736" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>tt <span class="op">=</span> np.array([<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>])</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>prior <span class="op">=</span> <span class="st">'laplace"'</span></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> <span class="fl">0.5</span></span></code></pre></div>
+</div>
+<div id="6376718e-39ce-463a-8286-e9e8466e5226" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>pr <span class="op">=</span> prior[<span class="dv">0</span>:<span class="dv">1</span>]</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>pr</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>'l'</code></pre>
+</div>
+</div>
+<div id="afaebfd5-dd49-4603-97a2-bd29f901c644" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pr <span class="op">==</span> <span class="st">"l"</span>:</span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>    tma <span class="op">=</span> tt <span class="op">/</span> s <span class="op">-</span> s <span class="op">*</span> a</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>    wi <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> np.<span class="bu">abs</span>(tma)</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(wi, (<span class="bu">int</span>, np.integer, np.ndarray)):</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>        wi[tma <span class="op">&gt;</span> <span class="op">-</span><span class="dv">35</span>] <span class="op">=</span> norm.cdf(tma[tma <span class="op">&gt;</span> <span class="op">-</span><span class="dv">35</span>]) <span class="op">/</span> norm.pdf(tma[tma <span class="op">&gt;</span> <span class="op">-</span><span class="dv">35</span>])</span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a>    wi <span class="op">=</span> a <span class="op">*</span> s <span class="op">*</span> wi <span class="op">-</span> EbayesThresh.beta_laplace(tt, s, a)</span></code></pre></div>
+</div>
+<div id="46cedaf0-91e5-4d06-babd-4fbfeadb353e" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a>tma</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>array([1.5, 2.5, 4.5])</code></pre>
+</div>
+</div>
+<div id="1d5ee94f-4204-4dfc-8f3f-de0decabac4b" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>wi</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<pre><code>array([2.71271947e+00, 1.51074409e+01, 1.56417968e+04])</code></pre>
+</div>
+</div>
+<div id="cc119800-e195-4560-a3ee-8d6e6c944441" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> pr <span class="op">==</span> <span class="st">"c"</span>:</span>
+<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>    dnz <span class="op">=</span> norm.pdf(tt)</span>
+<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>    wi <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> (norm.cdf(tt) <span class="op">-</span> tt <span class="op">*</span> dnz <span class="op">-</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>) <span class="op">/</span> (np.sqrt(np.pi<span class="op">/</span><span class="dv">2</span>) <span class="op">*</span> dnz <span class="op">*</span> tt<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(wi, np.ndarray):</span>
+<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(wi)):</span>
+<span id="cb88-6"><a href="#cb88-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="kw">not</span> np.isfinite(wi[i]):</span>
+<span id="cb88-7"><a href="#cb88-7" aria-hidden="true" tabindex="-1"></a>                wi[i] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb88-8"><a href="#cb88-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb88-9"><a href="#cb88-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> np.isfinite(wi):</span>
+<span id="cb88-10"><a href="#cb88-10" aria-hidden="true" tabindex="-1"></a>            wi <span class="op">=</span> <span class="dv">1</span></span></code></pre></div>
+</div>
+<div id="a6d9bc89-e3a6-4a0e-9dbb-df6eaa23fce1" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb89-1"><a href="#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="op">/</span> wi</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>array([3.68633768e-01, 6.61925474e-02, 6.39312744e-05])</code></pre>
+</div>
+</div>
+<ul>
+<li>R코드</li>
+</ul>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1" aria-hidden="true" tabindex="-1"></a>wfromt <span class="ot">&lt;-</span> <span class="cf">function</span>(tt, <span class="at">s =</span> <span class="dv">1</span>, <span class="at">prior =</span> <span class="st">"laplace"</span>, <span class="at">a =</span> <span class="fl">0.5</span>) {</span>
+<span id="cb91-2"><a href="#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="co">#</span></span>
+<span id="cb91-3"><a href="#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="co">#  Find the weight that has posterior median threshold tt, </span></span>
+<span id="cb91-4"><a href="#cb91-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">#   given s (sd) and a.</span></span>
+<span id="cb91-5"><a href="#cb91-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">#</span></span>
+<span id="cb91-6"><a href="#cb91-6" aria-hidden="true" tabindex="-1"></a>pr <span class="ot">&lt;-</span> <span class="fu">substring</span>(prior, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb91-7"><a href="#cb91-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"l"</span>){</span>
+<span id="cb91-8"><a href="#cb91-8" aria-hidden="true" tabindex="-1"></a>  tma <span class="ot">&lt;-</span> tt<span class="sc">/</span>s <span class="sc">-</span> s<span class="sc">*</span>a</span>
+<span id="cb91-9"><a href="#cb91-9" aria-hidden="true" tabindex="-1"></a>  wi <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">abs</span>(tma)</span>
+<span id="cb91-10"><a href="#cb91-10" aria-hidden="true" tabindex="-1"></a>  wi[tma <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">35</span>] <span class="ot">&lt;-</span> <span class="fu">pnorm</span>(tma[tma <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">35</span>])<span class="sc">/</span><span class="fu">dnorm</span>(tma[tma <span class="sc">&gt;</span> <span class="sc">-</span><span class="dv">35</span>])</span>
+<span id="cb91-11"><a href="#cb91-11" aria-hidden="true" tabindex="-1"></a>  wi <span class="ot">&lt;-</span> a <span class="sc">*</span> s <span class="sc">*</span> wi <span class="sc">-</span> <span class="fu">beta.laplace</span>(tt, s, a)</span>
+<span id="cb91-12"><a href="#cb91-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb91-13"><a href="#cb91-13" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"c"</span>) {</span>
+<span id="cb91-14"><a href="#cb91-14" aria-hidden="true" tabindex="-1"></a>  dnz <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(tt)</span>
+<span id="cb91-15"><a href="#cb91-15" aria-hidden="true" tabindex="-1"></a>  wi <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="fu">pnorm</span>(tt) <span class="sc">-</span> tt <span class="sc">*</span> dnz <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span></span>
+<span id="cb91-16"><a href="#cb91-16" aria-hidden="true" tabindex="-1"></a>    (<span class="fu">sqrt</span>(pi<span class="sc">/</span><span class="dv">2</span>) <span class="sc">*</span> dnz <span class="sc">*</span> tt<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb91-17"><a href="#cb91-17" aria-hidden="true" tabindex="-1"></a>  wi[<span class="sc">!</span><span class="fu">is.finite</span>(wi)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb91-18"><a href="#cb91-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb91-19"><a href="#cb91-19" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>wi</span>
+<span id="cb91-20"><a href="#cb91-20" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>결과</p>
+<ul>
+<li>Python</li>
+</ul>
+<div id="73b44642-ca91-4f3a-a22b-1e8e52944e63" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wfromt(np.array([<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>]),prior<span class="op">=</span><span class="st">'cachy'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>array([4.22963403e-01, 9.33799336e-02, 9.31590884e-05])</code></pre>
 </div>
 </div>
-<p><code>wfromx</code></p>
+<ul>
+<li>R</li>
+</ul>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">wfromt</span>(<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">5</span>),<span class="at">prior=</span><span class="st">'cachy'</span>)</span>
+<span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">4.229634e-01</span> <span class="fl">9.337993e-02</span> <span class="fl">9.315909e-05</span></span></code></pre></div>
+</section>
+<section id="wfromx" class="level1">
+<h1>wfromx</h1>
+<p>Description</p>
 <blockquote class="blockquote">
 <p>Suppose the vector <span class="math inline">\((x_1, \cdots, x_n)\)</span> is such that <span class="math inline">\(x_i\)</span> is drawn independently from a normal distribution with mean <span class="math inline">\(\theta_i\)</span> and standard deviation <span class="math inline">\(s_i\)</span> (<span class="math inline">\(s_i\)</span> equals <span class="math inline">\(1\)</span> for Cauchy prior). The prior distribution of the <span class="math inline">\(\theta_i\)</span> is a mixture with probability <span class="math inline">\(1 − w\)</span> of zero and probability <span class="math inline">\(w\)</span> of a given symmetric heavy-tailed distribution. This routine finds the marginal maximum likelihood estimate of the parameter <span class="math inline">\(w\)</span>.</p>
 </blockquote>
 <p><em>주어진 정규 분포 데이터에 대해 <span class="math inline">\(\theta_𝑖\)</span>의 사전 분포가 주어진 상황에서, 모수 <span class="math inline">\(w\)</span>의 최대우도 추정치를 계산하는 방법을 제공한다</em></p>
-<div id="314626a3-6dc7-419e-a17a-b4e9b17bb98e" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> np.array([<span class="dv">0</span>] <span class="op">*</span> <span class="dv">90</span> <span class="op">+</span> [<span class="dv">5</span>] <span class="op">*</span> <span class="dv">10</span>)</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(<span class="dv">0</span>, s, size<span class="op">=</span><span class="dv">100</span>)</span></code></pre></div>
+<div id="1a967f88-bb8d-441d-97d8-3fd021c36eb9" class="cell">
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb95-1"><a href="#cb95-1" aria-hidden="true" tabindex="-1"></a>pr <span class="op">=</span> prior[<span class="dv">0</span>:<span class="dv">1</span>]</span>
+<span id="cb95-2"><a href="#cb95-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-3"><a href="#cb95-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pr <span class="op">==</span> <span class="st">"c"</span>:</span>
+<span id="cb95-4"><a href="#cb95-4" aria-hidden="true" tabindex="-1"></a>        s <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb95-5"><a href="#cb95-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-6"><a href="#cb95-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> universalthresh:</span>
+<span id="cb95-7"><a href="#cb95-7" aria-hidden="true" tabindex="-1"></a>        tuniv <span class="op">=</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">len</span>(x))) <span class="op">*</span> s</span>
+<span id="cb95-8"><a href="#cb95-8" aria-hidden="true" tabindex="-1"></a>        wlo <span class="op">=</span> wfromt(tuniv, s, prior, a)</span>
+<span id="cb95-9"><a href="#cb95-9" aria-hidden="true" tabindex="-1"></a>        wlo <span class="op">=</span> np.<span class="bu">max</span>(wlo)</span>
+<span id="cb95-10"><a href="#cb95-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb95-11"><a href="#cb95-11" aria-hidden="true" tabindex="-1"></a>        wlo <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb95-12"><a href="#cb95-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-13"><a href="#cb95-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pr <span class="op">==</span> <span class="st">"l"</span>:</span>
+<span id="cb95-14"><a href="#cb95-14" aria-hidden="true" tabindex="-1"></a>        beta <span class="op">=</span> beta_laplace(x, s, a)</span>
+<span id="cb95-15"><a href="#cb95-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> pr <span class="op">==</span> <span class="st">"c"</span>:</span>
+<span id="cb95-16"><a href="#cb95-16" aria-hidden="true" tabindex="-1"></a>        beta <span class="op">=</span> beta_cauchy(x)</span>
+<span id="cb95-17"><a href="#cb95-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-18"><a href="#cb95-18" aria-hidden="true" tabindex="-1"></a>    whi <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb95-19"><a href="#cb95-19" aria-hidden="true" tabindex="-1"></a>    beta <span class="op">=</span> np.minimum(beta, <span class="fl">1e20</span>)</span>
+<span id="cb95-20"><a href="#cb95-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-21"><a href="#cb95-21" aria-hidden="true" tabindex="-1"></a>    shi <span class="op">=</span> np.<span class="bu">sum</span>(beta <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> beta))</span>
+<span id="cb95-22"><a href="#cb95-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> shi <span class="op">&gt;=</span> <span class="dv">0</span>:</span>
+<span id="cb95-23"><a href="#cb95-23" aria-hidden="true" tabindex="-1"></a>        shi <span class="op">=</span>  <span class="dv">1</span></span>
+<span id="cb95-24"><a href="#cb95-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-25"><a href="#cb95-25" aria-hidden="true" tabindex="-1"></a>    slo <span class="op">=</span> np.<span class="bu">sum</span>(beta <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> wlo <span class="op">*</span> beta))</span>
+<span id="cb95-26"><a href="#cb95-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> slo <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb95-27"><a href="#cb95-27" aria-hidden="true" tabindex="-1"></a>        slo <span class="op">=</span> wlo</span>
+<span id="cb95-28"><a href="#cb95-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb95-29"><a href="#cb95-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,<span class="dv">31</span>):</span>
+<span id="cb95-30"><a href="#cb95-30" aria-hidden="true" tabindex="-1"></a>        wmid <span class="op">=</span> np.sqrt(wlo <span class="op">*</span> whi)</span>
+<span id="cb95-31"><a href="#cb95-31" aria-hidden="true" tabindex="-1"></a>        smid <span class="op">=</span> np.<span class="bu">sum</span>(beta <span class="op">/</span> (<span class="dv">1</span> <span class="op">+</span> wmid <span class="op">*</span> beta))</span>
+<span id="cb95-32"><a href="#cb95-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> smid <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb95-33"><a href="#cb95-33" aria-hidden="true" tabindex="-1"></a>            smid <span class="op">=</span> wmid</span>
+<span id="cb95-34"><a href="#cb95-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> smid <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb95-35"><a href="#cb95-35" aria-hidden="true" tabindex="-1"></a>            wlo <span class="op">=</span> wmid</span>
+<span id="cb95-36"><a href="#cb95-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb95-37"><a href="#cb95-37" aria-hidden="true" tabindex="-1"></a>            whi <span class="op">=</span> wmid</span>
+<span id="cb95-38"><a href="#cb95-38" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb95-39"><a href="#cb95-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.sqrt(wlo <span class="op">*</span> whi)</span></code></pre></div>
 </div>
-<div id="fc57fdd3-8daf-4885-8e93-6d2b0a9a2bda" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wfromx(x, prior <span class="op">=</span> <span class="st">"cauchy"</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>0.08644292644513768</code></pre>
+<ul>
+<li>R코드</li>
+</ul>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a>wfromx <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">s =</span> <span class="dv">1</span>, <span class="at">prior =</span> <span class="st">"laplace"</span>, <span class="at">a =</span> <span class="fl">0.5</span>,</span>
+<span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">universalthresh =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    </span></span>
+<span id="cb96-4"><a href="#cb96-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  Given the vector of data x and s (sd),</span></span>
+<span id="cb96-5"><a href="#cb96-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   find the value of w that zeroes S(w) in the</span></span>
+<span id="cb96-6"><a href="#cb96-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   range by successive bisection, carrying out nits harmonic bisections</span></span>
+<span id="cb96-7"><a href="#cb96-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   of the original interval between wlo and 1.  </span></span>
+<span id="cb96-8"><a href="#cb96-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  </span></span>
+<span id="cb96-9"><a href="#cb96-9" aria-hidden="true" tabindex="-1"></a>    pr <span class="ot">&lt;-</span> <span class="fu">substring</span>(prior, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb96-10"><a href="#cb96-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"c"</span>)</span>
+<span id="cb96-11"><a href="#cb96-11" aria-hidden="true" tabindex="-1"></a>          s <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb96-12"><a href="#cb96-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(universalthresh) {</span>
+<span id="cb96-13"><a href="#cb96-13" aria-hidden="true" tabindex="-1"></a>          tuniv <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="dv">2</span> <span class="sc">*</span> <span class="fu">log</span>(<span class="fu">length</span>(x))) <span class="sc">*</span> s</span>
+<span id="cb96-14"><a href="#cb96-14" aria-hidden="true" tabindex="-1"></a>          wlo <span class="ot">&lt;-</span> <span class="fu">wfromt</span>(tuniv, s, prior, a)</span>
+<span id="cb96-15"><a href="#cb96-15" aria-hidden="true" tabindex="-1"></a>          wlo <span class="ot">&lt;-</span> <span class="fu">max</span>(wlo)</span>
+<span id="cb96-16"><a href="#cb96-16" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> </span>
+<span id="cb96-17"><a href="#cb96-17" aria-hidden="true" tabindex="-1"></a>          wlo <span class="ot">=</span> <span class="dv">0</span></span>
+<span id="cb96-18"><a href="#cb96-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"l"</span>)</span>
+<span id="cb96-19"><a href="#cb96-19" aria-hidden="true" tabindex="-1"></a>      beta <span class="ot">&lt;-</span> <span class="fu">beta.laplace</span>(x, s, a)</span>
+<span id="cb96-20"><a href="#cb96-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"c"</span>)</span>
+<span id="cb96-21"><a href="#cb96-21" aria-hidden="true" tabindex="-1"></a>      beta <span class="ot">&lt;-</span> <span class="fu">beta.cauchy</span>(x)</span>
+<span id="cb96-22"><a href="#cb96-22" aria-hidden="true" tabindex="-1"></a>    whi  <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb96-23"><a href="#cb96-23" aria-hidden="true" tabindex="-1"></a>    beta <span class="ot">&lt;-</span> <span class="fu">pmin</span>(beta, <span class="fl">1e20</span>) </span>
+<span id="cb96-24"><a href="#cb96-24" aria-hidden="true" tabindex="-1"></a>    shi  <span class="ot">&lt;-</span> <span class="fu">sum</span>(beta<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> beta))</span>
+<span id="cb96-25"><a href="#cb96-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(shi <span class="sc">&gt;=</span> <span class="dv">0</span>)</span>
+<span id="cb96-26"><a href="#cb96-26" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(<span class="dv">1</span>)</span>
+<span id="cb96-27"><a href="#cb96-27" aria-hidden="true" tabindex="-1"></a>    slo <span class="ot">&lt;-</span> <span class="fu">sum</span>(beta<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> wlo <span class="sc">*</span> beta))</span>
+<span id="cb96-28"><a href="#cb96-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(slo <span class="sc">&lt;=</span> <span class="dv">0</span>)</span>
+<span id="cb96-29"><a href="#cb96-29" aria-hidden="true" tabindex="-1"></a>      <span class="fu">return</span>(wlo)</span>
+<span id="cb96-30"><a href="#cb96-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(j <span class="cf">in</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>)) {</span>
+<span id="cb96-31"><a href="#cb96-31" aria-hidden="true" tabindex="-1"></a>      wmid <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(wlo <span class="sc">*</span> whi)</span>
+<span id="cb96-32"><a href="#cb96-32" aria-hidden="true" tabindex="-1"></a>      smid <span class="ot">&lt;-</span> <span class="fu">sum</span>(beta<span class="sc">/</span>(<span class="dv">1</span> <span class="sc">+</span> wmid <span class="sc">*</span> beta))</span>
+<span id="cb96-33"><a href="#cb96-33" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(smid <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb96-34"><a href="#cb96-34" aria-hidden="true" tabindex="-1"></a>        <span class="fu">return</span>(wmid)</span>
+<span id="cb96-35"><a href="#cb96-35" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span>(smid <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb96-36"><a href="#cb96-36" aria-hidden="true" tabindex="-1"></a>        wlo <span class="ot">&lt;-</span> wmid</span>
+<span id="cb96-37"><a href="#cb96-37" aria-hidden="true" tabindex="-1"></a>      <span class="cf">else</span></span>
+<span id="cb96-38"><a href="#cb96-38" aria-hidden="true" tabindex="-1"></a>        whi <span class="ot">&lt;-</span> wmid</span>
+<span id="cb96-39"><a href="#cb96-39" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb96-40"><a href="#cb96-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(<span class="fu">sqrt</span>(wlo <span class="sc">*</span> whi))</span>
+<span id="cb96-41"><a href="#cb96-41" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p>결과</p>
+<ul>
+<li>Python</li>
+</ul>
+<div id="fc57fdd3-8daf-4885-8e93-6d2b0a9a2bda" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb97-1"><a href="#cb97-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wfromx(x<span class="op">=</span> np.random.normal(<span class="dv">0</span>, np.concatenate((np.repeat(<span class="dv">0</span>, <span class="dv">90</span>), np.repeat(<span class="dv">5</span>, <span class="dv">10</span>))), size<span class="op">=</span><span class="dv">100</span>), prior <span class="op">=</span> <span class="st">"cauchy"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>0.13117639593366534</code></pre>
 </div>
 </div>
+<ul>
+<li>R</li>
+</ul>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">wfromx</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">s =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">0</span>,<span class="dv">90</span>),<span class="fu">rep</span>(<span class="dv">5</span>,<span class="dv">10</span>))),, <span class="at">prior =</span> <span class="st">"cauchy"</span>)</span>
+<span id="cb99-2"><a href="#cb99-2" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.1521295</span></span></code></pre></div>
 <p><code>isotone</code></p>
 <blockquote class="blockquote">
 <p>Isotonic Regression은 입력 변수에 따른 출력 변수의 단조 증가(monotonic increasing) 또는 감소(monotonic decreasing) 패턴을 찾는 방법</p>
 </blockquote>
-<div id="50d3f97e-3039-4325-98ab-205c5eacc612" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> EbayesThresh.beta_cauchy(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>]))</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.ones(<span class="bu">len</span>(beta))</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>aa <span class="op">=</span> w <span class="op">+</span> <span class="dv">1</span><span class="op">/</span>beta</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>ps <span class="op">=</span> w <span class="op">+</span> aa</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>ww <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>aa<span class="op">**</span><span class="dv">2</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>wnew <span class="op">=</span> EbayesThresh.isotone(ps, ww, increasing <span class="op">=</span> <span class="va">False</span>)</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>wnew</span></code></pre></div>
+<div id="50d3f97e-3039-4325-98ab-205c5eacc612" class="cell">
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb100-1"><a href="#cb100-1" aria-hidden="true" tabindex="-1"></a>beta <span class="op">=</span> EbayesThresh.beta_cauchy(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>]))</span>
+<span id="cb100-2"><a href="#cb100-2" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.ones(<span class="bu">len</span>(beta))</span>
+<span id="cb100-3"><a href="#cb100-3" aria-hidden="true" tabindex="-1"></a>aa <span class="op">=</span> w <span class="op">+</span> <span class="dv">1</span><span class="op">/</span>beta</span>
+<span id="cb100-4"><a href="#cb100-4" aria-hidden="true" tabindex="-1"></a>ps <span class="op">=</span> w <span class="op">+</span> aa</span>
+<span id="cb100-5"><a href="#cb100-5" aria-hidden="true" tabindex="-1"></a>ww <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>aa<span class="op">**</span><span class="dv">2</span></span>
+<span id="cb100-6"><a href="#cb100-6" aria-hidden="true" tabindex="-1"></a>wnew <span class="op">=</span> EbayesThresh.isotone(ps, ww, increasing <span class="op">=</span> <span class="va">False</span>)</span>
+<span id="cb100-7"><a href="#cb100-7" aria-hidden="true" tabindex="-1"></a>wnew</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>[3.67430141208924,
  -0.8467422493615953,
@@ -541,12 +1017,12 @@ window.Quarto = {
 <p>Given a vector of data, find the marginal maximum likelihood choice of weight sequence subject to the constraints that the weights are monotone decreasing</p>
 </blockquote>
 <p><em>데이터에 대해 가중치 시퀀스를 선택하는 과정에서 조건이 주어지는데, 이 가중치 시퀀스는 각각의 가중치 값이 단조 감소해야 하며, 주어진 데이터에 대한 최대 우도를 갖도록 선택되어야 함.</em></p>
-<div id="b87a21a1-0929-4cfa-b457-289b75d9afdf" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> np.array([<span class="dv">0</span>] <span class="op">*</span> <span class="dv">30</span> <span class="op">+</span> [<span class="dv">5</span>] <span class="op">*</span> <span class="dv">10</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(<span class="dv">0</span>, s, size<span class="op">=</span><span class="dv">40</span>)</span></code></pre></div>
+<div id="b87a21a1-0929-4cfa-b457-289b75d9afdf" class="cell">
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb102-1"><a href="#cb102-1" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> np.array([<span class="dv">0</span>] <span class="op">*</span> <span class="dv">30</span> <span class="op">+</span> [<span class="dv">5</span>] <span class="op">*</span> <span class="dv">10</span>)</span>
+<span id="cb102-2"><a href="#cb102-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(<span class="dv">0</span>, s, size<span class="op">=</span><span class="dv">40</span>)</span></code></pre></div>
 </div>
-<div id="97c98c4a-4cd9-454c-877d-5f6a381ca9c4" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wmonfromx(x, prior <span class="op">=</span> <span class="st">"cauchy"</span>)</span></code></pre></div>
+<div id="97c98c4a-4cd9-454c-877d-5f6a381ca9c4" class="cell">
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb103-1"><a href="#cb103-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wmonfromx(x, prior <span class="op">=</span> <span class="st">"cauchy"</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <pre><code>array([0.16414571, 0.16414571, 0.16414571, 0.16414571, 0.16414571,
        0.16414571, 0.16414571, 0.16414571, 0.16414571, 0.16414571,
@@ -563,7 +1039,7 @@ window.Quarto = {
 <p>임계값 t를 이용해서 데이터 조정</p>
 </blockquote>
 <div id="78e57bc7-116c-4d3d-aa30-f1ba9e579a28" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.threshold(np.array(<span class="bu">range</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">5</span>)), t<span class="op">=</span><span class="fl">1.4</span>, hard<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb105-1"><a href="#cb105-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.threshold(np.array(<span class="bu">range</span>(<span class="op">-</span><span class="dv">5</span>,<span class="dv">5</span>)), t<span class="op">=</span><span class="fl">1.4</span>, hard<span class="op">=</span><span class="va">False</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>array([-3.6, -2.6, -1.6, -0.6, -0. ,  0. ,  0. ,  0.6,  1.6,  2.6])</code></pre>
 </div>
@@ -576,15 +1052,15 @@ window.Quarto = {
 <li>라플라스 프라이어에 대한 한계음의로그우도함수 계산</li>
 </ul>
 <div id="fa6f36cd-c343-4a35-8e77-bdb85fd10f44" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>xpar <span class="op">=</span> np.array([<span class="fl">0.5</span>,<span class="fl">0.6</span>,<span class="fl">0.3</span>])</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>xx <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>ss <span class="op">=</span> np.array([<span class="dv">1</span>])</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>tlo <span class="op">=</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">len</span>(np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])))) <span class="op">*</span> <span class="dv">1</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>thi <span class="op">=</span> np.array([<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>])</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> xpar[<span class="dv">1</span>]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb107-1"><a href="#cb107-1" aria-hidden="true" tabindex="-1"></a>xpar <span class="op">=</span> np.array([<span class="fl">0.5</span>,<span class="fl">0.6</span>,<span class="fl">0.3</span>])</span>
+<span id="cb107-2"><a href="#cb107-2" aria-hidden="true" tabindex="-1"></a>xx <span class="op">=</span> np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])</span>
+<span id="cb107-3"><a href="#cb107-3" aria-hidden="true" tabindex="-1"></a>ss <span class="op">=</span> np.array([<span class="dv">1</span>])</span>
+<span id="cb107-4"><a href="#cb107-4" aria-hidden="true" tabindex="-1"></a>tlo <span class="op">=</span> np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.log(<span class="bu">len</span>(np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>])))) <span class="op">*</span> <span class="dv">1</span></span>
+<span id="cb107-5"><a href="#cb107-5" aria-hidden="true" tabindex="-1"></a>thi <span class="op">=</span> np.array([<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>])</span>
+<span id="cb107-6"><a href="#cb107-6" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> xpar[<span class="dv">1</span>]</span></code></pre></div>
 </div>
 <div id="9afd8514-1c47-4e5d-b70f-a94490fd04a2" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.negloglik_laplace(xpar, xx, ss, tlo, thi)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb108-1"><a href="#cb108-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.negloglik_laplace(xpar, xx, ss, tlo, thi)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>-16.797273710172206</code></pre>
 </div>
@@ -597,7 +1073,7 @@ window.Quarto = {
 <li>quasi-Cauch에 대한 사후 평균 구하기</li>
 </ul>
 <div id="e30de365-f9cf-45bc-87a6-b7b9d89ab545" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.postmean_cauchy(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]),<span class="fl">0.5</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb110-1"><a href="#cb110-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.postmean_cauchy(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]),<span class="fl">0.5</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>array([ 0,  0,  0, -3,  7, 49])</code></pre>
 </div>
@@ -610,7 +1086,7 @@ window.Quarto = {
 <li>0이 아닌 효과에 대한 사후 가중치 계산</li>
 </ul>
 <div id="def1cb56-68a3-4b8d-9b26-4f0b41967eb6" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wpost_laplace(<span class="fl">0.5</span>,np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb112-1"><a href="#cb112-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wpost_laplace(<span class="fl">0.5</span>,np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <pre><code>array([0.65396152, 0.38270015, 0.30467782, 0.99652125, 1.        ,
        1.        ])</code></pre>
@@ -624,7 +1100,7 @@ window.Quarto = {
 <li>이전 지수 분포에 대한 사후 평균</li>
 </ul>
 <div id="82b4fc5b-6d08-44d8-bc18-ba08d4f510c4" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.postmean_laplace(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb114-1"><a href="#cb114-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.postmean_laplace(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <pre><code>array([-1.63431541,  0.56091461,  0.        , -4.48434556,  8.5       ,
        50.5       ])</code></pre>
@@ -638,7 +1114,7 @@ window.Quarto = {
 <li>적절한 사후 평균 찾기</li>
 </ul>
 <div id="4f6ec048-878a-4dde-bbd2-bcaefbd09b1c" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.postmean(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]), s<span class="op">=</span><span class="dv">1</span>, w <span class="op">=</span> <span class="fl">0.5</span>, prior <span class="op">=</span> <span class="st">"laplace"</span>, a <span class="op">=</span> <span class="fl">0.5</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb116-1"><a href="#cb116-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.postmean(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]), s<span class="op">=</span><span class="dv">1</span>, w <span class="op">=</span> <span class="fl">0.5</span>, prior <span class="op">=</span> <span class="st">"laplace"</span>, a <span class="op">=</span> <span class="fl">0.5</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="20">
 <pre><code>array([-1.63431541,  0.56091461,  0.        , -4.48434556,  8.5       ,
        50.5       ])</code></pre>
@@ -649,7 +1125,7 @@ window.Quarto = {
 <p>Given a vector of data and a single value or vector of sampling standard deviations, find the marginal maximum likelihood choice of both weight and scale factor under the Laplace prior</p>
 </blockquote>
 <div id="a7131cbd-1729-4ec7-a77d-6906a49c29f2" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wandafromx(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb118-1"><a href="#cb118-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.wandafromx(np.array([<span class="op">-</span><span class="dv">2</span>,<span class="dv">1</span>,<span class="dv">0</span>,<span class="op">-</span><span class="dv">4</span>,<span class="dv">8</span>,<span class="dv">50</span>]))</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <pre><code>{'w': -1.491836784542754, 'a': 0.5}</code></pre>
 </div>
@@ -659,153 +1135,153 @@ window.Quarto = {
 <p>Given a data value or a vector of data, threshold the data at a specified value, using hard or soft thresholding</p>
 </blockquote>
 <p><em>임계값 t를 이용하여 threshold하는 함수</em></p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>threshld <span class="ot">&lt;-</span> <span class="cf">function</span>(x, t, <span class="at">hard =</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  threshold the data x using threshold t</span></span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  if hard=TRUE use hard thresholding</span></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  if hard=FALSE use soft thresholding</span></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(hard) z <span class="ot">&lt;-</span> x <span class="sc">*</span> (<span class="fu">abs</span>(x) <span class="sc">&gt;=</span> t) <span class="cf">else</span> {</span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>        z <span class="ot">&lt;-</span> <span class="fu">sign</span>(x) <span class="sc">*</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="fu">abs</span>(x) <span class="sc">-</span> t)</span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(z)</span>
-<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1" aria-hidden="true" tabindex="-1"></a>threshld <span class="ot">&lt;-</span> <span class="cf">function</span>(x, t, <span class="at">hard =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb120-2"><a href="#cb120-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb120-3"><a href="#cb120-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  threshold the data x using threshold t</span></span>
+<span id="cb120-4"><a href="#cb120-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  if hard=TRUE use hard thresholding</span></span>
+<span id="cb120-5"><a href="#cb120-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  if hard=FALSE use soft thresholding</span></span>
+<span id="cb120-6"><a href="#cb120-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(hard) z <span class="ot">&lt;-</span> x <span class="sc">*</span> (<span class="fu">abs</span>(x) <span class="sc">&gt;=</span> t) <span class="cf">else</span> {</span>
+<span id="cb120-7"><a href="#cb120-7" aria-hidden="true" tabindex="-1"></a>        z <span class="ot">&lt;-</span> <span class="fu">sign</span>(x) <span class="sc">*</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="fu">abs</span>(x) <span class="sc">-</span> t)</span>
+<span id="cb120-8"><a href="#cb120-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb120-9"><a href="#cb120-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(z)</span>
+<span id="cb120-10"><a href="#cb120-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div id="6786f33e-dd81-45fe-9043-14b6c1e4706c" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.threshld(np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]), <span class="dv">3</span>, hard <span class="op">=</span> <span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb121-1"><a href="#cb121-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.threshld(np.array([<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>]), <span class="dv">3</span>, hard <span class="op">=</span> <span class="va">True</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>array([0, 0, 3, 4, 5])</code></pre>
 </div>
 </div>
 <p><code>vecbinsolv</code></p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>vecbinsolv <span class="ot">&lt;-</span> <span class="cf">function</span>(zf, fun, tlo, thi, <span class="at">nits =</span> <span class="dv">30</span>, ...) {</span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  Given a monotone function fun, and a vector of values</span></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   zf find a vector of numbers t such that f(t) = zf.</span></span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   The solution is constrained to lie on the interval (tlo, thi)</span></span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  The function fun may be a vector of increasing functions </span></span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  Present version is inefficient because separate calculations</span></span>
-<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   are done for each element of z, and because bisections are done even</span></span>
-<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   if the solution is outside the range supplied</span></span>
-<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    </span></span>
-<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  It is important that fun should work for vector arguments.</span></span>
-<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   Additional arguments to fun can be passed through ...</span></span>
-<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  Works by successive bisection, carrying out nits harmonic bisections</span></span>
-<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   of the interval between tlo and thi</span></span>
-<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a>    nz <span class="ot">&lt;-</span> <span class="fu">length</span>(zf)</span>
-<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(tlo)<span class="sc">==</span><span class="dv">1</span>) tlo <span class="ot">&lt;-</span> <span class="fu">rep</span>(tlo, nz)</span>
-<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(tlo)<span class="sc">!=</span>nz)</span>
-<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a>          <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="st">"Lower constraint has to be homogeneous"</span>,</span>
-<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"or has the same length as #functions."</span>))</span>
-<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(thi)<span class="sc">==</span><span class="dv">1</span>) thi <span class="ot">&lt;-</span> <span class="fu">rep</span>(thi, nz)</span>
-<span id="cb56-25"><a href="#cb56-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(thi)<span class="sc">!=</span>nz)</span>
-<span id="cb56-26"><a href="#cb56-26" aria-hidden="true" tabindex="-1"></a>          <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="st">"Upper constraint has to be homogeneous"</span>,</span>
-<span id="cb56-27"><a href="#cb56-27" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"or has the same length as #functions."</span>))</span>
-<span id="cb56-28"><a href="#cb56-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb56-29"><a href="#cb56-29" aria-hidden="true" tabindex="-1"></a><span class="co">#  carry out nits bisections</span></span>
-<span id="cb56-30"><a href="#cb56-30" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb56-31"><a href="#cb56-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(jj <span class="cf">in</span> (<span class="dv">1</span><span class="sc">:</span>nits)) {</span>
-<span id="cb56-32"><a href="#cb56-32" aria-hidden="true" tabindex="-1"></a>        tmid <span class="ot">&lt;-</span> (tlo <span class="sc">+</span> thi)<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb56-33"><a href="#cb56-33" aria-hidden="true" tabindex="-1"></a>        fmid <span class="ot">&lt;-</span> <span class="fu">fun</span>(tmid, ...)</span>
-<span id="cb56-34"><a href="#cb56-34" aria-hidden="true" tabindex="-1"></a>        indt <span class="ot">&lt;-</span> (fmid <span class="sc">&lt;=</span> zf)</span>
-<span id="cb56-35"><a href="#cb56-35" aria-hidden="true" tabindex="-1"></a>        tlo[indt] <span class="ot">&lt;-</span> tmid[indt]</span>
-<span id="cb56-36"><a href="#cb56-36" aria-hidden="true" tabindex="-1"></a>        thi[<span class="sc">!</span>indt] <span class="ot">&lt;-</span> tmid[<span class="sc">!</span>indt]</span>
-<span id="cb56-37"><a href="#cb56-37" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb56-38"><a href="#cb56-38" aria-hidden="true" tabindex="-1"></a>    tsol <span class="ot">&lt;-</span> (tlo <span class="sc">+</span> thi)<span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb56-39"><a href="#cb56-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(tsol)</span>
-<span id="cb56-40"><a href="#cb56-40" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1" aria-hidden="true" tabindex="-1"></a>vecbinsolv <span class="ot">&lt;-</span> <span class="cf">function</span>(zf, fun, tlo, thi, <span class="at">nits =</span> <span class="dv">30</span>, ...) {</span>
+<span id="cb123-2"><a href="#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb123-3"><a href="#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  Given a monotone function fun, and a vector of values</span></span>
+<span id="cb123-4"><a href="#cb123-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   zf find a vector of numbers t such that f(t) = zf.</span></span>
+<span id="cb123-5"><a href="#cb123-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   The solution is constrained to lie on the interval (tlo, thi)</span></span>
+<span id="cb123-6"><a href="#cb123-6" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb123-7"><a href="#cb123-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  The function fun may be a vector of increasing functions </span></span>
+<span id="cb123-8"><a href="#cb123-8" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb123-9"><a href="#cb123-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  Present version is inefficient because separate calculations</span></span>
+<span id="cb123-10"><a href="#cb123-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   are done for each element of z, and because bisections are done even</span></span>
+<span id="cb123-11"><a href="#cb123-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   if the solution is outside the range supplied</span></span>
+<span id="cb123-12"><a href="#cb123-12" aria-hidden="true" tabindex="-1"></a><span class="co">#    </span></span>
+<span id="cb123-13"><a href="#cb123-13" aria-hidden="true" tabindex="-1"></a><span class="co">#  It is important that fun should work for vector arguments.</span></span>
+<span id="cb123-14"><a href="#cb123-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   Additional arguments to fun can be passed through ...</span></span>
+<span id="cb123-15"><a href="#cb123-15" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb123-16"><a href="#cb123-16" aria-hidden="true" tabindex="-1"></a><span class="co">#  Works by successive bisection, carrying out nits harmonic bisections</span></span>
+<span id="cb123-17"><a href="#cb123-17" aria-hidden="true" tabindex="-1"></a><span class="co">#   of the interval between tlo and thi</span></span>
+<span id="cb123-18"><a href="#cb123-18" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb123-19"><a href="#cb123-19" aria-hidden="true" tabindex="-1"></a>    nz <span class="ot">&lt;-</span> <span class="fu">length</span>(zf)</span>
+<span id="cb123-20"><a href="#cb123-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(tlo)<span class="sc">==</span><span class="dv">1</span>) tlo <span class="ot">&lt;-</span> <span class="fu">rep</span>(tlo, nz)</span>
+<span id="cb123-21"><a href="#cb123-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(tlo)<span class="sc">!=</span>nz)</span>
+<span id="cb123-22"><a href="#cb123-22" aria-hidden="true" tabindex="-1"></a>          <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="st">"Lower constraint has to be homogeneous"</span>,</span>
+<span id="cb123-23"><a href="#cb123-23" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"or has the same length as #functions."</span>))</span>
+<span id="cb123-24"><a href="#cb123-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(thi)<span class="sc">==</span><span class="dv">1</span>) thi <span class="ot">&lt;-</span> <span class="fu">rep</span>(thi, nz)</span>
+<span id="cb123-25"><a href="#cb123-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(thi)<span class="sc">!=</span>nz)</span>
+<span id="cb123-26"><a href="#cb123-26" aria-hidden="true" tabindex="-1"></a>          <span class="fu">stop</span>(<span class="fu">paste</span>(<span class="st">"Upper constraint has to be homogeneous"</span>,</span>
+<span id="cb123-27"><a href="#cb123-27" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"or has the same length as #functions."</span>))</span>
+<span id="cb123-28"><a href="#cb123-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb123-29"><a href="#cb123-29" aria-hidden="true" tabindex="-1"></a><span class="co">#  carry out nits bisections</span></span>
+<span id="cb123-30"><a href="#cb123-30" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb123-31"><a href="#cb123-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(jj <span class="cf">in</span> (<span class="dv">1</span><span class="sc">:</span>nits)) {</span>
+<span id="cb123-32"><a href="#cb123-32" aria-hidden="true" tabindex="-1"></a>        tmid <span class="ot">&lt;-</span> (tlo <span class="sc">+</span> thi)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb123-33"><a href="#cb123-33" aria-hidden="true" tabindex="-1"></a>        fmid <span class="ot">&lt;-</span> <span class="fu">fun</span>(tmid, ...)</span>
+<span id="cb123-34"><a href="#cb123-34" aria-hidden="true" tabindex="-1"></a>        indt <span class="ot">&lt;-</span> (fmid <span class="sc">&lt;=</span> zf)</span>
+<span id="cb123-35"><a href="#cb123-35" aria-hidden="true" tabindex="-1"></a>        tlo[indt] <span class="ot">&lt;-</span> tmid[indt]</span>
+<span id="cb123-36"><a href="#cb123-36" aria-hidden="true" tabindex="-1"></a>        thi[<span class="sc">!</span>indt] <span class="ot">&lt;-</span> tmid[<span class="sc">!</span>indt]</span>
+<span id="cb123-37"><a href="#cb123-37" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb123-38"><a href="#cb123-38" aria-hidden="true" tabindex="-1"></a>    tsol <span class="ot">&lt;-</span> (tlo <span class="sc">+</span> thi)<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb123-39"><a href="#cb123-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(tsol)</span>
+<span id="cb123-40"><a href="#cb123-40" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><code>tfromw</code></p>
 <blockquote class="blockquote">
 <p>Given a single value or a vector of weights (i.e.&nbsp;prior probabilities that the parameter is nonzero) and sampling standard deviations (sd equals 1 for Cauchy prior), find the corresponding threshold(s) under the specified prior.</p>
 </blockquote>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>tfromw <span class="ot">&lt;-</span> <span class="cf">function</span>(w, <span class="at">s =</span> <span class="dv">1</span>, <span class="at">prior =</span> <span class="st">"laplace"</span>, <span class="at">bayesfac =</span> <span class="cn">FALSE</span>, <span class="at">a =</span> <span class="fl">0.5</span>) {</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  Given the vector of weights w and s (sd), find the threshold or</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   vector of thresholds corresponding to these weights, under the</span></span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   specified prior.</span></span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  If bayesfac=TRUE the Bayes factor thresholds are found, otherwise</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   the posterior median thresholds are found.</span></span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  If the Laplace prior is used, a gives the value of the inverse scale</span></span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   (i.e., rate) parameter</span></span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>    pr <span class="ot">&lt;-</span> <span class="fu">substring</span>(prior, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(bayesfac) {</span>
-<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a>        z <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>w <span class="sc">-</span> <span class="dv">2</span></span>
-<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"l"</span>){ </span>
-<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span>(<span class="fu">length</span>(w)<span class="sc">&gt;=</span><span class="fu">length</span>(s)) {</span>
-<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a>            zz <span class="ot">&lt;-</span> z</span>
-<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>          } <span class="cf">else</span> { zz <span class="ot">&lt;-</span> <span class="fu">rep</span>(z, <span class="fu">length</span>(s)) }</span>
-<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>          tt <span class="ot">&lt;-</span> <span class="fu">vecbinsolv</span>(zz, beta.laplace, <span class="dv">0</span>, <span class="dv">10</span>, <span class="at">s =</span> s, <span class="at">a =</span> a)</span>
-<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"c"</span>)</span>
-<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a>            tt <span class="ot">&lt;-</span> <span class="fu">vecbinsolv</span>(z, beta.cauchy, <span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
-<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>      z <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"l"</span>){</span>
-<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>          zz <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">max</span>(<span class="fu">length</span>(s), <span class="fu">length</span>(w)))</span>
-<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>                  </span>
-<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>          <span class="co"># When x/s-s*a&gt;25, laplace.threshzero has value</span></span>
-<span id="cb57-29"><a href="#cb57-29" aria-hidden="true" tabindex="-1"></a>          <span class="co">#  close to 1/2; The boundary value of x can be</span></span>
-<span id="cb57-30"><a href="#cb57-30" aria-hidden="true" tabindex="-1"></a>          <span class="co">#  treated as the upper bound for search.</span></span>
-<span id="cb57-31"><a href="#cb57-31" aria-hidden="true" tabindex="-1"></a>          tt <span class="ot">&lt;-</span> <span class="fu">vecbinsolv</span>(zz, laplace.threshzero, <span class="dv">0</span>, s<span class="sc">*</span>(<span class="dv">25</span><span class="sc">+</span>s<span class="sc">*</span>a),</span>
-<span id="cb57-32"><a href="#cb57-32" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">s =</span> s, <span class="at">w =</span> w, <span class="at">a =</span> a)</span>
-<span id="cb57-33"><a href="#cb57-33" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb57-34"><a href="#cb57-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"c"</span>)</span>
-<span id="cb57-35"><a href="#cb57-35" aria-hidden="true" tabindex="-1"></a>            tt <span class="ot">&lt;-</span> <span class="fu">vecbinsolv</span>(z, cauchy.threshzero, <span class="dv">0</span>, <span class="dv">10</span>, <span class="at">w =</span> w)</span>
-<span id="cb57-36"><a href="#cb57-36" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb57-37"><a href="#cb57-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(tt)</span>
-<span id="cb57-38"><a href="#cb57-38" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1" aria-hidden="true" tabindex="-1"></a>tfromw <span class="ot">&lt;-</span> <span class="cf">function</span>(w, <span class="at">s =</span> <span class="dv">1</span>, <span class="at">prior =</span> <span class="st">"laplace"</span>, <span class="at">bayesfac =</span> <span class="cn">FALSE</span>, <span class="at">a =</span> <span class="fl">0.5</span>) {</span>
+<span id="cb124-2"><a href="#cb124-2" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb124-3"><a href="#cb124-3" aria-hidden="true" tabindex="-1"></a><span class="co">#  Given the vector of weights w and s (sd), find the threshold or</span></span>
+<span id="cb124-4"><a href="#cb124-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   vector of thresholds corresponding to these weights, under the</span></span>
+<span id="cb124-5"><a href="#cb124-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   specified prior.</span></span>
+<span id="cb124-6"><a href="#cb124-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  If bayesfac=TRUE the Bayes factor thresholds are found, otherwise</span></span>
+<span id="cb124-7"><a href="#cb124-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   the posterior median thresholds are found.</span></span>
+<span id="cb124-8"><a href="#cb124-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  If the Laplace prior is used, a gives the value of the inverse scale</span></span>
+<span id="cb124-9"><a href="#cb124-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   (i.e., rate) parameter</span></span>
+<span id="cb124-10"><a href="#cb124-10" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb124-11"><a href="#cb124-11" aria-hidden="true" tabindex="-1"></a>    pr <span class="ot">&lt;-</span> <span class="fu">substring</span>(prior, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb124-12"><a href="#cb124-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(bayesfac) {</span>
+<span id="cb124-13"><a href="#cb124-13" aria-hidden="true" tabindex="-1"></a>        z <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>w <span class="sc">-</span> <span class="dv">2</span></span>
+<span id="cb124-14"><a href="#cb124-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"l"</span>){ </span>
+<span id="cb124-15"><a href="#cb124-15" aria-hidden="true" tabindex="-1"></a>          <span class="cf">if</span>(<span class="fu">length</span>(w)<span class="sc">&gt;=</span><span class="fu">length</span>(s)) {</span>
+<span id="cb124-16"><a href="#cb124-16" aria-hidden="true" tabindex="-1"></a>            zz <span class="ot">&lt;-</span> z</span>
+<span id="cb124-17"><a href="#cb124-17" aria-hidden="true" tabindex="-1"></a>          } <span class="cf">else</span> { zz <span class="ot">&lt;-</span> <span class="fu">rep</span>(z, <span class="fu">length</span>(s)) }</span>
+<span id="cb124-18"><a href="#cb124-18" aria-hidden="true" tabindex="-1"></a>          tt <span class="ot">&lt;-</span> <span class="fu">vecbinsolv</span>(zz, beta.laplace, <span class="dv">0</span>, <span class="dv">10</span>, <span class="at">s =</span> s, <span class="at">a =</span> a)</span>
+<span id="cb124-19"><a href="#cb124-19" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb124-20"><a href="#cb124-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"c"</span>)</span>
+<span id="cb124-21"><a href="#cb124-21" aria-hidden="true" tabindex="-1"></a>            tt <span class="ot">&lt;-</span> <span class="fu">vecbinsolv</span>(z, beta.cauchy, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb124-22"><a href="#cb124-22" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb124-23"><a href="#cb124-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> {</span>
+<span id="cb124-24"><a href="#cb124-24" aria-hidden="true" tabindex="-1"></a>      z <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb124-25"><a href="#cb124-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"l"</span>){</span>
+<span id="cb124-26"><a href="#cb124-26" aria-hidden="true" tabindex="-1"></a>          zz <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">0</span>, <span class="fu">max</span>(<span class="fu">length</span>(s), <span class="fu">length</span>(w)))</span>
+<span id="cb124-27"><a href="#cb124-27" aria-hidden="true" tabindex="-1"></a>                  </span>
+<span id="cb124-28"><a href="#cb124-28" aria-hidden="true" tabindex="-1"></a>          <span class="co"># When x/s-s*a&gt;25, laplace.threshzero has value</span></span>
+<span id="cb124-29"><a href="#cb124-29" aria-hidden="true" tabindex="-1"></a>          <span class="co">#  close to 1/2; The boundary value of x can be</span></span>
+<span id="cb124-30"><a href="#cb124-30" aria-hidden="true" tabindex="-1"></a>          <span class="co">#  treated as the upper bound for search.</span></span>
+<span id="cb124-31"><a href="#cb124-31" aria-hidden="true" tabindex="-1"></a>          tt <span class="ot">&lt;-</span> <span class="fu">vecbinsolv</span>(zz, laplace.threshzero, <span class="dv">0</span>, s<span class="sc">*</span>(<span class="dv">25</span><span class="sc">+</span>s<span class="sc">*</span>a),</span>
+<span id="cb124-32"><a href="#cb124-32" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">s =</span> s, <span class="at">w =</span> w, <span class="at">a =</span> a)</span>
+<span id="cb124-33"><a href="#cb124-33" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb124-34"><a href="#cb124-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"c"</span>)</span>
+<span id="cb124-35"><a href="#cb124-35" aria-hidden="true" tabindex="-1"></a>            tt <span class="ot">&lt;-</span> <span class="fu">vecbinsolv</span>(z, cauchy.threshzero, <span class="dv">0</span>, <span class="dv">10</span>, <span class="at">w =</span> w)</span>
+<span id="cb124-36"><a href="#cb124-36" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb124-37"><a href="#cb124-37" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(tt)</span>
+<span id="cb124-38"><a href="#cb124-38" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div id="44df58cd-f7fd-48ac-83f2-b7f613f0c90d" class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tfromw(w, s<span class="op">=</span><span class="dv">1</span>, prior<span class="op">=</span><span class="st">"laplace"</span>, bayesfac<span class="op">=</span><span class="va">False</span>, a<span class="op">=</span><span class="fl">0.5</span>):</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>    pr <span class="op">=</span> prior[<span class="dv">0</span>:<span class="dv">1</span>]</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> bayesfac:</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>w <span class="op">-</span> <span class="dv">2</span></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pr <span class="op">==</span> <span class="st">"l"</span>:</span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(w) <span class="op">&gt;=</span> <span class="bu">len</span>(s):</span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>                zz <span class="op">=</span> z</span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
-<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>                zz <span class="op">=</span> np.tile(z, <span class="bu">len</span>(s))</span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>            tt <span class="op">=</span> vecbinsolv(zz, beta.laplace, <span class="dv">0</span>, <span class="dv">10</span>, s <span class="op">=</span> s, a <span class="op">=</span> a) <span class="op">********************</span></span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> pr <span class="op">==</span> <span class="st">"c"</span>:</span>
-<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a>            tt <span class="op">=</span> vecbinsolv(z, beta.cauchy, <span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb58-13"><a href="#cb58-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb58-14"><a href="#cb58-14" aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb58-15"><a href="#cb58-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pr <span class="op">==</span> <span class="st">"l"</span>:</span>
-<span id="cb58-16"><a href="#cb58-16" aria-hidden="true" tabindex="-1"></a>            zz <span class="op">=</span> [<span class="dv">0</span>] <span class="op">*</span> <span class="bu">max</span>(<span class="bu">len</span>(s), <span class="bu">len</span>(w))</span>
-<span id="cb58-17"><a href="#cb58-17" aria-hidden="true" tabindex="-1"></a>            tt <span class="op">=</span> vecbinsolv(zz, laplace.threshzero, <span class="dv">0</span>, s<span class="op">*</span>(<span class="dv">25</span><span class="op">+</span>s<span class="op">*</span>a), s <span class="op">=</span> s, w <span class="op">=</span> w, a <span class="op">=</span> a)</span>
-<span id="cb58-18"><a href="#cb58-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> prior <span class="op">==</span> <span class="st">"c"</span>:</span>
-<span id="cb58-19"><a href="#cb58-19" aria-hidden="true" tabindex="-1"></a>            tt <span class="op">=</span> vecbinsolv(z, cauchy.threshzero, <span class="dv">0</span>, <span class="dv">10</span>, w <span class="op">=</span> w)</span>
-<span id="cb58-20"><a href="#cb58-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tt</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb125-1"><a href="#cb125-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> tfromw(w, s<span class="op">=</span><span class="dv">1</span>, prior<span class="op">=</span><span class="st">"laplace"</span>, bayesfac<span class="op">=</span><span class="va">False</span>, a<span class="op">=</span><span class="fl">0.5</span>):</span>
+<span id="cb125-2"><a href="#cb125-2" aria-hidden="true" tabindex="-1"></a>    pr <span class="op">=</span> prior[<span class="dv">0</span>:<span class="dv">1</span>]</span>
+<span id="cb125-3"><a href="#cb125-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> bayesfac:</span>
+<span id="cb125-4"><a href="#cb125-4" aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> <span class="dv">1</span><span class="op">/</span>w <span class="op">-</span> <span class="dv">2</span></span>
+<span id="cb125-5"><a href="#cb125-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pr <span class="op">==</span> <span class="st">"l"</span>:</span>
+<span id="cb125-6"><a href="#cb125-6" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(w) <span class="op">&gt;=</span> <span class="bu">len</span>(s):</span>
+<span id="cb125-7"><a href="#cb125-7" aria-hidden="true" tabindex="-1"></a>                zz <span class="op">=</span> z</span>
+<span id="cb125-8"><a href="#cb125-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb125-9"><a href="#cb125-9" aria-hidden="true" tabindex="-1"></a>                zz <span class="op">=</span> np.tile(z, <span class="bu">len</span>(s))</span>
+<span id="cb125-10"><a href="#cb125-10" aria-hidden="true" tabindex="-1"></a>            tt <span class="op">=</span> vecbinsolv(zz, beta.laplace, <span class="dv">0</span>, <span class="dv">10</span>, s <span class="op">=</span> s, a <span class="op">=</span> a) <span class="op">********************</span></span>
+<span id="cb125-11"><a href="#cb125-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> pr <span class="op">==</span> <span class="st">"c"</span>:</span>
+<span id="cb125-12"><a href="#cb125-12" aria-hidden="true" tabindex="-1"></a>            tt <span class="op">=</span> vecbinsolv(z, beta.cauchy, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb125-13"><a href="#cb125-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb125-14"><a href="#cb125-14" aria-hidden="true" tabindex="-1"></a>        z <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb125-15"><a href="#cb125-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pr <span class="op">==</span> <span class="st">"l"</span>:</span>
+<span id="cb125-16"><a href="#cb125-16" aria-hidden="true" tabindex="-1"></a>            zz <span class="op">=</span> [<span class="dv">0</span>] <span class="op">*</span> <span class="bu">max</span>(<span class="bu">len</span>(s), <span class="bu">len</span>(w))</span>
+<span id="cb125-17"><a href="#cb125-17" aria-hidden="true" tabindex="-1"></a>            tt <span class="op">=</span> vecbinsolv(zz, laplace.threshzero, <span class="dv">0</span>, s<span class="op">*</span>(<span class="dv">25</span><span class="op">+</span>s<span class="op">*</span>a), s <span class="op">=</span> s, w <span class="op">=</span> w, a <span class="op">=</span> a)</span>
+<span id="cb125-18"><a href="#cb125-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> prior <span class="op">==</span> <span class="st">"c"</span>:</span>
+<span id="cb125-19"><a href="#cb125-19" aria-hidden="true" tabindex="-1"></a>            tt <span class="op">=</span> vecbinsolv(z, cauchy.threshzero, <span class="dv">0</span>, <span class="dv">10</span>, w <span class="op">=</span> w)</span>
+<span id="cb125-20"><a href="#cb125-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tt</span></code></pre></div>
 </div>
 <p><code>tfromx</code></p>
 <blockquote class="blockquote">
 <p>Given a vector of data and standard deviations (sd equals 1 for Cauchy prior), find the value or vector (heterogeneous sampling standard deviation with Laplace prior) of thresholds corresponding to the marginal maximum likelihood choice of weight.</p>
 </blockquote>
 <p><em>데이터가 주어졌을때, 가중치의 한계 최대 우도로 임계값 찾는 함수</em></p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>tfromx <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">s =</span> <span class="dv">1</span>, <span class="at">prior =</span> <span class="st">"laplace"</span>, <span class="at">bayesfac =</span> <span class="cn">FALSE</span>, <span class="at">a =</span> <span class="fl">0.5</span>,</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">universalthresh =</span> <span class="cn">TRUE</span>) {</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  Given the data x, the prior, and any other parameters, find the</span></span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   threshold corresponding to the marginal maximum likelihood</span></span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   estimator of the mixing weight.</span></span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>  pr <span class="ot">&lt;-</span> <span class="fu">substring</span>(prior, <span class="dv">1</span>, <span class="dv">1</span>)</span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"c"</span>)</span>
-<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">=</span> <span class="dv">1</span></span>
-<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ( pr<span class="sc">==</span><span class="st">"l"</span> <span class="sc">&amp;&amp;</span> <span class="fu">is.na</span> (a) ) {</span>
-<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>    wa <span class="ot">&lt;-</span>  <span class="fu">wandafromx</span>(x, s, universalthresh)</span>
-<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>    w  <span class="ot">&lt;-</span>  wa<span class="sc">$</span>w</span>
-<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>    a  <span class="ot">&lt;-</span>  wa<span class="sc">$</span>a </span>
-<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>    w <span class="ot">&lt;-</span> <span class="fu">wfromx</span>(x, s, <span class="at">prior =</span> prior, <span class="at">a =</span> a)</span>
-<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">tfromw</span>(w, s, <span class="at">prior =</span> prior, <span class="at">bayesfac =</span> bayesfac, <span class="at">a =</span> a))</span>
-<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1" aria-hidden="true" tabindex="-1"></a>tfromx <span class="ot">&lt;-</span> <span class="cf">function</span> (x, <span class="at">s =</span> <span class="dv">1</span>, <span class="at">prior =</span> <span class="st">"laplace"</span>, <span class="at">bayesfac =</span> <span class="cn">FALSE</span>, <span class="at">a =</span> <span class="fl">0.5</span>,</span>
+<span id="cb126-2"><a href="#cb126-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">universalthresh =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb126-3"><a href="#cb126-3" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb126-4"><a href="#cb126-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  Given the data x, the prior, and any other parameters, find the</span></span>
+<span id="cb126-5"><a href="#cb126-5" aria-hidden="true" tabindex="-1"></a><span class="co">#   threshold corresponding to the marginal maximum likelihood</span></span>
+<span id="cb126-6"><a href="#cb126-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   estimator of the mixing weight.</span></span>
+<span id="cb126-7"><a href="#cb126-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb126-8"><a href="#cb126-8" aria-hidden="true" tabindex="-1"></a>  pr <span class="ot">&lt;-</span> <span class="fu">substring</span>(prior, <span class="dv">1</span>, <span class="dv">1</span>)</span>
+<span id="cb126-9"><a href="#cb126-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(pr <span class="sc">==</span> <span class="st">"c"</span>)</span>
+<span id="cb126-10"><a href="#cb126-10" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">=</span> <span class="dv">1</span></span>
+<span id="cb126-11"><a href="#cb126-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> ( pr<span class="sc">==</span><span class="st">"l"</span> <span class="sc">&amp;&amp;</span> <span class="fu">is.na</span> (a) ) {</span>
+<span id="cb126-12"><a href="#cb126-12" aria-hidden="true" tabindex="-1"></a>    wa <span class="ot">&lt;-</span>  <span class="fu">wandafromx</span>(x, s, universalthresh)</span>
+<span id="cb126-13"><a href="#cb126-13" aria-hidden="true" tabindex="-1"></a>    w  <span class="ot">&lt;-</span>  wa<span class="sc">$</span>w</span>
+<span id="cb126-14"><a href="#cb126-14" aria-hidden="true" tabindex="-1"></a>    a  <span class="ot">&lt;-</span>  wa<span class="sc">$</span>a </span>
+<span id="cb126-15"><a href="#cb126-15" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb126-16"><a href="#cb126-16" aria-hidden="true" tabindex="-1"></a>    w <span class="ot">&lt;-</span> <span class="fu">wfromx</span>(x, s, <span class="at">prior =</span> prior, <span class="at">a =</span> a)</span>
+<span id="cb126-17"><a href="#cb126-17" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb126-18"><a href="#cb126-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">tfromw</span>(w, s, <span class="at">prior =</span> prior, <span class="at">bayesfac =</span> bayesfac, <span class="at">a =</span> a))</span>
+<span id="cb126-19"><a href="#cb126-19" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <div id="a41ad3ed-bba3-456c-84b7-065385208787" class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.tfromx(x, s <span class="op">=</span> <span class="dv">1</span>, prior <span class="op">=</span> <span class="st">"laplace"</span>, bayesfac <span class="op">=</span> <span class="va">False</span>, a <span class="op">=</span> <span class="fl">0.5</span>, universalthresh <span class="op">=</span> <span class="va">True</span>)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb127-1"><a href="#cb127-1" aria-hidden="true" tabindex="-1"></a>EbayesThresh.tfromx(x, s <span class="op">=</span> <span class="dv">1</span>, prior <span class="op">=</span> <span class="st">"laplace"</span>, bayesfac <span class="op">=</span> <span class="va">False</span>, a <span class="op">=</span> <span class="fl">0.5</span>, universalthresh <span class="op">=</span> <span class="va">True</span>)</span></code></pre></div>
 </div>
 
 
