@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.stats import norm, cauchy, laplace
 from scipy.optimize import minimize
+import warnings
 
 
 def beta_cauchy(x):
@@ -30,16 +31,31 @@ def beta_laplace(x, s=1, a=0.5):
     s - the value or vector of standard deviations; if vector, must have the same length as x
     a - the scale parameter of the Laplace distribution
     """
-    
     x = np.abs(x)
     xpa = x/s + s*a
     xma = x/s - s*a
     rat1 = 1/xpa
     xpa < 35
-    rat1[xpa < 35] = norm.cdf(-xpa[xpa < 35]) / norm.pdf(xpa[xpa < 35])
+    rat1[xpa < 35]
+    if isinstance(rat1, (int, float, str, bool)) and xpa < 35:
+        rat1 = norm.cdf(-xpa) / norm.pdf(xpa)
+    elif isinstance(rat1, (int, float, str, bool)) and xpa > 35:
+        rat1 = rat1
+    else:
+        rat1[xpa < 35] = norm.cdf(-xpa[xpa < 35]) / norm.pdf(xpa[xpa < 35])
     rat2 = 1/np.abs(xma)
-    xma[xma > 35] = 35
-    rat2[xma > -35] = norm.cdf(xma[xma > -35]) / norm.pdf(xma[xma > -35])
+    if isinstance(xma, (int, float, str, bool)) and xma > 35:
+        xma = 35
+    elif isinstance(xma, (int, float, str, bool)) and xma < 35:
+        xma = xma
+    else:
+        xma[xma > 35] = 35
+    if isinstance(rat1, (int, float, str, bool)) and xma > -35:
+        rat2 = norm.cdf(xma) / norm.pdf(xma)
+    elif isinstance(rat1, (int, float, str, bool)) and xma < -35:
+        rat2 = rat2
+    else:
+        rat2[xma > -35] = norm.cdf(xma[xma > -35]) / norm.pdf(xma[xma > -35])
     beta = (a * s) / 2 * (rat1 + rat2) - 1
     
     return beta
@@ -93,8 +109,12 @@ def wfromt(tt, s=1, prior="laplace", a=0.5):
     if pr == "l":
         tma = tt / s - s * a
         wi = 1 / np.abs(tma)
-        if isinstance(wi, (int, np.integer, np.ndarray)):
-            wi[tma > -35] = norm.cdf(tma[tma > -35]) / norm.pdf(tma[tma > -35])
+        if isinstance(wi, (int, float, str, bool)) and tma > -35:
+            wi = norm.cdf(tma) / norm.pdf(tma)
+        elif isinstance(wi, (int, float, str, bool)) and tma < -35:
+            wi = wi
+        else:
+            wi[tma > -35] = norm.cdf(tma[tma > -35])/norm.pdf(tma[tma > -35])
         wi = a * s * wi - beta_laplace(tt, s, a)
         
     if pr == "c":
@@ -183,10 +203,12 @@ def isotone(x, wt=None, increasing=False):
         list: Isotonic fit to the input sequence x.
     """
     nn = len(x)
+
     if nn == 1:
-        x = x.copy()
+        x = x
+
     if not increasing:
-        x = -(x.copy())
+        x = -x
 
     ip = np.arange(1, nn+1)
     dx = np.diff(x)
@@ -194,15 +216,15 @@ def isotone(x, wt=None, increasing=False):
 
     while nx > 1 and np.min(dx) < 0:
         # Find all local minima and maxima
-        jmax = np.where(np.concatenate((dx <= 0, [False])) & np.concatenate(([True], dx > 0)))[0] + 1
-        jmin = np.where(np.concatenate((dx > 0, [True])) & np.concatenate(([False], dx <= 0)))[0] + 1
+        jmax = np.arange(nx)[(np.concatenate((dx <= 0, [False])) & np.concatenate(([True], dx > 0)))]
+        jmin = np.arange(nx)[(np.concatenate((dx > 0, [True])) & np.concatenate(([False], dx <= 0)))]
 
         for jb in range(len(jmax)):
-            ind = np.arange(jmax[jb], jmin[jb])
+            ind = np.arange(jmax[jb], jmin[jb]+1)
             wtn = np.sum(wt[ind])
             x[jmax[jb]] = np.sum(wt[ind] * x[ind]) / wtn
             wt[jmax[jb]] = wtn
-            x[jmax[jb]:jmin[jb]] = np.nan
+            x[jmax[jb]+1:jmin[jb]+1] = np.nan
 
         # Clean up within iteration, eliminating the parts of sequences that
         # were set to NA
@@ -220,7 +242,7 @@ def isotone(x, wt=None, increasing=False):
     z = x[np.cumsum(jj) - 1]
 
     if not increasing:
-        z = -z.copy()
+        z = -z
 
     return z.tolist()
 
@@ -231,6 +253,11 @@ def wmonfromx(xd, prior="laplace", a=0.5,  tol=1e-08, maxits=20):
     assumed that the noise variance is equal to one.
     Find the beta values and the minimum weight
     Current version allows for standard deviation of 1 only.
+    xd - A vector of data.
+    prior - Specification of the prior to be used; can be cauchy or laplace.
+    a - Scale parameter in prior if prior="laplace". Ignored if prior="cauchy".
+    tol - Absolute tolerance to within which estimates are calculated.
+    maxits - Maximum number of weighted least squares iterations within the calculation.
     """
     pr = prior[0:1]
     nx = len(xd)
@@ -256,11 +283,11 @@ def wmonfromx(xd, prior="laplace", a=0.5,  tol=1e-08, maxits=20):
         if zinc < tol:
             return w
 
-    warning("More iterations required to achieve convergence")
+    warnings.filterwarnings("More iterations required to achieve convergence")
     return w
 
 
-def threshold(x, t, hard=True):
+def threshld(x, t, hard=True):
     """
     Threshold the data x using threshold t.
     If hard=True, use hard thresholding.
@@ -316,7 +343,7 @@ def postmean_cauchy(x, w):
     Find the posterior mean for the quasi-Cauchy prior with mixing
     weight w given data x, which may be a scalar or a vector.
     """
-    muhat = x.copy()  # Ensure x is a numpy array
+    muhat = x  # Ensure x is a numpy array
     ind = (x == 0)
     x = x[~ind]  # Remove zeros from x
     ex = np.exp(-x**2/2)
@@ -360,8 +387,8 @@ def postmean_laplace(x, s=1, w=0.5, a=0.5):
     xpa[xpa > 35] = 35
     xma[xma < -35] = -35
     
-    cp1 = norm.cdf(-xpa)
-    cp2 = norm.cdf(xma)
+    cp1 = norm.cdf(xma)
+    cp2 = norm.cdf(-xpa)
     ef = np.exp(np.minimum(2 * a * x, 100))
     postmean_cond = x - a * s**2 * (2 * cp1 / (cp1 + ef * cp2) - 1)
     
@@ -408,10 +435,10 @@ def wandafromx(x, s=1, universalthresh=True):
     startpar = np.array([0.5, 0.5])
 
     if 'optim' in globals():
-        result = minimize(negloglik_laplace, startpar, method='L-BFGS-B', bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, thi, tlo))
+        result = minimize(negloglik_laplace, startpar, method='L-BFGS-B', bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
         uu = result.x
     else:
-        result = minimize(negloglik_laplace, startpar, bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, thi, tlo))
+        result = minimize(negloglik_laplace, startpar, bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
         uu = result.x
 
     a = uu[1]
@@ -422,20 +449,55 @@ def wandafromx(x, s=1, universalthresh=True):
     w = uu[0] * (whi - wlo) + wlo
     return {'w': w, 'a': a}
 
-def threshld(x, t, hard=True):
+def vecbinsolv(zf, fun, tlo, thi, nits=30, *args, **kwargs):
     """
-    Threshold the data x using threshold t.
-    If hard=True, use hard thresholding.
-    If hard=False, use soft thresholding.
-    x - a data value or a vector of data
-    t - value of threshold to be used
-    hard - specifies whether hard or soft thresholding is applied
+    Given a monotone function fun, and a vector of values zf find a vector of numbers t such that f(t) = zf.
+    The solution is constrained to lie on the interval (tlo, thi).
+    
+    The function fun may be a vector of increasing functions.
+    
+    Present version is inefficient because separate calculations are done for each element of z, 
+    and because bisections are done even if the solution is outside the range supplied.
+    
+    It is important that fun should work for vector arguments. 
+    Additional arguments to fun can be passed through *args and **kwargs.
+    
+    Works by successive bisection, carrying out nits harmonic bisections of the interval between tlo and thi.
+    
+    zf- the right hand side of the equation(s) to be solved
+
+    fun - an increasing function of a scalar argument, or a vector of such functions
+
+    tlo - lower limit of interval over which the solution is sought
+
+    thi-upper limit of interval over which the solution is sought
+
+    nits-number of binary subdivisions carried out
     """
-    if hard:
-        z = x * (abs(x) >= t)
+    if isinstance(zf, int):
+        nz = len(str(zf))
     else:
-        z = np.sign(x) * np.maximum(0, abs(x) - t)
-    return z
+        nz = len(zf)
+    
+    if isinstance(tlo, (int, float)):
+        tlo = [tlo] * nz
+    if len(tlo) != nz:
+        raise ValueError("Lower constraint has to be homogeneous or has the same length as #functions.")
+    if isinstance(thi, (int, float)):
+        thi = [thi] * nz
+    if len(thi) != nz:
+        raise ValueError("Upper constraint has to be homogeneous or has the same length as #functions.")
+
+    # carry out nits bisections
+    for _ in range(nits):
+        tmid = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
+        fmid = fun(tmid, *args, **kwargs)
+        indt = [f <= z for f, z in zip(fmid, zf)]
+        tlo = [tm if ind else lo for tm, lo, ind in zip(tmid, tlo, indt)]
+        thi = [tm if not ind else hi for tm, hi, ind in zip(tmid, thi, indt)]
+        
+    tsol = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
+    return tsol
 
 
 

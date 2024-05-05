@@ -139,7 +139,7 @@
     "href": "posts/1_Note/2024-06-01-EbayesThresh_Python.html#확인용-import",
     "title": "EbayesThresh Python화 시도",
     "section": "확인용 import",
-    "text": "확인용 import\n\nfrom scipy.stats import norm"
+    "text": "확인용 import\n\nfrom scipy.stats import norm\nfrom scipy.optimize import minimize"
   },
   {
     "objectID": "posts/1_Note/2022-12-31-Space-study.html",
