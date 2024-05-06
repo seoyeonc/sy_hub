@@ -1,5 +1,5 @@
 import numpy as np
-from scipy.stats import norm, cauchy, laplace
+from scipy.stats import norm, cauchy,laplace, stats
 from scipy.optimize import minimize
 import warnings
 
@@ -71,6 +71,24 @@ def cauchy_medzero(x, z, w):
 def cauchy_threshzero(z, w):
     y = norm.cdf(z) - z * norm.pdf(z) - 1/2 - (z**2 * np.exp(-z**2/2) * (1/w - 1))/2
     return y
+
+def laplace_threshzero(x, s=1, w=0.5, a=0.5):
+    """
+    This function needs to be zeroed to find the threshold using Laplace prior.
+
+    Parameters:
+    x (float): Input value
+    s (float): Standard deviation (default: 1)
+    w (float): Mean (default: 0.5)
+    a (float): Input value where a < 20 (default: 0.5)
+    """
+    a = min(a, 20)
+    
+    xma = x / s - s * a
+    
+    z = norm.cdf(xma) - (1 / a) * (1 / s * norm.pdf(xma)) * (1 / w + beta_laplace(x, s, a))
+    
+    return z
 
 
 def mad(x, center=None, constant=1.4826, na_rm=False, low=False, high=False):
@@ -499,6 +517,43 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, *args, **kwargs):
     tsol = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
     return tsol
 
+
+def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):
+    """
+    
+    This function finds the threshold or threshold vector corresponding to the given weight vector w and standard deviation s under the specified prior distribution.
+    If bayesfac is set to True, it finds the Bayes factor thresholds; otherwise, it finds the posterior median thresholds.
+    If the Laplace prior distribution is used, a specifies the value of the inverse scale (i.e., rate) parameter where a < 20.
+
+    Parameters:
+    w (array-like): Weight vector
+    s (float): Standard deviation (default: 1)
+    prior (str): Prior distribution (default: "laplace")
+    bayesfac (bool): Whether to find the Bayes factor thresholds (default: False)
+    a (float): Input value where a < 20 (default: 0.5)
+
+    Returns:
+    array-like: Threshold or threshold vector
+    """
+    pr = prior[0]
+    if bayesfac:
+        z = 1 / w - 2
+        if pr == "l":
+            if len(w) >= len(s):
+                zz = z
+            else:
+                zz = [z] * len(s)
+            tt = vecbinsolv(zz, beta_laplace, 0, 10, s=s, a=a)
+        elif pr == "c":
+            tt = vecbinsolv(z, beta_cauchy, 0, 10)
+    else:
+        z = 0
+        if pr == "l":
+            zz = [0] * max(len(s), len(w))
+            tt = vecbinsolv(zz, laplace_threshzero, 0, s * (25 + s * a), s=s, w=w, a=a)
+        elif pr == "c":
+            tt = vecbinsolv(z, cauchy_threshzero, 0, 10, w=w)
+    return tt
 
 
 def tfromx(x, s=1, prior="laplace", bayesfac=False, a=0.5, universalthresh=True):
