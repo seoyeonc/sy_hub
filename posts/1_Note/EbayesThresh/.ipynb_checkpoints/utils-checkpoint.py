@@ -84,9 +84,16 @@ def laplace_threshzero(x, s=1, w=0.5, a=0.5):
     """
     a = min(a, 20)
     
-    xma = x / s - s * a
+    if isinstance(x, list):
+        z = []
+        for elem in x:
+            xma = elem / s - s * a
+            z_add = norm.cdf(xma) - (1 / a) * (1 / s * norm.pdf(xma)) * (1 / w + beta_laplace(elem, s, a))
+            z.append(z_add)
     
-    z = norm.cdf(xma) - (1 / a) * (1 / s * norm.pdf(xma)) * (1 / w + beta_laplace(x, s, a))
+    else:
+        xma = x / s - s * a
+        z = norm.cdf(xma) - (1 / a) * (1 / s * norm.pdf(xma)) * (1 / w + beta_laplace(x, s, a))
     
     return z
 
@@ -467,7 +474,7 @@ def wandafromx(x, s=1, universalthresh=True):
     w = uu[0] * (whi - wlo) + wlo
     return {'w': w, 'a': a}
 
-def vecbinsolv(zf, fun, tlo, thi, nits=30, *args, **kwargs):
+def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     """
     Given a monotone function fun, and a vector of values zf find a vector of numbers t such that f(t) = zf.
     The solution is constrained to lie on the interval (tlo, thi).
@@ -509,8 +516,20 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, *args, **kwargs):
     # carry out nits bisections
     for _ in range(nits):
         tmid = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
-        fmid = fun(tmid, *args, **kwargs)
-        indt = [f <= z for f, z in zip(fmid, zf)]
+        if fun == cauchy_threshzero:
+            fmid = cauchy_threshzero(tmid, w=w)
+        elif fun == laplace_threshzero:
+            fmid = laplace_threshzero(tmid, s=s, w=w, a=a)
+        else:
+            fmid = fun(tmid)
+        if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
+            indt = [f <= z for f, z in zip(fmid, zf)]
+        elif isinstance(fmid, int) and isinstance(zf, (list,np.ndarray)): 
+            indt = [fmid <= z for z in zf]
+        elif isinstance(fmid, (list,np.ndarray)) and isinstance(zf, int): 
+            indt = [f <= zf for f in fmid]
+        elif isinstance(fmid, int) and isinstance(zf, int): 
+            indt = fmid <= z
         tlo = [tm if ind else lo for tm, lo, ind in zip(tmid, tlo, indt)]
         thi = [tm if not ind else hi for tm, hi, ind in zip(tmid, thi, indt)]
         
@@ -535,13 +554,17 @@ def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):
     Returns:
     array-like: Threshold or threshold vector
     """
-    pr = prior[0]
+    pr = prior[0:1]
     if bayesfac:
         z = 1 / w - 2
         if pr == "l":
-            if len(w) >= len(s):
+            if isinstance(s, (int, float, str, bool)) and len(w) >= len(str(s)):
                 zz = z
-            else:
+            elif isinstance(s, (int, float, str, bool)) and len(w) <len(str(s)):
+                zz = [z] * len(str(s))
+            elif len(w) >= len(s):
+                zz = z
+            elif len(w) < len(str(s)):
                 zz = [z] * len(s)
             tt = vecbinsolv(zz, beta_laplace, 0, 10, s=s, a=a)
         elif pr == "c":
@@ -549,7 +572,14 @@ def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):
     else:
         z = 0
         if pr == "l":
-            zz = [0] * max(len(s), len(w))
+            if isinstance(s, (int, float, str, bool)) and not isinstance(w, (int, float, str, bool)):
+                zz = np.array([0] * max(len(str(s)), len(w)))
+            elif not isinstance(s, (int, float, str, bool)) and isinstance(w, (int, float, str, bool)):
+                zz = np.array([0] * max(len(s), len(str(w))))
+            elif isinstance(s, (int, float, str, bool)) and isinstance(w, (int, float, str, bool)):
+                zz = np.array([0] * max(len(str(s)), len(str(w))))
+            else:
+                zz = [0] * max(len(s), len(w))
             tt = vecbinsolv(zz, laplace_threshzero, 0, s * (25 + s * a), s=s, w=w, a=a)
         elif pr == "c":
             tt = vecbinsolv(z, cauchy_threshzero, 0, 10, w=w)
