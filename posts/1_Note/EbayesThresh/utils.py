@@ -540,11 +540,11 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     for _ in range(nits):
         tmid = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
         if fun == cauchy_threshzero:
-            fmid = cauchy_threshzero(tmid, w=w)
+            fmid = cauchy_threshzero(tmid, **kwargs)
         elif fun == laplace_threshzero:
-            fmid = laplace_threshzero(tmid, s=s, w=w, a=a)
+            fmid = laplace_threshzero(tmid, **kwargs)
         else:
-            fmid = fun(tmid)
+            fmid = fun(tmid, **kwargs)
         if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
             indt = [f <= z for f, z in zip(fmid, zf)]
         elif isinstance(fmid, int) and isinstance(zf, (list,np.ndarray)): 

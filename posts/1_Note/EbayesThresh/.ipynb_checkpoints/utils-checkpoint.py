@@ -436,6 +436,29 @@ def postmean(x, s=1, w=0.5, prior="laplace", a=0.5):
     return mutilde
 
 
+def postmed_cauchy(x, w):
+    """
+    Find the posterior median of the Cauchy prior with mixing weight w,
+    pointwise for each of the data points x
+    """
+    nx = len(x)
+    zest = np.empty_like(x, dtype=float)
+    w = np.repeat(w, nx)
+    ax = np.abs(x)
+    j = ax < 20
+    
+    zest[~j] = ax[~j] - 2 / ax[~j]
+    
+    if np.sum(j) > 0:
+        # Implement vecbinsolv function or use an equivalent Python function
+        # Implement cauchy.medzero function or use an equivalent Python function
+        zest[j] = vecbinsolv(np.zeros(np.sum(j)), cauchy_medzero, 0, np.max(ax[j]), ax[j], w[j])
+    
+    zest[zest < 1e-7] = 0
+    zest = np.sign(x) * zest
+    return zest
+
+
 def wandafromx(x, s=1, universalthresh=True):
     """
     Find the marginal max lik estimators of w and a given standard  deviation s,
@@ -517,11 +540,11 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     for _ in range(nits):
         tmid = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
         if fun == cauchy_threshzero:
-            fmid = cauchy_threshzero(tmid, w=w)
+            fmid = cauchy_threshzero(tmid, **kwargs)
         elif fun == laplace_threshzero:
-            fmid = laplace_threshzero(tmid, s=s, w=w, a=a)
+            fmid = laplace_threshzero(tmid, **kwargs)
         else:
-            fmid = fun(tmid)
+            fmid = fun(tmid, **kwargs)
         if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
             indt = [f <= z for f, z in zip(fmid, zf)]
         elif isinstance(fmid, int) and isinstance(zf, (list,np.ndarray)): 
