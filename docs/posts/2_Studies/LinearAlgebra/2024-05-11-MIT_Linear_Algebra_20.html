@@ -69,6 +69,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../../styles.css">
 </head>
@@ -248,8 +277,103 @@ ul.task-list li input[type="checkbox"] {
 
 
 
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/23LLB9mNJvc" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>https://twlab.tistory.com/43#google_vignette</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/QNpj-gOXW9M" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<blockquote class="blockquote">
+<p>학습목표</p>
+</blockquote>
+<ol type="1">
+<li>Formula for <span class="math inline">\(A^{-1}\)</span></li>
+<li>Crawers Rule for <span class="math inline">\(x = A^{-1}b\)</span></li>
+<li><span class="math inline">\(|Det\)</span> <span class="math inline">\(A| =\)</span> volumne of box</li>
+</ol>
+<p><span class="math inline">\(\begin{bmatrix} a &amp; b \\ c &amp; d\end{bmatrix}^{-1} = \frac{1}{ad-bc} \begin{bmatrix} d &amp; -b \\ -c &amp; a\end{bmatrix}\)</span></p>
+<ul>
+<li>우항의 1행 1열 <span class="math inline">\(d\)</span> 는 좌항의 1행 1열 <span class="math inline">\(a\)</span>의 cofactor 여인수</li>
+<li>우항의 2행 2열 <span class="math inline">\(a\)</span> 는 좌항의 2행 2열 <span class="math inline">\(d\)</span>의 cofactor 여인수</li>
+<li>counter diagonal 원소들(전치로 인해 바뀐 위치)
+<ul>
+<li>우항의 2행 1열 <span class="math inline">\(-c\)</span> 는 좌항의 1행 2열 <span class="math inline">\(b\)</span>의 cofactor 여인수</li>
+<li>우항의 1행 2열 <span class="math inline">\(-b\)</span> 는 좌항의 2행 1열 <span class="math inline">\(c\)</span>의 cofactor 여인수</li>
+</ul></li>
+</ul>
+<p><span class="math inline">\(A^{-1} = \frac{1}{\text{det } A} C^T\)</span></p>
+<p><span class="math inline">\(C^T\)</span> : 여인수 행렬 cofactor matrix의 전환transpose</p>
+<ul>
+<li><span class="math inline">\(3 \times 3\)</span>인 경우</li>
+</ul>
+<p><span class="math inline">\(\begin{bmatrix} a &amp; b &amp; c \\ d &amp; e &amp; f \\ g &amp; h &amp; i \end{bmatrix} = \frac{1}{\text{det } A} \begin{bmatrix} + \begin{vmatrix} e &amp; f \\ h &amp; i \end{vmatrix} &amp; - \begin{vmatrix} b &amp; c \\ h &amp; i \end{vmatrix} &amp; + \begin{vmatrix} b &amp; c \\ e &amp; f \end{vmatrix} \\ -\begin{vmatrix} d &amp; f \\ g &amp; i \end{vmatrix} &amp; + \begin{vmatrix} a &amp; c \\ g &amp; i \end{vmatrix} &amp; -\begin{vmatrix} a &amp; c \\ d &amp; f \end{vmatrix} \\ + \begin{vmatrix} s &amp; e \\ g &amp; h \end{vmatrix} &amp; - \begin{vmatrix} a &amp; b \\ g &amp; h \end{vmatrix} &amp; + \begin{vmatrix} a &amp; b \\ d &amp; e \end{vmatrix} \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(det\)</span> <span class="math inline">\(A = aei - afh - bdi + bfg + cdh - ceg\)</span></p>
+<ul>
+<li>역행렬 check</li>
+</ul>
+<p><span class="math inline">\(AC^T = (det\)</span> <span class="math inline">\(A)I\)</span></p>
+<p><span class="math inline">\(A = \begin{bmatrix} a_{11} &amp; a_{12} &amp; a_{13} \\ a_{21} &amp; a_{22} &amp; a_{23} \\ a_{31} &amp; a_{32} &amp; a_{33} \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(C = \begin{bmatrix} c_{11} &amp; c_{12} &amp; c_{13} \\ c_{21} &amp; c_{22} &amp; c_{23} \\ c_{31} &amp; c_{32} &amp; c_{33} \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(C^T = \begin{bmatrix} c_{11} &amp; c_{21} &amp; c_{31} \\ c_{12} &amp; c_{22} &amp; c_{32} \\ c_{13} &amp; c_{23} &amp; c_{33} \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(\begin{bmatrix} a_{11} &amp; a_{12} &amp; a_{13} \\ a_{21} &amp; a_{22} &amp; a_{23} \\ a_{31} &amp; a_{32} &amp; a_{33} \end{bmatrix} \begin{bmatrix} c_{11} &amp; c_{21} &amp; c_{31} \\ c_{12} &amp; c_{22} &amp; c_{32} \\ c_{13} &amp; c_{23} &amp; c_{33} \end{bmatrix} = \begin{bmatrix} \text{det } A &amp; 0 &amp; \\ 0 &amp; \text{det } A &amp; 0 \\ 0 &amp; 0 &amp; \text{det } A \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(A^{-1} = \frac{1}{\text{det } A} C^T\)</span>의 양변에 <span class="math inline">\((det\)</span> <span class="math inline">\(A)A\)</span>를 곱해준 것과 같음</p>
+<ul>
+<li><span class="math inline">\(C^T\)</span>의 1열은 <span class="math inline">\(A\)</span>의 1행의 여인수cofactor</li>
+<li>cofactor fomula
+<ul>
+<li><span class="math inline">\(det\)</span> <span class="math inline">\(A = a_{11}C_{11} + a_{12} C_{12} + \cdots + a_{1n} C_{1n}\)</span></li>
+<li><span class="math inline">\(det\)</span> <span class="math inline">\(A = a_{21}C_{21} + a_{22} C_{22} + \cdots + a_{2n} C_{2n}\)</span></li>
+<li><span class="math inline">\(\cdots\)</span></li>
+<li><span class="math inline">\(det\)</span> <span class="math inline">\(A = a_{n1}C_{n1} + a_{n2} C_{n2} + \cdots + a_{nn} C_{nn}\)</span></li>
+</ul></li>
+<li>특징
+<ul>
+<li>행은 1에서 n까지 어떤 인덱스를 통해서라도 <span class="math inline">\(det\)</span> <span class="math inline">\(A\)</span>를 나타낼 수 있다.</li>
+<li><span class="math inline">\(det\)</span> <span class="math inline">\(A\)</span> 구할 떄 컬럼의 인덱스가 같음
+<ul>
+<li>컬럼의 인덱스가 다르다면 내적이 <span class="math inline">\(0\)</span>이 되어 사라졌기 때문</li>
+<li>서로 다른 인덱스를 가진 행과 열을 곱하는 것은 똑같은 행을 두 개 이상 가진 특이행렬singular matrix의 deeterminant를 구하는 것과 같기 때문</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><span class="math inline">\(\begin{bmatrix}a &amp; b \\ c &amp; d \end{bmatrix} \begin{bmatrix} d &amp; -b \\ -c &amp; a \end{bmatrix} = \begin{bmatrix} \text{det } A &amp; 0 \\ 0 &amp; \text{det } A \end{bmatrix}\)</span></p>
+<p><span class="math inline">\((\text{det } A) I_{11} = ad + b (-c) = \text{det } A\)</span></p>
+<p><span class="math inline">\((\text{det } A) I_{12} = a(-b) +ba = 0\)</span></p>
+<p><span class="math inline">\((\text{det } A) I_{21} = cd+d(-c) = 0\)</span></p>
+<p><span class="math inline">\((\text{det } A) I_{22} = c(-b)+da = \text{det } A\)</span></p>
+<p><span class="math inline">\((\text{det } A) I_{12} = \begin{vmatrix} a &amp; b \\ a &amp; b \end{vmatrix} = ab-ba\)</span></p>
+<p><code>-</code> 크래머 공식 Cramer’s Rule</p>
+<p>선형시스템 방정식 linear system equation <span class="math inline">\(Ax = b\)</span>이 있을때, <span class="math inline">\(A\)</span>가 역행렬이 있다고 정의하여 아래와 같이 계산할 수 있음.</p>
+<p><span class="math inline">\(x = A^{-1} b = \frac{1}{\text{det } A} C^T b\)</span></p>
+<p><span class="math inline">\(x = \begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ \vdots \\ x_n \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(C^T = \begin{bmatrix}c_{11} &amp; c_{21} &amp; c_{31} &amp; \cdots &amp; c_{n1} \\ c_{12} &amp; c_{22} &amp; c_{32} &amp; \cdots &amp; c_{n2} \\ c_{13} &amp; c_{23} &amp; c_{33} &amp; \cdots &amp; c_{n3} \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ c_{1n} &amp; c_{2n} &amp; c_{3n} &amp; \cdots &amp; c_{nn} \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(b = \begin{bmatrix} b_1 \\ b_2 \\ b_3 \\ \vdots \\ b_n \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(\begin{bmatrix} x_1 \\ x_2 \\ x_3 \\ \vdots \\ x_n \end{bmatrix} = \frac{1}{\text{det } A} \begin{bmatrix}c_{11} &amp; c_{21} &amp; c_{31} &amp; \cdots &amp; c_{n1} \\ c_{12} &amp; c_{22} &amp; c_{32} &amp; \cdots &amp; c_{n2} \\ c_{13} &amp; c_{23} &amp; c_{33} &amp; \cdots &amp; c_{n3} \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ c_{1n} &amp; c_{2n} &amp; c_{3n} &amp; \cdots &amp; c_{nn} \end{bmatrix} \begin{bmatrix} b_1 \\ b_2 \\ b_3 \\ \vdots \\ b_n \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(x_1 = \frac{c_{11}b_1+c_{21}b_2+\cdots+c_{n1}b_n}{\text{det } A} = \frac{\text{det } B_1}{\text{det } A}\)</span></p>
+<p><span class="math inline">\(x_2 = \frac{c_{12}b_1+c_{22}b_2+\cdots+c_{n2}b_n}{\text{det } A} = \frac{\text{det } B_2}{\text{det } A}\)</span></p>
+<p><span class="math inline">\(\cdots\)</span></p>
+<p><span class="math inline">\(3 \times 3\)</span> 행렬<span class="math inline">\(A\)</span>이 있을 때, <span class="math inline">\(\begin{bmatrix} a_{11} &amp; a_{12} &amp; a_{13} \\ a_{21} &amp; a_{22} &amp; a_{23} \\ a_{31} &amp; a_{32} &amp; a_{33} \end{bmatrix}\)</span></p>
+<p><span class="math inline">\(x_1 = \frac{1}{\text{det } A} \begin{vmatrix} b_1 &amp; a_{12} &amp; a_{13} \\ b_2 &amp; a_{22} &amp; a_{23} \\ b_3 &amp; a_{32} &amp; a_{33}\end{vmatrix} = \frac{c_{11}b_1+c_{21}b_2+\cdots+c_{n1}b_n}{\text{det } A} = \frac{\text{det } B_1}{\text{det } A}\)</span></p>
+<p><span class="math inline">\(x_2 = \frac{1}{\text{det } A} \begin{vmatrix} a_{11} &amp; b_1 &amp; a_{13} \\ a_{21} &amp; b_2 &amp; a_{23} \\ a_{31} &amp; b_3 &amp; a_{33}\end{vmatrix} = \frac{c_{12}b_1+c_{22}b_2+\cdots+c_{n2}b_n}{\text{det } A} = \frac{\text{det } B_2}{\text{det } A}\)</span></p>
+<p><span class="math inline">\(x_3 = \frac{1}{\text{det } A} \begin{vmatrix} a_{11} &amp; a_{12} &amp; b_1 \\ a_{21} &amp;a_{22} &amp; b_2 \\ a_{31} &amp; a_{32} &amp; b_3 \end{vmatrix} = \frac{c_{13}b_1+c_{23}b_2+\cdots+c_{n3}b_n}{\text{det } A} = \frac{\text{det } B_3}{\text{det } A}\)</span></p>
+<ul>
+<li>크래머 공식 정의
+<ul>
+<li>임의의 선형시스템 방정식 <span class="math inline">\(Ax =b\)</span>의 해를 <span class="math inline">\(x\)</span>를 행렬식으로 유도된 공식을 통해 푸는 방법</li>
+</ul></li>
+<li>크래머 공식 단점
+<ul>
+<li>행렬이 크면 그만큼 곱해야해서 비효율적이다. <span class="math inline">\(1100 \times 100\)</span>행렬이면 100번 곱해야함
+<ul>
+<li>그런 의미로 가우스 소거 방법이 더 효율적임</li>
+</ul></li>
+</ul></li>
+</ul>
+<p><code>-</code> 행렬식, 넓이</p>
+<p><span class="math inline">\(2 \times 2\)</span> 행렬에서 <span class="math inline">\(det\)</span> <span class="math inline">\(A\)</span> = area of parallelogram</p>
+<p><span class="math inline">\(A = \begin{bmatrix} 4 &amp; 1 \\ 2 &amp; 3 \end{bmatrix}, v_1 = \begin{bmatrix} 4 &amp; 1 \end{bmatrix}, v_2 = \begin{bmatrix} 2 &amp; 3\end{bmatrix}\)</span></p>
+<ul>
+<li>행렬을 벡터로 표현한 평행 사변형의 넓이는 행렬 <span class="math inline">\(A\)</span>의 determinatn와 같다.</li>
+<li>즉, <span class="math inline">\(det\)</span> <span class="math inline">\(A = \begin{vmatrix} 4 &amp; 1 \\ 2 &amp; 3\end{vmatrix} = 12-2 = 10\)</span></li>
+</ul>
+<p><code>-</code> volume of box</p>
+<p>행렬식으로 표현된 상자의 부피는 determinant로 계산 가능하다.</p>
+<p><span class="math inline">\(A\)</span>의 부피 = <span class="math inline">\(det\)</span> <span class="math inline">\(A = \begin{vmatrix} a &amp; b &amp; c \\ d &amp; e &amp; f \\ g &amp; h &amp; i \end{vmatrix}\)</span></p>
 
 
 
