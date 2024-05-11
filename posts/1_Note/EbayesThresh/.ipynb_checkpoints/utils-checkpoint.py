@@ -72,6 +72,69 @@ def cauchy_threshzero(z, w):
     y = norm.cdf(z) - z * norm.pdf(z) - 1/2 - (z**2 * np.exp(-z**2/2) * (1/w - 1))/2
     return y
 
+
+def isotone(x, wt=None, increasing=False):
+    """
+    Find the weighted least squares isotone fit to the sequence x,
+    the weights given by the sequence wt. If increasing == True,
+    the curve is set to be increasing, otherwise to be decreasing.
+    The vector ip contains the indices on the original scale of the
+    breaks in the regression at each stage.
+
+    Parameters:
+        x (list or numpy.ndarray): Input sequence.
+        wt (list or numpy.ndarray, optional): Weights for the sequence x. Defaults to None.
+        increasing (bool, optional): If True, the curve is set to be increasing, otherwise decreasing.
+            Defaults to False.
+
+    Returns:
+        list: Isotonic fit to the input sequence x.
+    """
+    nn = len(x)
+
+    if nn == 1:
+        x = x
+
+    if not increasing:
+        x = -x
+
+    ip = np.arange(1, nn+1)
+    dx = np.diff(x)
+    nx = len(x)
+
+    while nx > 1 and np.min(dx) < 0:
+        # Find all local minima and maxima
+        jmax = np.arange(nx)[(np.concatenate((dx <= 0, [False])) & np.concatenate(([True], dx > 0)))]
+        jmin = np.arange(nx)[(np.concatenate((dx > 0, [True])) & np.concatenate(([False], dx <= 0)))]
+
+        for jb in range(len(jmax)):
+            ind = np.arange(jmax[jb], jmin[jb]+1)
+            wtn = np.sum(wt[ind])
+            x[jmax[jb]] = np.sum(wt[ind] * x[ind]) / wtn
+            wt[jmax[jb]] = wtn
+            x[jmax[jb]+1:jmin[jb]+1] = np.nan
+
+        # Clean up within iteration, eliminating the parts of sequences that
+        # were set to NA
+        ind = ~np.isnan(x)
+        x = x[ind]
+        wt = wt[ind]
+        ip = ip[ind]
+        dx = np.diff(x)
+        nx = len(x)
+
+    # Final cleanup: reconstruct z at all points by repeating the pooled
+    # values the appropriate number of times
+    jj = np.zeros(nn, dtype=int)
+    jj[ip - 1] = 1
+    z = x[np.cumsum(jj) - 1]
+
+    if not increasing:
+        z = -z
+
+    return z.tolist()
+
+
 def laplace_threshzero(x, s=1, w=0.5, a=0.5):
     """
     This function needs to be zeroed to find the threshold using Laplace prior.
@@ -97,6 +160,160 @@ def laplace_threshzero(x, s=1, w=0.5, a=0.5):
     
     return z
 
+def negloglik_laplace(xpar, xx, ss, tlo, thi):
+    """
+    Marginal negative log likelihood function for Laplace prior. 
+    Constraints for thresholds need to be passed externally.
+
+    Parameters:
+    xpar : array-like, shape (2,)
+        Vector of two parameters:
+        xpar[0]: a value between [0, 1] which will be adjusted to range of w 
+        xpar[1]: inverse scale (rate) parameter ("a")
+    xx : array-like
+        Data
+    ss : array-like
+        Vector of standard deviations
+    tlo : array-like
+        Lower bound of thresholds
+    thi : array-like
+        Upper bound of thresholds
+
+    Returns:
+    neg_loglik : float
+        Negative log likelihood
+    """
+    a = xpar[1]
+    
+    # Calculate the range of w given a, using negative monotonicity
+    # between w and t
+    wlo = wfromt(thi, ss, a=a)
+    whi = wfromt(tlo, ss, a=a)
+    wlo = np.max(wlo)
+    whi = np.min(whi)
+    
+    loglik = np.sum(np.log(1 + (xpar[0] * (whi - wlo) + wlo) *
+                           beta_laplace(xx, ss, a)))
+    
+    return -loglik
+
+def postmean(x, s=1, w=0.5, prior="laplace", a=0.5):
+    """
+    Find the posterior mean for the appropriate prior for given x, s (sd), w, and a.
+    """
+    pr = prior[0:1]
+    if pr == "l":
+        mutilde = postmean_laplace(x, s, w, a=a)
+    elif pr == "c":
+        if np.any(s != 1):
+            raise ValueError("Only standard deviation of 1 is allowed for Cauchy prior.")
+        mutilde = postmean_cauchy(x, w)
+    else:
+        raise ValueError("Unknown prior type.")
+    return mutilde
+
+def postmean_cauchy(x, w):
+    """
+    Find the posterior mean for the quasi-Cauchy prior with mixing
+    weight w given data x, which may be a scalar or a vector.
+    """
+    muhat = x  # Ensure x is a numpy array
+    ind = (x == 0)
+    x = x[~ind]  # Remove zeros from x
+    ex = np.exp(-x**2/2)
+    z = w * (x - (2 * (1 - ex))/x)
+    z = z / (w * (1 - ex) + (1 - w) * ex * x**2)
+    muhat[~ind] = z
+    return muhat
+
+
+def postmean_laplace(x, s=1, w=0.5, a=0.5):
+    """
+    Find the posterior mean for the double exponential prior for
+    given x, s (sd), w, and a.
+
+    Args:
+        x (float or numpy array): Input data.
+        s (float): Standard deviation.
+        w (float): Parameter.
+        a (float): Parameter.
+
+    Returns:
+        float or numpy array: Posterior mean.
+    """
+    # Only allow a < 20 for input value.
+    a = min(a, 20)
+    
+    # First find the probability of being non-zero
+    w_post = wpost_laplace(w, x, s, a)
+    
+    # Now find the posterior mean conditional on being non-zero
+    sx = np.sign(x)
+    x = np.abs(x)
+    xpa = x/s + s*a
+    xma = x/s - s*a
+    xpa[xpa > 35] = 35
+    xma[xma < -35] = -35
+    
+    cp1 = norm.cdf(xma)
+    cp2 = norm.cdf(-xpa)
+    ef = np.exp(np.minimum(2 * a * x, 100))
+    postmean_cond = x - a * s**2 * (2 * cp1 / (cp1 + ef * cp2) - 1)
+    
+    # Calculate posterior mean and return
+    return sx * w_post * postmean_cond
+
+def threshld(x, t, hard=True):
+    """
+    Threshold the data x using threshold t.
+    If hard=True, use hard thresholding.
+    If hard=False, use soft thresholding.
+    """
+    if hard:
+        z = x * (np.abs(x) >= t)
+    else:
+        z = np.sign(x) * np.maximum(0, np.abs(x) - t)
+    return z
+
+
+
+def wandafromx(x, s=1, universalthresh=True):
+    """
+    Find the marginal max lik estimators of w and a given standard  deviation s,
+    using a bivariate optimization; If universalthresh=TRUE, the thresholds will 
+    be upper bounded by universal threshold adjusted by standard deviation. 
+    The threshold is constrained to lie between 0 and sqrt ( 2 log (n)) *   s. 
+    Otherwise, threshold can take any nonnegative value;  If running R, 
+    the routine optim is used; in S-PLUS the routine is nlminb.
+    """
+    # Range for thresholds
+    if universalthresh:
+        thi = np.sqrt(2 * np.log(len(x))) * s
+    else:
+        thi = np.inf
+
+    if isinstance(s, int):
+        tlo = np.zeros(len(str(s)))
+    else:
+        tlo = np.zeros(len(s))
+    lo = np.array([0, 0.04])
+    hi = np.array([1, 3])
+    startpar = np.array([0.5, 0.5])
+
+    if 'optim' in globals():
+        result = minimize(negloglik_laplace, startpar, method='L-BFGS-B', bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
+        uu = result.x
+    else:
+        result = minimize(negloglik_laplace, startpar, bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
+        uu = result.x
+
+    a = uu[1]
+    wlo = wfromt(thi, s, a=a)
+    whi = wfromt(tlo, s, a=a)
+    wlo = np.max(wlo)
+    whi = np.min(whi)
+    w = uu[0] * (whi - wlo) + wlo
+    return {'w': w, 'a': a}
 
 def mad(x, center=None, constant=1.4826, na_rm=False, low=False, high=False):
     # NA 제거 옵션 처리
@@ -210,66 +427,7 @@ def wfromx(x, s=1, prior="laplace", a=0.5, universalthresh=True):
             
     return np.sqrt(wlo * whi)
 
-def isotone(x, wt=None, increasing=False):
-    """
-    Find the weighted least squares isotone fit to the sequence x,
-    the weights given by the sequence wt. If increasing == True,
-    the curve is set to be increasing, otherwise to be decreasing.
-    The vector ip contains the indices on the original scale of the
-    breaks in the regression at each stage.
 
-    Parameters:
-        x (list or numpy.ndarray): Input sequence.
-        wt (list or numpy.ndarray, optional): Weights for the sequence x. Defaults to None.
-        increasing (bool, optional): If True, the curve is set to be increasing, otherwise decreasing.
-            Defaults to False.
-
-    Returns:
-        list: Isotonic fit to the input sequence x.
-    """
-    nn = len(x)
-
-    if nn == 1:
-        x = x
-
-    if not increasing:
-        x = -x
-
-    ip = np.arange(1, nn+1)
-    dx = np.diff(x)
-    nx = len(x)
-
-    while nx > 1 and np.min(dx) < 0:
-        # Find all local minima and maxima
-        jmax = np.arange(nx)[(np.concatenate((dx <= 0, [False])) & np.concatenate(([True], dx > 0)))]
-        jmin = np.arange(nx)[(np.concatenate((dx > 0, [True])) & np.concatenate(([False], dx <= 0)))]
-
-        for jb in range(len(jmax)):
-            ind = np.arange(jmax[jb], jmin[jb]+1)
-            wtn = np.sum(wt[ind])
-            x[jmax[jb]] = np.sum(wt[ind] * x[ind]) / wtn
-            wt[jmax[jb]] = wtn
-            x[jmax[jb]+1:jmin[jb]+1] = np.nan
-
-        # Clean up within iteration, eliminating the parts of sequences that
-        # were set to NA
-        ind = ~np.isnan(x)
-        x = x[ind]
-        wt = wt[ind]
-        ip = ip[ind]
-        dx = np.diff(x)
-        nx = len(x)
-
-    # Final cleanup: reconstruct z at all points by repeating the pooled
-    # values the appropriate number of times
-    jj = np.zeros(nn, dtype=int)
-    jj[ip - 1] = 1
-    z = x[np.cumsum(jj) - 1]
-
-    if not increasing:
-        z = -z
-
-    return z.tolist()
 
 def wmonfromx(xd, prior="laplace", a=0.5,  tol=1e-08, maxits=20):
     """
@@ -311,191 +469,6 @@ def wmonfromx(xd, prior="laplace", a=0.5,  tol=1e-08, maxits=20):
     warnings.filterwarnings("More iterations required to achieve convergence")
     return w
 
-
-def threshld(x, t, hard=True):
-    """
-    Threshold the data x using threshold t.
-    If hard=True, use hard thresholding.
-    If hard=False, use soft thresholding.
-    """
-    if hard:
-        z = x * (np.abs(x) >= t)
-    else:
-        z = np.sign(x) * np.maximum(0, np.abs(x) - t)
-    return z
-
-
-def negloglik_laplace(xpar, xx, ss, tlo, thi):
-    """
-    Marginal negative log likelihood function for Laplace prior. 
-    Constraints for thresholds need to be passed externally.
-
-    Parameters:
-    xpar : array-like, shape (2,)
-        Vector of two parameters:
-        xpar[0]: a value between [0, 1] which will be adjusted to range of w 
-        xpar[1]: inverse scale (rate) parameter ("a")
-    xx : array-like
-        Data
-    ss : array-like
-        Vector of standard deviations
-    tlo : array-like
-        Lower bound of thresholds
-    thi : array-like
-        Upper bound of thresholds
-
-    Returns:
-    neg_loglik : float
-        Negative log likelihood
-    """
-    a = xpar[1]
-    
-    # Calculate the range of w given a, using negative monotonicity
-    # between w and t
-    wlo = wfromt(thi, ss, a=a)
-    whi = wfromt(tlo, ss, a=a)
-    wlo = np.max(wlo)
-    whi = np.min(whi)
-    
-    loglik = np.sum(np.log(1 + (xpar[0] * (whi - wlo) + wlo) *
-                           beta_laplace(xx, ss, a)))
-    
-    return -loglik
-
-
-def postmean_cauchy(x, w):
-    """
-    Find the posterior mean for the quasi-Cauchy prior with mixing
-    weight w given data x, which may be a scalar or a vector.
-    """
-    muhat = x  # Ensure x is a numpy array
-    ind = (x == 0)
-    x = x[~ind]  # Remove zeros from x
-    ex = np.exp(-x**2/2)
-    z = w * (x - (2 * (1 - ex))/x)
-    z = z / (w * (1 - ex) + (1 - w) * ex * x**2)
-    muhat[~ind] = z
-    return muhat
-
-
-def wpost_laplace(w, x, s=1, a=0.5):
-    # Calculate the posterior weight for non-zero effect
-    laplace_beta = beta_laplace(x, s, a)
-    return 1 - (1 - w) / (1 + w * laplace_beta)
-
-
-def postmean_laplace(x, s=1, w=0.5, a=0.5):
-    """
-    Find the posterior mean for the double exponential prior for
-    given x, s (sd), w, and a.
-
-    Args:
-        x (float or numpy array): Input data.
-        s (float): Standard deviation.
-        w (float): Parameter.
-        a (float): Parameter.
-
-    Returns:
-        float or numpy array: Posterior mean.
-    """
-    # Only allow a < 20 for input value.
-    a = min(a, 20)
-    
-    # First find the probability of being non-zero
-    w_post = wpost_laplace(w, x, s, a)
-    
-    # Now find the posterior mean conditional on being non-zero
-    sx = np.sign(x)
-    x = np.abs(x)
-    xpa = x/s + s*a
-    xma = x/s - s*a
-    xpa[xpa > 35] = 35
-    xma[xma < -35] = -35
-    
-    cp1 = norm.cdf(xma)
-    cp2 = norm.cdf(-xpa)
-    ef = np.exp(np.minimum(2 * a * x, 100))
-    postmean_cond = x - a * s**2 * (2 * cp1 / (cp1 + ef * cp2) - 1)
-    
-    # Calculate posterior mean and return
-    return sx * w_post * postmean_cond
-
-def postmean(x, s=1, w=0.5, prior="laplace", a=0.5):
-    """
-    Find the posterior mean for the appropriate prior for given x, s (sd), w, and a.
-    """
-    pr = prior[0:1]
-    if pr == "l":
-        mutilde = postmean_laplace(x, s, w, a=a)
-    elif pr == "c":
-        if np.any(s != 1):
-            raise ValueError("Only standard deviation of 1 is allowed for Cauchy prior.")
-        mutilde = postmean_cauchy(x, w)
-    else:
-        raise ValueError("Unknown prior type.")
-    return mutilde
-
-
-def postmed_cauchy(x, w):
-    """
-    Find the posterior median of the Cauchy prior with mixing weight w,
-    pointwise for each of the data points x
-    """
-    nx = len(x)
-    zest = np.empty_like(x, dtype=float)
-    w = np.repeat(w, nx)
-    ax = np.abs(x)
-    j = ax < 20
-    
-    zest[~j] = ax[~j] - 2 / ax[~j]
-    
-    if np.sum(j) > 0:
-        # Implement vecbinsolv function or use an equivalent Python function
-        # Implement cauchy.medzero function or use an equivalent Python function
-        zest[j] = vecbinsolv(np.zeros(np.sum(j)), cauchy_medzero, 0, np.max(ax[j]), ax[j], w[j])
-    
-    zest[zest < 1e-7] = 0
-    zest = np.sign(x) * zest
-    return zest
-
-
-def wandafromx(x, s=1, universalthresh=True):
-    """
-    Find the marginal max lik estimators of w and a given standard  deviation s,
-    using a bivariate optimization; If universalthresh=TRUE, the thresholds will 
-    be upper bounded by universal threshold adjusted by standard deviation. 
-    The threshold is constrained to lie between 0 and sqrt ( 2 log (n)) *   s. 
-    Otherwise, threshold can take any nonnegative value;  If running R, 
-    the routine optim is used; in S-PLUS the routine is nlminb.
-    """
-    # Range for thresholds
-    if universalthresh:
-        thi = np.sqrt(2 * np.log(len(x))) * s
-    else:
-        thi = np.inf
-
-    if isinstance(s, int):
-        tlo = np.zeros(len(str(s)))
-    else:
-        tlo = np.zeros(len(s))
-    lo = np.array([0, 0.04])
-    hi = np.array([1, 3])
-    startpar = np.array([0.5, 0.5])
-
-    if 'optim' in globals():
-        result = minimize(negloglik_laplace, startpar, method='L-BFGS-B', bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
-        uu = result.x
-    else:
-        result = minimize(negloglik_laplace, startpar, bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
-        uu = result.x
-
-    a = uu[1]
-    wlo = wfromt(thi, s, a=a)
-    whi = wfromt(tlo, s, a=a)
-    wlo = np.max(wlo)
-    whi = np.min(whi)
-    w = uu[0] * (whi - wlo) + wlo
-    return {'w': w, 'a': a}
 
 def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     """
@@ -635,3 +608,104 @@ def tfromx(x, s=1, prior="laplace", bayesfac=False, a=0.5, universalthresh=True)
     else:
         w = wfromx(x, s, prior=prior, a=a)
     return tfromw(w, s, prior=prior, bayesfac=bayesfac, a=a)
+
+def wpost_laplace(w, x, s=1, a=0.5):
+    # Calculate the posterior weight for non-zero effect
+    laplace_beta = beta_laplace(x, s, a)
+    return 1 - (1 - w) / (1 + w * laplace_beta)
+
+def zetafromx(xd, cs, pilo=None, prior="laplace", a=0.5):
+    """
+    Given a sequence xd, a vector of scale factors cs, and a lower limit pilo,
+    find the marginal maximum likelihood estimate of the parameter zeta
+    such that the prior probability is of the form median(pilo, zeta*cs, 1).
+
+    If pilo is None, then it is calculated according to the sample size
+    to correspond to the universal threshold.
+
+    Find the beta values and the minimum weight if necessary.
+
+    Current version allows for standard deviation of 1 only.
+    
+    xd - A vector of data.
+    cs - A vector of scale factors, of the same length as xd.
+    pilo The lower limit for the estimated weights. If pilo=NA it is calculated according
+    to the sample size to be the weight corresponding to the universal threshold √ 2 log n.
+    prior Specification of prior to be used conditional on the mean being nonzero; can be
+    cauchy or laplace.
+    a - Scale factor if Laplace prior is used. Ignored if Cauchy prior is used. If, on entry,
+    a=NA and prior="laplace", then the scale parameter will also be estimated by
+    marginal maximum likelihood. If a is not specified then the default value 0.5
+    will be used.
+    """
+    pr = prior[0:1]
+    nx = len(xd)
+    if pilo is None:
+        pilo = wfromt(np.sqrt(2 * np.log(len(xd))), prior=prior, a=a)
+    if pr == "l":
+        beta = beta_laplace(xd, a=a)
+    elif pr == "c":
+        beta = beta_cauchy(xd)
+    
+    # Find jump points zj in the derivative of log likelihood as a function of z,
+    # and other preliminary calculations
+    zs1 = pilo / cs
+    zs2 = 1 / cs
+    zj = np.sort(np.unique(np.concatenate((zs1, zs2))))
+    cb = cs * beta
+    mz = len(zj)
+    zlmax = None
+
+    # Find left and right derivatives at each zj and check which are local minima
+    lmin = np.zeros(mz, dtype=bool)
+    for j in range(1, mz - 1):
+        ze = zj[j]
+        cbil = cb[(ze > zs1) & (ze <= zs2)]
+        ld = np.sum(cbil / (1 + ze * cbil))
+        if ld <= 0:
+            cbir = cb[(ze >= zs1) & (ze < zs2)]
+            rd = np.sum(cbir / (1 + ze * cbir))
+            lmin[j] = rd >= 0
+    
+    # Deal with the two end points in turn, finding right deriv at lower end
+    # and left deriv at upper.
+    cbir = cb[zj[0] == zs1]
+    rd = np.sum(cbir / (1 + zj[0] * cbir))
+    if rd > 0:
+        lmin[0] = True
+    else:
+        zlmax = zj[0]
+    
+    cbil = cb[zj[mz - 1] == zs2]
+    ld = np.sum(cbil / (1 + zj[mz - 1] * cbil))
+    if ld < 0:
+        lmin[mz - 1] = True
+    else:
+        zlmax = zj[mz - 1]
+
+    # Flag all local minima and do a binary search between them to find the local maxima
+    zlmin = zj[lmin]
+    nlmin = len(zlmin)
+    for j in range(1, nlmin):
+        zlo = zlmin[j - 1]
+        zhi = zlmin[j]
+        ze = (zlo + zhi) / 2
+        zstep = (zhi - zlo) / 2
+        for nit in range(10):
+            cbi = cb[(ze >= zs1) & (ze <= zs2)]
+            likd = np.sum(cbi / (1 + ze * cbi))
+            zstep /= 2
+            ze += zstep * np.sign(likd)
+        zlmax = np.append(zlmax, ze)
+    
+    # Evaluate all local maxima and find global max;
+    # use smaller value if there is an exact tie for the global maximum.
+    nlmax = len(zlmax)
+    zm = np.empty(nlmax)
+    for j in range(nlmax):
+        pz = np.maximum(zs1, np.minimum(zlmax[j], zs2))
+        zm[j] = np.sum(np.log(1 + cb * pz))
+    zeta = zlmax[zm == np.max(zm)]
+    zeta = np.min(zeta)
+    w = np.minimum(1, np.maximum(zeta * cs, pilo))
+    return {"zeta": zeta, "w": w, "cs": cs, "pilo": pilo}
