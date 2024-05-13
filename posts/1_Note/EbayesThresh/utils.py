@@ -470,7 +470,7 @@ def wmonfromx(xd, prior="laplace", a=0.5,  tol=1e-08, maxits=20):
     return w
 
 
-def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
+def vecbinsolv(zf, fun, tlo, thi, nits=30, *args, **kwargs):
     """
     Given a monotone function fun, and a vector of values zf find a vector of numbers t such that f(t) = zf.
     The solution is constrained to lie on the interval (tlo, thi).
@@ -513,9 +513,9 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     for _ in range(nits):
         tmid = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
         if fun == cauchy_threshzero:
-            fmid = cauchy_threshzero(tmid, **kwargs)
+            fmid = fun(tmid, z=z, w=w)
         elif fun == laplace_threshzero:
-            fmid = laplace_threshzero(tmid, **kwargs)
+            fmid = fun(tmid, s=s, w=w, a=a)
         else:
             fmid = fun(tmid, **kwargs)
         if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
