@@ -69,6 +69,8 @@ def cauchy_medzero(x, z, w):
 
 
 def cauchy_threshzero(z, w):
+    if isinstance(z, (list)):
+        z = np.array(z)
     y = norm.cdf(z) - z * norm.pdf(z) - 1/2 - (z**2 * np.exp(-z**2/2) * (1/w - 1))/2
     return y
 
@@ -470,7 +472,7 @@ def wmonfromx(xd, prior="laplace", a=0.5,  tol=1e-08, maxits=20):
     return w
 
 
-def vecbinsolv(zf, fun, tlo, thi, nits=30, *args, **kwargs):
+def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     """
     Given a monotone function fun, and a vector of values zf find a vector of numbers t such that f(t) = zf.
     The solution is constrained to lie on the interval (tlo, thi).
@@ -495,6 +497,9 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, *args, **kwargs):
 
     nits-number of binary subdivisions carried out
     """
+    s = kwargs.get('s', 0) 
+    w = kwargs.get('w', 0) 
+    a = kwargs.get('a', 0) 
     if isinstance(zf, int):
         nz = len(str(zf))
     else:
@@ -513,11 +518,11 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, *args, **kwargs):
     for _ in range(nits):
         tmid = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
         if fun == cauchy_threshzero:
-            fmid = fun(tmid, z=z, w=w)
+            fmid = fun(z=tmid, w=w)
         elif fun == laplace_threshzero:
-            fmid = fun(tmid, s=s, w=w, a=a)
+            fmid = fun(x=tmid, s=s, w=w, a=a)
         else:
-            fmid = fun(tmid, **kwargs)
+            fmid = fun(tmid)
         if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
             indt = [f <= z for f, z in zip(fmid, zf)]
         elif isinstance(fmid, int) and isinstance(zf, (list,np.ndarray)): 
@@ -576,7 +581,7 @@ def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):
                 zz = np.array([0] * max(len(str(s)), len(str(w))))
             else:
                 zz = [0] * max(len(s), len(w))
-            tt = vecbinsolv(zz, laplace_threshzero, 0, s * (25 + s * a), s=s, w=w, a=a)
+            tt = vecbinsolv(zz, laplace_threshzero, 0, s * (25 + s * a))
         elif pr == "c":
             tt = vecbinsolv(z, cauchy_threshzero, 0, 10, w=w)
     return tt
