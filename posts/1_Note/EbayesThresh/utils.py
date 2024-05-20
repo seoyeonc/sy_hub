@@ -506,35 +506,36 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
         nz = len(zf)
     
     if isinstance(tlo, (int, float)):
-        tlo = [tlo] * nz
+        tlo = np.array([tlo] * nz)
     if len(tlo) != nz:
         raise ValueError("Lower constraint has to be homogeneous or has the same length as #functions.")
     if isinstance(thi, (int, float)):
-        thi = [thi] * nz
+        thi = np.array([thi] * nz)
     if len(thi) != nz:
         raise ValueError("Upper constraint has to be homogeneous or has the same length as #functions.")
 
     # carry out nits bisections
     for _ in range(nits):
-        tmid = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
+        tmid = np.array([(lo + hi) / 2 for lo, hi in zip(tlo, thi)])
         if fun == cauchy_threshzero:
             fmid = fun(z=tmid, w=w)
         elif fun == laplace_threshzero:
             fmid = fun(x=tmid, s=s, w=w, a=a)
         else:
             fmid = fun(tmid)
+    #     indt = (fmid <= zf)
+    #     tlo[indt] = tmid[indt]
+    #     thi[~indt] = tmid[~indt]
+    # tsol = (tlo + thi) / 2
         if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
             indt = [f <= z for f, z in zip(fmid, zf)]
-        elif isinstance(fmid, int) and isinstance(zf, (list,np.ndarray)): 
-            indt = [fmid <= z for z in zf]
-        elif isinstance(fmid, (list,np.ndarray)) and isinstance(zf, int): 
-            indt = [f <= zf for f in fmid]
-        elif isinstance(fmid, int) and isinstance(zf, int): 
-            indt = fmid <= z
+        else: 
+            indt = fmid <= zf
         tlo = [tm if ind else lo for tm, lo, ind in zip(tmid, tlo, indt)]
         thi = [tm if not ind else hi for tm, hi, ind in zip(tmid, thi, indt)]
         
     tsol = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
+    
     return tsol
 
 
@@ -567,9 +568,9 @@ def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):
                 zz = z
             elif len(w) < len(str(s)):
                 zz = [z] * len(s)
-            tt = vecbinsolv(zz, beta_laplace, 0, 10, s=s, a=a)
+            tt = vecbinsolv(zz, beta_laplace, 0, 10, s=s, w=w, a=a)
         elif pr == "c":
-            tt = vecbinsolv(z, beta_cauchy, 0, 10)
+            tt = vecbinsolv(z, beta_cauchy, 0, 10, 30, w=w)
     else:
         z = 0
         if pr == "l":
@@ -581,9 +582,9 @@ def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):
                 zz = np.array([0] * max(len(str(s)), len(str(w))))
             else:
                 zz = [0] * max(len(s), len(w))
-            tt = vecbinsolv(zz, laplace_threshzero, 0, s * (25 + s * a))
+            tt = vecbinsolv(zz, laplace_threshzero, 0, s * (25 + s * a), 30, s=s, w=w, a=a)
         elif pr == "c":
-            tt = vecbinsolv(z, cauchy_threshzero, 0, 10, w=w)
+            tt = vecbinsolv(z, cauchy_threshzero, 0, 10, 30, w=w)
     return tt
 
 
