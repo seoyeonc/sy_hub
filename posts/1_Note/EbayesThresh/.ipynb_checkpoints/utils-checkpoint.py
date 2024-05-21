@@ -523,20 +523,16 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
             fmid = fun(x=tmid, s=s, w=w, a=a)
         else:
             fmid = fun(tmid)
-    #     indt = (fmid <= zf)
-    #     tlo[indt] = tmid[indt]
-    #     thi[~indt] = tmid[~indt]
-    # tsol = (tlo + thi) / 2
         if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
             indt = [f <= z for f, z in zip(fmid, zf)]
         else: 
             indt = fmid <= zf
-        tlo = [tm if ind else lo for tm, lo, ind in zip(tmid, tlo, indt)]
-        thi = [tm if not ind else hi for tm, hi, ind in zip(tmid, thi, indt)]
+#         tlo = [tm if ind else lo for tm, lo, ind in zip(tmid, tlo, indt)]
+#         thi = [tm if not ind else hi for tm, hi, ind in zip(tmid, thi, indt)]
         
-    tsol = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
+#     tsol = [(lo + hi) / 2 for lo, hi in zip(tlo, thi)]
     
-    return tsol
+    return indt
 
 
 def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):

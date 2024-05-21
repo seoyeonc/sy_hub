@@ -523,10 +523,6 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
             fmid = fun(x=tmid, s=s, w=w, a=a)
         else:
             fmid = fun(tmid)
-    #     indt = (fmid <= zf)
-    #     tlo[indt] = tmid[indt]
-    #     thi[~indt] = tmid[~indt]
-    # tsol = (tlo + thi) / 2
         if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
             indt = [f <= z for f, z in zip(fmid, zf)]
         else: 
