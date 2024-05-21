@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.stats import norm, cauchy,laplace, stats
-from scipy.optimize import minimize
+from scipy.optimize import minimize, root_scalar
+from statsmodels.robust.scale import mad
 import warnings
 
 
@@ -59,6 +60,142 @@ def beta_laplace(x, s=1, a=0.5):
     beta = (a * s) / 2 * (rat1 + rat2) - 1
     
     return beta
+
+def ebayesthresh(x, prior="laplace", a=0.5, bayesfac=False, sdev=None, verbose=False, threshrule="median", universalthresh=True, stabadjustment=None):
+    pr = prior[0:1]
+
+    if sdev is None:
+        sdev = mad(x, center=0)
+        stabadjustment_condition = True
+    elif len(np.atleast_1d(sdev)) == 1:
+        if stabadjustment is not None:
+            raise ValueError("Argument stabadjustment is not applicable when variances are homogeneous.")
+        if np.isnan(sdev):
+            sdev = mad(x, center=0)
+        stabadjustment_condition = True
+    else:
+        if pr == "c":
+            raise ValueError("Standard deviation has to be homogeneous for Cauchy prior.")
+        if len(sdev) != len(x):
+            raise ValueError("Standard deviation has to be homogeneous or have the same length as observations.")
+        if stabadjustment is None:
+            stabadjustment = False
+        stabadjustment_condition = stabadjustment
+
+    if stabadjustment_condition:
+        m_sdev = np.mean(sdev)
+        s = sdev / m_sdev
+        x = x / m_sdev
+    else:
+        s = sdev
+
+    if (pr == "l") and np.isnan(a):
+        pp = wandafromx(x, s, universalthresh)
+        w = pp['w']
+        a = pp['a']
+    else:
+        w = wfromx(x, s, prior=prior, a=a, universalthresh=universalthresh)
+
+    if pr != "m" or verbose:
+        tt = tfromw(w, s, prior=prior, bayesfac=bayesfac, a=a)[0]
+        if stabadjustment_condition:
+            tcor = tt * m_sdev
+        else:
+            tcor = tt
+
+    if threshrule == "median":
+        muhat = postmed(x, s, w, prior=prior, a=a)
+    elif threshrule == "mean":
+        muhat = postmean(x, s, w, prior=prior, a=a)
+    elif threshrule == "hard":
+        muhat = threshld(x, tt)
+    elif threshrule == "soft":
+        muhat = threshld(x, tt, hard=False)
+    elif threshrule == "none":
+        muhat = None
+    else:
+        raise ValueError(f"Unknown threshold rule: {threshrule}")
+
+    if stabadjustment_condition:
+        muhat = muhat * m_sdev
+
+    if not verbose:
+        return muhat
+    else:
+        retlist = {
+            'muhat': muhat,
+            'x': x,
+            'threshold.sdevscale': tt,
+            'threshold.origscale': tcor,
+            'prior': prior,
+            'w': w,
+            'a': a,
+            'bayesfac': bayesfac,
+            'sdev': sdev,
+            'threshrule': threshrule
+        }
+        if pr == "c":
+            del retlist['a']
+        if threshrule == "none":
+            del retlist['muhat']
+        return retlist
+
+    
+    
+def ebayesthresh_wavelet_dwt(x_dwt, vscale="independent", smooth_levels=float('inf'), 
+                             prior="laplace", a=0.5, bayesfac=False, 
+                             threshrule="median"):
+    nlevs = len(x_dwt) - 1
+    slevs = min(nlevs, smooth_levels)
+    
+    if isinstance(vscale, str):
+        vs = vscale[0].lower()
+        if vs == "i":
+            vscale = mad(x_dwt[0], center=0)
+        if vs == "l":
+            vscale = None
+    
+    for j in range(slevs):
+        x_dwt[j] = ebayesthresh(x_dwt[j], prior=prior, a=a, bayesfac=bayesfac, 
+                                sdev=vscale, verbose=False, threshrule=threshrule)
+    
+    return x_dwt
+
+def ebayesthresh_wavelet_splus(x_dwt, vscale="independent", smooth_levels=float('inf'), 
+                                prior="laplace", a=0.5, bayesfac=False, threshrule="median"):
+    nlevs = len(x_dwt)
+    slevs = min(nlevs, smooth_levels)
+    
+    if isinstance(vscale, str):
+        vs = vscale[0].lower()
+        if vs == "i":
+            vscale = mad(x_dwt[-1])  # Use the last level for vscale
+        elif vs == "l":
+            vscale = None
+    
+    for j in range(nlevs - slevs + 1, nlevs + 1):
+        x_dwt[j - 1] = ebayesthresh(x_dwt[j - 1], prior=prior, a=a, bayesfac=bayesfac, 
+                                    sdev=vscale, verbose=False, threshrule=threshrule)
+    
+    return x_dwt
+
+def ebayesthresh_wavelet_wd(x_wd, vscale="independent", smooth_levels=float('inf'), 
+                             prior="laplace", a=0.5, bayesfac=False, threshrule="median"):
+    nlevs = x_wd.nlevels
+    slevs = min(nlevs - 1, smooth_levels)
+    
+    if isinstance(vscale, str):
+        vs = vscale[0].lower()
+        if vs == "i":
+            vscale = mad(x_wd[-1].d)  # Use the last level for vscale
+        elif vs == "l":
+            vscale = None
+    
+    for j in range(nlevs - slevs, nlevs - 1):
+        x_wd.d[j] = ebayesthresh(x_wd.d[j], prior=prior, a=a, bayesfac=bayesfac, 
+                                  sdev=vscale, verbose=False, threshrule=threshrule)
+    
+    return x_wd
 
 def cauchy_medzero(x, z, w):
     hh = z - x
@@ -264,6 +401,80 @@ def postmean_laplace(x, s=1, w=0.5, a=0.5):
     
     # Calculate posterior mean and return
     return sx * w_post * postmean_cond
+
+def postmed(x, s=1, w=0.5, prior="laplace", a=0.5):
+    """
+    Find the posterior median for the appropriate prior for given x, s (sd), w, and a.
+
+    Parameters:
+        x (array-like): Observations.
+        s (float): Standard deviation.
+        w (float): Weight parameter.
+        prior (str): Type of prior ("laplace" or "cauchy").
+        a (float): Parameter a.
+
+    Returns:
+        array-like: Posterior median estimates.
+    """
+    pr = prior[0:1]
+    if pr == "l":
+        muhat = postmed_laplace(x, s, w, a)
+    elif pr == "c":
+        if np.any(s != 1):
+            raise ValueError("Only standard deviation of 1 is allowed for Cauchy prior.")
+        muhat = postmed_cauchy(x, w)
+    else:
+        raise ValueError(f"Unknown prior: {prior}")
+    return muhat
+
+def postmed_cauchy(x, w):
+    """
+    Find the posterior median of the Cauchy prior with mixing weight w,
+    pointwise for each of the data points x
+    """
+    nx = len(x)
+    zest = np.full(nx, np.nan)
+    w = np.full(nx, w)
+    ax = np.abs(x)
+    j = (ax < 20)
+    zest[~j] = ax[~j] - 2 / ax[~j]
+    
+    if np.sum(j) > 0:
+        zest[j] = vecbinsolv(zf=np.zeros(np.sum(j)), fun=cauchy_medzero,
+                             tlo=0, thi=np.max(ax[j]), z=ax[j], w=w[j])
+                             
+    zest[zest < 1e-7] = 0
+    zest = np.sign(x) * zest
+    
+    return zest
+
+def postmed_laplace(x, s=1, w=0.5, a=0.5):
+    """
+    Find the posterior median for the Laplace prior for given x (observations), s (sd), w, and a.
+    
+    Parameters:
+        x (array-like): Observations.
+        s (float): Standard deviation.
+        w (float): Weight parameter.
+        a (float): Parameter a.
+        
+    Returns:
+        array-like: Posterior median estimates.
+    """
+    # Only allow a < 20 for input value
+    a = min(a, 20)
+    
+    # Work with the absolute value of x, and for x > 25 use the approximation
+    # to dnorm(x-a)*beta_laplace(x, a)
+    sx = np.sign(x)
+    x = np.abs(x)
+    xma = x / s - s * a
+    zz = 1 / a * (1 / s * norm.pdf(xma)) * (1 / w + beta_laplace(x, s, a))
+    zz[xma > 25] = 0.5
+    mucor = norm.ppf(np.minimum(zz, 1))
+    muhat = sx * np.maximum(0, xma - mucor) * s
+    
+    return muhat
 
 def threshld(x, t, hard=True):
     """
@@ -505,13 +716,13 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     else:
         nz = len(zf)
     
-    if isinstance(tlo, (int, float)):
+    if isinstance(tlo, (int, float, np.int64)):
         tlo = np.array([tlo] * nz)
-    if len(tlo) != nz:
+    if not isinstance(tlo, (int, float, np.int64)) and len(tlo) != nz:
         raise ValueError("Lower constraint has to be homogeneous or has the same length as #functions.")
-    if isinstance(thi, (int, float)):
+    if isinstance(thi, (int, float, np.int64)):
         thi = np.array([thi] * nz)
-    if len(thi) != nz:
+    if not isinstance(thi, (int, float, np.int64)) and len(thi) != nz:
         raise ValueError("Upper constraint has to be homogeneous or has the same length as #functions.")
 
     # carry out nits bisections
@@ -522,7 +733,7 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
         elif fun == laplace_threshzero:
             fmid = fun(x=tmid, s=s, w=w, a=a)
         else:
-            fmid = fun(tmid)
+            fmid = fun(tmid, **kwargs)
         if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
             indt = [f <= z for f, z in zip(fmid, zf)]
         else: 
@@ -564,7 +775,7 @@ def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):
                 zz = z
             elif len(w) < len(str(s)):
                 zz = [z] * len(s)
-            tt = vecbinsolv(zz, beta_laplace, 0, 10, s=s, w=w, a=a)
+            tt = vecbinsolv(zz, beta_laplace, 0, 10, 30, s=s, w=w, a=a)
         elif pr == "c":
             tt = vecbinsolv(z, beta_cauchy, 0, 10, 30, w=w)
     else:
