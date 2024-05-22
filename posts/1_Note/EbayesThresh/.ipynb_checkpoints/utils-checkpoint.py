@@ -820,7 +820,7 @@ def tfromx(x, s=1, prior="laplace", bayesfac=False, a=0.5, universalthresh=True)
         a = wa['a']
     else:
         w = wfromx(x, s, prior=prior, a=a)
-    return tfromw(w, s, prior=prior, bayesfac=bayesfac, a=a)
+    return tfromw(w, s, prior=prior, bayesfac=bayesfac, a=a)[0]
 
 def wpost_laplace(w, x, s=1, a=0.5):
     # Calculate the posterior weight for non-zero effect
