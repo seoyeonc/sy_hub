@@ -308,7 +308,7 @@ window.Quarto = {
   <ul>
   <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">Import</a>
   <ul class="collapse">
-  <li><a href="#확인용-import" id="toc-확인용-import" class="nav-link" data-scroll-target="#확인용-import">확인용 import</a></li>
+  <li><a href="#import-for-code-check" id="toc-import-for-code-check" class="nav-link" data-scroll-target="#import-for-code-check">import for code check</a></li>
   </ul></li>
   <li><a href="#beta.cauchy" id="toc-beta.cauchy" class="nav-link" data-scroll-target="#beta.cauchy">beta.cauchy</a></li>
   <li><a href="#beta.laplace" id="toc-beta.laplace" class="nav-link" data-scroll-target="#beta.laplace">beta.laplace</a></li>
@@ -339,8 +339,7 @@ window.Quarto = {
   <li><a href="#tfromx" id="toc-tfromx" class="nav-link" data-scroll-target="#tfromx">tfromx</a></li>
   <li><a href="#wpost_laplace" id="toc-wpost_laplace" class="nav-link" data-scroll-target="#wpost_laplace">wpost_laplace</a></li>
   <li><a href="#zetafromx" id="toc-zetafromx" class="nav-link" data-scroll-target="#zetafromx">zetafromx</a></li>
-  <li><a href="#시도" id="toc-시도" class="nav-link" data-scroll-target="#시도">시도</a></li>
-  <li><a href="#torch.nn.module-시도" id="toc-torch.nn.module-시도" class="nav-link" data-scroll-target="#torch.nn.module-시도">torch.nn.module 시도</a></li>
+  <li><a href="#layer" id="toc-layer" class="nav-link" data-scroll-target="#layer">Layer</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2024-06-01-EbayesThresh_Python.out.ipynb" download="2024-06-01-EbayesThresh_Python.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -351,8 +350,11 @@ window.Quarto = {
 
 
 
-<p>https://cran.r-project.org/web/packages/EbayesThresh/EbayesThresh.pdf</p>
-<p>https://guebin.github.io/STML2022/posts/II.%20DNN/2022-10-12-6wk.html#%EC%8B%9C%EB%B2%A4%EC%BD%94%EC%A0%95%EB%A6%AC</p>
+<p>ref</p>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/EbayesThresh/EbayesThresh.pdf">R_ebayesthresh</a></li>
+<li><a href="https://guebin.github.io/STML2022/posts/II.%20DNN/2022-10-12-6wk.html#%EC%8B%9C%EB%B2%A4%EC%BD%94%EC%A0%95%EB%A6%AC">교수님 블로그</a></li>
+</ul>
 <section id="import" class="level1">
 <h1>Import</h1>
 <div id="7b74dbea-662a-4ddf-b71f-b5ad0edf1778" class="cell" data-execution_count="1">
@@ -360,8 +362,8 @@ window.Quarto = {
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ebayesthresh</span></code></pre></div>
 </div>
-<section id="확인용-import" class="level2">
-<h2 class="anchored" data-anchor-id="확인용-import">확인용 import</h2>
+<section id="import-for-code-check" class="level2">
+<h2 class="anchored" data-anchor-id="import-for-code-check">import for code check</h2>
 <div id="5f0a2e3e-bef8-48a9-af05-343378f104f4" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm, stats</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.optimize <span class="im">import</span> minimize, root_scalar</span>
@@ -4127,42 +4129,37 @@ executing.executing.NotOneValueFound: Expected one value, found 0</code></pre>
 <span id="cb556-11"><a href="#cb556-11" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>pilo</span>
 <span id="cb556-12"><a href="#cb556-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="fl">0.412115</span></span></code></pre></div>
 <hr>
-<div id="a35b6538-891e-4dd1-b279-deae4cbd7710" class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb557"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb557-1"><a href="#cb557-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_Psi(T):</span>
-<span id="cb557-2"><a href="#cb557-2" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> np.zeros((T,T))</span>
-<span id="cb557-3"><a href="#cb557-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(T):</span>
-<span id="cb557-4"><a href="#cb557-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(T):</span>
-<span id="cb557-5"><a href="#cb557-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i<span class="op">==</span>j :</span>
-<span id="cb557-6"><a href="#cb557-6" aria-hidden="true" tabindex="-1"></a>                W[i,j] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb557-7"><a href="#cb557-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> np.<span class="bu">abs</span>(i<span class="op">-</span>j) <span class="op">&lt;=</span> <span class="dv">1</span> : </span>
-<span id="cb557-8"><a href="#cb557-8" aria-hidden="true" tabindex="-1"></a>                W[i,j] <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb557-9"><a href="#cb557-9" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> np.array(W.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>))</span>
-<span id="cb557-10"><a href="#cb557-10" aria-hidden="true" tabindex="-1"></a>    D <span class="op">=</span> np.diag(d)</span>
-<span id="cb557-11"><a href="#cb557-11" aria-hidden="true" tabindex="-1"></a>    L <span class="op">=</span> np.array(np.diag(<span class="dv">1</span><span class="op">/</span>np.sqrt(d)) <span class="op">@</span> (D<span class="op">-</span>W) <span class="op">@</span> np.diag(<span class="dv">1</span><span class="op">/</span>np.sqrt(d)))</span>
-<span id="cb557-12"><a href="#cb557-12" aria-hidden="true" tabindex="-1"></a>    lamb, Psi <span class="op">=</span> np.linalg.eigh(L)</span>
-<span id="cb557-13"><a href="#cb557-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Psi</span></code></pre></div>
-</div>
 </section>
-<section id="시도" class="level1">
-<h1>시도</h1>
-<div id="68c6ae49-e2c8-4e9a-ae5e-bd7e9d0832bb" class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb558"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb558-1"><a href="#cb558-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb558-2"><a href="#cb558-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
-<span id="cb558-3"><a href="#cb558-3" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.sin(<span class="fl">0.5</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">1.2</span><span class="op">*</span>np.sin(<span class="fl">1.0</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>np.sin(<span class="fl">1.2</span><span class="op">*</span>t) </span>
-<span id="cb558-4"><a href="#cb558-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_true <span class="op">+</span> np.random.normal(size<span class="op">=</span>T)</span>
-<span id="cb558-5"><a href="#cb558-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb558-6"><a href="#cb558-6" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-303-output-1.png" class="img-fluid figure-img"></p>
-</figure>
+<section id="layer" class="level1">
+<h1>Layer</h1>
+<div id="792b3741-240a-460f-9626-5d496d46839d" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb557"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb557-1"><a href="#cb557-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb557-2"><a href="#cb557-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
+<span id="cb557-3"><a href="#cb557-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
+<span id="cb557-4"><a href="#cb557-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div>
 </div>
+<div id="a35b6538-891e-4dd1-b279-deae4cbd7710" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb558"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb558-1"><a href="#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_Psi(T):</span>
+<span id="cb558-2"><a href="#cb558-2" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> np.zeros((T,T))</span>
+<span id="cb558-3"><a href="#cb558-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(T):</span>
+<span id="cb558-4"><a href="#cb558-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(T):</span>
+<span id="cb558-5"><a href="#cb558-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> i<span class="op">==</span>j :</span>
+<span id="cb558-6"><a href="#cb558-6" aria-hidden="true" tabindex="-1"></a>                W[i,j] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb558-7"><a href="#cb558-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">elif</span> np.<span class="bu">abs</span>(i<span class="op">-</span>j) <span class="op">&lt;=</span> <span class="dv">1</span> : </span>
+<span id="cb558-8"><a href="#cb558-8" aria-hidden="true" tabindex="-1"></a>                W[i,j] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb558-9"><a href="#cb558-9" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> np.array(W.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>))</span>
+<span id="cb558-10"><a href="#cb558-10" aria-hidden="true" tabindex="-1"></a>    D <span class="op">=</span> np.diag(d)</span>
+<span id="cb558-11"><a href="#cb558-11" aria-hidden="true" tabindex="-1"></a>    L <span class="op">=</span> np.array(np.diag(<span class="dv">1</span><span class="op">/</span>np.sqrt(d)) <span class="op">@</span> (D<span class="op">-</span>W) <span class="op">@</span> np.diag(<span class="dv">1</span><span class="op">/</span>np.sqrt(d)))</span>
+<span id="cb558-12"><a href="#cb558-12" aria-hidden="true" tabindex="-1"></a>    lamb, Psi <span class="op">=</span> np.linalg.eigh(L)</span>
+<span id="cb558-13"><a href="#cb558-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Psi</span></code></pre></div>
 </div>
-</div>
-<div id="76f4e9de-3bd3-48fa-8692-3e074788526b" class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb559"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb559-1"><a href="#cb559-1" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'o'</span>)</span>
-<span id="cb559-2"><a href="#cb559-2" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span></code></pre></div>
+<div id="68c6ae49-e2c8-4e9a-ae5e-bd7e9d0832bb" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb559"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb559-1"><a href="#cb559-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb559-2"><a href="#cb559-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb559-3"><a href="#cb559-3" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.sin(<span class="fl">0.5</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">1.2</span><span class="op">*</span>np.sin(<span class="fl">1.0</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>np.sin(<span class="fl">1.2</span><span class="op">*</span>t) </span>
+<span id="cb559-4"><a href="#cb559-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_true <span class="op">+</span> np.random.normal(size<span class="op">=</span>T)</span>
+<span id="cb559-5"><a href="#cb559-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb559-6"><a href="#cb559-6" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4171,41 +4168,41 @@ executing.executing.NotOneValueFound: Expected one value, found 0</code></pre>
 </div>
 </div>
 </div>
-<div id="4e61d9cf-4665-44e6-9abd-de41aada06cb" class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb560"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb560-1"><a href="#cb560-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.array(y)</span>
-<span id="cb560-2"><a href="#cb560-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(f.shape)<span class="op">==</span><span class="dv">1</span>: f <span class="op">=</span> f.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
-<span id="cb560-3"><a href="#cb560-3" aria-hidden="true" tabindex="-1"></a>T,N <span class="op">=</span> f.shape</span>
-<span id="cb560-4"><a href="#cb560-4" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span>
-<span id="cb560-5"><a href="#cb560-5" aria-hidden="true" tabindex="-1"></a>fbar <span class="op">=</span> Psi.T <span class="op">@</span> f <span class="co"># apply dft </span></span></code></pre></div>
-</div>
-<div id="dbcab11e-3834-4388-9dbe-ebba699b5170" class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb561"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb561-1"><a href="#cb561-1" aria-hidden="true" tabindex="-1"></a>plt.plot(t,fbar<span class="op">**</span><span class="dv">2</span>) <span class="co"># periodogram </span></span></code></pre></div>
+<div id="76f4e9de-3bd3-48fa-8692-3e074788526b" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb560"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb560-1"><a href="#cb560-1" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'o'</span>)</span>
+<span id="cb560-2"><a href="#cb560-2" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-306-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-305-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="89fcd9dc-bfaa-4e54-bd14-5134fd2ef70f" class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb562"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb562-1"><a href="#cb562-1" aria-hidden="true" tabindex="-1"></a>fbar_threshed <span class="op">=</span> ebayesthresh.ebayesthresh(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
+<div id="4e61d9cf-4665-44e6-9abd-de41aada06cb" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb561"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb561-1"><a href="#cb561-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.array(y)</span>
+<span id="cb561-2"><a href="#cb561-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(f.shape)<span class="op">==</span><span class="dv">1</span>: f <span class="op">=</span> f.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
+<span id="cb561-3"><a href="#cb561-3" aria-hidden="true" tabindex="-1"></a>T,N <span class="op">=</span> f.shape</span>
+<span id="cb561-4"><a href="#cb561-4" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span>
+<span id="cb561-5"><a href="#cb561-5" aria-hidden="true" tabindex="-1"></a>fbar <span class="op">=</span> Psi.T <span class="op">@</span> f <span class="co"># apply dft </span></span></code></pre></div>
 </div>
-<div id="d1b529f6-aac6-444f-8ad0-d912dee7779d" class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb563"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb563-1"><a href="#cb563-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fbar_threshed = np.stack([ebayesthresh(FloatVector(fbar[:,i])) for i in range(N)],axis=1)</span></span>
-<span id="cb563-2"><a href="#cb563-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)) <span class="co"># periodogram </span></span>
-<span id="cb563-3"><a href="#cb563-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)) </span></code></pre></div>
+<div id="dbcab11e-3834-4388-9dbe-ebba699b5170" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb562"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb562-1"><a href="#cb562-1" aria-hidden="true" tabindex="-1"></a>plt.plot(t,fbar<span class="op">**</span><span class="dv">2</span>) <span class="co"># periodogram </span></span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-308-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-307-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="b413e3e9-0976-497a-bb23-4e66b4fd06ff" class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb564"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb564-1"><a href="#cb564-1" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) <span class="co"># periodogram </span></span>
-<span id="cb564-2"><a href="#cb564-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) </span></code></pre></div>
+<div id="89fcd9dc-bfaa-4e54-bd14-5134fd2ef70f" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb563"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb563-1"><a href="#cb563-1" aria-hidden="true" tabindex="-1"></a>fbar_threshed <span class="op">=</span> ebayesthresh.ebayesthresh(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
+</div>
+<div id="d1b529f6-aac6-444f-8ad0-d912dee7779d" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb564"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb564-1"><a href="#cb564-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fbar_threshed = np.stack([ebayesthresh(FloatVector(fbar[:,i])) for i in range(N)],axis=1)</span></span>
+<span id="cb564-2"><a href="#cb564-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)) <span class="co"># periodogram </span></span>
+<span id="cb564-3"><a href="#cb564-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)) </span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4214,12 +4211,9 @@ executing.executing.NotOneValueFound: Expected one value, found 0</code></pre>
 </div>
 </div>
 </div>
-<div id="80db53fc-8399-49d7-bea0-675fd81e1b01" class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb565"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb565-1"><a href="#cb565-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="op">=</span> Psi <span class="op">@</span> fbar_threshed <span class="co"># inverse dft</span></span>
-<span id="cb565-2"><a href="#cb565-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb565-3"><a href="#cb565-3" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'.'</span>)</span>
-<span id="cb565-4"><a href="#cb565-4" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span>
-<span id="cb565-5"><a href="#cb565-5" aria-hidden="true" tabindex="-1"></a>plt.plot(t,yhat)</span></code></pre></div>
+<div id="b413e3e9-0976-497a-bb23-4e66b4fd06ff" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb565"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb565-1"><a href="#cb565-1" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) <span class="co"># periodogram </span></span>
+<span id="cb565-2"><a href="#cb565-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) </span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -4228,72 +4222,46 @@ executing.executing.NotOneValueFound: Expected one value, found 0</code></pre>
 </div>
 </div>
 </div>
-<hr>
-</section>
-<section id="torch.nn.module-시도" class="level1">
-<h1>torch.nn.module 시도</h1>
-<div id="792b3741-240a-460f-9626-5d496d46839d" class="cell" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb566"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb566-1"><a href="#cb566-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb566-2"><a href="#cb566-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
-<span id="cb566-3"><a href="#cb566-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
-<span id="cb566-4"><a href="#cb566-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div>
+<div id="80db53fc-8399-49d7-bea0-675fd81e1b01" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb566"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb566-1"><a href="#cb566-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="op">=</span> Psi <span class="op">@</span> fbar_threshed <span class="co"># inverse dft</span></span>
+<span id="cb566-2"><a href="#cb566-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb566-3"><a href="#cb566-3" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'.'</span>)</span>
+<span id="cb566-4"><a href="#cb566-4" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span>
+<span id="cb566-5"><a href="#cb566-5" aria-hidden="true" tabindex="-1"></a>plt.plot(t,yhat)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-311-output-1.png" class="img-fluid figure-img"></p>
+</figure>
 </div>
-<div id="499d301e-35e6-4c6f-a75c-67440f1a76bc" class="cell" data-execution_count="34">
+</div>
+</div>
+<div id="499d301e-35e6-4c6f-a75c-67440f1a76bc" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb567"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb567-1"><a href="#cb567-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ebayesthresh_nn(torch.nn.Module):</span>
 <span id="cb567-2"><a href="#cb567-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
 <span id="cb567-3"><a href="#cb567-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
 <span id="cb567-4"><a href="#cb567-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>,<span class="bu">input</span>):</span>
 <span id="cb567-5"><a href="#cb567-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ebayesthresh.ebayesthresh(<span class="bu">input</span>)</span></code></pre></div>
 </div>
-<div id="b3f3f5c7-ba9e-459e-baa1-3783888c8b47" class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb568"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb568-1"><a href="#cb568-1" aria-hidden="true" tabindex="-1"></a>fbar[:,<span class="dv">0</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
-<pre><code>array([ 5.67178448e+00, -1.74569575e+01, -5.26778247e+00,  1.54436540e+00,
-       -7.18541222e+00,  3.17708094e+00, -3.17999572e+00, -1.05264316e+00,
-       -9.90853296e-02,  1.93804886e+00, -7.80786790e-01,  1.41565604e-01,
-       -1.97574188e+00,  1.32326955e+00,  2.23209354e+00,  1.13368176e+00,
-       -4.95056926e-01, -6.17458939e-01,  1.56806424e+00,  4.63345207e-01,
-       -9.00982809e-01, -4.16356384e-02, -1.16943024e+00, -1.59359288e+00,
-       -4.31198091e-01, -1.20026143e+00,  1.75013369e+00, -1.47611824e+00,
-        1.19143344e+00, -1.38968750e+00,  2.01557373e-01, -8.96974542e-01,
-        4.16791571e-01,  1.05366582e+00, -2.44904562e-01,  1.79030266e+00,
-       -6.34254982e-01,  4.41643000e-01, -3.64223878e-02,  1.33695032e+00,
-       -9.62529821e-02, -1.57157663e-01,  3.02214251e-01,  4.90833121e-01,
-        2.38407943e-01,  1.69418549e+00, -6.25979841e-03, -1.57295380e+00,
-        2.87772378e-01,  2.02574744e-01, -1.25294665e-01, -7.95064486e-01,
-       -3.03954960e-01, -5.79108441e-01,  6.12796208e-01,  7.01787027e-02,
-       -1.35588044e+00,  4.50146253e-01,  6.89312358e-01,  1.30558041e+00,
-       -6.77907561e-01, -3.57482215e-01, -2.57572280e+00, -7.92854140e-01,
-        8.47077708e-01, -1.10643201e+00, -6.82035565e-01, -2.69470736e-01,
-        1.60837070e+00, -1.64052964e+00,  7.55846285e-01, -4.52560898e-01,
-        2.45067808e+00, -7.72616110e-01, -1.71048172e+00,  2.58095601e-01,
-        4.04495785e-01,  1.97091872e-01,  3.25172845e-01,  6.40815692e-01,
-        8.27555092e-01, -4.04341311e-01,  2.85436550e-01,  6.33110989e-01,
-       -5.87795942e-01,  1.12303237e+00,  1.26666848e+00,  1.11850480e+00,
-       -9.51665485e-01,  2.66404572e-01, -2.59127504e-02, -8.36345475e-02,
-        1.68715985e+00, -1.25932506e-01,  3.06708566e+00, -4.31911063e-01,
-        7.41547726e-01,  6.74003323e-01, -1.96321668e+00,  5.05598214e-01])</code></pre>
+<div id="0f247663-39e8-4a79-9d13-201e5d6f0bc1" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb568"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb568-1"><a href="#cb568-1" aria-hidden="true" tabindex="-1"></a>thresh_layer <span class="op">=</span> ebayesthresh_nn()</span></code></pre></div>
 </div>
-</div>
-<div id="0f247663-39e8-4a79-9d13-201e5d6f0bc1" class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb570"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb570-1"><a href="#cb570-1" aria-hidden="true" tabindex="-1"></a>thresh_layer <span class="op">=</span> ebayesthresh_nn()</span></code></pre></div>
-</div>
-<div id="10c15875-a5de-4349-8254-73e075490218" class="cell" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb571"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb571-1"><a href="#cb571-1" aria-hidden="true" tabindex="-1"></a>plt.plot(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
+<div id="10c15875-a5de-4349-8254-73e075490218" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb569"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb569-1"><a href="#cb569-1" aria-hidden="true" tabindex="-1"></a>plt.plot(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-315-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-314-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="e4010662-d50d-48ba-a870-00cf52dafeb2" class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb572"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb572-1"><a href="#cb572-1" aria-hidden="true" tabindex="-1"></a>plt.plot(thresh_layer(fbar[:,<span class="dv">0</span>]))</span></code></pre></div>
+<div id="e4010662-d50d-48ba-a870-00cf52dafeb2" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb570"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb570-1"><a href="#cb570-1" aria-hidden="true" tabindex="-1"></a>plt.plot(thresh_layer(fbar[:,<span class="dv">0</span>]))</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-316-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2024-06-01-EbayesThresh_Python_files/figure-html/cell-315-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>

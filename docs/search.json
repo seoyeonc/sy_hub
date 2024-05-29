@@ -132,14 +132,14 @@
     "href": "posts/1_Note/2024-06-01-EbayesThresh_Python.html",
     "title": "EbayesThresh Python화 시도",
     "section": "",
-    "text": "https://cran.r-project.org/web/packages/EbayesThresh/EbayesThresh.pdf\nhttps://guebin.github.io/STML2022/posts/II.%20DNN/2022-10-12-6wk.html#%EC%8B%9C%EB%B2%A4%EC%BD%94%EC%A0%95%EB%A6%AC"
+    "text": "ref"
   },
   {
-    "objectID": "posts/1_Note/2024-06-01-EbayesThresh_Python.html#확인용-import",
-    "href": "posts/1_Note/2024-06-01-EbayesThresh_Python.html#확인용-import",
+    "objectID": "posts/1_Note/2024-06-01-EbayesThresh_Python.html#import-for-code-check",
+    "href": "posts/1_Note/2024-06-01-EbayesThresh_Python.html#import-for-code-check",
     "title": "EbayesThresh Python화 시도",
-    "section": "확인용 import",
-    "text": "확인용 import\n\nfrom scipy.stats import norm, stats\nfrom scipy.optimize import minimize, root_scalar\nfrom statsmodels.robust.scale import mad\nimport pywt"
+    "section": "import for code check",
+    "text": "import for code check\n\nfrom scipy.stats import norm, stats\nfrom scipy.optimize import minimize, root_scalar\nfrom statsmodels.robust.scale import mad\nimport pywt"
   },
   {
     "objectID": "posts/1_Note/2022-12-31-Space-study.html",

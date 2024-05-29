@@ -734,6 +734,8 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
             fmid = fun(x=tmid, s=s, w=w, a=a)
         elif fun == beta_cauchy:
             fmid = fun(tmid)
+        elif fun == beta_laplace:
+            fmid = fun(tmid, s=s, a=a)
         else:
             fmid = fun(tmid, **kwargs)
         if isinstance(fmid, (list,np.ndarray)) and isinstance(zf, (list,np.ndarray)):
