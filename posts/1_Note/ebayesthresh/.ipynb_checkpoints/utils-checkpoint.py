@@ -111,8 +111,8 @@ def ebayesthresh(x, prior="laplace", a=0.5, bayesfac=False, sdev=None, verbose=F
         muhat = threshld(x, tt)
     elif threshrule == "soft":
         muhat = threshld(x, tt, hard=False)
-    elif threshrule == "none":
-        muhat = None
+        if threshrule == "none":
+            muhat = None
     else:
         raise ValueError(f"Unknown threshold rule: {threshrule}")
 
@@ -121,8 +121,7 @@ def ebayesthresh(x, prior="laplace", a=0.5, bayesfac=False, sdev=None, verbose=F
 
     if not verbose:
         return muhat
-    else:
-        retlist = {
+    retlist = {
             'muhat': muhat,
             'x': x,
             'threshold.sdevscale': tt,
@@ -134,11 +133,11 @@ def ebayesthresh(x, prior="laplace", a=0.5, bayesfac=False, sdev=None, verbose=F
             'sdev': sdev,
             'threshrule': threshrule
         }
-        if pr == "c":
-            del retlist['a']
-        if threshrule == "none":
-            del retlist['muhat']
-        return retlist
+    if pr == "c":
+        del retlist['a']
+    if threshrule == "none":
+        del retlist['muhat']
+    return retlist
 
     
     
