@@ -912,7 +912,7 @@ window.Quarto = {
 </section>
 <section id="ebayesthresh" class="level1">
 <h1>ebayesthresh</h1>
-<div id="c1c750ca-c019-4374-9cd7-e488433cd744" class="cell" data-execution_count="43">
+<div id="c1c750ca-c019-4374-9cd7-e488433cd744" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.concatenate([np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">90</span>), np.random.normal(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">10</span>)])</span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a>sdev <span class="op">=</span> <span class="dv">1</span></span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>prior<span class="op">=</span><span class="st">"laplace"</span></span>
@@ -923,10 +923,10 @@ window.Quarto = {
 <span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a>universalthresh<span class="op">=</span><span class="va">True</span></span>
 <span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a>stabadjustment<span class="op">=</span><span class="va">None</span></span></code></pre></div>
 </div>
-<div id="dec7ed08-f20b-46d0-832d-929bddc4c829" class="cell" data-execution_count="44">
+<div id="dec7ed08-f20b-46d0-832d-929bddc4c829" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb87"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a>pr <span class="op">=</span> prior[<span class="dv">0</span>:<span class="dv">1</span>]</span>
 <span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a>pr</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>'l'</code></pre>
 </div>
 </div>
@@ -1207,29 +1207,29 @@ window.Quarto = {
 <ul>
 <li>Python</li>
 </ul>
-<div id="dd53fa2b-eeb8-4be6-ad1b-379fbe0c0657" class="cell" data-execution_count="59">
+<div id="dd53fa2b-eeb8-4be6-ad1b-379fbe0c0657" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb111"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb111-1"><a href="#cb111-1" aria-hidden="true" tabindex="-1"></a>ebayesthresh.ebayesthresh(x<span class="op">=</span>np.concatenate([np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">90</span>), np.random.normal(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">10</span>)]), sdev <span class="op">=</span> <span class="dv">1</span>)</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="59">
-<pre><code>array([ 0.        ,  0.        , -0.        , -0.        , -0.        ,
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>array([-0.        ,  0.        , -0.        ,  0.        , -0.        ,
+        0.        ,  0.        , -0.        ,  0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        , -0.        ,
+        0.        ,  0.        ,  0.        , -0.        ,  0.        ,
+        0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+       -0.        ,  0.        ,  0.        ,  0.        ,  0.83181094,
+       -0.        , -0.        , -0.        ,  0.        , -0.        ,
+       -0.        , -0.        , -0.        , -0.        , -0.        ,
+       -0.        ,  0.        , -0.        ,  0.        , -2.89468824,
+       -0.        ,  0.        , -0.        ,  0.        ,  0.        ,
+        0.        ,  0.        , -0.        , -0.        , -0.        ,
+        0.        , -0.        ,  0.        ,  0.        ,  0.        ,
+        0.        , -0.        , -0.        , -0.        ,  0.        ,
+       -0.        ,  0.        , -0.        , -0.        ,  0.        ,
         0.        , -0.        ,  0.        , -0.        , -0.        ,
-       -0.        ,  0.        ,  0.        ,  0.        , -0.        ,
-        0.        ,  0.        ,  0.        , -0.        , -0.        ,
-       -0.        ,  0.        ,  0.        ,  0.        , -0.        ,
         0.        , -0.        ,  0.        ,  0.        , -0.        ,
-       -0.        ,  0.        , -0.        ,  0.        , -0.        ,
-        0.        , -0.        , -0.        ,  0.        ,  0.        ,
-        0.        , -0.        ,  0.        ,  0.        , -0.        ,
-       -0.        , -0.15798723,  0.        ,  1.5784871 , -0.        ,
-        2.16796225, -0.        ,  0.        ,  0.        ,  0.        ,
-       -0.        ,  1.6454291 , -0.        ,  0.        , -0.        ,
-       -0.        ,  0.        ,  0.        , -0.        ,  0.        ,
-        0.        ,  0.        ,  0.        , -0.        , -0.        ,
+       -0.        , -0.        , -0.        ,  0.        , -0.        ,
        -0.        , -0.        ,  0.        ,  0.        ,  0.        ,
-       -0.        ,  0.        ,  0.        , -0.        ,  0.        ,
-       -0.        , -0.        , -0.        ,  0.        ,  0.        ,
-        0.        ,  0.        , -0.22048162, -0.        , -0.        ,
-        3.71312167,  3.33739314,  2.11176721,  6.00144628,  4.51031269,
-        2.97643769,  5.49006448,  2.98365748,  4.79352558,  4.20984628])</code></pre>
+        2.99222302,  4.60992013,  3.68760194,  3.16329967,  3.93131817,
+        4.87250552,  3.47040456,  3.28492248,  5.09923275,  4.07454939])</code></pre>
 </div>
 </div>
 <ul>
