@@ -324,10 +324,10 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </section>
 <section id="import" class="level1">
 <h1>Import</h1>
-<div id="8e91f07f-c2c4-4144-a785-17cbbe6fc4a1" class="cell">
+<div id="8e91f07f-c2c4-4144-a785-17cbbe6fc4a1" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ebayesthresh</span></code></pre></div>
 </div>
-<div id="060756d2-f9da-4d09-b41a-0349789a643e" class="cell" data-execution_count="2">
+<div id="060756d2-f9da-4d09-b41a-0349789a643e" class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
@@ -355,24 +355,16 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </section>
 <section id="example" class="level1">
 <h1>Example</h1>
-<div id="b637a611-5a48-4ed5-997e-a4a3d5d4be11" class="cell" data-execution_count="4">
+<div id="b637a611-5a48-4ed5-997e-a4a3d5d4be11" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.sin(<span class="fl">0.5</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">1.2</span><span class="op">*</span>np.sin(<span class="fl">1.0</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>np.sin(<span class="fl">1.2</span><span class="op">*</span>t) </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_true <span class="op">+</span> np.random.normal(size<span class="op">=</span>T)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-6-output-1.png" class="img-fluid figure-img"></p>
-</figure>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_true <span class="op">+</span> np.random.normal(size<span class="op">=</span>T)</span></code></pre></div>
 </div>
-</div>
-</div>
-<div id="cba711be-7042-40fb-9144-93ef10c31b2f" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'o'</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span></code></pre></div>
+<div id="cba711be-7042-40fb-9144-93ef10c31b2f" class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'o'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -381,30 +373,32 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </div>
 </div>
 </div>
-<div id="c251b013-e121-484d-b6ce-2f5608623cbf" class="cell" data-execution_count="6">
+<div id="c251b013-e121-484d-b6ce-2f5608623cbf" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.array(y)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(f.shape)<span class="op">==</span><span class="dv">1</span>: f <span class="op">=</span> f.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>T,N <span class="op">=</span> f.shape</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fbar <span class="op">=</span> Psi.T <span class="op">@</span> f <span class="co"># apply dft </span></span></code></pre></div>
 </div>
-<div id="8d26a609-e949-4533-9587-bed07239181f" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>plt.plot(t,fbar<span class="op">**</span><span class="dv">2</span>) <span class="co"># periodogram </span></span></code></pre></div>
+<div id="60b60b57-0056-443a-86cd-c91951ca04ae" class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fbar_threshed <span class="op">=</span> ebayesthresh.ebayesthresh(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
+</div>
+<div id="b8054b51-5636-4562-9711-f0b32b4c4353" class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)) <span class="co"># periodogram </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)) </span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-10-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="60b60b57-0056-443a-86cd-c91951ca04ae" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fbar_threshed <span class="op">=</span> ebayesthresh.ebayesthresh(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
-</div>
-<div id="b8054b51-5636-4562-9711-f0b32b4c4353" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># fbar_threshed = np.stack([ebayesthresh(FloatVector(fbar[:,i])) for i in range(N)],axis=1)</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)) <span class="co"># periodogram </span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)) </span></code></pre></div>
+<div id="b1e34fec-7f51-4fa1-8568-971073ea8d81" class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) <span class="co"># periodogram </span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) </span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -413,9 +407,12 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </div>
 </div>
 </div>
-<div id="b1e34fec-7f51-4fa1-8568-971073ea8d81" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) <span class="co"># periodogram </span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) </span></code></pre></div>
+<div id="339c6b15-cf32-46ef-8419-8382066e9183" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="op">=</span> Psi <span class="op">@</span> fbar_threshed <span class="co"># inverse dft</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'.'</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>plt.plot(t,yhat)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -424,133 +421,164 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </div>
 </div>
 </div>
-<div id="339c6b15-cf32-46ef-8419-8382066e9183" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="op">=</span> Psi <span class="op">@</span> fbar_threshed <span class="co"># inverse dft</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'.'</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>plt.plot(t,yhat)</span></code></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
 <section id="사용자-함수-정의" class="level1">
 <h1>사용자 함수 정의</h1>
-<div id="1ef400a6-212a-4c5d-8f31-fd1cc79306e7" class="cell" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ebayesthresh_nn(torch.nn.Module):</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>,prior<span class="op">=</span><span class="st">"laplace"</span>, a <span class="op">=</span> <span class="fl">0.5</span>, bayesfac <span class="op">=</span> <span class="va">False</span>, sdev <span class="op">=</span> <span class="va">None</span>, verbose <span class="op">=</span> <span class="va">True</span>, threshrule <span class="op">=</span> <span class="st">"median"</span>, universalthresh <span class="op">=</span> <span class="va">True</span>, stabadjustment <span class="op">=</span> <span class="va">None</span>):</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.prior <span class="op">=</span> prior</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a <span class="op">=</span> a</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bayesfac <span class="op">=</span> bayesfac</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sdev <span class="op">=</span> sdev</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.verbose <span class="op">=</span> verbose</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.threshrule <span class="op">=</span> threshrule</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.universalthresh <span class="op">=</span> universalthresh</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.stabadjustment <span class="op">=</span> stabadjustment</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>,<span class="bu">input</span>):</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ebayesthresh.ebayesthresh(<span class="bu">input</span>,<span class="va">self</span>.prior, a<span class="op">=</span><span class="va">self</span>.a, bayesfac<span class="op">=</span><span class="va">self</span>.bayesfac, sdev<span class="op">=</span><span class="va">self</span>.sdev, verbose<span class="op">=</span><span class="va">self</span>.verbose, threshrule<span class="op">=</span><span class="va">self</span>.threshrule, universalthresh<span class="op">=</span><span class="va">self</span>.universalthresh, stabadjustment<span class="op">=</span><span class="va">self</span>.stabadjustment)</span></code></pre></div>
-</div>
-<blockquote class="blockquote">
-<p>레이어 정의</p>
-</blockquote>
-<div id="a752424f-ae86-4eb9-a3e3-51fde3effcda" class="cell" data-execution_count="49">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>thresh_layer <span class="op">=</span> ebayesthresh_nn()</span></code></pre></div>
+<div id="1ef400a6-212a-4c5d-8f31-fd1cc79306e7" class="cell" data-execution_count="259">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ebayesthresh_nn(torch.nn.Module):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>,<span class="bu">input</span>, prior<span class="op">=</span><span class="st">"laplace"</span>, a <span class="op">=</span> <span class="fl">0.5</span>, bayesfac <span class="op">=</span> <span class="va">False</span>, sdev <span class="op">=</span> <span class="va">None</span>, verbose <span class="op">=</span> <span class="va">True</span>, threshrule <span class="op">=</span> <span class="st">"median"</span>, universalthresh <span class="op">=</span> <span class="va">True</span>, stabadjustment <span class="op">=</span> <span class="va">None</span>):</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.prior <span class="op">=</span> prior</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a <span class="op">=</span> a</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bayesfac <span class="op">=</span> bayesfac</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sdev <span class="op">=</span> sdev</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.verbose <span class="op">=</span> verbose</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.threshrule <span class="op">=</span> threshrule</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.universalthresh <span class="op">=</span> universalthresh</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.stabadjustment <span class="op">=</span> stabadjustment</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ebayesthresh.ebayesthresh(<span class="bu">input</span>,<span class="va">self</span>.prior, a<span class="op">=</span><span class="va">self</span>.a, bayesfac<span class="op">=</span><span class="va">self</span>.bayesfac, sdev<span class="op">=</span><span class="va">self</span>.sdev, verbose<span class="op">=</span><span class="va">self</span>.verbose, threshrule<span class="op">=</span><span class="va">self</span>.threshrule, universalthresh<span class="op">=</span><span class="va">self</span>.universalthresh, stabadjustment<span class="op">=</span><span class="va">self</span>.stabadjustment)</span></code></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>데이터</p>
 </blockquote>
-<div id="cf1a071e-d798-446d-9c3f-1fbe056d13ef" class="cell" data-execution_count="50">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>plt.plot(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
+<div id="6e304b8b-318e-4f2c-ab71-06c01377dba9" class="cell" data-tags="[]" data-execution_count="260">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">111</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>ytrue <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.sin(<span class="fl">0.5</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">1.2</span><span class="op">*</span>np.sin(<span class="fl">1.0</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>np.sin(<span class="fl">1.2</span><span class="op">*</span>t) </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>noise  <span class="op">=</span> np.random.normal(size<span class="op">=</span>T)<span class="op">*</span><span class="fl">0.7</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ytrue <span class="op">+</span> noise</span></code></pre></div>
+</div>
+<div id="543cdf05-6349-45b7-8525-a3b0bd04c462" class="cell" data-execution_count="261">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.plot(y,<span class="st">'.'</span>,color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.plot(ytrue,<span class="st">'-'</span>,color<span class="op">=</span><span class="st">'b'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <blockquote class="blockquote">
-<p>결과</p>
+<p>레이어 정의</p>
 </blockquote>
-<div id="a4b25596-0602-47f5-8766-9502fe12141b" class="cell" data-execution_count="61">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.plot(thresh_layer(fbar[:,<span class="dv">0</span>])[<span class="st">'muhat'</span>])</span></code></pre></div>
+<div id="a752424f-ae86-4eb9-a3e3-51fde3effcda" class="cell" data-execution_count="263">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>thresh_layer <span class="op">=</span> ebayesthresh_nn()</span></code></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Fourier Transform</p>
+</blockquote>
+<div id="18a6dd89-df8c-4332-a7c5-5cde5fed5f9d" class="cell" data-execution_count="264">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span></code></pre></div>
+</div>
+<div id="26817264-bcf0-4886-a212-4c2bc25acec4" class="cell" data-execution_count="265">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ybar <span class="op">=</span> Psi.T <span class="op">@</span> y</span></code></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Learn</p>
+</blockquote>
+<div id="222e1a23-3697-46d8-a446-f6e4b76941d4" class="cell" data-execution_count="266">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>power_threshed <span class="op">=</span> thresh_layer(ybar)</span></code></pre></div>
+</div>
+<blockquote class="blockquote">
+<p>Inverse Fourier Transform</p>
+</blockquote>
+<div id="21026ef1-0ad2-4d37-89f0-ade4cbfb00b3" class="cell" data-execution_count="267">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ytrue_hat <span class="op">=</span> Psi<span class="op">@</span>power_threshed[<span class="st">'muhat'</span>]</span></code></pre></div>
+</div>
+<div id="9aa3484a-f58c-44cb-89ae-2b665da6e48d" class="cell" data-execution_count="275">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>power_threshed</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="275">
+<pre><code>{'muhat': array([  6.42453566, -18.27981487,  -5.36813323,   0.        ,
+         -7.57307354,   0.69758938,  -2.55666216,  -0.        ,
+          0.        ,  -0.        ,   0.        ,   0.        ,
+          0.        ,  -0.        ,  -0.        ,  -0.        ,
+          0.        ,  -0.        ,   0.        ,  -0.        ,
+         -0.        ,  -0.        ,   0.        ,   0.        ,
+         -0.        ,  -0.        ,   0.        ,   0.        ,
+         -0.        ,   0.        ,   0.        ,   0.        ,
+          0.        ,  -0.        ,   0.        ,   0.        ,
+         -0.        ,   0.        ,  -0.        ,   0.        ,
+         -0.        ,  -0.        ,  -0.        ,  -0.        ,
+         -0.        ,   0.        ,  -0.        ,  -0.        ,
+          0.        ,   0.        ,   0.        ,  -0.        ,
+         -0.        ,   0.        ,   0.        ,  -0.        ,
+         -0.        ,  -0.        ,   0.        ,   0.        ,
+         -0.        ,  -0.        ,   0.        ,   0.        ,
+          0.        ,   0.        ,   0.        ,  -0.        ,
+         -0.        ,   0.        ,   0.        ,  -0.        ,
+         -0.        ,   0.        ,   0.        ,   0.        ,
+          0.        ,   0.        ,   0.        ,   0.        ,
+         -0.        ,   0.        ,   0.        ,   0.        ,
+         -0.        ,   0.        ,   0.        ,   0.        ,
+         -0.        ,   0.        ,   0.        ,  -0.        ,
+          0.        ,   0.        ,  -0.        ,   0.        ,
+          0.        ,   0.        ,  -0.        ,  -0.        ]),
+ 'x': array([ 7.96090601e+00, -2.17286129e+01, -6.73409067e+00,  1.16066347e+00,
+        -9.29471964e+00,  2.75532680e+00, -3.58570868e+00, -7.13994439e-01,
+         4.58504860e-01, -2.02885504e-01,  1.92986541e+00,  6.55340952e-02,
+         5.80257166e-01, -4.08419081e-01, -2.98559300e-01, -7.77532045e-02,
+         1.41066070e+00, -4.12602244e-01,  9.97319572e-01, -1.84618056e-01,
+        -1.01787292e+00, -1.31628173e+00,  3.68199086e-01,  2.44761154e-01,
+        -9.91785126e-01, -2.66537481e-01,  4.72120174e-01,  6.24460631e-01,
+        -3.22887073e-01,  8.42601787e-01,  1.41725882e+00,  6.74331215e-01,
+         1.35566126e+00, -9.77323818e-01,  1.97208316e+00,  1.56210807e-02,
+        -1.52605085e+00,  1.00557005e+00, -6.75367496e-01,  9.50273574e-01,
+        -6.74650304e-01, -1.23815087e-01, -2.49676097e-01, -5.59795567e-01,
+        -8.98892940e-01,  7.57776686e-01, -3.49052620e-01, -9.37666511e-01,
+         8.71954327e-02,  5.47814218e-01,  4.77252803e-02, -1.46828352e+00,
+        -9.30857491e-01,  3.28800952e-01,  2.40925420e-01, -7.89089808e-01,
+        -8.74382159e-01, -1.01778695e+00,  5.70315993e-01,  5.27018835e-01,
+        -9.86879892e-01, -8.28525506e-01,  6.98180547e-01,  1.47166419e-01,
+         5.29873400e-01,  1.45358366e-01,  5.76151265e-01, -3.91087511e-01,
+        -1.07801307e+00,  5.96031864e-01,  8.23746723e-01, -4.31143439e-01,
+        -2.52209282e-01,  1.12542209e-01,  8.29350466e-03,  1.05791488e+00,
+         6.25175011e-01,  2.10597487e-01,  6.63196692e-01,  5.10036820e-01,
+        -7.20199340e-01,  1.44715172e-01,  1.00295048e+00,  1.17873613e+00,
+        -1.88134284e+00,  1.05213248e+00,  3.22540435e-01,  1.78509023e+00,
+        -1.36083714e-01,  1.73329388e-02,  6.72531590e-01, -7.30082711e-02,
+         7.00278667e-01,  7.84248744e-01, -7.87404812e-01,  2.89861256e-03,
+         1.20609925e+00,  1.00302915e+00, -3.84288222e-01, -7.96168316e-01]),
+ 'threshold.sdevscale': 2.695897994795814,
+ 'threshold.origscale': 2.32141951295113,
+ 'prior': 'laplace',
+ 'w': 0.12797891964122715,
+ 'a': 0.5,
+ 'bayesfac': False,
+ 'sdev': 0.8610932303197002,
+ 'threshrule': 'median'}</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Result</p>
+</blockquote>
+<div id="c990053f-961a-41aa-9df6-ae8ceabdf9c8" class="cell" data-execution_count="268">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.plot(ytrue_hat,<span class="st">'.'</span>,color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>plt.plot(ytrue,<span class="st">'-'</span>,color<span class="op">=</span><span class="st">'b'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="38d86bdc-a994-49a6-be49-f7531046fd53" class="cell" data-execution_count="59">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>thresh_layer(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="59">
-<pre><code>{'muhat': array([  5.76182087, -18.94965465,  -4.294227  ,   0.        ,
-         -7.18658342,   0.55902108,  -0.        ,  -0.        ,
-         -0.        ,   0.        ,   0.        ,   0.        ,
-         -0.        ,   0.        ,  -0.        ,   0.        ,
-          0.        ,  -0.        ,   0.        ,   0.        ,
-         -0.        ,   0.        ,  -0.        ,  -0.        ,
-          0.        ,   0.        ,   0.        ,   0.        ,
-         -0.        ,  -0.        ,  -0.        ,   0.        ,
-         -0.        ,   0.        ,   0.        ,  -0.        ,
-         -0.        ,  -0.        ,  -0.        ,  -0.        ,
-         -0.        ,  -0.        ,  -0.        ,   0.        ,
-         -0.        ,   0.        ,  -0.        ,  -0.        ,
-          0.        ,   0.        ,  -0.        ,   0.        ,
-         -0.        ,  -0.        ,   0.        ,   0.        ,
-          0.        ,  -0.        ,   0.        ,  -0.        ,
-          0.        ,   0.        ,  -0.        ,  -0.        ,
-         -0.        ,   0.        ,  -0.        ,   0.        ,
-          0.        ,   0.        ,   0.        ,   0.        ,
-         -0.        ,  -0.        ,  -0.        ,  -0.        ,
-          0.        ,   0.        ,   0.        ,   0.        ,
-          0.        ,  -0.        ,   0.        ,  -0.        ,
-          0.        ,   0.        ,   0.        ,   0.        ,
-         -0.        ,  -0.        ,   0.        ,  -0.        ,
-         -0.        ,   0.        ,   0.        ,   0.        ,
-         -0.        ,  -0.        ,   0.        ,   0.        ]),
- 'x': array([ 5.03848626e+00, -1.54245291e+01, -3.92741028e+00,  7.96928164e-01,
-        -6.16007185e+00,  2.78865597e+00, -1.39906425e+00, -1.19186542e+00,
-        -8.66515505e-01,  2.11976568e+00,  1.13207994e+00,  4.96098609e-01,
-        -4.85441935e-01,  7.13535071e-01, -1.04395253e+00,  6.50833275e-02,
-         1.06033542e+00, -2.64112893e-01,  1.95298858e-02,  1.15709161e-02,
-        -7.63311864e-01,  1.47110714e+00, -1.92763415e-01, -1.37987198e-01,
-         1.16510315e+00,  4.25256217e-01,  1.39923626e+00,  1.01496169e-02,
-        -3.56344071e-01, -9.80283426e-01, -4.94947664e-01,  4.74947734e-01,
-        -1.34229517e+00,  1.34460660e+00,  1.09625492e+00, -6.09527208e-01,
-        -6.02011255e-01, -3.39936883e-01, -8.03211715e-01, -1.51231486e+00,
-        -1.07282390e+00, -1.30014536e+00, -8.78447762e-01,  1.18738374e+00,
-        -5.96847302e-01,  7.59274038e-01, -2.57210226e-01, -2.83006773e-01,
-         5.92873199e-01,  4.40498377e-01, -3.38472918e-01,  4.58807653e-01,
-        -8.04486400e-01, -1.35612049e-01,  6.20176931e-01,  6.38163495e-01,
-         3.24896490e-02, -7.35256017e-01,  1.27470533e+00, -2.21245866e+00,
-         4.13986155e-01,  9.87408153e-01, -2.72842096e-01, -1.10061996e+00,
-        -5.78839527e-01,  7.38174879e-01, -1.59996062e-01,  3.28162379e-01,
-         1.00086302e+00,  3.71362207e-01,  3.15777750e-01,  2.44437526e-01,
-        -2.31608257e-01, -3.89920408e-01, -7.46582781e-01, -1.63714549e+00,
-         1.38708879e-01,  1.31541059e+00,  3.34182072e-01,  3.60944199e-01,
-         8.29170143e-01, -1.14455969e+00,  4.14825790e-01, -4.57832999e-01,
-         5.21293152e-03,  1.17565078e+00,  2.07495011e-01,  1.77289208e-01,
-        -6.79764087e-01, -3.67484230e-01,  1.01543499e+00, -8.18721098e-01,
-        -6.69217432e-01,  2.85150694e-01,  1.00855875e+00,  9.86262487e-01,
-        -1.83353957e-01, -1.06223939e-01,  1.88432622e+00,  7.28246333e-01]),
- 'threshold.sdevscale': 2.769676569616422,
- 'threshold.origscale': 3.516654644399203,
- 'prior': 'laplace',
- 'w': 0.11027344737803506,
- 'a': 0.5,
- 'bayesfac': False,
- 'sdev': 1.2696986655327165,
- 'threshrule': 'median'}</code></pre>
+<blockquote class="blockquote">
+<p>MSE</p>
+</blockquote>
+<div id="581ecb90-0a9d-4ab5-856e-f28bbb4fd0a2" class="cell" data-execution_count="269">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> criterion(torch.tensor(ytrue_hat, requires_grad<span class="op">=</span><span class="va">True</span>), torch.tensor(ytrue, requires_grad<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>loss.item()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="269">
+<pre><code>0.10165286195631064</code></pre>
 </div>
 </div>
 
