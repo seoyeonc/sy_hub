@@ -265,6 +265,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Linear Algebra</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../2_kan.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">KAN</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -295,7 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="install" class="level1">
 <h1>Install</h1>
 <div id="39044b45-fb55-4471-ba00-3e12a0ad21cd" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install git<span class="op">+</span>https:<span class="op">//</span>github.com<span class="op">/</span>seoyeonc<span class="op">/</span>ebayesthresh.git</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># !pip install git+https://github.com/seoyeonc/ebayesthresh.git</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Collecting git+https://github.com/seoyeonc/ebayesthresh.git
   Cloning https://github.com/seoyeonc/ebayesthresh.git to /tmp/pip-req-build-gh560sa9
@@ -324,10 +330,10 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </section>
 <section id="import" class="level1">
 <h1>Import</h1>
-<div id="8e91f07f-c2c4-4144-a785-17cbbe6fc4a1" class="cell" data-execution_count="1">
+<div id="8e91f07f-c2c4-4144-a785-17cbbe6fc4a1" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ebayesthresh</span></code></pre></div>
 </div>
-<div id="060756d2-f9da-4d09-b41a-0349789a643e" class="cell">
+<div id="060756d2-f9da-4d09-b41a-0349789a643e" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
@@ -337,7 +343,7 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </section>
 <section id="예제를-위해-필요한-함수-정의" class="level1">
 <h1>예제를 위해 필요한 함수 정의</h1>
-<div id="7b6f09b1-7619-4136-972c-68d75bd47205" class="cell" data-execution_count="3">
+<div id="7b6f09b1-7619-4136-972c-68d75bd47205" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_Psi(T):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> np.zeros((T,T))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(T):</span>
@@ -355,16 +361,16 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </section>
 <section id="example" class="level1">
 <h1>Example</h1>
-<div id="b637a611-5a48-4ed5-997e-a4a3d5d4be11" class="cell" data-execution_count="24">
+<div id="b637a611-5a48-4ed5-997e-a4a3d5d4be11" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.sin(<span class="fl">0.5</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">1.2</span><span class="op">*</span>np.sin(<span class="fl">1.0</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>np.sin(<span class="fl">1.2</span><span class="op">*</span>t) </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.sin(<span class="fl">0.5</span><span class="op">*</span>x) <span class="op">+</span> <span class="fl">1.2</span><span class="op">*</span>np.sin(<span class="fl">1.0</span><span class="op">*</span>x) <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>np.sin(<span class="fl">1.2</span><span class="op">*</span>x) </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_true <span class="op">+</span> np.random.normal(size<span class="op">=</span>T)</span></code></pre></div>
 </div>
-<div id="cba711be-7042-40fb-9144-93ef10c31b2f" class="cell" data-execution_count="25">
+<div id="cba711be-7042-40fb-9144-93ef10c31b2f" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'o'</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span></code></pre></div>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'o'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y_true,<span class="st">'--'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -373,17 +379,17 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </div>
 </div>
 </div>
-<div id="c251b013-e121-484d-b6ce-2f5608623cbf" class="cell" data-execution_count="26">
+<div id="c251b013-e121-484d-b6ce-2f5608623cbf" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.array(y)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(f.shape)<span class="op">==</span><span class="dv">1</span>: f <span class="op">=</span> f.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>T,N <span class="op">=</span> f.shape</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fbar <span class="op">=</span> Psi.T <span class="op">@</span> f <span class="co"># apply dft </span></span></code></pre></div>
 </div>
-<div id="60b60b57-0056-443a-86cd-c91951ca04ae" class="cell" data-execution_count="27">
+<div id="60b60b57-0056-443a-86cd-c91951ca04ae" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fbar_threshed <span class="op">=</span> ebayesthresh.ebayesthresh(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
 </div>
-<div id="b8054b51-5636-4562-9711-f0b32b4c4353" class="cell" data-execution_count="28">
+<div id="b8054b51-5636-4562-9711-f0b32b4c4353" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)) <span class="co"># periodogram </span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)) </span></code></pre></div>
@@ -395,7 +401,7 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </div>
 </div>
 </div>
-<div id="b1e34fec-7f51-4fa1-8568-971073ea8d81" class="cell" data-execution_count="29">
+<div id="b1e34fec-7f51-4fa1-8568-971073ea8d81" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) <span class="co"># periodogram </span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) </span></code></pre></div>
@@ -407,12 +413,12 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </div>
 </div>
 </div>
-<div id="339c6b15-cf32-46ef-8419-8382066e9183" class="cell" data-execution_count="30">
+<div id="339c6b15-cf32-46ef-8419-8382066e9183" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="op">=</span> Psi <span class="op">@</span> fbar_threshed <span class="co"># inverse dft</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y,<span class="st">'.'</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.plot(t,y_true,<span class="st">'--'</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>plt.plot(t,yhat)</span></code></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'.'</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y_true,<span class="st">'--'</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>plt.plot(x,yhat)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -424,44 +430,146 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 </section>
 <section id="사용자-함수-정의" class="level1">
 <h1>사용자 함수 정의</h1>
-<div id="1ef400a6-212a-4c5d-8f31-fd1cc79306e7" class="cell" data-execution_count="259">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ebayesthresh_nn(torch.nn.Module):</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>,<span class="bu">input</span>, prior<span class="op">=</span><span class="st">"laplace"</span>, a <span class="op">=</span> <span class="fl">0.5</span>, bayesfac <span class="op">=</span> <span class="va">False</span>, sdev <span class="op">=</span> <span class="va">None</span>, verbose <span class="op">=</span> <span class="va">True</span>, threshrule <span class="op">=</span> <span class="st">"median"</span>, universalthresh <span class="op">=</span> <span class="va">True</span>, stabadjustment <span class="op">=</span> <span class="va">None</span>):</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.prior <span class="op">=</span> prior</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a <span class="op">=</span> a</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bayesfac <span class="op">=</span> bayesfac</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sdev <span class="op">=</span> sdev</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.verbose <span class="op">=</span> verbose</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.threshrule <span class="op">=</span> threshrule</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.universalthresh <span class="op">=</span> universalthresh</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.stabadjustment <span class="op">=</span> stabadjustment</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ebayesthresh.ebayesthresh(<span class="bu">input</span>,<span class="va">self</span>.prior, a<span class="op">=</span><span class="va">self</span>.a, bayesfac<span class="op">=</span><span class="va">self</span>.bayesfac, sdev<span class="op">=</span><span class="va">self</span>.sdev, verbose<span class="op">=</span><span class="va">self</span>.verbose, threshrule<span class="op">=</span><span class="va">self</span>.threshrule, universalthresh<span class="op">=</span><span class="va">self</span>.universalthresh, stabadjustment<span class="op">=</span><span class="va">self</span>.stabadjustment)</span></code></pre></div>
+<div id="09797839-b23f-428d-bfd3-06698dc1ffc7" class="cell" data-execution_count="83">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>torch.tensor(<span class="fl">0.0</span>,requires_grad<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="83">
+<pre><code>tensor(0., requires_grad=True)</code></pre>
+</div>
+</div>
+<div id="1ef400a6-212a-4c5d-8f31-fd1cc79306e7" class="cell" data-execution_count="102">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ebayesthresh_nn(torch.nn.Module):</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="op">**</span>kwargs):</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bayesfac <span class="op">=</span> kwargs.get(<span class="st">"bayesfac"</span>,<span class="va">True</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.verbose <span class="op">=</span> kwargs.get(<span class="st">'verbose'</span>, <span class="va">True</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.threshrule <span class="op">=</span> kwargs.get(<span class="st">'threshrule'</span>, <span class="st">'median'</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.universalthresh <span class="op">=</span> kwargs.get(<span class="st">'universalthresh'</span>, <span class="va">True</span>)</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.stabadjustment <span class="op">=</span> kwargs.get(<span class="st">'stabadjustment'</span>, <span class="va">None</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.prior <span class="op">=</span> kwargs.get(<span class="st">'prior'</span>, <span class="st">'laplace'</span>)</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.bayesfac <span class="op">=</span> kwargs.get(<span class="st">'bayesfac'</span>, <span class="va">False</span>) </span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">#--#</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.a <span class="op">=</span> torch.tensor(<span class="fl">0.1</span>,requires_grad<span class="op">=</span><span class="va">True</span>)<span class="op">;</span> <span class="va">self</span>.a.data <span class="op">=</span> torch.tensor(kwargs.get(<span class="st">'a'</span>, <span class="fl">0.5</span>)).<span class="bu">float</span>()</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.sdev <span class="op">=</span> torch.tensor(<span class="fl">0.1</span>,requires_grad<span class="op">=</span><span class="va">True</span>)<span class="op">;</span> <span class="va">self</span>.sdev <span class="op">=</span>  torch.tensor(kwargs.get(<span class="st">'sdev'</span>, <span class="fl">0.5</span>)).<span class="bu">float</span>()</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">#prior="laplace", a = 0.5, bayesfac = False, sdev = None, verbose = True, threshrule = "median", universalthresh = True, stabadjustment = None</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> thresh(<span class="va">self</span>):</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        bayesfac<span class="op">=</span> <span class="va">self</span>.bayesfac</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        verbose <span class="op">=</span> <span class="va">self</span>.verbose</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        threshrule <span class="op">=</span> <span class="va">self</span>.threshrule</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        universalthresh <span class="op">=</span> <span class="va">self</span>.universalthresh</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        stabadjustment <span class="op">=</span> <span class="va">self</span>.stabadjustment</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>        prior <span class="op">=</span> <span class="va">self</span>.prior </span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>        bayesfac <span class="op">=</span> <span class="va">self</span>.bayesfac </span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">#--#</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>        a <span class="op">=</span> <span class="va">self</span>.a </span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>        sdev <span class="op">=</span> <span class="va">self</span>.sdev</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> sdev <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>            sdev <span class="op">=</span> mad(x, center<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>            stabadjustment_condition <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> <span class="bu">len</span>(np.atleast_1d(sdev)) <span class="op">==</span> <span class="dv">1</span>:</span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> stabadjustment <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Argument stabadjustment is not applicable when variances are homogeneous."</span>)</span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> np.isnan(sdev):</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>                sdev <span class="op">=</span> mad(x, center<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>            stabadjustment_condition <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> pr <span class="op">==</span> <span class="st">"c"</span>:</span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Standard deviation has to be homogeneous for Cauchy prior."</span>)</span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="bu">len</span>(sdev) <span class="op">!=</span> <span class="bu">len</span>(x):</span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>                <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Standard deviation has to be homogeneous or have the same length as observations."</span>)</span>
+<span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> stabadjustment <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb15-42"><a href="#cb15-42" aria-hidden="true" tabindex="-1"></a>                stabadjustment <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb15-43"><a href="#cb15-43" aria-hidden="true" tabindex="-1"></a>            stabadjustment_condition <span class="op">=</span> stabadjustment</span>
+<span id="cb15-44"><a href="#cb15-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-45"><a href="#cb15-45" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> stabadjustment_condition:</span>
+<span id="cb15-46"><a href="#cb15-46" aria-hidden="true" tabindex="-1"></a>            m_sdev <span class="op">=</span> np.mean(sdev)</span>
+<span id="cb15-47"><a href="#cb15-47" aria-hidden="true" tabindex="-1"></a>            s <span class="op">=</span> sdev <span class="op">/</span> m_sdev</span>
+<span id="cb15-48"><a href="#cb15-48" aria-hidden="true" tabindex="-1"></a>            x <span class="op">=</span> x <span class="op">/</span> m_sdev</span>
+<span id="cb15-49"><a href="#cb15-49" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb15-50"><a href="#cb15-50" aria-hidden="true" tabindex="-1"></a>            s <span class="op">=</span> sdev</span>
+<span id="cb15-51"><a href="#cb15-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-52"><a href="#cb15-52" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (pr <span class="op">==</span> <span class="st">"l"</span>) <span class="kw">and</span> np.isnan(a):</span>
+<span id="cb15-53"><a href="#cb15-53" aria-hidden="true" tabindex="-1"></a>            pp <span class="op">=</span> wandafromx(x, s, universalthresh)</span>
+<span id="cb15-54"><a href="#cb15-54" aria-hidden="true" tabindex="-1"></a>            w <span class="op">=</span> pp[<span class="st">'w'</span>]</span>
+<span id="cb15-55"><a href="#cb15-55" aria-hidden="true" tabindex="-1"></a>            a <span class="op">=</span> pp[<span class="st">'a'</span>]</span>
+<span id="cb15-56"><a href="#cb15-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb15-57"><a href="#cb15-57" aria-hidden="true" tabindex="-1"></a>            w <span class="op">=</span> wfromx(x, s, prior<span class="op">=</span>prior, a<span class="op">=</span>a, universalthresh<span class="op">=</span>universalthresh)</span>
+<span id="cb15-58"><a href="#cb15-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-59"><a href="#cb15-59" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pr <span class="op">!=</span> <span class="st">"m"</span> <span class="kw">or</span> verbose:</span>
+<span id="cb15-60"><a href="#cb15-60" aria-hidden="true" tabindex="-1"></a>            tt <span class="op">=</span> tfromw(w, s, prior<span class="op">=</span>prior, bayesfac<span class="op">=</span>bayesfac, a<span class="op">=</span>a)[<span class="dv">0</span>]</span>
+<span id="cb15-61"><a href="#cb15-61" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> stabadjustment_condition:</span>
+<span id="cb15-62"><a href="#cb15-62" aria-hidden="true" tabindex="-1"></a>                tcor <span class="op">=</span> tt <span class="op">*</span> m_sdev</span>
+<span id="cb15-63"><a href="#cb15-63" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:</span>
+<span id="cb15-64"><a href="#cb15-64" aria-hidden="true" tabindex="-1"></a>                tcor <span class="op">=</span> tt</span>
+<span id="cb15-65"><a href="#cb15-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-66"><a href="#cb15-66" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> threshrule <span class="op">==</span> <span class="st">"median"</span>:</span>
+<span id="cb15-67"><a href="#cb15-67" aria-hidden="true" tabindex="-1"></a>            muhat <span class="op">=</span> postmed(x, s, w, prior<span class="op">=</span>prior, a<span class="op">=</span>a)</span>
+<span id="cb15-68"><a href="#cb15-68" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> threshrule <span class="op">==</span> <span class="st">"mean"</span>:</span>
+<span id="cb15-69"><a href="#cb15-69" aria-hidden="true" tabindex="-1"></a>            muhat <span class="op">=</span> postmean(x, s, w, prior<span class="op">=</span>prior, a<span class="op">=</span>a)</span>
+<span id="cb15-70"><a href="#cb15-70" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> threshrule <span class="op">==</span> <span class="st">"hard"</span>:</span>
+<span id="cb15-71"><a href="#cb15-71" aria-hidden="true" tabindex="-1"></a>            muhat <span class="op">=</span> threshld(x, tt)</span>
+<span id="cb15-72"><a href="#cb15-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">elif</span> threshrule <span class="op">==</span> <span class="st">"soft"</span>:</span>
+<span id="cb15-73"><a href="#cb15-73" aria-hidden="true" tabindex="-1"></a>            muhat <span class="op">=</span> threshld(x, tt, hard<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb15-74"><a href="#cb15-74" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> threshrule <span class="op">==</span> <span class="st">"none"</span>:</span>
+<span id="cb15-75"><a href="#cb15-75" aria-hidden="true" tabindex="-1"></a>                muhat <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb15-76"><a href="#cb15-76" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb15-77"><a href="#cb15-77" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"Unknown threshold rule: </span><span class="sc">{</span>threshrule<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb15-78"><a href="#cb15-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-79"><a href="#cb15-79" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> stabadjustment_condition:</span>
+<span id="cb15-80"><a href="#cb15-80" aria-hidden="true" tabindex="-1"></a>            muhat <span class="op">=</span> muhat <span class="op">*</span> m_sdev</span>
+<span id="cb15-81"><a href="#cb15-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-82"><a href="#cb15-82" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> verbose:</span>
+<span id="cb15-83"><a href="#cb15-83" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> muhat</span>
+<span id="cb15-84"><a href="#cb15-84" aria-hidden="true" tabindex="-1"></a>        retlist <span class="op">=</span> {</span>
+<span id="cb15-85"><a href="#cb15-85" aria-hidden="true" tabindex="-1"></a>                <span class="st">'muhat'</span>: muhat,</span>
+<span id="cb15-86"><a href="#cb15-86" aria-hidden="true" tabindex="-1"></a>                <span class="st">'x'</span>: x,</span>
+<span id="cb15-87"><a href="#cb15-87" aria-hidden="true" tabindex="-1"></a>                <span class="st">'threshold.sdevscale'</span>: tt,</span>
+<span id="cb15-88"><a href="#cb15-88" aria-hidden="true" tabindex="-1"></a>                <span class="st">'threshold.origscale'</span>: tcor,</span>
+<span id="cb15-89"><a href="#cb15-89" aria-hidden="true" tabindex="-1"></a>                <span class="st">'prior'</span>: prior,</span>
+<span id="cb15-90"><a href="#cb15-90" aria-hidden="true" tabindex="-1"></a>                <span class="st">'w'</span>: w,</span>
+<span id="cb15-91"><a href="#cb15-91" aria-hidden="true" tabindex="-1"></a>                <span class="st">'a'</span>: a,</span>
+<span id="cb15-92"><a href="#cb15-92" aria-hidden="true" tabindex="-1"></a>                <span class="st">'bayesfac'</span>: bayesfac,</span>
+<span id="cb15-93"><a href="#cb15-93" aria-hidden="true" tabindex="-1"></a>                <span class="st">'sdev'</span>: sdev,</span>
+<span id="cb15-94"><a href="#cb15-94" aria-hidden="true" tabindex="-1"></a>                <span class="st">'threshrule'</span>: threshrule</span>
+<span id="cb15-95"><a href="#cb15-95" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb15-96"><a href="#cb15-96" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pr <span class="op">==</span> <span class="st">"c"</span>:</span>
+<span id="cb15-97"><a href="#cb15-97" aria-hidden="true" tabindex="-1"></a>            <span class="kw">del</span> retlist[<span class="st">'a'</span>]</span>
+<span id="cb15-98"><a href="#cb15-98" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> threshrule <span class="op">==</span> <span class="st">"none"</span>:</span>
+<span id="cb15-99"><a href="#cb15-99" aria-hidden="true" tabindex="-1"></a>            <span class="kw">del</span> retlist[<span class="st">'muhat'</span>]</span>
+<span id="cb15-100"><a href="#cb15-100" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> retlist</span>
+<span id="cb15-101"><a href="#cb15-101" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>,x):</span>
+<span id="cb15-102"><a href="#cb15-102" aria-hidden="true" tabindex="-1"></a>        out <span class="op">=</span> ebayesthresh.ebayesthresh(</span>
+<span id="cb15-103"><a href="#cb15-103" aria-hidden="true" tabindex="-1"></a>            x,</span>
+<span id="cb15-104"><a href="#cb15-104" aria-hidden="true" tabindex="-1"></a>            <span class="va">self</span>.prior, </span>
+<span id="cb15-105"><a href="#cb15-105" aria-hidden="true" tabindex="-1"></a>            a<span class="op">=</span><span class="va">self</span>.a, </span>
+<span id="cb15-106"><a href="#cb15-106" aria-hidden="true" tabindex="-1"></a>            bayesfac<span class="op">=</span><span class="va">self</span>.bayesfac, </span>
+<span id="cb15-107"><a href="#cb15-107" aria-hidden="true" tabindex="-1"></a>            sdev<span class="op">=</span><span class="va">self</span>.sdev, </span>
+<span id="cb15-108"><a href="#cb15-108" aria-hidden="true" tabindex="-1"></a>            verbose<span class="op">=</span><span class="va">self</span>.verbose, </span>
+<span id="cb15-109"><a href="#cb15-109" aria-hidden="true" tabindex="-1"></a>            threshrule<span class="op">=</span><span class="va">self</span>.threshrule, </span>
+<span id="cb15-110"><a href="#cb15-110" aria-hidden="true" tabindex="-1"></a>            universalthresh<span class="op">=</span><span class="va">self</span>.universalthresh, </span>
+<span id="cb15-111"><a href="#cb15-111" aria-hidden="true" tabindex="-1"></a>            stabadjustment<span class="op">=</span><span class="va">self</span>.stabadjustment</span>
+<span id="cb15-112"><a href="#cb15-112" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb15-113"><a href="#cb15-113" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> out</span></code></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>데이터</p>
 </blockquote>
-<div id="6e304b8b-318e-4f2c-ab71-06c01377dba9" class="cell" data-tags="[]" data-execution_count="260">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">111</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>ytrue <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.sin(<span class="fl">0.5</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">1.2</span><span class="op">*</span>np.sin(<span class="fl">1.0</span><span class="op">*</span>t) <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>np.sin(<span class="fl">1.2</span><span class="op">*</span>t) </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>noise  <span class="op">=</span> np.random.normal(size<span class="op">=</span>T)<span class="op">*</span><span class="fl">0.7</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ytrue <span class="op">+</span> noise</span></code></pre></div>
+<div id="6e304b8b-318e-4f2c-ab71-06c01377dba9" class="cell" data-tags="[]" data-execution_count="103">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">111</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ytrue <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.sin(<span class="fl">0.5</span><span class="op">*</span>x) <span class="op">+</span> <span class="fl">1.2</span><span class="op">*</span>np.sin(<span class="fl">1.0</span><span class="op">*</span>x) <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>np.sin(<span class="fl">1.2</span><span class="op">*</span>x) </span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>noise  <span class="op">=</span> np.random.normal(size<span class="op">=</span>T)<span class="op">*</span><span class="fl">0.7</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ytrue <span class="op">+</span> noise</span></code></pre></div>
 </div>
-<div id="543cdf05-6349-45b7-8525-a3b0bd04c462" class="cell" data-execution_count="261">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plt.plot(y,<span class="st">'.'</span>,color<span class="op">=</span><span class="st">'r'</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>plt.plot(ytrue,<span class="st">'-'</span>,color<span class="op">=</span><span class="st">'b'</span>)</span></code></pre></div>
+<div id="543cdf05-6349-45b7-8525-a3b0bd04c462" class="cell" data-execution_count="104">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.plot(y,<span class="st">'.'</span>,color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.plot(ytrue,<span class="st">'-'</span>,color<span class="op">=</span><span class="st">'b'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-15-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -469,33 +577,133 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 <blockquote class="blockquote">
 <p>레이어 정의</p>
 </blockquote>
-<div id="a752424f-ae86-4eb9-a3e3-51fde3effcda" class="cell" data-execution_count="263">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>thresh_layer <span class="op">=</span> ebayesthresh_nn()</span></code></pre></div>
+<div id="a752424f-ae86-4eb9-a3e3-51fde3effcda" class="cell" data-execution_count="105">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>thresh_layer <span class="op">=</span> ebayesthresh_nn()</span></code></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>Fourier Transform</p>
 </blockquote>
-<div id="18a6dd89-df8c-4332-a7c5-5cde5fed5f9d" class="cell" data-execution_count="264">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span></code></pre></div>
+<div id="18a6dd89-df8c-4332-a7c5-5cde5fed5f9d" class="cell" data-execution_count="106">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span></code></pre></div>
 </div>
-<div id="26817264-bcf0-4886-a212-4c2bc25acec4" class="cell" data-execution_count="265">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ybar <span class="op">=</span> Psi.T <span class="op">@</span> y</span></code></pre></div>
+<div id="26817264-bcf0-4886-a212-4c2bc25acec4" class="cell" data-execution_count="107">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ybar <span class="op">=</span> Psi.T <span class="op">@</span> y</span></code></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>Learn</p>
 </blockquote>
-<div id="222e1a23-3697-46d8-a446-f6e4b76941d4" class="cell" data-execution_count="266">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>power_threshed <span class="op">=</span> thresh_layer(ybar)</span></code></pre></div>
+<div id="08f93b71-65e1-417d-9637-4211e6c59701" class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ebayesthresh.ebayesthresh??</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Signature:</span>
+ebayesthresh<span class="ansi-blue-fg">.</span>ebayesthresh<span class="ansi-blue-fg">(</span>
+    x<span class="ansi-blue-fg">,</span>
+    prior<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">'laplace'</span><span class="ansi-blue-fg">,</span>
+    a<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0.5</span><span class="ansi-blue-fg">,</span>
+    bayesfac<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span>
+    sdev<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span>
+    verbose<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span>
+    threshrule<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">'median'</span><span class="ansi-blue-fg">,</span>
+    universalthresh<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span>
+    stabadjustment<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">Docstring:</span> &lt;no docstring&gt;
+<span class="ansi-red-fg">Source:</span>   
+<span class="ansi-green-fg">def</span> ebayesthresh<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> prior<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">"laplace"</span><span class="ansi-blue-fg">,</span> a<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0.5</span><span class="ansi-blue-fg">,</span> bayesfac<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> sdev<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span> verbose<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">,</span> threshrule<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">"median"</span><span class="ansi-blue-fg">,</span> universalthresh<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span> stabadjustment<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+    pr <span class="ansi-blue-fg">=</span> prior<span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">:</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span>
+    <span class="ansi-green-fg">if</span> sdev <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+        sdev <span class="ansi-blue-fg">=</span> mad<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> center<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span>
+        stabadjustment_condition <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span>
+    <span class="ansi-green-fg">elif</span> len<span class="ansi-blue-fg">(</span>np<span class="ansi-blue-fg">.</span>atleast_1d<span class="ansi-blue-fg">(</span>sdev<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">==</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">if</span> stabadjustment <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+            <span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"Argument stabadjustment is not applicable when variances are homogeneous."</span><span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> np<span class="ansi-blue-fg">.</span>isnan<span class="ansi-blue-fg">(</span>sdev<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+            sdev <span class="ansi-blue-fg">=</span> mad<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> center<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">)</span>
+        stabadjustment_condition <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span>
+    <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">if</span> pr <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">"c"</span><span class="ansi-blue-fg">:</span>
+            <span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"Standard deviation has to be homogeneous for Cauchy prior."</span><span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> len<span class="ansi-blue-fg">(</span>sdev<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">!=</span> len<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+            <span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"Standard deviation has to be homogeneous or have the same length as observations."</span><span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> stabadjustment <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+            stabadjustment <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">False</span>
+        stabadjustment_condition <span class="ansi-blue-fg">=</span> stabadjustment
+    <span class="ansi-green-fg">if</span> stabadjustment_condition<span class="ansi-blue-fg">:</span>
+        m_sdev <span class="ansi-blue-fg">=</span> np<span class="ansi-blue-fg">.</span>mean<span class="ansi-blue-fg">(</span>sdev<span class="ansi-blue-fg">)</span>
+        s <span class="ansi-blue-fg">=</span> sdev <span class="ansi-blue-fg">/</span> m_sdev
+        x <span class="ansi-blue-fg">=</span> x <span class="ansi-blue-fg">/</span> m_sdev
+    <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+        s <span class="ansi-blue-fg">=</span> sdev
+    <span class="ansi-green-fg">if</span> <span class="ansi-blue-fg">(</span>pr <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">"l"</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">and</span> np<span class="ansi-blue-fg">.</span>isnan<span class="ansi-blue-fg">(</span>a<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+        pp <span class="ansi-blue-fg">=</span> wandafromx<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> s<span class="ansi-blue-fg">,</span> universalthresh<span class="ansi-blue-fg">)</span>
+        w <span class="ansi-blue-fg">=</span> pp<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">'w'</span><span class="ansi-blue-fg">]</span>
+        a <span class="ansi-blue-fg">=</span> pp<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">'a'</span><span class="ansi-blue-fg">]</span>
+    <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+        w <span class="ansi-blue-fg">=</span> wfromx<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> s<span class="ansi-blue-fg">,</span> prior<span class="ansi-blue-fg">=</span>prior<span class="ansi-blue-fg">,</span> a<span class="ansi-blue-fg">=</span>a<span class="ansi-blue-fg">,</span> universalthresh<span class="ansi-blue-fg">=</span>universalthresh<span class="ansi-blue-fg">)</span>
+    <span class="ansi-green-fg">if</span> pr <span class="ansi-blue-fg">!=</span> <span class="ansi-blue-fg">"m"</span> <span class="ansi-green-fg">or</span> verbose<span class="ansi-blue-fg">:</span>
+        tt <span class="ansi-blue-fg">=</span> tfromw<span class="ansi-blue-fg">(</span>w<span class="ansi-blue-fg">,</span> s<span class="ansi-blue-fg">,</span> prior<span class="ansi-blue-fg">=</span>prior<span class="ansi-blue-fg">,</span> bayesfac<span class="ansi-blue-fg">=</span>bayesfac<span class="ansi-blue-fg">,</span> a<span class="ansi-blue-fg">=</span>a<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">0</span><span class="ansi-blue-fg">]</span>
+        <span class="ansi-green-fg">if</span> stabadjustment_condition<span class="ansi-blue-fg">:</span>
+            tcor <span class="ansi-blue-fg">=</span> tt <span class="ansi-blue-fg">*</span> m_sdev
+        <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+            tcor <span class="ansi-blue-fg">=</span> tt
+    <span class="ansi-green-fg">if</span> threshrule <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">"median"</span><span class="ansi-blue-fg">:</span>
+        muhat <span class="ansi-blue-fg">=</span> postmed<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> s<span class="ansi-blue-fg">,</span> w<span class="ansi-blue-fg">,</span> prior<span class="ansi-blue-fg">=</span>prior<span class="ansi-blue-fg">,</span> a<span class="ansi-blue-fg">=</span>a<span class="ansi-blue-fg">)</span>
+    <span class="ansi-green-fg">elif</span> threshrule <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">"mean"</span><span class="ansi-blue-fg">:</span>
+        muhat <span class="ansi-blue-fg">=</span> postmean<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> s<span class="ansi-blue-fg">,</span> w<span class="ansi-blue-fg">,</span> prior<span class="ansi-blue-fg">=</span>prior<span class="ansi-blue-fg">,</span> a<span class="ansi-blue-fg">=</span>a<span class="ansi-blue-fg">)</span>
+    <span class="ansi-green-fg">elif</span> threshrule <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">"hard"</span><span class="ansi-blue-fg">:</span>
+        muhat <span class="ansi-blue-fg">=</span> threshld<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> tt<span class="ansi-blue-fg">)</span>
+    <span class="ansi-green-fg">elif</span> threshrule <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">"soft"</span><span class="ansi-blue-fg">:</span>
+        muhat <span class="ansi-blue-fg">=</span> threshld<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> tt<span class="ansi-blue-fg">,</span> hard<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> threshrule <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">"none"</span><span class="ansi-blue-fg">:</span>
+            muhat <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">None</span>
+    <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">raise</span> ValueError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">f"Unknown threshold rule: {threshrule}"</span><span class="ansi-blue-fg">)</span>
+    <span class="ansi-green-fg">if</span> stabadjustment_condition<span class="ansi-blue-fg">:</span>
+        muhat <span class="ansi-blue-fg">=</span> muhat <span class="ansi-blue-fg">*</span> m_sdev
+    <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> verbose<span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">return</span> muhat
+    retlist <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span>
+            <span class="ansi-blue-fg">'muhat'</span><span class="ansi-blue-fg">:</span> muhat<span class="ansi-blue-fg">,</span>
+            <span class="ansi-blue-fg">'x'</span><span class="ansi-blue-fg">:</span> x<span class="ansi-blue-fg">,</span>
+            <span class="ansi-blue-fg">'threshold.sdevscale'</span><span class="ansi-blue-fg">:</span> tt<span class="ansi-blue-fg">,</span>
+            <span class="ansi-blue-fg">'threshold.origscale'</span><span class="ansi-blue-fg">:</span> tcor<span class="ansi-blue-fg">,</span>
+            <span class="ansi-blue-fg">'prior'</span><span class="ansi-blue-fg">:</span> prior<span class="ansi-blue-fg">,</span>
+            <span class="ansi-blue-fg">'w'</span><span class="ansi-blue-fg">:</span> w<span class="ansi-blue-fg">,</span>
+            <span class="ansi-blue-fg">'a'</span><span class="ansi-blue-fg">:</span> a<span class="ansi-blue-fg">,</span>
+            <span class="ansi-blue-fg">'bayesfac'</span><span class="ansi-blue-fg">:</span> bayesfac<span class="ansi-blue-fg">,</span>
+            <span class="ansi-blue-fg">'sdev'</span><span class="ansi-blue-fg">:</span> sdev<span class="ansi-blue-fg">,</span>
+            <span class="ansi-blue-fg">'threshrule'</span><span class="ansi-blue-fg">:</span> threshrule
+        <span class="ansi-blue-fg">}</span>
+    <span class="ansi-green-fg">if</span> pr <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">"c"</span><span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">del</span> retlist<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">'a'</span><span class="ansi-blue-fg">]</span>
+    <span class="ansi-green-fg">if</span> threshrule <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">"none"</span><span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">del</span> retlist<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">'muhat'</span><span class="ansi-blue-fg">]</span>
+    <span class="ansi-green-fg">return</span> retlist
+<span class="ansi-red-fg">File:</span>      ~/Dropbox/sy_hub/posts/1_Note/ebayesthresh/utils.py
+<span class="ansi-red-fg">Type:</span>      function
+</pre>
+</div>
+</div>
+</div>
+<div id="222e1a23-3697-46d8-a446-f6e4b76941d4" class="cell" data-execution_count="99">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>power_threshed <span class="op">=</span> thresh_layer(torch.tensor(ybar))</span></code></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>TypeError: mean() received an invalid combination of arguments - got (dtype=NoneType, out=NoneType, axis=NoneType, ), but expected one of:
+ * (*, torch.dtype dtype)
+ * (tuple of ints dim, bool keepdim, *, torch.dtype dtype)
+ * (tuple of names dim, bool keepdim, *, torch.dtype dtype)</code></pre>
+</div>
 </div>
 <blockquote class="blockquote">
 <p>Inverse Fourier Transform</p>
 </blockquote>
-<div id="21026ef1-0ad2-4d37-89f0-ade4cbfb00b3" class="cell" data-execution_count="267">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>ytrue_hat <span class="op">=</span> Psi<span class="op">@</span>power_threshed[<span class="st">'muhat'</span>]</span></code></pre></div>
+<div id="21026ef1-0ad2-4d37-89f0-ade4cbfb00b3" class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ytrue_hat <span class="op">=</span> Psi<span class="op">@</span>power_threshed[<span class="st">'muhat'</span>]</span></code></pre></div>
 </div>
-<div id="9aa3484a-f58c-44cb-89ae-2b665da6e48d" class="cell" data-execution_count="275">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>power_threshed</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="275">
+<div id="9aa3484a-f58c-44cb-89ae-2b665da6e48d" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>power_threshed</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="31">
 <pre><code>{'muhat': array([  6.42453566, -18.27981487,  -5.36813323,   0.        ,
          -7.57307354,   0.69758938,  -2.55666216,  -0.        ,
           0.        ,  -0.        ,   0.        ,   0.        ,
@@ -559,14 +767,14 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 <blockquote class="blockquote">
 <p>Result</p>
 </blockquote>
-<div id="c990053f-961a-41aa-9df6-ae8ceabdf9c8" class="cell" data-execution_count="268">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plt.plot(ytrue_hat,<span class="st">'.'</span>,color<span class="op">=</span><span class="st">'r'</span>)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>plt.plot(ytrue,<span class="st">'-'</span>,color<span class="op">=</span><span class="st">'b'</span>)</span></code></pre></div>
+<div id="c990053f-961a-41aa-9df6-ae8ceabdf9c8" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>plt.plot(ytrue_hat,<span class="st">'.'</span>,color<span class="op">=</span><span class="st">'r'</span>)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>plt.plot(ytrue,<span class="st">'-'</span>,color<span class="op">=</span><span class="st">'b'</span>)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="2024-05-29-ebayesthresh_python_example_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -574,11 +782,172 @@ Successfully installed ebayesthresh-0.0.1</code></pre>
 <blockquote class="blockquote">
 <p>MSE</p>
 </blockquote>
-<div id="581ecb90-0a9d-4ab5-856e-f28bbb4fd0a2" class="cell" data-execution_count="269">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> criterion(torch.tensor(ytrue_hat, requires_grad<span class="op">=</span><span class="va">True</span>), torch.tensor(ytrue, requires_grad<span class="op">=</span><span class="va">True</span>))</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>loss.item()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="269">
-<pre><code>0.10165286195631064</code></pre>
+<div id="2fc7538f-896a-457e-a1e5-f92d64bfcd1e" class="cell" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor(y)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>ytrue_hat <span class="op">=</span> torch.tensor(ytrue_hat,requires_grad<span class="op">=</span><span class="va">True</span>)</span></code></pre></div>
+</div>
+<div id="581ecb90-0a9d-4ab5-856e-f28bbb4fd0a2" class="cell" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>loss <span class="op">=</span> torch.<span class="bu">sum</span>((y<span class="op">-</span> ytrue_hat)<span class="op">**</span><span class="dv">2</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>loss</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="48">
+<pre><code>tensor(50.2861, dtype=torch.float64, grad_fn=&lt;SumBackward0&gt;)</code></pre>
+</div>
+</div>
+<div id="58250fd6-22b4-4542-bcce-82b5d6ad97aa" class="cell" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ytrue_hat.grad</span></code></pre></div>
+</div>
+<div id="79b1d9fc-4291-4dc4-aa49-1f4e5c595c42" class="cell" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>loss.backward()</span></code></pre></div>
+</div>
+<div id="4674a430-0bb7-4556-9ac0-e6ef09947361" class="cell" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ytrue_hat.grad</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="51">
+<pre><code>tensor([ 2.9195,  0.7201, -1.3920,  0.7190,  0.9161,  0.1220, -0.7026, -0.4869,
+        -0.0884,  0.4602, -1.5615, -0.3885,  0.8501, -2.1748,  0.4428, -0.7604,
+        -1.4611, -1.2501, -2.3386, -0.8789,  0.2302, -0.1631,  1.1447,  0.0221,
+        -0.8889, -1.3406,  2.2993, -0.7001,  0.4186, -3.3630, -2.1764,  0.9073,
+         1.3142,  2.3474, -0.4366,  0.2822, -0.6091,  0.1923,  2.6515,  1.3788,
+         2.1354,  0.1095,  0.8709,  0.8678,  0.9315, -2.2676, -0.5263, -1.1352,
+        -2.4840,  2.1805, -0.4385,  0.2941, -3.5019,  0.1060,  1.2290, -0.9767,
+        -0.2687, -2.0383, -0.3204,  0.1575, -0.1681,  2.2191, -0.3186, -0.3580,
+        -1.1659, -1.5349, -1.3802, -0.4360,  0.9556, -2.0545, -1.4892, -2.3337,
+        -1.0227,  0.8117,  0.3780,  0.8228,  0.0866, -0.2766,  0.3736,  1.8458,
+         1.2516, -0.0851,  0.0654,  0.5813, -0.9866,  1.6026,  0.3054, -0.6239,
+         0.9239,  1.7057,  1.0228, -3.0392,  2.8222, -0.9495,  0.0268, -3.4367,
+         0.9180, -0.4054,  1.6353,  2.6825], dtype=torch.float64)</code></pre>
+</div>
+</div>
+<div id="b8092ce4-671f-4aad-90d2-e34e8d925677" class="cell" data-execution_count="53">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ytrue_hat<span class="op">/</span>y</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="53">
+<pre><code>tensor([-0.8392,  1.6014,  0.5916,  1.4922,  1.6166,  1.0477,  0.8103,  0.8736,
+         0.9770,  1.1239,  0.7466,  0.9283,  1.1848,  0.7291,  1.0765,  0.8963,
+         0.8246,  0.8507,  0.7580,  0.8948,  1.0314,  0.9790,  1.1779,  1.0029,
+         0.8925,  0.8433,  1.4889,  0.9061,  1.0690,  0.6479,  0.7297,  1.1953,
+         1.3358,  1.9186,  0.9130,  1.0707,  0.8672,  1.0549,  4.4013,  1.7639,
+         3.6095,  1.0416,  1.5207,  1.5814,  1.7401,  0.4724,  0.7812,  0.6044,
+         0.3909, -2.0195,  0.7513,  1.3270,  0.2330,  1.1278, -1.9387,  0.4137,
+         0.6805,  0.1846,  0.5278,  2.4833,  0.5161, -0.0501,  0.1215, -0.0175,
+        -0.0404, -0.0509, -0.0740, -0.3364,  0.1127, -0.0695, -0.1119, -0.0810,
+        -0.2631,  0.2489,  0.4786,  0.3543,  0.8712,  1.5791,  0.7195,  0.3940,
+         0.5418,  1.0497,  0.9705,  0.8136,  1.5013,  0.6794,  0.9266,  1.1684,
+         0.8387,  0.7558,  0.8488,  1.9669,  0.7003,  1.1576,  0.9964,  1.8279,
+         0.8949,  1.0535,  0.8317,  0.6814], dtype=torch.float64,
+       grad_fn=&lt;DivBackward0&gt;)</code></pre>
+</div>
+</div>
+<div id="17feffc0-45ad-465f-98cb-b7fb56133429" class="cell" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.optim <span class="im">as</span> optim</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>criterion <span class="op">=</span> nn.MSELoss()</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> optim.SGD(thresh_layer.parameters(), lr<span class="op">=</span><span class="fl">0.01</span>)</span></code></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>ValueError: optimizer got an empty parameter list</code></pre>
+</div>
+</div>
+<div id="991dc974-f29f-4ca6-b36a-47d82cd5d6e8" class="cell" data-execution_count="52">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>num_epochs <span class="op">=</span> <span class="dv">1000</span>  <span class="co"># 에폭 수</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(num_epochs):</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 순전파</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    outputs <span class="op">=</span> model(x_tensor)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> criterion(outputs, y_tensor)</span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 역전파</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    optimizer.zero_grad()</span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>    optimizer.step()</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 로그 출력</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (epoch<span class="op">+</span><span class="dv">1</span>) <span class="op">%</span> <span class="dv">100</span> <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f'Epoch [</span><span class="sc">{</span>epoch<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>num_epochs<span class="sc">}</span><span class="ss">], Loss: </span><span class="sc">{</span>loss<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">'</span>)</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 학습된 모델을 통해 예측</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>predicted <span class="op">=</span> model(x_tensor).detach().numpy()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="52">
+<pre><code>tensor(50.2861, dtype=torch.float64, grad_fn=&lt;SumBackward0&gt;)</code></pre>
+</div>
+</div>
+<div id="75e42093-dfeb-4f2f-9f3e-f6a2f2cfc0cc" class="cell" data-execution_count="57">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>??torch.nn.Linear</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">Init signature:</span>
+torch<span class="ansi-blue-fg">.</span>nn<span class="ansi-blue-fg">.</span>Linear<span class="ansi-blue-fg">(</span>
+    in_features<span class="ansi-blue-fg">:</span> int<span class="ansi-blue-fg">,</span>
+    out_features<span class="ansi-blue-fg">:</span> int<span class="ansi-blue-fg">,</span>
+    bias<span class="ansi-blue-fg">:</span> bool <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span>
+    device<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span>
+    dtype<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span>
+<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> <span class="ansi-green-fg">None</span>
+<span class="ansi-red-fg">Source:</span>        
+<span class="ansi-green-fg">class</span> Linear<span class="ansi-blue-fg">(</span>Module<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
+    <span class="ansi-blue-fg">r"""Applies a linear transformation to the incoming data: :math:`y = xA^T + b`</span>
+<span class="ansi-blue-fg">    This module supports :ref:`TensorFloat32&lt;tf32_on_ampere&gt;`.</span>
+<span class="ansi-blue-fg">    On certain ROCm devices, when using float16 inputs this module will use :ref:`different precision&lt;fp16_on_mi200&gt;` for backward.</span>
+<span class="ansi-blue-fg">    Args:</span>
+<span class="ansi-blue-fg">        in_features: size of each input sample</span>
+<span class="ansi-blue-fg">        out_features: size of each output sample</span>
+<span class="ansi-blue-fg">        bias: If set to ``False``, the layer will not learn an additive bias.</span>
+<span class="ansi-blue-fg">            Default: ``True``</span>
+<span class="ansi-blue-fg">    Shape:</span>
+<span class="ansi-blue-fg">        - Input: :math:`(*, H_{in})` where :math:`*` means any number of</span>
+<span class="ansi-blue-fg">          dimensions including none and :math:`H_{in} = \text{in\_features}`.</span>
+<span class="ansi-blue-fg">        - Output: :math:`(*, H_{out})` where all but the last dimension</span>
+<span class="ansi-blue-fg">          are the same shape as the input and :math:`H_{out} = \text{out\_features}`.</span>
+<span class="ansi-blue-fg">    Attributes:</span>
+<span class="ansi-blue-fg">        weight: the learnable weights of the module of shape</span>
+<span class="ansi-blue-fg">            :math:`(\text{out\_features}, \text{in\_features})`. The values are</span>
+<span class="ansi-blue-fg">            initialized from :math:`\mathcal{U}(-\sqrt{k}, \sqrt{k})`, where</span>
+<span class="ansi-blue-fg">            :math:`k = \frac{1}{\text{in\_features}}`</span>
+<span class="ansi-blue-fg">        bias:   the learnable bias of the module of shape :math:`(\text{out\_features})`.</span>
+<span class="ansi-blue-fg">                If :attr:`bias` is ``True``, the values are initialized from</span>
+<span class="ansi-blue-fg">                :math:`\mathcal{U}(-\sqrt{k}, \sqrt{k})` where</span>
+<span class="ansi-blue-fg">                :math:`k = \frac{1}{\text{in\_features}}`</span>
+<span class="ansi-blue-fg">    Examples::</span>
+<span class="ansi-blue-fg">        &gt;&gt;&gt; m = nn.Linear(20, 30)</span>
+<span class="ansi-blue-fg">        &gt;&gt;&gt; input = torch.randn(128, 20)</span>
+<span class="ansi-blue-fg">        &gt;&gt;&gt; output = m(input)</span>
+<span class="ansi-blue-fg">        &gt;&gt;&gt; print(output.size())</span>
+<span class="ansi-blue-fg">        torch.Size([128, 30])</span>
+<span class="ansi-blue-fg">    """</span>
+    __constants__ <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">'in_features'</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'out_features'</span><span class="ansi-blue-fg">]</span>
+    in_features<span class="ansi-blue-fg">:</span> int
+    out_features<span class="ansi-blue-fg">:</span> int
+    weight<span class="ansi-blue-fg">:</span> Tensor
+    <span class="ansi-green-fg">def</span> __init__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> in_features<span class="ansi-blue-fg">:</span> int<span class="ansi-blue-fg">,</span> out_features<span class="ansi-blue-fg">:</span> int<span class="ansi-blue-fg">,</span> bias<span class="ansi-blue-fg">:</span> bool <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span>
+                 device<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">,</span> dtype<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+        factory_kwargs <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">{</span><span class="ansi-blue-fg">'device'</span><span class="ansi-blue-fg">:</span> device<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">'dtype'</span><span class="ansi-blue-fg">:</span> dtype<span class="ansi-blue-fg">}</span>
+        super<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>__init__<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+        self<span class="ansi-blue-fg">.</span>in_features <span class="ansi-blue-fg">=</span> in_features
+        self<span class="ansi-blue-fg">.</span>out_features <span class="ansi-blue-fg">=</span> out_features
+        self<span class="ansi-blue-fg">.</span>weight <span class="ansi-blue-fg">=</span> Parameter<span class="ansi-blue-fg">(</span>torch<span class="ansi-blue-fg">.</span>empty<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span>out_features<span class="ansi-blue-fg">,</span> in_features<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>factory_kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> bias<span class="ansi-blue-fg">:</span>
+            self<span class="ansi-blue-fg">.</span>bias <span class="ansi-blue-fg">=</span> Parameter<span class="ansi-blue-fg">(</span>torch<span class="ansi-blue-fg">.</span>empty<span class="ansi-blue-fg">(</span>out_features<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>factory_kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
+            self<span class="ansi-blue-fg">.</span>register_parameter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">'bias'</span><span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
+        self<span class="ansi-blue-fg">.</span>reset_parameters<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
+    <span class="ansi-green-fg">def</span> reset_parameters<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+        <span class="ansi-red-fg"># Setting a=sqrt(5) in kaiming_uniform is the same as initializing with</span>
+        <span class="ansi-red-fg"># uniform(-1/sqrt(in_features), 1/sqrt(in_features)). For details, see</span>
+        <span class="ansi-red-fg"># https://github.com/pytorch/pytorch/issues/57109</span>
+        init<span class="ansi-blue-fg">.</span>kaiming_uniform_<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>weight<span class="ansi-blue-fg">,</span> a<span class="ansi-blue-fg">=</span>math<span class="ansi-blue-fg">.</span>sqrt<span class="ansi-blue-fg">(</span><span class="ansi-cyan-fg">5</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+        <span class="ansi-green-fg">if</span> self<span class="ansi-blue-fg">.</span>bias <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
+            fan_in<span class="ansi-blue-fg">,</span> _ <span class="ansi-blue-fg">=</span> init<span class="ansi-blue-fg">.</span>_calculate_fan_in_and_fan_out<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>weight<span class="ansi-blue-fg">)</span>
+            bound <span class="ansi-blue-fg">=</span> <span class="ansi-cyan-fg">1</span> <span class="ansi-blue-fg">/</span> math<span class="ansi-blue-fg">.</span>sqrt<span class="ansi-blue-fg">(</span>fan_in<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">if</span> fan_in <span class="ansi-blue-fg">&gt;</span> <span class="ansi-cyan-fg">0</span> <span class="ansi-green-fg">else</span> <span class="ansi-cyan-fg">0</span>
+            init<span class="ansi-blue-fg">.</span>uniform_<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>bias<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">-</span>bound<span class="ansi-blue-fg">,</span> bound<span class="ansi-blue-fg">)</span>
+    <span class="ansi-green-fg">def</span> forward<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> input<span class="ansi-blue-fg">:</span> Tensor<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> Tensor<span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">return</span> F<span class="ansi-blue-fg">.</span>linear<span class="ansi-blue-fg">(</span>input<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>weight<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>bias<span class="ansi-blue-fg">)</span>
+    <span class="ansi-green-fg">def</span> extra_repr<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">-&gt;</span> str<span class="ansi-blue-fg">:</span>
+        <span class="ansi-green-fg">return</span> <span class="ansi-blue-fg">'in_features={}, out_features={}, bias={}'</span><span class="ansi-blue-fg">.</span>format<span class="ansi-blue-fg">(</span>
+            self<span class="ansi-blue-fg">.</span>in_features<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>out_features<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>bias <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span>
+        <span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">File:</span>           ~/anaconda3/envs/temp_csy/lib/python3.8/site-packages/torch/nn/modules/linear.py
+<span class="ansi-red-fg">Type:</span>           type
+<span class="ansi-red-fg">Subclasses:</span>     NonDynamicallyQuantizableLinear, LazyLinear, Linear, LinearBn1d, Linear
+</pre>
+</div>
 </div>
 </div>
 

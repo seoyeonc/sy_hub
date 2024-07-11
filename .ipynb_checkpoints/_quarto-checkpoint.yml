@@ -44,6 +44,7 @@ website:
           - 2_ept.qmd
           - 2_stgcn.qmd
           - 2_linearalgebra.qmd
+          - 2_kan.qmd
       
 format:
   html:
