@@ -3,7 +3,7 @@ from scipy.optimize import minimize, root_scalar
 from statsmodels.robust.scale import mad
 import warnings
 import torch
-import torch.distributions.normal as dist_normal
+from scipy.stats import norm
 
 
 def beta_cauchy(x):
@@ -14,21 +14,18 @@ def beta_cauchy(x):
     Parameters:
     x - a real value or vector
     """
-    norm = dist_normal.Normal(0, 1)
-    phix = norm.log_prob(x).exp()
+    x = torch.tensor(x,dtype=torch.float64)
 
-    # Define the condition j
+    phix = torch.tensor(norm.pdf(x, loc=0, scale=1))
+    
     j = (x != 0)
 
-    # Initialize beta with x
     beta = x.clone()
 
-    # Apply the condition using torch.where
     beta = torch.where(j == False, -1/2, beta)
 
-    # Update beta where j is True
-    beta[j] = (norm.log_prob(torch.tensor(0.0)).exp() / phix[j] - 1) / (x[j] ** 2) - 1
-    
+    beta[j] = (torch.tensor(norm.pdf(0, loc=0, scale=1)) / phix[j] - 1) / (x[j] ** 2) - 1
+
     return beta
 
 
@@ -42,20 +39,21 @@ def beta_laplace(x, s=1, a=0.5):
     """
     # Compute xpa and xma
     x = torch.abs(x)
+
     xpa = x / s + s * a
+
     xma = x / s - s * a
-    
-    # Compute rat1 and rat2
-    rat1 = 1 / xpa
-    norm = dist_normal.Normal(0, 1)
-    rat1[xpa < 35] = norm.cdf(-xpa[xpa < 35]) / norm.log_prob(xpa[xpa < 35]).exp()
-    
-    rat2 = 1 / torch.abs(xma)
-    
+
+    rat1 = torch.tensor(1 / xpa, dtype=torch.float64)
+
+    rat1[xpa < 35] = torch.tensor(norm.cdf(-xpa[xpa < 35], loc=0, scale=1) / norm.pdf(xpa[xpa < 35], loc=0, scale=1))
+
+    rat2 = torch.tensor(1 / torch.abs(xma), dtype=torch.float64)
+
     xma = torch.where(xma > 35, torch.tensor(35.0), xma)
-    rat2[xma > -35] = norm.cdf(xma[xma > -35]) / norm.log_prob(xma[xma > -35]).exp()
+
+    rat2[xma > -35] = torch.tensor(norm.cdf(xma[xma > -35], loc=0, scale=1) / norm.pdf(xma[xma > -35], loc=0, scale=1))
     
-    # Calculate beta
     beta = (a * s) / 2 * (rat1 + rat2) - 1
     
     return beta
@@ -140,73 +138,75 @@ def beta_laplace(x, s=1, a=0.5):
 
     
     
-def ebayesthresh_wavelet_dwt(x_dwt, vscale="independent", smooth_levels=float('inf'), 
-                             prior="laplace", a=0.5, bayesfac=False, 
-                             threshrule="median"):
-    nlevs = len(x_dwt) - 1
-    slevs = min(nlevs, smooth_levels)
+# def ebayesthresh_wavelet_dwt(x_dwt, vscale="independent", smooth_levels=float('inf'), 
+#                              prior="laplace", a=0.5, bayesfac=False, 
+#                              threshrule="median"):
+#     nlevs = len(x_dwt) - 1
+#     slevs = min(nlevs, smooth_levels)
     
-    if isinstance(vscale, str):
-        vs = vscale[0].lower()
-        if vs == "i":
-            vscale = mad(x_dwt[0], center=0)
-        if vs == "l":
-            vscale = None
+#     if isinstance(vscale, str):
+#         vs = vscale[0].lower()
+#         if vs == "i":
+#             vscale = mad(x_dwt[0], center=0)
+#         if vs == "l":
+#             vscale = None
     
-    for j in range(slevs):
-        x_dwt[j] = ebayesthresh(x_dwt[j], prior=prior, a=a, bayesfac=bayesfac, 
-                                sdev=vscale, verbose=False, threshrule=threshrule)
+#     for j in range(slevs):
+#         x_dwt[j] = ebayesthresh(x_dwt[j], prior=prior, a=a, bayesfac=bayesfac, 
+#                                 sdev=vscale, verbose=False, threshrule=threshrule)
     
-    return x_dwt
+#     return x_dwt
 
-def ebayesthresh_wavelet_splus(x_dwt, vscale="independent", smooth_levels=float('inf'), 
-                                prior="laplace", a=0.5, bayesfac=False, threshrule="median"):
-    nlevs = len(x_dwt)
-    slevs = min(nlevs, smooth_levels)
+# def ebayesthresh_wavelet_splus(x_dwt, vscale="independent", smooth_levels=float('inf'), 
+#                                 prior="laplace", a=0.5, bayesfac=False, threshrule="median"):
+#     nlevs = len(x_dwt)
+#     slevs = min(nlevs, smooth_levels)
     
-    if isinstance(vscale, str):
-        vs = vscale[0].lower()
-        if vs == "i":
-            vscale = mad(x_dwt[-1])  # Use the last level for vscale
-        elif vs == "l":
-            vscale = None
+#     if isinstance(vscale, str):
+#         vs = vscale[0].lower()
+#         if vs == "i":
+#             vscale = mad(x_dwt[-1])  # Use the last level for vscale
+#         elif vs == "l":
+#             vscale = None
     
-    for j in range(nlevs - slevs + 1, nlevs + 1):
-        x_dwt[j - 1] = ebayesthresh(x_dwt[j - 1], prior=prior, a=a, bayesfac=bayesfac, 
-                                    sdev=vscale, verbose=False, threshrule=threshrule)
+#     for j in range(nlevs - slevs + 1, nlevs + 1):
+#         x_dwt[j - 1] = ebayesthresh(x_dwt[j - 1], prior=prior, a=a, bayesfac=bayesfac, 
+#                                     sdev=vscale, verbose=False, threshrule=threshrule)
     
-    return x_dwt
+#     return x_dwt
 
-def ebayesthresh_wavelet_wd(x_wd, vscale="independent", smooth_levels=float('inf'), 
-                             prior="laplace", a=0.5, bayesfac=False, threshrule="median"):
-    nlevs = x_wd.nlevels
-    slevs = min(nlevs - 1, smooth_levels)
+# def ebayesthresh_wavelet_wd(x_wd, vscale="independent", smooth_levels=float('inf'), 
+#                              prior="laplace", a=0.5, bayesfac=False, threshrule="median"):
+#     nlevs = x_wd.nlevels
+#     slevs = min(nlevs - 1, smooth_levels)
     
-    if isinstance(vscale, str):
-        vs = vscale[0].lower()
-        if vs == "i":
-            vscale = mad(x_wd[-1].d)  # Use the last level for vscale
-        elif vs == "l":
-            vscale = None
+#     if isinstance(vscale, str):
+#         vs = vscale[0].lower()
+#         if vs == "i":
+#             vscale = mad(x_wd[-1].d)  # Use the last level for vscale
+#         elif vs == "l":
+#             vscale = None
     
-    for j in range(nlevs - slevs, nlevs - 1):
-        x_wd.d[j] = ebayesthresh(x_wd.d[j], prior=prior, a=a, bayesfac=bayesfac, 
-                                  sdev=vscale, verbose=False, threshrule=threshrule)
+#     for j in range(nlevs - slevs, nlevs - 1):
+#         x_wd.d[j] = ebayesthresh(x_wd.d[j], prior=prior, a=a, bayesfac=bayesfac, 
+#                                   sdev=vscale, verbose=False, threshrule=threshrule)
     
-    return x_wd
+#     return x_wd
 
 def cauchy_medzero(x, z, w):
-    norm = dist_normal.Normal(0, 1)
     hh = z - x
-    dnhh = norm.log_prob(hh).exp()
-    yleft = norm.cdf(hh) - z * dnhh + ((z * x - 1) * dnhh * norm.cdf(-x) ) / norm.log_prob(x).exp()
+
+    dnhh = torch.tensor(norm.pdf(hh, loc=0, scale=1))
+
+    yleft = torch.tensor(norm.cdf(hh, loc=0, scale=1)) - z * dnhh + ((z * x - 1) * dnhh * torch.tensor(norm.cdf(-x, loc=0, scale=1)) ) / torch.tensor(norm.pdf(x, loc=0, scale=1))
+
     yright2 = 1 + torch.exp(-z**2 / 2) * (z**2 * (1/w - 1) - 1)
+
     return yright2 / 2 - yleft
 
 
 def cauchy_threshzero(z, w):
-    norm = dist_normal.Normal(0, 1)
-    y = (norm.cdf(z) - z * norm.log_prob(z).exp() - 0.5 - (z**2 * torch.exp(-z**2 / 2) * (1/w - 1)) / 2)
+    y = (torch.tensor(norm.cdf(z, loc=0, scale=1)) - z * torch.tensor(norm.pdf(z, loc=0, scale=1)) - 0.5 - (z**2 * torch.exp(-z**2 / 2) * (1/w - 1)) / 2)
     return y
 
 
@@ -283,11 +283,9 @@ def laplace_threshzero(x, s=1, w=0.5, a=0.5):
     """
     a = min(a, 20)
     
-    norm = dist_normal.Normal(0, 1)
-    
     xma = x / s - s * a
     
-    z = norm.cdf(xma) - (1 / a) * (1 / s * norm.log_prob(xma).exp()) * (1 / w + beta_laplace(x, s, a))
+    z = z = torch.tensor(norm.cdf(xma, loc=0, scale=1)) - (1 / a) * (1 / s * torch.tensor(norm.pdf(xma, loc=0, scale=1))) * (1 / w + beta_laplace(x, s, a))
     
     return z
 
