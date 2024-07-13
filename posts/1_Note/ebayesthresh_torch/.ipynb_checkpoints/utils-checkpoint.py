@@ -5,6 +5,8 @@ import warnings
 import torch
 from scipy.stats import norm
 
+torch.set_printoptions(precision=15)
+
 
 def beta_cauchy(x):
     """
@@ -58,141 +60,85 @@ def beta_laplace(x, s=1, a=0.5):
     
     return beta
 
-# def ebayesthresh(x, prior="laplace", a=0.5, bayesfac=False, sdev=None, verbose=False, threshrule="median", universalthresh=True, stabadjustment=None):
-#     pr = prior[0:1]
+def ebayesthresh(x, prior="laplace", a=0.5, bayesfac=False, sdev=None, verbose=False, threshrule="median", universalthresh=True, stabadjustment=None):
+    pr = prior[0:1]
 
-#     if sdev is None:
-#         sdev = mad(x, center=0)
-#         stabadjustment_condition = True
-#     elif len(np.atleast_1d(sdev)) == 1:
-#         if stabadjustment is not None:
-#             raise ValueError("Argument stabadjustment is not applicable when variances are homogeneous.")
-#         if np.isnan(sdev):
-#             sdev = mad(x, center=0)
-#         stabadjustment_condition = True
-#     else:
-#         if pr == "c":
-#             raise ValueError("Standard deviation has to be homogeneous for Cauchy prior.")
-#         if len(sdev) != len(x):
-#             raise ValueError("Standard deviation has to be homogeneous or have the same length as observations.")
-#         if stabadjustment is None:
-#             stabadjustment = False
-#         stabadjustment_condition = stabadjustment
+    if sdev is None: sdev = torch.tensor([float('nan')])
+    else: sdev = torch.tensor([sdev])
+    
+    if len(sdev) == 1:
+        if stabadjustment is not None:
+            raise ValueError("Argument stabadjustment is not applicable when variances are homogeneous.")
+        if torch.isnan(torch.tensor(sdev)):
+            sdev = mad(x, center=0)
+        stabadjustment_condition = True
+    else:
+        if pr == "c":
+            raise ValueError("Standard deviation has to be homogeneous for Cauchy prior.")
+        if sdev.numel() != x.numel():
+            raise ValueError("Standard deviation has to be homogeneous or have the same length as observations.")
+        if stabadjustment is None:
+            stabadjustment = False
+        stabadjustment_condition = stabadjustment
 
-#     if stabadjustment_condition:
-#         m_sdev = np.mean(sdev)
-#         s = sdev / m_sdev
-#         x = x / m_sdev
-#     else:
-#         s = sdev
+    if stabadjustment_condition:
+        m_sdev = torch.mean(sdev.float()) 
+        s = sdev / m_sdev 
+        x = x / m_sdev
+    else:
+        s = sdev
 
-#     if (pr == "l") and np.isnan(a):
-#         pp = wandafromx(x, s, universalthresh)
-#         w = pp['w']
-#         a = pp['a']
-#     else:
-#         w = wfromx(x, s, prior=prior, a=a, universalthresh=universalthresh)
+    if pr == "l" and a is None:
+        pp = wandafromx(x, s, universalthresh)
+        w = pp["w"]
+        a = pp["a"]
+    else:
+        w = wfromx(x, s, prior, a, universalthresh)
 
-#     if pr != "m" or verbose:
-#         tt = tfromw(w, s, prior=prior, bayesfac=bayesfac, a=a)[0]
-#         if stabadjustment_condition:
-#             tcor = tt * m_sdev
-#         else:
-#             tcor = tt
+    if pr != "m" or verbose:
+        tt = tfromw(w, s, prior=prior, bayesfac=bayesfac, a=a)[0]
+        if stabadjustment_condition:
+            tcor = tt * m_sdev
+        else:
+            tcor = tt
 
-#     if threshrule == "median":
-#         muhat = postmed(x, s, w, prior=prior, a=a)
-#     elif threshrule == "mean":
-#         muhat = postmean(x, s, w, prior=prior, a=a)
-#     elif threshrule == "hard":
-#         muhat = threshld(x, tt)
-#     elif threshrule == "soft":
-#         muhat = threshld(x, tt, hard=False)
-#         if threshrule == "none":
-#             muhat = None
-#     else:
-#         raise ValueError(f"Unknown threshold rule: {threshrule}")
+    if threshrule == "median":
+        muhat = postmed(x, s, w, prior=prior, a=a)
+    elif threshrule == "mean":
+        muhat = postmean(x, s, w, prior=prior, a=a)
+    elif threshrule == "hard":
+        muhat = threshld(x, tt)
+    elif threshrule == "soft":
+        muhat = threshld(x, tt, hard=False)
+        if threshrule == "none":
+            muhat = None
+    else:
+        raise ValueError(f"Unknown threshold rule: {threshrule}")
 
-#     if stabadjustment_condition:
-#         muhat = muhat * m_sdev
+    if stabadjustment_condition:
+        muhat = muhat * m_sdev
 
-#     if not verbose:
-#         return muhat
-#     retlist = {
-#             'muhat': muhat,
-#             'x': x,
-#             'threshold.sdevscale': tt,
-#             'threshold.origscale': tcor,
-#             'prior': prior,
-#             'w': w,
-#             'a': a,
-#             'bayesfac': bayesfac,
-#             'sdev': sdev,
-#             'threshrule': threshrule
-#         }
-#     if pr == "c":
-#         del retlist['a']
-#     if threshrule == "none":
-#         del retlist['muhat']
-#     return retlist
+    if not verbose:
+        return muhat
+    retlist = {
+            'muhat': muhat,
+            'x': x,
+            'threshold.sdevscale': tt,
+            'threshold.origscale': tcor,
+            'prior': prior,
+            'w': w,
+            'a': a,
+            'bayesfac': bayesfac,
+            'sdev': sdev,
+            'threshrule': threshrule
+        }
+    if pr == "c":
+        del retlist['a']
+    if threshrule == "none":
+        del retlist['muhat']
+    return retlist
 
     
-    
-# def ebayesthresh_wavelet_dwt(x_dwt, vscale="independent", smooth_levels=float('inf'), 
-#                              prior="laplace", a=0.5, bayesfac=False, 
-#                              threshrule="median"):
-#     nlevs = len(x_dwt) - 1
-#     slevs = min(nlevs, smooth_levels)
-    
-#     if isinstance(vscale, str):
-#         vs = vscale[0].lower()
-#         if vs == "i":
-#             vscale = mad(x_dwt[0], center=0)
-#         if vs == "l":
-#             vscale = None
-    
-#     for j in range(slevs):
-#         x_dwt[j] = ebayesthresh(x_dwt[j], prior=prior, a=a, bayesfac=bayesfac, 
-#                                 sdev=vscale, verbose=False, threshrule=threshrule)
-    
-#     return x_dwt
-
-# def ebayesthresh_wavelet_splus(x_dwt, vscale="independent", smooth_levels=float('inf'), 
-#                                 prior="laplace", a=0.5, bayesfac=False, threshrule="median"):
-#     nlevs = len(x_dwt)
-#     slevs = min(nlevs, smooth_levels)
-    
-#     if isinstance(vscale, str):
-#         vs = vscale[0].lower()
-#         if vs == "i":
-#             vscale = mad(x_dwt[-1])  # Use the last level for vscale
-#         elif vs == "l":
-#             vscale = None
-    
-#     for j in range(nlevs - slevs + 1, nlevs + 1):
-#         x_dwt[j - 1] = ebayesthresh(x_dwt[j - 1], prior=prior, a=a, bayesfac=bayesfac, 
-#                                     sdev=vscale, verbose=False, threshrule=threshrule)
-    
-#     return x_dwt
-
-# def ebayesthresh_wavelet_wd(x_wd, vscale="independent", smooth_levels=float('inf'), 
-#                              prior="laplace", a=0.5, bayesfac=False, threshrule="median"):
-#     nlevs = x_wd.nlevels
-#     slevs = min(nlevs - 1, smooth_levels)
-    
-#     if isinstance(vscale, str):
-#         vs = vscale[0].lower()
-#         if vs == "i":
-#             vscale = mad(x_wd[-1].d)  # Use the last level for vscale
-#         elif vs == "l":
-#             vscale = None
-    
-#     for j in range(nlevs - slevs, nlevs - 1):
-#         x_wd.d[j] = ebayesthresh(x_wd.d[j], prior=prior, a=a, bayesfac=bayesfac, 
-#                                   sdev=vscale, verbose=False, threshrule=threshrule)
-    
-#     return x_wd
-
 def cauchy_medzero(x, z, w):
     hh = z - x
 
@@ -217,15 +163,6 @@ def isotone(x, wt=None, increasing=False):
     the curve is set to be increasing, otherwise to be decreasing.
     The vector ip contains the indices on the original scale of the
     breaks in the regression at each stage.
-
-    Parameters:
-        x (list or numpy.ndarray): Input sequence.
-        wt (list or numpy.ndarray, optional): Weights for the sequence x. Defaults to None.
-        increasing (bool, optional): If True, the curve is set to be increasing, otherwise decreasing.
-            Defaults to False.
-
-    Returns:
-        list: Isotonic fit to the input sequence x.
     """
     if wt is None:
         wt = torch.ones_like(x)
@@ -357,19 +294,6 @@ def postmean_cauchy(x, w):
 
 
 def postmean_laplace(x, s=1, w=0.5, a=0.5):
-    """
-    Find the posterior mean for the double exponential prior for
-    given x, s (sd), w, and a.
-
-    Args:
-        x (float or numpy array): Input data.
-        s (float): Standard deviation.
-        w (float): Parameter.
-        a (float): Parameter.
-
-    Returns:
-        float or numpy array: Posterior mean.
-    """
     a = min(a, 20)
     
     # First find the probability of being non-zero
@@ -383,38 +307,37 @@ def postmean_laplace(x, s=1, w=0.5, a=0.5):
     xpa = torch.minimum(xpa, torch.tensor(35.0))
     xma = torch.maximum(xma, torch.tensor(-35.0))
 
-    norm = dist_normal.Normal(0, 1)
-    cp1 = norm.cdf(xma)
-    cp2 = norm.cdf(-xpa)
+    cp1 = torch.tensor(norm.cdf(xma, loc=0, scale=1))
+    cp2 = torch.tensor(norm.cdf(-xpa, loc=0, scale=1))
     ef = torch.exp(torch.minimum(2 * a * x, torch.tensor(100.0, dtype=torch.float32)))
     postmean_cond = x - a * s**2 * (2 * cp1 / (cp1 + ef * cp2) - 1)
     
     return sx * w_post * postmean_cond
 
-# def postmed(x, s=1, w=0.5, prior="laplace", a=0.5):
-#     """
-#     Find the posterior median for the appropriate prior for given x, s (sd), w, and a.
+def postmed(x, s=1, w=0.5, prior="laplace", a=0.5):
+    """
+    Find the posterior median for the appropriate prior for given x, s (sd), w, and a.
 
-#     Parameters:
-#         x (array-like): Observations.
-#         s (float): Standard deviation.
-#         w (float): Weight parameter.
-#         prior (str): Type of prior ("laplace" or "cauchy").
-#         a (float): Parameter a.
+    Parameters:
+        x (array-like): Observations.
+        s (float): Standard deviation.
+        w (float): Weight parameter.
+        prior (str): Type of prior ("laplace" or "cauchy").
+        a (float): Parameter a.
 
-#     Returns:
-#         array-like: Posterior median estimates.
-#     """
-#     pr = prior[0:1]
-#     if pr == "l":
-#         muhat = postmed_laplace(x, s, w, a)
-#     elif pr == "c":
-#         if np.any(s != 1):
-#             raise ValueError("Only standard deviation of 1 is allowed for Cauchy prior.")
-#         muhat = postmed_cauchy(x, w)
-#     else:
-#         raise ValueError(f"Unknown prior: {prior}")
-#     return muhat
+    Returns:
+        array-like: Posterior median estimates.
+    """
+    pr = prior[0:1]
+    if pr == "l":
+        muhat = postmed_laplace(x, s, w, a)
+    elif pr == "c":
+        if np.any(s != 1):
+            raise ValueError("Only standard deviation of 1 is allowed for Cauchy prior.")
+        muhat = postmed_cauchy(x, w)
+    else:
+        raise ValueError(f"Unknown prior: {prior}")
+    return muhat
 
 def postmed_cauchy(x, w):
     """
@@ -437,33 +360,33 @@ def postmed_cauchy(x, w):
     
     return zest
 
-# def postmed_laplace(x, s=1, w=0.5, a=0.5):
-#     """
-#     Find the posterior median for the Laplace prior for given x (observations), s (sd), w, and a.
+def postmed_laplace(x, s=1, w=0.5, a=0.5):
+    """
+    Find the posterior median for the Laplace prior for given x (observations), s (sd), w, and a.
     
-#     Parameters:
-#         x (array-like): Observations.
-#         s (float): Standard deviation.
-#         w (float): Weight parameter.
-#         a (float): Parameter a.
+    Parameters:
+        x (array-like): Observations.
+        s (float): Standard deviation.
+        w (float): Weight parameter.
+        a (float): Parameter a.
         
-#     Returns:
-#         array-like: Posterior median estimates.
-#     """
-#     # Only allow a < 20 for input value
-#     a = min(a, 20)
+    Returns:
+        array-like: Posterior median estimates.
+    """
+    # Only allow a < 20 for input value
+    a = min(a, 20)
     
-#     # Work with the absolute value of x, and for x > 25 use the approximation
-#     # to dnorm(x-a)*beta_laplace(x, a)
-#     sx = np.sign(x)
-#     x = np.abs(x)
-#     xma = x / s - s * a
-#     zz = 1 / a * (1 / s * norm.pdf(xma)) * (1 / w + beta_laplace(x, s, a))
-#     zz[xma > 25] = 0.5
-#     mucor = norm.ppf(np.minimum(zz, 1))
-#     muhat = sx * np.maximum(0, xma - mucor) * s
+    # Work with the absolute value of x, and for x > 25 use the approximation
+    # to dnorm(x-a)*beta_laplace(x, a)
+    sx = torch.sign(x)
+    x = torch.abs(x)
+    xma = x / s - s * a
+    zz = 1 / a * (1 / s * torch.tensor(norm.pdf(xma, loc=0, scale=1))) * (1 / w + beta_laplace(x, s, a))
+    zz[xma > 25] = 0.5
+    mucor = torch.tensor(norm.ppf(torch.minimum(zz, torch.tensor(1))))
+    muhat = sx * torch.maximum(torch.tensor(0), xma - mucor) * s
     
-#     return muhat
+    return muhat
 
 def threshld(x, t, hard=True):
     """
@@ -482,43 +405,43 @@ def threshld(x, t, hard=True):
 
 
 
-# def wandafromx(x, s=1, universalthresh=True):
-#     """
-#     Find the marginal max lik estimators of w and a given standard  deviation s,
-#     using a bivariate optimization; If universalthresh=TRUE, the thresholds will 
-#     be upper bounded by universal threshold adjusted by standard deviation. 
-#     The threshold is constrained to lie between 0 and sqrt ( 2 log (n)) *   s. 
-#     Otherwise, threshold can take any nonnegative value;  If running R, 
-#     the routine optim is used; in S-PLUS the routine is nlminb.
-#     """
-#     # Range for thresholds
-#     if universalthresh:
-#         thi = np.sqrt(2 * np.log(len(x))) * s
-#     else:
-#         thi = np.inf
+def wandafromx(x, s=1, universalthresh=True):
+    """
+    Find the marginal max lik estimators of w and a given standard  deviation s,
+    using a bivariate optimization; If universalthresh=TRUE, the thresholds will 
+    be upper bounded by universal threshold adjusted by standard deviation. 
+    The threshold is constrained to lie between 0 and sqrt ( 2 log (n)) *   s. 
+    Otherwise, threshold can take any nonnegative value;  If running R, 
+    the routine optim is used; in S-PLUS the routine is nlminb.
+    """
+    # Range for thresholds
+    if universalthresh:
+        thi = torch.sqrt(2 * torch.log(torch.tensor(len(x)))) * s
+    else:
+        thi = torch.inf
 
-#     if isinstance(s, int):
-#         tlo = np.zeros(len(str(s)))
-#     else:
-#         tlo = np.zeros(len(s))
-#     lo = np.array([0, 0.04])
-#     hi = np.array([1, 3])
-#     startpar = np.array([0.5, 0.5])
+    if isinstance(s, int):
+        tlo = torch.zeros(len(str(s)))
+    else:
+        tlo = np.zeros(len(s))
+    lo = torch.tensor([0, 0.04])
+    hi = torch.tensor([1, 3])
+    startpar = torch.tensor([0.5, 0.5])
 
-#     if 'optim' in globals():
-#         result = minimize(negloglik_laplace, startpar, method='L-BFGS-B', bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
-#         uu = result.x
-#     else:
-#         result = minimize(negloglik_laplace, startpar, bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
-#         uu = result.x
+    if 'optim' in globals():
+        result = minimize(negloglik_laplace, startpar, method='L-BFGS-B', bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
+        uu = result.x
+    else:
+        result = minimize(negloglik_laplace, startpar, bounds=[(lo[0], hi[0]), (lo[1], hi[1])], args=(x, s, tlo, thi))
+        uu = result.x
 
-#     a = uu[1]
-#     wlo = wfromt(thi, s, a=a)
-#     whi = wfromt(tlo, s, a=a)
-#     wlo = np.max(wlo)
-#     whi = np.min(whi)
-#     w = uu[0] * (whi - wlo) + wlo
-#     return {'w': w, 'a': a}
+    a = uu[1]
+    wlo = wfromt(thi, s, a=a)
+    whi = wfromt(tlo, s, a=a)
+    wlo = torch.max(wlo)
+    whi = torch.min(whi)
+    w = uu[0] * (whi - wlo) + wlo
+    return {'w': w, 'a': a}
 
 def mad(x, center=None, constant=1.4826, na_rm=False, low=False, high=False):
     if na_rm:
@@ -550,119 +473,126 @@ def wfromt(tt, s=1, prior="laplace", a=0.5):
     prior - Specification of prior to be used; can be "cauchy" or "laplace".
     a - Scale factor if Laplace prior is used. Ignored if Cauchy prior is used.
     """
-    norm = dist_normal.Normal(0, 1)
+    tt = torch.tensor(tt, dtype=torch.float64)
     
     pr = prior[0:1]
     if pr == "l":
-        tma = tt / s - s * a
+        tma = torch.tensor(tt / s - s * a)
         wi = 1 / torch.abs(tma)
-        wi[tma > -35] = norm.cdf(tma[tma > -35])/norm.log_prob(tma[tma > -35]).exp()
+        wi[tma > -35] = torch.tensor(norm.cdf(tma[tma > -35], loc=0, scale=1)/norm.pdf(tma[tma > -35], loc=0, scale=1))
         wi = a * s * wi - beta_laplace(tt, s, a)
         
     if pr == "c":
-        dnz = norm.log_prob(tt).exp()
-        wi = 1 + (norm.cdf(tt) - tt * dnz - 1/2) / (torch.sqrt(torch.tensor(torch.pi/2)) * dnz * tt**2)
+        dnz = norm.pdf(tt, loc=0, scale=1)
+        wi = 1 + (torch.tensor(norm.cdf(tt, loc=0, scale=1)) - tt * dnz - 1/2) / (torch.sqrt(torch.tensor(torch.pi/2)) * dnz * tt**2)
         wi[~torch.isfinite(wi)] = 1
         
     return 1 / wi
 
 
-# def wfromx(x, s=1, prior="laplace", a=0.5, universalthresh=True):
-#     """
-#     Given the vector of data x and s (sd),
-#     find the value of w that zeroes S(w) in the
-#     range by successive bisection, carrying out nits harmonic bisections
-#     of the original interval between wlo and 1.  
+def wfromx(x, s=1, prior="laplace", a=0.5, universalthresh=True):
+    """
+    Given the vector of data x and s (sd),
+    find the value of w that zeroes S(w) in the
+    range by successive bisection, carrying out nits harmonic bisections
+    of the original interval between wlo and 1.  
   
-#     x - Vector of data.
-#     s - A single value or a vector of standard deviations if the Laplace prior is used. If
-#     a vector, must have the same length as x. Ignored if Cauchy prior is used.
-#     prior - Specification of prior to be used; can be "cauchy" or "laplace".
-#     a - Scale factor if Laplace prior is used. Ignored if Cauchy prior is used.
-#     universalthresh - If universalthresh = TRUE, the thresholds will be upper bounded by universal
-#     threshold; otherwise, the thresholds can take any non-negative values.
-#     """
-#     pr = prior[0:1]
+    x - Vector of data.
+    s - A single value or a vector of standard deviations if the Laplace prior is used. If
+    a vector, must have the same length as x. Ignored if Cauchy prior is used.
+    prior - Specification of prior to be used; can be "cauchy" or "laplace".
+    a - Scale factor if Laplace prior is used. Ignored if Cauchy prior is used.
+    universalthresh - If universalthresh = TRUE, the thresholds will be upper bounded by universal
+    threshold; otherwise, the thresholds can take any non-negative values.
+    """
+    s = torch.tensor(s, dtype=torch.float)
 
-#     if pr == "c":
-#         s = 1
+    pr = prior[0:1]
+    
+    if pr == "c":
+        s = torch.tensor(1, dtype=torch.float)
 
-#     if universalthresh:
-#         tuniv = np.sqrt(2 * np.log(len(x))) * s
-#         wlo = wfromt(tuniv, s, prior, a)
-#         wlo = np.max(wlo)
-#     else:
-#         wlo = 0
+    if universalthresh:
+        tuniv = torch.sqrt(2 * torch.log(torch.tensor(len(x)))) * s
+        wlo = wfromt(tuniv, s, prior, a)
+        wlo = torch.max(wlo)
+    else:
+        wlo = 0
 
-#     if pr == "l":
-#         beta = beta_laplace(x, s, a)
-#     elif pr == "c":
-#         beta = beta_cauchy(x)
+    if pr == "l":
+        beta = beta_laplace(x, s, a)
+    elif pr == "c":
+        beta = beta_cauchy(x)
 
-#     whi = 1
-#     beta = np.minimum(beta, 1e20)
+    whi = 1
+    beta = torch.minimum(beta, torch.tensor(1e20))
 
-#     shi = np.sum(beta / (1 + beta))
-#     if shi >= 0:
-#         shi =  1
+    shi = torch.sum(beta / (1 + beta))
 
-#     slo = np.sum(beta / (1 + wlo * beta))
-#     if slo <= 0:
-#         slo = wlo
+    if shi >= 0:
+        shi =  1
 
-#     for _ in range(1,31):
-#         wmid = np.sqrt(wlo * whi)
-#         smid = np.sum(beta / (1 + wmid * beta))
-#         if smid == 0:
-#             smid = wmid
-#         if smid > 0:
-#             wlo = wmid
-#         else:
-#             whi = wmid
-            
-#     return np.sqrt(wlo * whi)
+    slo = torch.sum(beta / (1 + wlo * beta))
+
+    if slo <= 0:
+        slo = wlo
+
+    for _ in range(1,31):
+        wmid = torch.sqrt(wlo * whi)
+        smid = torch.sum(beta / (1 + wmid * beta))
+        if smid == 0:
+            smid = wmid
+        if smid > 0:
+            wlo = wmid
+        else:
+            whi = wmid
+
+    return torch.sqrt(wlo * whi)
 
 
 
-# def wmonfromx(xd, prior="laplace", a=0.5,  tol=1e-08, maxits=20):
-#     """
-#     Find the monotone marginal maximum likelihood estimate of the
-#     mixing weights for the Laplace prior with parameter a.  It is
-#     assumed that the noise variance is equal to one.
-#     Find the beta values and the minimum weight
-#     Current version allows for standard deviation of 1 only.
-#     xd - A vector of data.
-#     prior - Specification of the prior to be used; can be cauchy or laplace.
-#     a - Scale parameter in prior if prior="laplace". Ignored if prior="cauchy".
-#     tol - Absolute tolerance to within which estimates are calculated.
-#     maxits - Maximum number of weighted least squares iterations within the calculation.
-#     """
-#     pr = prior[0:1]
-#     nx = len(xd)
-#     wmin = wfromt(np.sqrt(2 * np.log(len(xd))), prior=prior, a=a)
-#     winit = 1
-#     if pr == "l":
-#         beta = beta_laplace(xd, a=a)
-#     if pr == "c":
-#         beta = beta_cauchy(xd)
-#     """
-#     now conduct iterated weighted least squares isotone regression
-#     """
-#     w = np.repeat(winit, len(beta))
-#     for j in range(maxits):
-#         aa = w + 1 / beta
-#         ps = w + aa
-#         ww = 1 / aa ** 2
-#         wnew = isotone(ps, ww, increasing=False)
-#         wnew = np.maximum(wmin, wnew)
-#         wnew = np.minimum(1, wnew)
-#         zinc = np.max(np.abs(np.diff(wnew)))
-#         w = wnew
-#         if zinc < tol:
-#             return w
+def wmonfromx(xd, prior="laplace", a=0.5,  tol=1e-08, maxits=20):
+    """
+    Find the monotone marginal maximum likelihood estimate of the
+    mixing weights for the Laplace prior with parameter a.  It is
+    assumed that the noise variance is equal to one.
+    Find the beta values and the minimum weight
+    Current version allows for standard deviation of 1 only.
+    xd - A vector of data.
+    prior - Specification of the prior to be used; can be cauchy or laplace.
+    a - Scale parameter in prior if prior="laplace". Ignored if prior="cauchy".
+    tol - Absolute tolerance to within which estimates are calculated.
+    maxits - Maximum number of weighted least squares iterations within the calculation.
+    """
+    pr = prior[0:1]
 
-#     # warnings.filterwarnings("More iterations required to achieve convergence")
-#     return w
+    nx = len(xd)
+
+    wmin = wfromt(torch.sqrt(2 * torch.log(torch.tensor(len(xd)))), prior=prior, a=a)
+
+    winit = torch.tensor(1)
+
+    if pr == "l":
+        beta = beta_laplace(xd, a=a)
+    if pr == "c":
+        beta = beta_cauchy(xd)
+
+    w = winit.repeat_interleave(len(beta))
+
+    for j in range(maxits):
+        aa = w + 1 / beta
+        ps = w + aa
+        ww = 1 / aa ** 2
+        wnew = torch.tensor(isotone(ps, ww, increasing=False))
+        wnew = torch.maximum(wmin, wnew)
+        wnew = torch.minimum(torch.tensor(1), wnew)
+        zinc = torch.max(torch.abs(torch.diff(wnew)))
+        w = wnew
+        if zinc < tol:
+            return w
+
+    # warnings.filterwarnings("More iterations required to achieve convergence")
+    return w
 
 
 def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
@@ -693,7 +623,10 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     s = kwargs.get('s', 0) 
     w = kwargs.get('w', 0) 
     a = kwargs.get('a', 0) 
-    nz = zf.shape[0]
+    
+    if isinstance(zf, (int, float, str, bool)) :
+        nz = len(str(zf))
+    else : nz = zf.shape[0]
     
     tlo = torch.full((nz,), tlo, dtype=torch.float32)
     thi = torch.full((nz,), thi, dtype=torch.float32)
@@ -707,7 +640,7 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     for _ in range(nits):
         tmid = (tlo + thi) / 2
         if fun == cauchy_threshzero:
-            fmid = fun(tmid, s=s,w=w)
+            fmid = fun(tmid,w=w)
         elif fun == laplace_threshzero:
             fmid = fun(tmid, s=s,w=w,a=a)
         elif fun == beta_cauchy:
@@ -727,81 +660,82 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     return tsol
 
 
-# def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):
-#     """
+def tfromw(w, s=1, prior="laplace", bayesfac=False, a=0.5):
+    """
     
-#     This function finds the threshold or threshold vector corresponding to the given weight vector w and standard deviation s under the specified prior distribution.
-#     If bayesfac is set to True, it finds the Bayes factor thresholds; otherwise, it finds the posterior median thresholds.
-#     If the Laplace prior distribution is used, a specifies the value of the inverse scale (i.e., rate) parameter where a < 20.
+    This function finds the threshold or threshold vector corresponding to the given weight vector w and standard deviation s under the specified prior distribution.
+    If bayesfac is set to True, it finds the Bayes factor thresholds; otherwise, it finds the posterior median thresholds.
+    If the Laplace prior distribution is used, a specifies the value of the inverse scale (i.e., rate) parameter where a < 20.
 
-#     Parameters:
-#     w (array-like): Weight vector
-#     s (float): Standard deviation (default: 1)
-#     prior (str): Prior distribution (default: "laplace")
-#     bayesfac (bool): Whether to find the Bayes factor thresholds (default: False)
-#     a (float): Input value where a < 20 (default: 0.5)
+    Parameters:
+    w (array-like): Weight vector
+    s (float): Standard deviation (default: 1)
+    prior (str): Prior distribution (default: "laplace")
+    bayesfac (bool): Whether to find the Bayes factor thresholds (default: False)
+    a (float): Input value where a < 20 (default: 0.5)
 
-#     Returns:
-#     array-like: Threshold or threshold vector
-#     """
-#     pr = prior[0:1]
-#     if bayesfac:
-#         z = 1 / w - 2
-#         if pr == "l":
-#             if isinstance(s, (int, float, str, bool)) and len(w) >= len(str(s)):
-#                 zz = z
-#             elif isinstance(s, (int, float, str, bool)) and len(w) <len(str(s)):
-#                 zz = [z] * len(str(s))
-#             elif len(w) >= len(s):
-#                 zz = z
-#             elif len(w) < len(str(s)):
-#                 zz = [z] * len(s)
-#             tt = vecbinsolv(zz, beta_laplace, 0, 10, 30, s=s, w=w, a=a)
-#         elif pr == "c":
-#             tt = vecbinsolv(z, beta_cauchy, 0, 10, 30, w=w)
-#     else:
-#         z = 0
-#         if pr == "l":
-#             if isinstance(s, (int, float, str, bool)) and not isinstance(w, (int, float, str, bool)):
-#                 zz = np.array([0] * max(len(str(s)), len(w)))
-#             elif not isinstance(s, (int, float, str, bool)) and isinstance(w, (int, float, str, bool)):
-#                 zz = np.array([0] * max(len(s), len(str(w))))
-#             elif isinstance(s, (int, float, str, bool)) and isinstance(w, (int, float, str, bool)):
-#                 zz = np.array([0] * max(len(str(s)), len(str(w))))
-#             else:
-#                 zz = [0] * max(len(s), len(w))
-#             tt = vecbinsolv(zz, laplace_threshzero, 0, s * (25 + s * a), 30, s=s, w=w, a=a)
-#         elif pr == "c":
-#             tt = vecbinsolv(z, cauchy_threshzero, 0, 10, 30, w=w)
-#     return tt
-
-
-# def tfromx(x, s=1, prior="laplace", bayesfac=False, a=0.5, universalthresh=True):
-#     """
-#     Given the data x, the prior, and any other parameters, find the
-#     threshold corresponding to the marginal maximum likelihood
-#     estimator of the mixing weight.
+    Returns:
+    array-like: Threshold or threshold vector
+    """
+    pr = prior[0:1]
     
-#     x - Vector of data.
-#     s - A single value or a vector of standard deviations if the Laplace prior is used. If
-#     a vector, must have the same length as x. Ignored if Cauchy prior is used.
-#     prior - Specification of prior to be used; can be "cauchy" or "laplace".
-#     bayesfac - Specifies whether Bayes factor threshold should be used instead of posterior
-#     median threshold.
-#     a - Scale factor if Laplace prior is used. Ignored if Cauchy prior is used.
-#     universalthresh - If universalthresh = TRUE, the thresholds will be upper bounded by universal
-#     threshold; otherwise, the thresholds can take any non-negative values.
-#     """
-#     pr = prior[0:1]
-#     if pr == "c":
-#         s = 1
-#     if pr == "l" and np.isnan(a):
-#         wa = wandafromx(x, s, universalthresh)
-#         w = wa['w']
-#         a = wa['a']
-#     else:
-#         w = wfromx(x, s, prior=prior, a=a)
-#     return tfromw(w, s, prior=prior, bayesfac=bayesfac, a=a)[0]
+    if not isinstance(w, torch.Tensor):
+        w = torch.tensor(w)
+    if not isinstance(s, torch.Tensor):
+        s = torch.tensor(s)
+    if not isinstance(a, torch.Tensor):
+        a = torch.tensor(a)
+
+    if bayesfac:
+        z = 1 / w - 2
+        if pr == "l":
+            if w.dim() == 0 or len(w) >= len(s):
+                zz = z
+            else:
+                zz = z.repeat(len(s))
+            tt = vecbinsolv(zz, beta_laplace, 0, 10, s=s, a=a)
+        elif pr == "c":
+            tt = vecbinsolv(z, beta_cauchy, 0, 10)
+    else:
+        z = torch.tensor(0.0)
+        if pr == "l":
+            zz = torch.zeros(max(s.numel(), w.numel()))
+            upper_bound = s * (25 + s * a)
+            upper_bound = upper_bound.item()
+            tt = vecbinsolv(zz, laplace_threshzero, 0, upper_bound, s=s, w=w, a=a)
+        elif pr == "c":
+            tt = vecbinsolv(z, cauchy_threshzero, 0, 10, w=w)
+
+    return tt
+
+
+def tfromx(x, s=1, prior="laplace", bayesfac=False, a=0.5, universalthresh=True):
+    """
+    Given the data x, the prior, and any other parameters, find the
+    threshold corresponding to the marginal maximum likelihood
+    estimator of the mixing weight.
+    
+    x - Vector of data.
+    s - A single value or a vector of standard deviations if the Laplace prior is used. If
+    a vector, must have the same length as x. Ignored if Cauchy prior is used.
+    prior - Specification of prior to be used; can be "cauchy" or "laplace".
+    bayesfac - Specifies whether Bayes factor threshold should be used instead of posterior
+    median threshold.
+    a - Scale factor if Laplace prior is used. Ignored if Cauchy prior is used.
+    universalthresh - If universalthresh = TRUE, the thresholds will be upper bounded by universal
+    threshold; otherwise, the thresholds can take any non-negative values.
+    """
+    pr = prior[0:1]
+    a = torch.tensor(a)
+    if pr == "c":
+        s = 1
+    if pr == "l" and torch.isnan(a):
+        wa = wandafromx(x, s, universalthresh)
+        w = wa['w']
+        a = wa['a']
+    else:
+        w = wfromx(x, s, prior=prior, a=a)
+    return tfromw(w, s, prior=prior, bayesfac=bayesfac, a=a)[0]
 
 def wpost_laplace(w, x, s=1, a=0.5):
     # Calculate the posterior weight for non-zero effect
