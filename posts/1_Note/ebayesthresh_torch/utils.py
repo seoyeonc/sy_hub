@@ -5,6 +5,8 @@ import warnings
 import torch
 from scipy.stats import norm
 
+import numpy as np
+
 torch.set_printoptions(precision=15)
 
 
@@ -16,7 +18,7 @@ def beta_cauchy(x):
     Parameters:
     x - a real value or vector
     """
-    x = torch.tensor(x,dtype=torch.float64)
+    x = x.clone().detach().type(torch.float64)
 
     phix = torch.tensor(norm.pdf(x, loc=0, scale=1))
     
@@ -39,24 +41,23 @@ def beta_laplace(x, s=1, a=0.5):
     s - the value or vector of standard deviations; if vector, must have the same length as x
     a - the scale parameter of the Laplace distribution
     """
-    # Compute xpa and xma
-    x = torch.abs(x)
-
+    x = torch.abs(x).type(torch.float64)
     xpa = x / s + s * a
 
     xma = x / s - s * a
 
-    rat1 = torch.tensor(1 / xpa, dtype=torch.float64)
+    rat1 = 1 / xpa
 
-    rat1[xpa < 35] = torch.tensor(norm.cdf(-xpa[xpa < 35], loc=0, scale=1) / norm.pdf(xpa[xpa < 35], loc=0, scale=1))
+    xpa_np = np.array(xpa.detach())
+    rat1[xpa < 35] = torch.tensor(norm.cdf(-xpa_np[xpa_np < 35], loc=0, scale=1) / norm.pdf(xpa_np[xpa_np < 35], loc=0, scale=1))
 
-    rat2 = torch.tensor(1 / torch.abs(xma), dtype=torch.float64)
+    rat2 = 1 / torch.abs(xma)
 
-    xma = torch.where(xma > 35, torch.tensor(35.0), xma)
+    xma_np = np.array(xma.detach())
+    xma_np[xma_np > 35] = 35
+    rat2[xma > -35] = torch.tensor(norm.cdf(xma_np[xma_np > -35], loc=0, scale=1) / norm.pdf(xma_np[xma_np > -35], loc=0, scale=1))
 
-    rat2[xma > -35] = torch.tensor(norm.cdf(xma[xma > -35], loc=0, scale=1) / norm.pdf(xma[xma > -35], loc=0, scale=1))
-    
-    beta = (a * s) / 2 * (rat1 + rat2) - 1
+    beta = (a * s / 2) * (rat1 + rat2) - 1
     
     return beta
 
@@ -198,7 +199,7 @@ def isotone(x, wt=None, increasing=False):
         dx = torch.diff(x)
         nx = len(x)
 
-    jj = torch.zeros(nn, dtype=torch.int32)
+    jj = torch.zeros(nn, dtype=torch.float64)
     jj[ip] = 1
     z = x[torch.cumsum(jj, dim=0) - 1]
 
@@ -221,8 +222,8 @@ def laplace_threshzero(x, s=1, w=0.5, a=0.5):
     a = min(a, 20)
     
     xma = x / s - s * a
-    
-    z = z = torch.tensor(norm.cdf(xma, loc=0, scale=1)) - (1 / a) * (1 / s * torch.tensor(norm.pdf(xma, loc=0, scale=1))) * (1 / w + beta_laplace(x, s, a))
+    xma_np = np.array(xma.detach())
+    z = torch.tensor(norm.cdf(xma_np, loc=0, scale=1)) - (1 / a) * (1 / s * torch.tensor(norm.pdf(xma_np, loc=0, scale=1))) * (1 / w + beta_laplace(x, s, a))
     
     return z
 
@@ -309,7 +310,7 @@ def postmean_laplace(x, s=1, w=0.5, a=0.5):
 
     cp1 = torch.tensor(norm.cdf(xma, loc=0, scale=1))
     cp2 = torch.tensor(norm.cdf(-xpa, loc=0, scale=1))
-    ef = torch.exp(torch.minimum(2 * a * x, torch.tensor(100.0, dtype=torch.float32)))
+    ef = torch.exp(torch.minimum(2 * a * x, torch.tensor(100.0, dtype=torch.float64)))
     postmean_cond = x - a * s**2 * (2 * cp1 / (cp1 + ef * cp2) - 1)
     
     return sx * w_post * postmean_cond
@@ -381,9 +382,11 @@ def postmed_laplace(x, s=1, w=0.5, a=0.5):
     sx = torch.sign(x)
     x = torch.abs(x)
     xma = x / s - s * a
-    zz = 1 / a * (1 / s * torch.tensor(norm.pdf(xma, loc=0, scale=1))) * (1 / w + beta_laplace(x, s, a))
+    xma_np = np.array(xma.detach())
+    zz = 1 / a * (1 / s * torch.tensor(norm.pdf(xma_np, loc=0, scale=1))) * (1 / w + beta_laplace(x, s, a))
     zz[xma > 25] = 0.5
-    mucor = torch.tensor(norm.ppf(torch.minimum(zz, torch.tensor(1))))
+    tmp = np.array(torch.minimum(zz, torch.tensor(1)).detach())
+    mucor = torch.tensor(norm.ppf(tmp))
     muhat = sx * torch.maximum(torch.tensor(0), xma - mucor) * s
     
     return muhat
@@ -473,11 +476,11 @@ def wfromt(tt, s=1, prior="laplace", a=0.5):
     prior - Specification of prior to be used; can be "cauchy" or "laplace".
     a - Scale factor if Laplace prior is used. Ignored if Cauchy prior is used.
     """
-    tt = torch.tensor(tt, dtype=torch.float64)
+    tt = tt.clone().detach().type(torch.float64)
     
     pr = prior[0:1]
     if pr == "l":
-        tma = torch.tensor(tt / s - s * a)
+        tma = (tt / s - s * a).clone().detach().type(torch.float64)
         wi = 1 / torch.abs(tma)
         wi[tma > -35] = torch.tensor(norm.cdf(tma[tma > -35], loc=0, scale=1)/norm.pdf(tma[tma > -35], loc=0, scale=1))
         wi = a * s * wi - beta_laplace(tt, s, a)
@@ -505,7 +508,10 @@ def wfromx(x, s=1, prior="laplace", a=0.5, universalthresh=True):
     universalthresh - If universalthresh = TRUE, the thresholds will be upper bounded by universal
     threshold; otherwise, the thresholds can take any non-negative values.
     """
-    s = torch.tensor(s, dtype=torch.float)
+    if not isinstance(s, torch.Tensor):
+        s = torch.tensor(s, dtype=torch.float64)
+    
+    s = s.clone().detach()
 
     pr = prior[0:1]
     
@@ -624,12 +630,16 @@ def vecbinsolv(zf, fun, tlo, thi, nits=30, **kwargs):
     w = kwargs.get('w', 0) 
     a = kwargs.get('a', 0) 
     
-    if isinstance(zf, (int, float, str, bool)) :
+    if isinstance(zf, (int, float, str, bool)):
         nz = len(str(zf))
-    else : nz = zf.shape[0]
+    else:
+        if zf.ndimension() == 0: 
+            nz = len(str(zf.item()))
+        else:
+            nz = zf.shape[0] 
     
-    tlo = torch.full((nz,), tlo, dtype=torch.float32)
-    thi = torch.full((nz,), thi, dtype=torch.float32)
+    tlo = torch.full((nz,), tlo, dtype=torch.float64)
+    thi = torch.full((nz,), thi, dtype=torch.float64)
     
     if tlo.numel() != nz:
         raise ValueError("Lower constraint has to be homogeneous or have the same length as the number of functions.")
