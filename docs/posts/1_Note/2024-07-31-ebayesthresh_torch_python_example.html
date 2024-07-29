@@ -431,7 +431,7 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 </section>
 <section id="사용자-함수-정의" class="level1">
 <h1>사용자 함수 정의</h1>
-<div id="1ef400a6-212a-4c5d-8f31-fd1cc79306e7" class="cell" data-execution_count="140">
+<div id="1ef400a6-212a-4c5d-8f31-fd1cc79306e7" class="cell" data-execution_count="199">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ebayesthresh_nn(torch.nn.Module):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="op">**</span>kwargs):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -466,7 +466,7 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 <blockquote class="blockquote">
 <p>데이터</p>
 </blockquote>
-<div id="6e304b8b-318e-4f2c-ab71-06c01377dba9" class="cell" data-tags="[]" data-execution_count="141">
+<div id="6e304b8b-318e-4f2c-ab71-06c01377dba9" class="cell" data-tags="[]" data-execution_count="200">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">111</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
@@ -474,7 +474,7 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>noise  <span class="op">=</span> np.random.normal(size<span class="op">=</span>T)<span class="op">*</span><span class="fl">0.7</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ytrue <span class="op">+</span> noise</span></code></pre></div>
 </div>
-<div id="543cdf05-6349-45b7-8525-a3b0bd04c462" class="cell" data-execution_count="142">
+<div id="543cdf05-6349-45b7-8525-a3b0bd04c462" class="cell" data-execution_count="201">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.figure(figsize=(10,6))</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.plot(y,'.',color='r')</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.plot(ytrue,'-',color='b')</span></span></code></pre></div>
@@ -482,27 +482,27 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 <blockquote class="blockquote">
 <p>레이어 정의</p>
 </blockquote>
-<div id="a752424f-ae86-4eb9-a3e3-51fde3effcda" class="cell" data-execution_count="143">
+<div id="a752424f-ae86-4eb9-a3e3-51fde3effcda" class="cell" data-execution_count="202">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>thresh_layer <span class="op">=</span> ebayesthresh_nn()</span></code></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>Fourier Transform</p>
 </blockquote>
-<div id="18a6dd89-df8c-4332-a7c5-5cde5fed5f9d" class="cell" data-execution_count="144">
+<div id="18a6dd89-df8c-4332-a7c5-5cde5fed5f9d" class="cell" data-execution_count="203">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span></code></pre></div>
 </div>
-<div id="26817264-bcf0-4886-a212-4c2bc25acec4" class="cell" data-execution_count="145">
+<div id="26817264-bcf0-4886-a212-4c2bc25acec4" class="cell" data-execution_count="204">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ybar <span class="op">=</span> Psi.T <span class="op">@</span> y</span></code></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>Learn</p>
 </blockquote>
-<div id="b132d604-bf83-4c55-bf63-0ed8b1ca75ac" class="cell" data-execution_count="146">
+<div id="b132d604-bf83-4c55-bf63-0ed8b1ca75ac" class="cell" data-execution_count="205">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>power_threshed <span class="op">=</span> thresh_layer(ybar)</span></code></pre></div>
 </div>
-<div id="c0ada8de-34bc-4698-978c-ae949cb9507c" class="cell" data-execution_count="147">
+<div id="c0ada8de-34bc-4698-978c-ae949cb9507c" class="cell" data-execution_count="206">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>power_threshed</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="147">
+<div class="cell-output cell-output-display" data-execution_count="206">
 <pre><code>tensor([  6.606373838818255, -18.459911752393730,  -5.548808386322293,
           0.336519592469161,  -7.753497824494824,   2.122283659415806,
          -2.837627123184061,  -0.000000000000000,   0.000000000000000,
@@ -539,18 +539,79 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
          -0.000000000000000], dtype=torch.float64, grad_fn=&lt;MulBackward0&gt;)</code></pre>
 </div>
 </div>
-<div id="fed06a3c-4946-4938-a7bb-864a01ae4a07" class="cell" data-execution_count="148">
+<div id="fed06a3c-4946-4938-a7bb-864a01ae4a07" class="cell" data-execution_count="207">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>thresh_layer.a</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="148">
+<div class="cell-output cell-output-display" data-execution_count="207">
 <pre><code>tensor(0.500000000000000, requires_grad=True)</code></pre>
 </div>
 </div>
-<div id="8819fa2e-a590-42a8-bd66-d0ce6238256b" class="cell" data-execution_count="149">
+<div id="8819fa2e-a590-42a8-bd66-d0ce6238256b" class="cell" data-execution_count="208">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>thresh_layer.sdev</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="149">
+<div class="cell-output cell-output-display" data-execution_count="208">
 <pre><code>tensor([0.500000000000000])</code></pre>
 </div>
 </div>
+<div id="8cbdfafa-a5d1-418d-b4f2-d591e03ca820" class="cell" data-execution_count="209">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>gradient <span class="op">=</span> torch.ones(power_threshed.shape)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>power_threshed.backward(gradient<span class="op">=</span>gradient)</span></code></pre></div>
+</div>
+<div id="7dc0bc9b-f78a-423c-b4db-c8c76aa3c96e" class="cell" data-execution_count="210">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>power_threshed</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="210">
+<pre><code>tensor([  6.606373838818255, -18.459911752393730,  -5.548808386322293,
+          0.336519592469161,  -7.753497824494824,   2.122283659415806,
+         -2.837627123184061,  -0.000000000000000,   0.000000000000000,
+         -0.000000000000000,   1.390184407168864,   0.000000000000000,
+         -0.000000000000000,  -0.000000000000000,  -0.000000000000000,
+         -0.000000000000000,   0.781773544538979,  -0.000000000000000,
+         -0.000000000000000,  -0.000000000000000,  -0.000000000000000,
+         -0.632339497985928,   0.000000000000000,   0.000000000000000,
+         -0.000000000000000,  -0.000000000000000,   0.000000000000000,
+          0.000000000000000,  -0.000000000000000,   0.000000000000000,
+         -0.791569520349330,   0.000000000000000,  -0.696915272959604,
+         -0.000000000000000,  -1.430598198373583,   0.000000000000000,
+          0.942973224278802,   0.000000000000000,  -0.000000000000000,
+          0.000000000000000,  -0.000000000000000,  -0.000000000000000,
+          0.000000000000000,  -0.000000000000000,  -0.000000000000000,
+          0.000000000000000,  -0.000000000000000,  -0.000000000000000,
+         -0.000000000000000,   0.000000000000000,   0.000000000000000,
+         -0.864876475773310,  -0.000000000000000,   0.000000000000000,
+         -0.000000000000000,  -0.000000000000000,  -0.000000000000000,
+         -0.000000000000000,   0.000000000000000,   0.000000000000000,
+         -0.000000000000000,  -0.000000000000000,  -0.000000000000000,
+          0.000000000000000,  -0.000000000000000,   0.000000000000000,
+         -0.000000000000000,  -0.000000000000000,  -0.134906442023211,
+          0.000000000000000,   0.000000000000000,  -0.000000000000000,
+         -0.000000000000000,   0.000000000000000,   0.000000000000000,
+          0.077974319687101,   0.000000000000000,   0.000000000000000,
+          0.000000000000000,   0.000000000000000,   0.000000000000000,
+          0.000000000000000,   0.000000000000000,   0.374434118750229,
+          1.342773817293552,   0.060728811672864,   0.000000000000000,
+          1.244851651799166,  -0.000000000000000,   0.000000000000000,
+          0.000000000000000,  -0.000000000000000,  -0.000000000000000,
+          0.000000000000000,   0.000000000000000,   0.000000000000000,
+          0.430651230343156,   0.000000000000000,  -0.000000000000000,
+         -0.000000000000000], dtype=torch.float64, grad_fn=&lt;MulBackward0&gt;)</code></pre>
+</div>
+</div>
+<div id="2956bcfb-9ec2-48f4-97b7-865fd5e2a124" class="cell" data-execution_count="213">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>thresh_layer.a</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="213">
+<pre><code>tensor(0.500000000000000, requires_grad=True)</code></pre>
+</div>
+</div>
+<div id="e44c34df-3025-4851-98a1-749261794f53" class="cell" data-execution_count="214">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>thresh_layer.sdev</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="214">
+<pre><code>tensor([0.500000000000000])</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>왜 gradient가 필요한가? 비스칼라 텐서에 대해 Tensor.backward()를 호출할 때, 기울기를 계산하기 위해 명시적인 gradient 값을 필요로 합니다. 이는 미분할 함수의 기울기 방향과 크기를 정의하는 것입니다. 비유: 수학적으로 기울기를 계산할 때, 우리는 어떤 기준값을 가지고 기울기를 측정합니다. gradient는 이러한 기준값을 제공하여, PyTorch가 적절한 기울기를 계산할 수 있도록 돕습니다. 예시 없이 설명하기 스칼라 텐서: x = torch.tensor(3.0, requires_grad=True)와 같은 경우, x.backward()만 호출하면 기울기가 자동으로 계산됩니다. 왜냐하면 x는 단일 값이므로, 기울기를 계산할 기준이 명확합니다. 비스칼라 텐서: x = torch.randn(2, 2, requires_grad=True)와 같은 경우, x.backward()를 호출하려면 gradient 파라미터를 제공해야 합니다. 이 경우, gradient는 x의 모양과 같은 2x2 텐서여야 하며, 각 요소의 기울기 초기 값을 제공합니다. -GPT</p>
+</blockquote>
+<ul>
+<li>gradient (Tensor, optional) – The gradient of the function being differentiated w.r.t. self. This argument can be omitted if self is a scalar.<a href="https://pytorch.org/docs/stable/generated/torch.Tensor.backward.html">공식문서</a></li>
+</ul>
 
 
 </section>
