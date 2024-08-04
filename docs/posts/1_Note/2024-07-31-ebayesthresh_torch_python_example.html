@@ -331,10 +331,10 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 </section>
 <section id="import" class="level1">
 <h1>Import</h1>
-<div id="8e91f07f-c2c4-4144-a785-17cbbe6fc4a1" class="cell" data-execution_count="2">
+<div id="8e91f07f-c2c4-4144-a785-17cbbe6fc4a1" class="cell" data-execution_count="215">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ebayesthresh_torch</span></code></pre></div>
 </div>
-<div id="060756d2-f9da-4d09-b41a-0349789a643e" class="cell" data-execution_count="3">
+<div id="060756d2-f9da-4d09-b41a-0349789a643e" class="cell" data-execution_count="216">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn <span class="im">as</span> nn</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
@@ -344,7 +344,7 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 </section>
 <section id="예제를-위해-필요한-함수-정의" class="level1">
 <h1>예제를 위해 필요한 함수 정의</h1>
-<div id="3d581120-1fd4-42b0-9971-6a01d48f08fd" class="cell" data-execution_count="132">
+<div id="3d581120-1fd4-42b0-9971-6a01d48f08fd" class="cell" data-execution_count="217">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_Psi(T):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    W <span class="op">=</span> torch.zeros((T,T))</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(T):</span>
@@ -362,13 +362,13 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 </section>
 <section id="example" class="level1">
 <h1>Example</h1>
-<div id="b637a611-5a48-4ed5-997e-a4a3d5d4be11" class="cell" data-execution_count="133">
+<div id="b637a611-5a48-4ed5-997e-a4a3d5d4be11" class="cell" data-execution_count="218">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>y_true <span class="op">=</span> <span class="dv">3</span><span class="op">*</span>np.sin(<span class="fl">0.5</span><span class="op">*</span>x) <span class="op">+</span> <span class="fl">1.2</span><span class="op">*</span>np.sin(<span class="fl">1.0</span><span class="op">*</span>x) <span class="op">+</span> <span class="fl">0.5</span><span class="op">*</span>np.sin(<span class="fl">1.2</span><span class="op">*</span>x) </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> y_true <span class="op">+</span> np.random.normal(size<span class="op">=</span>T)</span></code></pre></div>
 </div>
-<div id="cba711be-7042-40fb-9144-93ef10c31b2f" class="cell" data-execution_count="134">
+<div id="cba711be-7042-40fb-9144-93ef10c31b2f" class="cell" data-execution_count="219">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'o'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y_true,<span class="st">'--'</span>)</span></code></pre></div>
@@ -380,17 +380,17 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 </div>
 </div>
 </div>
-<div id="c251b013-e121-484d-b6ce-2f5608623cbf" class="cell" data-execution_count="135">
+<div id="c251b013-e121-484d-b6ce-2f5608623cbf" class="cell" data-execution_count="220">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> np.array(y)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(f.shape)<span class="op">==</span><span class="dv">1</span>: f <span class="op">=</span> f.reshape(<span class="op">-</span><span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>T,N <span class="op">=</span> f.shape</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>fbar <span class="op">=</span> Psi.T <span class="op">@</span> f <span class="co"># apply dft </span></span></code></pre></div>
 </div>
-<div id="60b60b57-0056-443a-86cd-c91951ca04ae" class="cell" data-execution_count="136">
+<div id="60b60b57-0056-443a-86cd-c91951ca04ae" class="cell" data-execution_count="221">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fbar_threshed <span class="op">=</span> ebayesthresh_torch.ebayesthresh(fbar[:,<span class="dv">0</span>])</span></code></pre></div>
 </div>
-<div id="b8054b51-5636-4562-9711-f0b32b4c4353" class="cell" data-execution_count="137">
+<div id="b8054b51-5636-4562-9711-f0b32b4c4353" class="cell" data-execution_count="222">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)) <span class="co"># periodogram </span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)) </span></code></pre></div>
@@ -402,7 +402,7 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 </div>
 </div>
 </div>
-<div id="b1e34fec-7f51-4fa1-8568-971073ea8d81" class="cell" data-execution_count="138">
+<div id="b1e34fec-7f51-4fa1-8568-971073ea8d81" class="cell" data-execution_count="223">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) <span class="co"># periodogram </span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>plt.plot((fbar_threshed<span class="op">**</span><span class="dv">2</span>)[<span class="dv">20</span>:<span class="dv">80</span>]) </span></code></pre></div>
@@ -414,7 +414,7 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 </div>
 </div>
 </div>
-<div id="339c6b15-cf32-46ef-8419-8382066e9183" class="cell" data-execution_count="139">
+<div id="339c6b15-cf32-46ef-8419-8382066e9183" class="cell" data-execution_count="224">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>yhat <span class="op">=</span> Psi <span class="op">@</span> fbar_threshed.<span class="bu">float</span>() <span class="co"># inverse dft</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.plot(x,y,<span class="st">'.'</span>)</span>
@@ -431,7 +431,7 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 </section>
 <section id="사용자-함수-정의" class="level1">
 <h1>사용자 함수 정의</h1>
-<div id="1ef400a6-212a-4c5d-8f31-fd1cc79306e7" class="cell" data-execution_count="199">
+<div id="1ef400a6-212a-4c5d-8f31-fd1cc79306e7" class="cell" data-execution_count="225">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ebayesthresh_nn(torch.nn.Module):</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, <span class="op">**</span>kwargs):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>()</span>
@@ -466,7 +466,7 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 <blockquote class="blockquote">
 <p>데이터</p>
 </blockquote>
-<div id="6e304b8b-318e-4f2c-ab71-06c01377dba9" class="cell" data-tags="[]" data-execution_count="200">
+<div id="6e304b8b-318e-4f2c-ab71-06c01377dba9" class="cell" data-tags="[]" data-execution_count="226">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">111</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>T <span class="op">=</span> <span class="dv">100</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.arange(T)<span class="op">/</span>T <span class="op">*</span> <span class="dv">10</span></span>
@@ -474,7 +474,7 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 <span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>noise  <span class="op">=</span> np.random.normal(size<span class="op">=</span>T)<span class="op">*</span><span class="fl">0.7</span></span>
 <span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> ytrue <span class="op">+</span> noise</span></code></pre></div>
 </div>
-<div id="543cdf05-6349-45b7-8525-a3b0bd04c462" class="cell" data-execution_count="201">
+<div id="543cdf05-6349-45b7-8525-a3b0bd04c462" class="cell" data-execution_count="227">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.figure(figsize=(10,6))</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.plot(y,'.',color='r')</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.plot(ytrue,'-',color='b')</span></span></code></pre></div>
@@ -482,27 +482,27 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
 <blockquote class="blockquote">
 <p>레이어 정의</p>
 </blockquote>
-<div id="a752424f-ae86-4eb9-a3e3-51fde3effcda" class="cell" data-execution_count="202">
+<div id="a752424f-ae86-4eb9-a3e3-51fde3effcda" class="cell" data-execution_count="228">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>thresh_layer <span class="op">=</span> ebayesthresh_nn()</span></code></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>Fourier Transform</p>
 </blockquote>
-<div id="18a6dd89-df8c-4332-a7c5-5cde5fed5f9d" class="cell" data-execution_count="203">
+<div id="18a6dd89-df8c-4332-a7c5-5cde5fed5f9d" class="cell" data-execution_count="229">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Psi <span class="op">=</span> make_Psi(T)</span></code></pre></div>
 </div>
-<div id="26817264-bcf0-4886-a212-4c2bc25acec4" class="cell" data-execution_count="204">
+<div id="26817264-bcf0-4886-a212-4c2bc25acec4" class="cell" data-execution_count="230">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ybar <span class="op">=</span> Psi.T <span class="op">@</span> y</span></code></pre></div>
 </div>
 <blockquote class="blockquote">
 <p>Learn</p>
 </blockquote>
-<div id="b132d604-bf83-4c55-bf63-0ed8b1ca75ac" class="cell" data-execution_count="205">
+<div id="b132d604-bf83-4c55-bf63-0ed8b1ca75ac" class="cell" data-execution_count="231">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>power_threshed <span class="op">=</span> thresh_layer(ybar)</span></code></pre></div>
 </div>
-<div id="c0ada8de-34bc-4698-978c-ae949cb9507c" class="cell" data-execution_count="206">
+<div id="c0ada8de-34bc-4698-978c-ae949cb9507c" class="cell" data-execution_count="232">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>power_threshed</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="206">
+<div class="cell-output cell-output-display" data-execution_count="232">
 <pre><code>tensor([  6.606373838818255, -18.459911752393730,  -5.548808386322293,
           0.336519592469161,  -7.753497824494824,   2.122283659415806,
          -2.837627123184061,  -0.000000000000000,   0.000000000000000,
@@ -539,25 +539,25 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
          -0.000000000000000], dtype=torch.float64, grad_fn=&lt;MulBackward0&gt;)</code></pre>
 </div>
 </div>
-<div id="fed06a3c-4946-4938-a7bb-864a01ae4a07" class="cell" data-execution_count="207">
+<div id="fed06a3c-4946-4938-a7bb-864a01ae4a07" class="cell" data-execution_count="233">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>thresh_layer.a</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="207">
+<div class="cell-output cell-output-display" data-execution_count="233">
 <pre><code>tensor(0.500000000000000, requires_grad=True)</code></pre>
 </div>
 </div>
-<div id="8819fa2e-a590-42a8-bd66-d0ce6238256b" class="cell" data-execution_count="208">
+<div id="8819fa2e-a590-42a8-bd66-d0ce6238256b" class="cell" data-execution_count="234">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>thresh_layer.sdev</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="208">
+<div class="cell-output cell-output-display" data-execution_count="234">
 <pre><code>tensor([0.500000000000000])</code></pre>
 </div>
 </div>
-<div id="8cbdfafa-a5d1-418d-b4f2-d591e03ca820" class="cell" data-execution_count="209">
+<div id="8cbdfafa-a5d1-418d-b4f2-d591e03ca820" class="cell" data-execution_count="235">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>gradient <span class="op">=</span> torch.ones(power_threshed.shape)</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>power_threshed.backward(gradient<span class="op">=</span>gradient)</span></code></pre></div>
 </div>
-<div id="7dc0bc9b-f78a-423c-b4db-c8c76aa3c96e" class="cell" data-execution_count="210">
+<div id="7dc0bc9b-f78a-423c-b4db-c8c76aa3c96e" class="cell" data-execution_count="236">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>power_threshed</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="210">
+<div class="cell-output cell-output-display" data-execution_count="236">
 <pre><code>tensor([  6.606373838818255, -18.459911752393730,  -5.548808386322293,
           0.336519592469161,  -7.753497824494824,   2.122283659415806,
          -2.837627123184061,  -0.000000000000000,   0.000000000000000,
@@ -594,15 +594,15 @@ Requirement already satisfied: mpmath&gt;=0.19 in /home/csy/anaconda3/envs/temp_
          -0.000000000000000], dtype=torch.float64, grad_fn=&lt;MulBackward0&gt;)</code></pre>
 </div>
 </div>
-<div id="2956bcfb-9ec2-48f4-97b7-865fd5e2a124" class="cell" data-execution_count="213">
+<div id="2956bcfb-9ec2-48f4-97b7-865fd5e2a124" class="cell" data-execution_count="237">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>thresh_layer.a</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="213">
+<div class="cell-output cell-output-display" data-execution_count="237">
 <pre><code>tensor(0.500000000000000, requires_grad=True)</code></pre>
 </div>
 </div>
-<div id="e44c34df-3025-4851-98a1-749261794f53" class="cell" data-execution_count="214">
+<div id="e44c34df-3025-4851-98a1-749261794f53" class="cell" data-execution_count="238">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>thresh_layer.sdev</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="214">
+<div class="cell-output cell-output-display" data-execution_count="238">
 <pre><code>tensor([0.500000000000000])</code></pre>
 </div>
 </div>
