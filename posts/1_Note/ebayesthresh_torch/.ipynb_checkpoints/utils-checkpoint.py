@@ -65,9 +65,9 @@ def ebayesthresh(x, prior="laplace", a=0.5, bayesfac=False, sdev=None, verbose=F
     pr = prior[0:1]
 
     if sdev is None: sdev = torch.tensor([float('nan')])
-    else: sdev = torch.tensor([sdev])
+    else: sdev = torch.tensor(sdev*1.0,requires_grad=True)
     
-    if len(sdev) == 1:
+    if len([sdev.item()]) == 1:
         if stabadjustment is not None:
             raise ValueError("Argument stabadjustment is not applicable when variances are homogeneous.")
         if torch.isnan(torch.tensor(sdev)):

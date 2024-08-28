@@ -11,7 +11,7 @@ setup(
     packages=['ebayesthresh'],
     zip_safe=False,
     install_requires=[
-        'torch==2.0.1',
+        'torch>=2.0.1',
         'scipy==1.10.1',
         'statsmodels==0.14.0']
 )
