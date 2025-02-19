@@ -2,6 +2,7 @@
   {
     "listing": "/1_note.html",
     "items": [
+      "/posts/1_Note/2025-02-19-Tableau.html",
       "/posts/1_Note/2024-07-31-EbayesThresh_Torch.html",
       "/posts/1_Note/2024-07-31-ebayesthresh_torch_python_example.html",
       "/posts/1_Note/2024-06-01-EbayesThresh_Python.html",
@@ -49,24 +50,9 @@
     ]
   },
   {
-    "listing": "/2_kan.html",
-    "items": [
-      "/posts/2_Studies/KAN/2024-07-13-KAN_other_examples.html",
-      "/posts/2_Studies/KAN/2024-07-11-KAN.html"
-    ]
-  },
-  {
-    "listing": "/2_stgcn.html",
-    "items": [
-      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_8.html",
-      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_3 regression.html",
-      "/posts/2_Studies/STGCN/2024-02-18-self_consistency_gyubin_choi.html",
-      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html"
-    ]
-  },
-  {
     "listing": "/index.html",
     "items": [
+      "/posts/1_Note/2025-02-19-Tableau.html",
       "/posts/1_Note/2024-07-31-EbayesThresh_Torch.html",
       "/posts/1_Note/2024-07-31-ebayesthresh_torch_python_example.html",
       "/posts/2_Studies/KAN/2024-07-13-KAN_other_examples.html",
@@ -121,6 +107,22 @@
       "/posts/1_Note/2022-04-03-(5주차) 4월2일.html",
       "/posts/1_Note/2022-03-28-(4주차) 3월28일.html",
       "/posts/1_Note/2019-04-26-퓨리에 변환.html"
+    ]
+  },
+  {
+    "listing": "/2_stgcn.html",
+    "items": [
+      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_8.html",
+      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_3 regression.html",
+      "/posts/2_Studies/STGCN/2024-02-18-self_consistency_gyubin_choi.html",
+      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html"
+    ]
+  },
+  {
+    "listing": "/2_kan.html",
+    "items": [
+      "/posts/2_Studies/KAN/2024-07-13-KAN_other_examples.html",
+      "/posts/2_Studies/KAN/2024-07-11-KAN.html"
     ]
   },
   {
