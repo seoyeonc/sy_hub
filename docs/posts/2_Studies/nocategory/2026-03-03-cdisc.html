@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="SEOYEON CHOI">
+<meta name="dcterms.date" content="2026-03-03">
 
-<title>Seoyeon’s Blog</title>
+<title>Seoyeon’s Blog - [CDISC] example data set</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,10 +22,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../../../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -66,6 +102,9 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 <link rel="stylesheet" href="../../../styles.css">
@@ -142,7 +181,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[CDISC] example data set</li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -152,7 +191,35 @@ ul.task-list li input[type="checkbox"] {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">[CDISC] example data set</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>SEOYEON CHOI </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">March 3, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -215,8 +282,15 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="Untitled.out.ipynb" download="Untitled.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">Import</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2026-03-03-cdisc.out.ipynb" download="2026-03-03-cdisc.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
 
@@ -224,7 +298,281 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+<p><a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master">refer</a></p>
+<section id="import" class="level1">
+<h1>Import</h1>
+<div id="b288a599-f3fa-4be4-a013-5a0582dc52bb" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyreadstat</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code></pre></div>
+</div>
+</section>
+<section id="data" class="level1">
+<h1>Data</h1>
+<p><a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/blob/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets/dataguide.pdf">adamdata guide</a></p>
+<div id="743fe4f4-2dd4-4481-a9b8-17ce814deba0" class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_folder <span class="op">=</span> Path(<span class="st">"../../../../delete/adam/"</span>)</span></code></pre></div>
+</div>
+<div id="0b7d64cb-6acc-455e-957d-448d6fef4b2f" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adae.xpt"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbc.xpt"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbh.xpt"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbhy.xpt"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adqsadas.xpt"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adqscibc.xpt"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adqsnpix.xpt"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adsl.xpt"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adtte.xpt"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"advs.xpt"</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
+</div>
+<div id="95fe7627-bbbe-482b-b492-3ac5c48dafad" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {}</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> {}</span></code></pre></div>
+</div>
+<div id="3962fd9b-3f38-44a3-8c99-06eb6b01d304" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> files:</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    full_path <span class="op">=</span> data_folder <span class="op">/</span> f</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    df, meta <span class="op">=</span> pyreadstat.read_xport(full_path)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    key <span class="op">=</span> f.replace(<span class="st">".xpt"</span>,<span class="st">""</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    data[key] <span class="op">=</span> df</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    metadata[key] <span class="op">=</span> meta</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>f<span class="sc">}</span><span class="ss"> loaded:"</span>, df.shape)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>adae.xpt loaded: (1191, 55)
+adlbc.xpt loaded: (74264, 46)
+adlbh.xpt loaded: (49932, 46)
+adlbhy.xpt loaded: (9954, 43)
+adqsadas.xpt loaded: (12463, 40)
+adqscibc.xpt loaded: (730, 36)
+adqsnpix.xpt loaded: (31140, 41)
+adsl.xpt loaded: (254, 48)
+adtte.xpt loaded: (254, 26)
+advs.xpt loaded: (32139, 34)</code></pre>
+</div>
+</div>
+<div id="f7a7577c-8836-492e-b54f-66d890713e60" class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adsl'</span>].head()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<div>
 
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">STUDYID</th>
+<th data-quarto-table-cell-role="th">USUBJID</th>
+<th data-quarto-table-cell-role="th">SUBJID</th>
+<th data-quarto-table-cell-role="th">SITEID</th>
+<th data-quarto-table-cell-role="th">SITEGR1</th>
+<th data-quarto-table-cell-role="th">ARM</th>
+<th data-quarto-table-cell-role="th">TRT01P</th>
+<th data-quarto-table-cell-role="th">TRT01PN</th>
+<th data-quarto-table-cell-role="th">TRT01A</th>
+<th data-quarto-table-cell-role="th">TRT01AN</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">DURDIS</th>
+<th data-quarto-table-cell-role="th">DURDSGR1</th>
+<th data-quarto-table-cell-role="th">VISIT1DT</th>
+<th data-quarto-table-cell-role="th">RFSTDTC</th>
+<th data-quarto-table-cell-role="th">RFENDTC</th>
+<th data-quarto-table-cell-role="th">VISNUMEN</th>
+<th data-quarto-table-cell-role="th">RFENDT</th>
+<th data-quarto-table-cell-role="th">DCDECOD</th>
+<th data-quarto-table-cell-role="th">DCREASCD</th>
+<th data-quarto-table-cell-role="th">MMSETOT</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>CDISCPILOT01</td>
+<td>01-701-1015</td>
+<td>1015</td>
+<td>701</td>
+<td>701</td>
+<td>Placebo</td>
+<td>Placebo</td>
+<td>0.0</td>
+<td>Placebo</td>
+<td>0.0</td>
+<td>...</td>
+<td>43.9</td>
+<td>&gt;=12</td>
+<td>2013-12-26</td>
+<td>2014-01-02</td>
+<td>2014-07-02</td>
+<td>12.0</td>
+<td>2014-07-02</td>
+<td>COMPLETED</td>
+<td>Completed</td>
+<td>23.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>CDISCPILOT01</td>
+<td>01-701-1023</td>
+<td>1023</td>
+<td>701</td>
+<td>701</td>
+<td>Placebo</td>
+<td>Placebo</td>
+<td>0.0</td>
+<td>Placebo</td>
+<td>0.0</td>
+<td>...</td>
+<td>76.4</td>
+<td>&gt;=12</td>
+<td>2012-07-22</td>
+<td>2012-08-05</td>
+<td>2012-09-02</td>
+<td>5.0</td>
+<td>2012-09-02</td>
+<td>ADVERSE EVENT</td>
+<td>Adverse Event</td>
+<td>23.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>CDISCPILOT01</td>
+<td>01-701-1028</td>
+<td>1028</td>
+<td>701</td>
+<td>701</td>
+<td>Xanomeline High Dose</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+<td>...</td>
+<td>42.8</td>
+<td>&gt;=12</td>
+<td>2013-07-11</td>
+<td>2013-07-19</td>
+<td>2014-01-14</td>
+<td>12.0</td>
+<td>2014-01-14</td>
+<td>COMPLETED</td>
+<td>Completed</td>
+<td>23.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>CDISCPILOT01</td>
+<td>01-701-1033</td>
+<td>1033</td>
+<td>701</td>
+<td>701</td>
+<td>Xanomeline Low Dose</td>
+<td>Xanomeline Low Dose</td>
+<td>54.0</td>
+<td>Xanomeline Low Dose</td>
+<td>54.0</td>
+<td>...</td>
+<td>55.3</td>
+<td>&gt;=12</td>
+<td>2014-03-10</td>
+<td>2014-03-18</td>
+<td>2014-04-14</td>
+<td>5.0</td>
+<td>2014-04-14</td>
+<td>STUDY TERMINATED BY SPONSOR</td>
+<td>Sponsor Decision</td>
+<td>23.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>CDISCPILOT01</td>
+<td>01-701-1034</td>
+<td>1034</td>
+<td>701</td>
+<td>701</td>
+<td>Xanomeline High Dose</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+<td>...</td>
+<td>32.9</td>
+<td>&gt;=12</td>
+<td>2014-06-24</td>
+<td>2014-07-01</td>
+<td>2014-12-30</td>
+<td>12.0</td>
+<td>2014-12-30</td>
+<td>COMPLETED</td>
+<td>Completed</td>
+<td>21.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>5 rows × 48 columns</p>
+</div>
+</div>
+</div>
+<div id="80cbcdeb-8b30-4075-96ba-b37df8c16cb5" class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adsl'</span>].column_names_to_labels</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>{'STUDYID': 'Study Identifier',
+ 'USUBJID': 'Unique Subject Identifier',
+ 'SUBJID': 'Subject Identifier for the Study',
+ 'SITEID': 'Study Site Identifier',
+ 'SITEGR1': 'Pooled Site Group 1',
+ 'ARM': 'Description of Planned Arm',
+ 'TRT01P': 'Planned Treatment for Period 01',
+ 'TRT01PN': 'Planned Treatment for Period 01 (N)',
+ 'TRT01A': 'Actual Treatment for Period 01',
+ 'TRT01AN': 'Actual Treatment for Period 01 (N)',
+ 'TRTSDT': 'Date of First Exposure to Treatment',
+ 'TRTEDT': 'Date of Last Exposure to Treatment',
+ 'TRTDUR': 'Duration of Treatment (days)',
+ 'AVGDD': 'Avg Daily Dose (as planned)',
+ 'CUMDOSE': 'Cumulative Dose (as planned)',
+ 'AGE': 'Age',
+ 'AGEGR1': 'Pooled Age Group 1',
+ 'AGEGR1N': 'Pooled Age Group 1 (N)',
+ 'AGEU': 'Age Units',
+ 'RACE': 'Race',
+ 'RACEN': 'Race (N)',
+ 'SEX': 'Sex',
+ 'ETHNIC': 'Ethnicity',
+ 'SAFFL': 'Safety Population Flag',
+ 'ITTFL': 'Intent-To-Treat Population Flag',
+ 'EFFFL': 'Efficacy Population Flag',
+ 'COMP8FL': 'Completers of Week 8 Population Flag',
+ 'COMP16FL': 'Completers of Week 16 Population Flag',
+ 'COMP24FL': 'Completers of Week 24 Population Flag',
+ 'DISCONFL': 'Did the Subject Discontinue the Study?',
+ 'DSRAEFL': 'Discontinued due to AE?',
+ 'DTHFL': 'Subject Died?',
+ 'BMIBL': 'Baseline BMI (kg/m^2)',
+ 'BMIBLGR1': 'Pooled Baseline BMI Group 1',
+ 'HEIGHTBL': 'Baseline Height (cm)',
+ 'WEIGHTBL': 'Baseline Weight (kg)',
+ 'EDUCLVL': 'Years of Education',
+ 'DISONSDT': 'Date of Onset of Disease',
+ 'DURDIS': 'Duration of Disease (Months)',
+ 'DURDSGR1': 'Pooled Disease Duration Group 1',
+ 'VISIT1DT': 'Date of Visit 1',
+ 'RFSTDTC': 'Subject Reference Start Date/Time',
+ 'RFENDTC': 'Subject Reference End Date/Time',
+ 'VISNUMEN': 'End of Trt Visit (Vis 12 or Early Term.)',
+ 'RFENDT': 'Date of Discontinuation/Completion',
+ 'DCDECOD': 'Standardized Disposition Term',
+ 'DCREASCD': 'Reason for Discontinuation',
+ 'MMSETOT': 'MMSE Total'}</code></pre>
+</div>
+</div>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
