@@ -9,7 +9,7 @@
 <meta name="author" content="SEOYEON CHOI">
 <meta name="dcterms.date" content="2026-03-03">
 
-<title>Seoyeon’s Blog - [CDISC] example data set</title>
+<title>Seoyeon’s Blog - [CDISC] ADaM Analysis Data Model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -181,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[CDISC] example data set</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">[CDISC] ADaM Analysis Data Model</li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -194,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">[CDISC] example data set</h1>
+      <h1 class="title">[CDISC] ADaM Analysis Data Model</h1>
                       </div>
   </div>
     
@@ -286,8 +286,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#import" id="toc-import" class="nav-link active" data-scroll-target="#import">Import</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
+  <li><a href="#adam-analysis-data-model" id="toc-adam-analysis-data-model" class="nav-link active" data-scroll-target="#adam-analysis-data-model">ADaM Analysis Data Model</a></li>
+  <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
+  <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import">Import</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a>
+  <ul class="collapse">
+  <li><a href="#adsl" id="toc-adsl" class="nav-link" data-scroll-target="#adsl">ADSL</a></li>
+  </ul></li>
+  <li><a href="#table" id="toc-table" class="nav-link" data-scroll-target="#table">Table</a>
+  <ul class="collapse">
+  <li><a href="#table-11-1.-demographic-characteristics" id="toc-table-11-1.-demographic-characteristics" class="nav-link" data-scroll-target="#table-11-1.-demographic-characteristics">Table 11-1. Demographic Characteristics</a></li>
+  </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2026-03-03-cdisc.out.ipynb" download="2026-03-03-cdisc.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -298,10 +307,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p><a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master">refer</a></p>
+<section id="adam-analysis-data-model" class="level1">
+<h1>ADaM Analysis Data Model</h1>
+<blockquote class="blockquote">
+<p>The <strong>ADaM (Analysis Data Model)</strong> dataset is a CDISC standard for organizing clinical trial data to support statistical analysis, regulatory reporting, and traceability. Derived from <strong>SDTM (Study Data Tabulation Model)</strong> data, ADaM datasets are designed to be <strong>“analysis-ready”</strong> for generating tables, listings, and figures. They are required by <strong>regulatory agencies like the FDA and PMDA</strong>.</p>
+</blockquote>
+</section>
+<section id="reference" class="level1">
+<h1>Reference</h1>
+<ul>
+<li><a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/tree/master">Data</a>
+<ul>
+<li><a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/blob/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets/dataguide.pdf">adamdata guide</a></li>
+</ul></li>
+<li><a href="https://www.lexjansen.com/pharmasug/2012/DS/PharmaSUG-2012-DS18.pdf">Explanation</a></li>
+</ul>
+</section>
 <section id="import" class="level1">
 <h1>Import</h1>
-<div id="b288a599-f3fa-4be4-a013-5a0582dc52bb" class="cell" data-execution_count="32">
+<div id="b288a599-f3fa-4be4-a013-5a0582dc52bb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyreadstat</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -310,11 +334,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data" class="level1">
 <h1>Data</h1>
-<p><a href="https://github.com/cdisc-org/sdtm-adam-pilot-project/blob/master/updated-pilot-submission-package/900172/m5/datasets/cdiscpilot01/analysis/adam/datasets/dataguide.pdf">adamdata guide</a></p>
-<div id="743fe4f4-2dd4-4481-a9b8-17ce814deba0" class="cell" data-execution_count="33">
+<div id="743fe4f4-2dd4-4481-a9b8-17ce814deba0" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_folder <span class="op">=</span> Path(<span class="st">"../../../../delete/adam/"</span>)</span></code></pre></div>
 </div>
-<div id="0b7d64cb-6acc-455e-957d-448d6fef4b2f" class="cell" data-execution_count="34">
+<div id="0b7d64cb-6acc-455e-957d-448d6fef4b2f" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adae.xpt"</span>,</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbc.xpt"</span>,</span>
@@ -328,11 +351,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"advs.xpt"</span></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
 </div>
-<div id="95fe7627-bbbe-482b-b492-3ac5c48dafad" class="cell" data-execution_count="42">
+<div id="95fe7627-bbbe-482b-b492-3ac5c48dafad" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {}</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> {}</span></code></pre></div>
 </div>
-<div id="3962fd9b-3f38-44a3-8c99-06eb6b01d304" class="cell" data-execution_count="43">
+<div id="3962fd9b-3f38-44a3-8c99-06eb6b01d304" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> files:</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    full_path <span class="op">=</span> data_folder <span class="op">/</span> f</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    df, meta <span class="op">=</span> pyreadstat.read_xport(full_path)</span>
@@ -356,9 +379,14 @@ adtte.xpt loaded: (254, 26)
 advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 </div>
-<div id="f7a7577c-8836-492e-b54f-66d890713e60" class="cell" data-execution_count="44">
+<section id="adsl" class="level2">
+<h2 class="anchored" data-anchor-id="adsl">ADSL</h2>
+<blockquote class="blockquote">
+<p>The first is ADSL (Subject Level Analysis Dataset), a one-recordper-subject structure that contains subject-level attributes. Because of its structure, it can be merged onto any other clinical dataset, including other ADaM datasets and SDTM datasets.</p>
+</blockquote>
+<div id="f7a7577c-8836-492e-b54f-66d890713e60" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adsl'</span>].head()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="44">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
 
@@ -517,9 +545,9 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 </div>
 </div>
-<div id="80cbcdeb-8b30-4075-96ba-b37df8c16cb5" class="cell" data-execution_count="45">
+<div id="80cbcdeb-8b30-4075-96ba-b37df8c16cb5" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adsl'</span>].column_names_to_labels</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="45">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>{'STUDYID': 'Study Identifier',
  'USUBJID': 'Unique Subject Identifier',
  'SUBJID': 'Subject Identifier for the Study',
@@ -570,8 +598,531 @@ advs.xpt loaded: (32139, 34)</code></pre>
  'MMSETOT': 'MMSE Total'}</code></pre>
 </div>
 </div>
+</section>
+</section>
+<section id="table" class="level1">
+<h1>Table</h1>
+<section id="table-11-1.-demographic-characteristics" class="level2">
+<h2 class="anchored" data-anchor-id="table-11-1.-demographic-characteristics">Table 11-1. Demographic Characteristics</h2>
+<div id="dc7975bf-f806-47a9-9975-a4ea07b7f2e8" class="cell" data-execution_count="289">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> data[<span class="st">'adsl'</span>].copy()</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>data2[<span class="st">'RACE2'</span>] <span class="op">=</span> data2[<span class="st">'RACE'</span>].replace({</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'WHITE'</span>: <span class="st">'White/Caucasian'</span>,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'BLACK OR AFRICAN AMERICAN'</span>: <span class="st">'Other'</span>,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AMERICAN INDIAN OR ALASKA NATIVE'</span>: <span class="st">'Other'</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+</div>
+<div id="2d1aafee-9b31-4660-8738-5fb399bf520b" class="cell" data-execution_count="290">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>n_counts <span class="op">=</span> data[<span class="st">'adsl'</span>].groupby(<span class="st">'ARM'</span>)[<span class="st">'USUBJID'</span>].nunique()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>total_n <span class="op">=</span> data[<span class="st">'adsl'</span>][<span class="st">'USUBJID'</span>].nunique()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>n_counts[<span class="st">'Total'</span>] <span class="op">=</span> total_n</span></code></pre></div>
+</div>
+<div id="5b6716c2-070c-4a1e-b960-64062dbaf0d6" class="cell" data-execution_count="291">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_min_max_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>,</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                       mean_digits<span class="op">=</span><span class="dv">1</span>, minmax_digits<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Create Mean (Min–Max) summary table by group + Total</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">    df : DataFrame</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">    var : str (continuous variable name)</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">    group_col : str (grouping column, default='ARM')</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">    total_label : str</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">    mean_digits : int (decimal places for mean)</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">    minmax_digits : int (decimal places for min/max)</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ARM별 요약</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    arm_summary <span class="op">=</span> (</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>        df.groupby(group_col)[var]</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Total 요약</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    total_summary <span class="op">=</span> (</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>        df[var]</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>          .to_frame().T</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    total_summary.index <span class="op">=</span> [total_label]</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 합치기</span></span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    final <span class="op">=</span> pd.concat([arm_summary, total_summary])</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 포맷팅</span></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    final[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>] <span class="op">=</span> (</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>        final[<span class="st">'mean'</span>].<span class="bu">round</span>(mean_digits).astype(<span class="bu">str</span>)</span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'min'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">"–"</span></span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'max'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> final[[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>]]</span></code></pre></div>
+</div>
+<div id="16a8f4fa-5abf-4c01-9478-71fbc45a397a" class="cell" data-execution_count="292">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorical_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>, pct_digits<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Create n (%) table for categorical variable by group + Total</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 교차표</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    ct <span class="op">=</span> pd.crosstab(df[var], df[group_col])</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ARM 기준 %</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> ct.div(ct.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    formatted <span class="op">=</span> (</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Total 계산</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    total_n <span class="op">=</span> df.shape[<span class="dv">0</span>]</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    total_ct <span class="op">=</span> df[var].value_counts()</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    total_pct <span class="op">=</span> total_ct <span class="op">/</span> total_n <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    formatted[total_label] <span class="op">=</span> (</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        total_ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        total_pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>    formatted.columns.name <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> formatted</span></code></pre></div>
+</div>
+<div id="3b7749fe-fd8a-47f5-a059-2286ae6bee95" class="cell" data-execution_count="313">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>Table11_1 <span class="op">=</span> pd.concat([mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'AGE'</span>).T,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data[<span class="st">'adsl'</span>],<span class="st">'SEX'</span>).reset_index().set_index(<span class="st">'SEX'</span>).reindex([<span class="st">'M'</span>, <span class="st">'F'</span>]),</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data2,<span class="st">'RACE2'</span>).reset_index().set_index(<span class="st">'RACE2'</span>).reindex([<span class="st">'White/Caucasian'</span>, <span class="st">'Other'</span>]),</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                    mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'EDUCLVL'</span>).T,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                   ])</span></code></pre></div>
+</div>
+<div id="f2014872-9cfd-47eb-984e-e65952a76c1e" class="cell" data-execution_count="314">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>Table11_1.columns <span class="op">=</span> [</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> (n=</span><span class="sc">{</span>n_counts[col]<span class="sc">}</span><span class="ss">)"</span> <span class="cf">if</span> col <span class="kw">in</span> n_counts.index</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> col</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> final2.columns</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
+</div>
+<div id="85a1b91a-15a6-4995-9b6a-b73327a96c8a" class="cell" data-execution_count="315">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Table11_1</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="315">
+<div>
 
 
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Placebo (n=86)</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose (n=84)</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose (n=84)</th>
+<th data-quarto-table-cell-role="th">Total (n=254)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AGE Mean (Min–Max)</td>
+<td>75.2 (52–89)</td>
+<td>74.4 (56–88)</td>
+<td>75.7 (51–88)</td>
+<td>75.1 (51–89)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">M</td>
+<td>33 (38%)</td>
+<td>44 (52%)</td>
+<td>34 (40%)</td>
+<td>111 (44%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">F</td>
+<td>53 (62%)</td>
+<td>40 (48%)</td>
+<td>50 (60%)</td>
+<td>143 (56%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">White/Caucasian</td>
+<td>78 (91%)</td>
+<td>74 (88%)</td>
+<td>78 (93%)</td>
+<td>230 (91%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Other</td>
+<td>8 (9%)</td>
+<td>10 (12%)</td>
+<td>6 (7%)</td>
+<td>24 (9%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">EDUCLVL Mean (Min–Max)</td>
+<td>12.6 (6–21)</td>
+<td>12.5 (6–20)</td>
+<td>13.2 (3–24)</td>
+<td>12.8 (3–24)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="267872a2-5074-4e73-bb46-7b7e5982554b" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adqscibc'</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">STUDYID</th>
+<th data-quarto-table-cell-role="th">SITEID</th>
+<th data-quarto-table-cell-role="th">SITEGR1</th>
+<th data-quarto-table-cell-role="th">USUBJID</th>
+<th data-quarto-table-cell-role="th">TRTSDT</th>
+<th data-quarto-table-cell-role="th">TRTEDT</th>
+<th data-quarto-table-cell-role="th">TRTP</th>
+<th data-quarto-table-cell-role="th">TRTPN</th>
+<th data-quarto-table-cell-role="th">AGE</th>
+<th data-quarto-table-cell-role="th">AGEGR1</th>
+<th data-quarto-table-cell-role="th">...</th>
+<th data-quarto-table-cell-role="th">AVAL</th>
+<th data-quarto-table-cell-role="th">ANL01FL</th>
+<th data-quarto-table-cell-role="th">DTYPE</th>
+<th data-quarto-table-cell-role="th">AWRANGE</th>
+<th data-quarto-table-cell-role="th">AWTARGET</th>
+<th data-quarto-table-cell-role="th">AWTDIFF</th>
+<th data-quarto-table-cell-role="th">AWLO</th>
+<th data-quarto-table-cell-role="th">AWHI</th>
+<th data-quarto-table-cell-role="th">AWU</th>
+<th data-quarto-table-cell-role="th">QSSEQ</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>CDISCPILOT01</td>
+<td>701</td>
+<td>701</td>
+<td>01-701-1015</td>
+<td>2014-01-02</td>
+<td>2014-07-02</td>
+<td>Placebo</td>
+<td>0.0</td>
+<td>63.0</td>
+<td>&lt;65</td>
+<td>...</td>
+<td>4.0</td>
+<td>Y</td>
+<td></td>
+<td>2-84</td>
+<td>56.0</td>
+<td>7.0</td>
+<td>2.0</td>
+<td>84.0</td>
+<td>DAYS</td>
+<td>6001.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>CDISCPILOT01</td>
+<td>701</td>
+<td>701</td>
+<td>01-701-1015</td>
+<td>2014-01-02</td>
+<td>2014-07-02</td>
+<td>Placebo</td>
+<td>0.0</td>
+<td>63.0</td>
+<td>&lt;65</td>
+<td>...</td>
+<td>4.0</td>
+<td>Y</td>
+<td></td>
+<td>85-140</td>
+<td>112.0</td>
+<td>14.0</td>
+<td>85.0</td>
+<td>140.0</td>
+<td>DAYS</td>
+<td>6002.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>CDISCPILOT01</td>
+<td>701</td>
+<td>701</td>
+<td>01-701-1015</td>
+<td>2014-01-02</td>
+<td>2014-07-02</td>
+<td>Placebo</td>
+<td>0.0</td>
+<td>63.0</td>
+<td>&lt;65</td>
+<td>...</td>
+<td>4.0</td>
+<td>Y</td>
+<td></td>
+<td>&gt;140</td>
+<td>168.0</td>
+<td>0.0</td>
+<td>141.0</td>
+<td>NaN</td>
+<td>DAYS</td>
+<td>6003.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>CDISCPILOT01</td>
+<td>701</td>
+<td>701</td>
+<td>01-701-1023</td>
+<td>2012-08-05</td>
+<td>2012-09-01</td>
+<td>Placebo</td>
+<td>0.0</td>
+<td>64.0</td>
+<td>&lt;65</td>
+<td>...</td>
+<td>3.0</td>
+<td>Y</td>
+<td></td>
+<td>2-84</td>
+<td>56.0</td>
+<td>27.0</td>
+<td>2.0</td>
+<td>84.0</td>
+<td>DAYS</td>
+<td>6001.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>CDISCPILOT01</td>
+<td>701</td>
+<td>701</td>
+<td>01-701-1023</td>
+<td>2012-08-05</td>
+<td>2012-09-01</td>
+<td>Placebo</td>
+<td>0.0</td>
+<td>64.0</td>
+<td>&lt;65</td>
+<td>...</td>
+<td>3.0</td>
+<td>Y</td>
+<td>LOCF</td>
+<td>85-140</td>
+<td>112.0</td>
+<td>83.0</td>
+<td>85.0</td>
+<td>140.0</td>
+<td>DAYS</td>
+<td>6001.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">725</td>
+<td>CDISCPILOT01</td>
+<td>718</td>
+<td>718</td>
+<td>01-718-1371</td>
+<td>2013-04-26</td>
+<td>2013-08-01</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+<td>69.0</td>
+<td>65-80</td>
+<td>...</td>
+<td>4.0</td>
+<td>Y</td>
+<td></td>
+<td>85-140</td>
+<td>112.0</td>
+<td>7.0</td>
+<td>85.0</td>
+<td>140.0</td>
+<td>DAYS</td>
+<td>6001.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">726</td>
+<td>CDISCPILOT01</td>
+<td>718</td>
+<td>718</td>
+<td>01-718-1371</td>
+<td>2013-04-26</td>
+<td>2013-08-01</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+<td>69.0</td>
+<td>65-80</td>
+<td>...</td>
+<td>4.0</td>
+<td>Y</td>
+<td>LOCF</td>
+<td>&gt;140</td>
+<td>168.0</td>
+<td>63.0</td>
+<td>141.0</td>
+<td>NaN</td>
+<td>DAYS</td>
+<td>6001.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">727</td>
+<td>CDISCPILOT01</td>
+<td>718</td>
+<td>718</td>
+<td>01-718-1427</td>
+<td>2012-12-17</td>
+<td>2013-02-11</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+<td>74.0</td>
+<td>65-80</td>
+<td>...</td>
+<td>4.0</td>
+<td>Y</td>
+<td></td>
+<td>2-84</td>
+<td>56.0</td>
+<td>8.0</td>
+<td>2.0</td>
+<td>84.0</td>
+<td>DAYS</td>
+<td>6001.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">728</td>
+<td>CDISCPILOT01</td>
+<td>718</td>
+<td>718</td>
+<td>01-718-1427</td>
+<td>2012-12-17</td>
+<td>2013-02-11</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+<td>74.0</td>
+<td>65-80</td>
+<td>...</td>
+<td>4.0</td>
+<td>Y</td>
+<td>LOCF</td>
+<td>85-140</td>
+<td>112.0</td>
+<td>48.0</td>
+<td>85.0</td>
+<td>140.0</td>
+<td>DAYS</td>
+<td>6001.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">729</td>
+<td>CDISCPILOT01</td>
+<td>718</td>
+<td>718</td>
+<td>01-718-1427</td>
+<td>2012-12-17</td>
+<td>2013-02-11</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+<td>74.0</td>
+<td>65-80</td>
+<td>...</td>
+<td>4.0</td>
+<td>Y</td>
+<td></td>
+<td>&gt;140</td>
+<td>168.0</td>
+<td>1.0</td>
+<td>141.0</td>
+<td>NaN</td>
+<td>DAYS</td>
+<td>6002.0</td>
+</tr>
+</tbody>
+</table>
+
+<p>730 rows × 36 columns</p>
+</div>
+</div>
+</div>
+<div id="ccf6cdfa-6db1-47bf-b6b0-c04472e129c8" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adqscibc'</span>].column_names_to_labels</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<pre><code>{'STUDYID': 'Study Identifier',
+ 'SITEID': 'Study Site Identifier',
+ 'SITEGR1': 'Pooled Site Group 1',
+ 'USUBJID': 'Unique Subject Identifier',
+ 'TRTSDT': 'Date of First Exposure to Treatment',
+ 'TRTEDT': 'Date of Last Exposure to Treatment',
+ 'TRTP': 'Planned Treatment',
+ 'TRTPN': 'Planned Treatment (N)',
+ 'AGE': 'Age',
+ 'AGEGR1': 'Pooled Age Group 1',
+ 'AGEGR1N': 'Pooled Age Group 1 (N)',
+ 'RACE': 'Race',
+ 'RACEN': 'Race (N)',
+ 'SEX': 'Sex',
+ 'ITTFL': 'Intent-to-Treat Population Flag',
+ 'EFFFL': 'Efficacy Population Flag',
+ 'COMP24FL': 'Completers of Week 24 Population Flag',
+ 'AVISIT': 'Analysis Visit',
+ 'AVISITN': 'Analysis Visit (N)',
+ 'VISIT': 'Visit Name',
+ 'VISITNUM': 'Visit Number',
+ 'ADY': 'Analysis Relative Day',
+ 'ADT': 'Analysis Date',
+ 'PARAMCD': 'Parameter Code',
+ 'PARAM': 'Parameter',
+ 'PARAMN': 'Parameter (N)',
+ 'AVAL': 'Analysis Value',
+ 'ANL01FL': 'Analysis Record Flag 01',
+ 'DTYPE': 'Derivation Type',
+ 'AWRANGE': 'Analysis Window Valid Relative Range',
+ 'AWTARGET': 'Analysis Window Target',
+ 'AWTDIFF': 'Analysis Window Diff from Target',
+ 'AWLO': 'Analysis Window Beginning Timepoint',
+ 'AWHI': 'Analysis Window Ending Timepoint',
+ 'AWU': 'Analysis Window Unit',
+ 'QSSEQ': 'Sequence Number'}</code></pre>
+</div>
+</div>
+<p>9.7.1.1. Endpoints - The primary efficacy endpoints were: - Alzheimer’s Disease Assessment Scale - Cognitive Subscale, total of 11 items [ADAS-Cog (11)] at Week 24 - Video-referenced Clinician’s Interview-based Impression of Change (CIBIC+) at Week 24 - The secondary efficacy endpoints were: - Alzheimer’s Disease Assessment Scale - Cognitive Subscale, total of 11 items [ADAS-Cog (11)] at Weeks 8 and 16 - Video-referenced Clinician’s Interview-based Impression of Change (CIBIC+) at Weeks 8 and 16 - Mean Revised Neuropsychiatric Inventory (NPI-X) from Week 4 to Week 24 - The safety endpoints were: - Adverse events - Vital signs (weight, standing and supine blood pressure, heart rate) - Laboratory evaluations</p>
+
+
+</section>
 </section>
 
 </main> <!-- /main -->

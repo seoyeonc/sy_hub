@@ -50,9 +50,24 @@
     ]
   },
   {
+    "listing": "/2_kan.html",
+    "items": [
+      "/posts/2_Studies/KAN/2024-07-13-KAN_other_examples.html",
+      "/posts/2_Studies/KAN/2024-07-11-KAN.html"
+    ]
+  },
+  {
+    "listing": "/2_stgcn.html",
+    "items": [
+      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_8.html",
+      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_3 regression.html",
+      "/posts/2_Studies/STGCN/2024-02-18-self_consistency_gyubin_choi.html",
+      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html"
+    ]
+  },
+  {
     "listing": "/index.html",
     "items": [
-      "/posts/2_Studies/nocategory/2026-03-03-survival analysis.html",
       "/posts/2_Studies/nocategory/2026-03-03-cdisc.html",
       "/posts/2_Studies/nocategory/2025-03-06-정리.html",
       "/posts/1_Note/2025-02-19-Tableau.html",
@@ -113,26 +128,9 @@
     ]
   },
   {
-    "listing": "/2_stgcn.html",
-    "items": [
-      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_8.html",
-      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_3 regression.html",
-      "/posts/2_Studies/STGCN/2024-02-18-self_consistency_gyubin_choi.html",
-      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html"
-    ]
-  },
-  {
-    "listing": "/2_kan.html",
-    "items": [
-      "/posts/2_Studies/KAN/2024-07-13-KAN_other_examples.html",
-      "/posts/2_Studies/KAN/2024-07-11-KAN.html"
-    ]
-  },
-  {
     "listing": "/2_nocategory.html",
     "items": [
       "/posts/2_Studies/nocategory/2026-03-03-cdisc.html",
-      "/posts/2_Studies/nocategory/2026-03-03-survival analysis.html",
       "/posts/2_Studies/nocategory/2025-03-06-정리.html"
     ]
   },
