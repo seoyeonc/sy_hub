@@ -293,6 +293,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a>
   <ul class="collapse">
   <li><a href="#analysis-populations" id="toc-analysis-populations" class="nav-link" data-scroll-target="#analysis-populations">Analysis Populations</a></li>
+  <li><a href="#demographics-and-baseline-characteristics" id="toc-demographics-and-baseline-characteristics" class="nav-link" data-scroll-target="#demographics-and-baseline-characteristics">Demographics and Baseline Characteristics</a></li>
+  <li><a href="#treatment-exposure" id="toc-treatment-exposure" class="nav-link" data-scroll-target="#treatment-exposure">Treatment Exposure</a></li>
   <li><a href="#adsl" id="toc-adsl" class="nav-link" data-scroll-target="#adsl">ADSL</a></li>
   </ul></li>
   <li><a href="#table" id="toc-table" class="nav-link" data-scroll-target="#table">Table</a>
@@ -364,62 +366,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="import" class="level1">
 <h1>Import</h1>
-<div id="b288a599-f3fa-4be4-a013-5a0582dc52bb" class="cell" data-execution_count="1">
-<details class="code-fold">
-<summary>Code</summary>
+<div id="b288a599-f3fa-4be4-a013-5a0582dc52bb" class="cell" data-execution_count="353">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyreadstat</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span></code></pre></div>
-</details>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyreadstat</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span></code></pre></div>
 </div>
 </section>
 <section id="data" class="level1">
 <h1>Data</h1>
-<div id="743fe4f4-2dd4-4481-a9b8-17ce814deba0" class="cell" data-execution_count="2">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_folder <span class="op">=</span> Path(<span class="st">"../../../../delete/adam/"</span>)</span></code></pre></div>
-</details>
-</div>
-<div id="0b7d64cb-6acc-455e-957d-448d6fef4b2f" class="cell" data-execution_count="3">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adae.xpt"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbc.xpt"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbh.xpt"</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbhy.xpt"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adqsadas.xpt"</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adqscibc.xpt"</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adqsnpix.xpt"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adsl.xpt"</span>,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adtte.xpt"</span>,</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"advs.xpt"</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
-</details>
+<div id="2308a50d-8fea-4b0a-85aa-6135051e2931" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_folder <span class="op">=</span> Path(<span class="st">"../../../../delete/adam/"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adae.xpt"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbc.xpt"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbh.xpt"</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adlbhy.xpt"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adqsadas.xpt"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adqscibc.xpt"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adqsnpix.xpt"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adsl.xpt"</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"adtte.xpt"</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"advs.xpt"</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
 </div>
 <div id="95fe7627-bbbe-482b-b492-3ac5c48dafad" class="cell" data-execution_count="4">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {}</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> {}</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {}</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> {}</span></code></pre></div>
 </div>
 <div id="3962fd9b-3f38-44a3-8c99-06eb6b01d304" class="cell" data-execution_count="5">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> files:</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    full_path <span class="op">=</span> data_folder <span class="op">/</span> f</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    df, meta <span class="op">=</span> pyreadstat.read_xport(full_path)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    key <span class="op">=</span> f.replace(<span class="st">".xpt"</span>,<span class="st">""</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    data[key] <span class="op">=</span> df</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    metadata[key] <span class="op">=</span> meta</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>f<span class="sc">}</span><span class="ss"> loaded:"</span>, df.shape)</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> files:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    full_path <span class="op">=</span> data_folder <span class="op">/</span> f</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    df, meta <span class="op">=</span> pyreadstat.read_xport(full_path)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    key <span class="op">=</span> f.replace(<span class="st">".xpt"</span>,<span class="st">""</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    data[key] <span class="op">=</span> df</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    metadata[key] <span class="op">=</span> meta</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>f<span class="sc">}</span><span class="ss"> loaded:"</span>, df.shape)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>adae.xpt loaded: (1191, 55)
 adlbc.xpt loaded: (74264, 46)
@@ -441,41 +430,39 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <ul>
 <li>Population Summary</li>
 </ul>
-<div id="fd96b74d-ba93-430f-b511-20239a7e701d" class="cell" data-execution_count="340">
+<div id="fd96b74d-ba93-430f-b511-20239a7e701d" class="cell" data-execution_count="342">
 <details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data[<span class="st">'adsl'</span>]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>arm <span class="op">=</span> <span class="st">'ARM'</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> [<span class="st">'SAFFL'</span>,<span class="st">'ITTFL'</span>,<span class="st">'EFFFL'</span>]</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> []</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> flag <span class="kw">in</span> rows:</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    ct <span class="op">=</span> pd.crosstab(df[flag], df[arm]).reindex([<span class="st">'Y'</span>,<span class="st">'N'</span>], fill_value<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> ct.div(ct.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    formatted <span class="op">=</span> ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span> pct.<span class="bu">round</span>(<span class="dv">1</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    total_ct <span class="op">=</span> df[flag].value_counts().reindex([<span class="st">'Y'</span>,<span class="st">'N'</span>], fill_value<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    total_pct <span class="op">=</span> total_ct <span class="op">/</span> <span class="bu">len</span>(df) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    formatted[<span class="st">'Total'</span>] <span class="op">=</span> (</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        total_ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        total_pct.<span class="bu">round</span>(<span class="dv">0</span>).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    formatted.index <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>flag<span class="sc">}</span><span class="ss">=</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> formatted.index]</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    result.append(formatted)</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> pd.concat(result)</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>table</span></code></pre></div>
+<summary>Show Python code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data[<span class="st">'adsl'</span>]</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> [<span class="st">'SAFFL'</span>,<span class="st">'ITTFL'</span>,<span class="st">'EFFFL'</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> []</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> flag <span class="kw">in</span> rows:</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    ct <span class="op">=</span> pd.crosstab(df[flag], df[<span class="st">'ARM'</span>]).reindex([<span class="st">'Y'</span>,<span class="st">'N'</span>], fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> ct.div(ct.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    formatted <span class="op">=</span> ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span> pct.<span class="bu">round</span>(<span class="dv">1</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    total_ct <span class="op">=</span> df[flag].value_counts().reindex([<span class="st">'Y'</span>,<span class="st">'N'</span>], fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    total_pct <span class="op">=</span> total_ct <span class="op">/</span> <span class="bu">len</span>(df) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    formatted[<span class="st">'Total'</span>] <span class="op">=</span> (</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        total_ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>        total_pct.<span class="bu">round</span>(<span class="dv">0</span>).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    formatted.index <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>flag<span class="sc">}</span><span class="ss">=</span><span class="sc">{</span>i<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> i <span class="kw">in</span> formatted.index]</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    result.append(formatted)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>table <span class="op">=</span> pd.concat(result)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>table</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="340">
+<div class="cell-output cell-output-display" data-execution_count="342">
 <div>
 
 
@@ -538,42 +525,434 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 </div>
 </div>
-<ul>
-<li>Demographics and Baseline Characteristics
+</section>
+<section id="demographics-and-baseline-characteristics" class="level2">
+<h2 class="anchored" data-anchor-id="demographics-and-baseline-characteristics">Demographics and Baseline Characteristics</h2>
 <ul>
 <li>Describe comparability of treatment groups</li>
-</ul></li>
 </ul>
-<div id="886b4ebb-bb8f-437c-9d13-df5d7aab9d77" class="cell">
+<div id="d4c803e3-d567-4e4a-825b-73dd1d25de10" class="cell" data-execution_count="365">
 <details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>arm 별로</span></code></pre></div>
+<summary>Show Python code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _fmt_p(p):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(p):</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">""</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p <span class="op">&lt;</span> <span class="fl">0.001</span>:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"&lt;0.001"</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>p<span class="sc">:.3f}</span><span class="ss">"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _mean_sd(x):</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> pd.to_numeric(x, errors<span class="op">=</span><span class="st">"coerce"</span>).dropna()</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(x) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">""</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">.</span>mean()<span class="sc">:.1f}</span><span class="ss"> (</span><span class="sc">{</span>x<span class="sc">.</span>std(ddof<span class="op">=</span><span class="dv">1</span>)<span class="sc">:.1f}</span><span class="ss">)"</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _n_pct(n, denom):</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> denom <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> (0.0%)"</span></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="dv">100</span><span class="op">*</span>n<span class="op">/</span>denom<span class="sc">:.1f}</span><span class="ss">%)"</span></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _shapiro_p(x):</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> pd.to_numeric(x, errors<span class="op">=</span><span class="st">"coerce"</span>).dropna()</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&lt;</span> <span class="dv">3</span>:</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.nan</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> n <span class="op">&gt;</span> <span class="dv">5000</span>:</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> x.sample(<span class="dv">5000</span>, random_state<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> stats.shapiro(x).pvalue</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.nan</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _cont_pvalue(df, var, arm_col, normality<span class="op">=</span><span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.05</span>):</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    groups <span class="op">=</span> []</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _, sub <span class="kw">in</span> df.groupby(arm_col, dropna<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> pd.to_numeric(sub[var], errors<span class="op">=</span><span class="st">"coerce"</span>).dropna().values</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>        groups.append(x)</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    nonempty <span class="op">=</span> [g <span class="cf">for</span> g <span class="kw">in</span> groups <span class="cf">if</span> <span class="bu">len</span>(g) <span class="op">&gt;</span> <span class="dv">0</span>]</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(nonempty) <span class="op">&lt;</span> <span class="dv">2</span>:</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (np.nan, <span class="st">"NA"</span>)</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> normality:</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>        ps <span class="op">=</span> []</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _, sub <span class="kw">in</span> df.groupby(arm_col, dropna<span class="op">=</span><span class="va">False</span>):</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>            ps.append(_shapiro_p(sub[var]))</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>        <span class="co"># any NaN (too small n) or any p&lt;=alpha -&gt; Kruskal (conservative)</span></span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">any</span>(pd.isna(p) <span class="cf">for</span> p <span class="kw">in</span> ps) <span class="kw">or</span> <span class="bu">any</span>(p <span class="op">&lt;=</span> alpha <span class="cf">for</span> p <span class="kw">in</span> ps):</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> (stats.kruskal(<span class="op">*</span>nonempty).pvalue, <span class="st">"Kruskal–Wallis"</span>)</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> (np.nan, <span class="st">"Kruskal–Wallis"</span>)</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>            <span class="cf">try</span>:</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> (stats.f_oneway(<span class="op">*</span>nonempty).pvalue, <span class="st">"ANOVA"</span>)</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>            <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>                <span class="cf">return</span> (np.nan, <span class="st">"ANOVA"</span>)</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> (stats.f_oneway(<span class="op">*</span>nonempty).pvalue, <span class="st">"ANOVA"</span>)</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> (np.nan, <span class="st">"ANOVA"</span>)</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _cat_pvalue(df, var, arm_col):</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>    tab <span class="op">=</span> pd.crosstab(df[var], df[arm_col], dropna<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> tab.shape[<span class="dv">0</span>] <span class="op">&lt;</span> <span class="dv">2</span> <span class="kw">or</span> tab.shape[<span class="dv">1</span>] <span class="op">&lt;</span> <span class="dv">2</span>:</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (np.nan, <span class="st">"NA"</span>)</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>        chi2, p, dof, expected <span class="op">=</span> stats.chi2_contingency(tab.values, correction<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (np.nan, <span class="st">"Chi-square"</span>)</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2x2 and any expected &lt;5 -&gt; Fisher</span></span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> tab.shape <span class="op">==</span> (<span class="dv">2</span>, <span class="dv">2</span>) <span class="kw">and</span> (expected <span class="op">&lt;</span> <span class="dv">5</span>).<span class="bu">any</span>():</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>            _, p_f <span class="op">=</span> stats.fisher_exact(tab.values)</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> (p_f, <span class="st">"Fisher’s exact"</span>)</span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> (p, <span class="st">"Chi-square"</span>)</span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (p, <span class="st">"Chi-square"</span>)</span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_table1_adsl(</span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>    arm_col<span class="op">=</span><span class="st">"ARM"</span>,</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>    continuous<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>    categorical<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>    normality_for_continuous<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>    include_missing_row<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>    pct_decimals<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a>    cont_decimals<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a>    continuous <span class="op">=</span> continuous <span class="kw">or</span> []</span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a>    categorical <span class="op">=</span> categorical <span class="kw">or</span> []</span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> labels <span class="kw">or</span> {}</span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ARM levels in appearance order (keep NaN last)</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a>    arm_levels <span class="op">=</span> df[arm_col].dropna().unique().tolist()</span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> df[arm_col].isna().<span class="bu">any</span>():</span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a>        arm_levels <span class="op">=</span> arm_levels <span class="op">+</span> [np.nan]</span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>    total_n <span class="op">=</span> <span class="bu">len</span>(df)</span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Footnote letters by test</span></span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a>    test_to_letter <span class="op">=</span> {}</span>
+<span id="cb7-114"><a href="#cb7-114" aria-hidden="true" tabindex="-1"></a>    letters <span class="op">=</span> <span class="bu">list</span>(<span class="st">"123456789"</span>)</span>
+<span id="cb7-115"><a href="#cb7-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-116"><a href="#cb7-116" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _letter_for(test_name):</span>
+<span id="cb7-117"><a href="#cb7-117" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> test_name <span class="kw">in</span> (<span class="st">""</span>, <span class="st">"NA"</span>, <span class="va">None</span>):</span>
+<span id="cb7-118"><a href="#cb7-118" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">""</span></span>
+<span id="cb7-119"><a href="#cb7-119" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> test_name <span class="kw">not</span> <span class="kw">in</span> test_to_letter:</span>
+<span id="cb7-120"><a href="#cb7-120" aria-hidden="true" tabindex="-1"></a>            test_to_letter[test_name] <span class="op">=</span> letters[<span class="bu">len</span>(test_to_letter)]</span>
+<span id="cb7-121"><a href="#cb7-121" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> test_to_letter[test_name]</span>
+<span id="cb7-122"><a href="#cb7-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-123"><a href="#cb7-123" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _get_arm_subset(arm):</span>
+<span id="cb7-124"><a href="#cb7-124" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pd.isna(arm):</span>
+<span id="cb7-125"><a href="#cb7-125" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> df[df[arm_col].isna()]</span>
+<span id="cb7-126"><a href="#cb7-126" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> df[df[arm_col] <span class="op">==</span> arm]</span>
+<span id="cb7-127"><a href="#cb7-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-128"><a href="#cb7-128" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _n_pct_fmt(n, denom):</span>
+<span id="cb7-129"><a href="#cb7-129" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> denom <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb7-130"><a href="#cb7-130" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> (0.</span><span class="sc">{</span> <span class="st">'0'</span><span class="op">*</span>pct_decimals <span class="sc">}</span><span class="ss">%)"</span> <span class="cf">if</span> pct_decimals <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="ss">f"</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> (0%)"</span></span>
+<span id="cb7-131"><a href="#cb7-131" aria-hidden="true" tabindex="-1"></a>        fmt <span class="op">=</span> <span class="ss">f"</span><span class="ch">{{</span><span class="ss">:.</span><span class="sc">{</span>pct_decimals<span class="sc">}</span><span class="ss">f</span><span class="ch">}}</span><span class="ss">"</span></span>
+<span id="cb7-132"><a href="#cb7-132" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>fmt<span class="sc">.</span><span class="bu">format</span>(<span class="dv">100</span><span class="op">*</span>n<span class="op">/</span>denom)<span class="sc">}</span><span class="ss">%)"</span></span>
+<span id="cb7-133"><a href="#cb7-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-134"><a href="#cb7-134" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _mean_sd_fmt(x):</span>
+<span id="cb7-135"><a href="#cb7-135" aria-hidden="true" tabindex="-1"></a>        x <span class="op">=</span> pd.to_numeric(x, errors<span class="op">=</span><span class="st">"coerce"</span>).dropna()</span>
+<span id="cb7-136"><a href="#cb7-136" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(x) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb7-137"><a href="#cb7-137" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">""</span></span>
+<span id="cb7-138"><a href="#cb7-138" aria-hidden="true" tabindex="-1"></a>        fmt <span class="op">=</span> <span class="ss">f"</span><span class="ch">{{</span><span class="ss">:.</span><span class="sc">{</span>cont_decimals<span class="sc">}</span><span class="ss">f</span><span class="ch">}}</span><span class="ss">"</span></span>
+<span id="cb7-139"><a href="#cb7-139" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>fmt<span class="sc">.</span><span class="bu">format</span>(x.mean())<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>fmt<span class="sc">.</span><span class="bu">format</span>(x.std(ddof<span class="op">=</span><span class="dv">1</span>))<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb7-140"><a href="#cb7-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-141"><a href="#cb7-141" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> []</span>
+<span id="cb7-142"><a href="#cb7-142" aria-hidden="true" tabindex="-1"></a>    index <span class="op">=</span> []</span>
+<span id="cb7-143"><a href="#cb7-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-144"><a href="#cb7-144" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _add_row(row_label, values_by_arm, pval<span class="op">=</span><span class="va">None</span>, test_name<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb7-145"><a href="#cb7-145" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> {}</span>
+<span id="cb7-146"><a href="#cb7-146" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> arm <span class="kw">in</span> arm_levels:</span>
+<span id="cb7-147"><a href="#cb7-147" aria-hidden="true" tabindex="-1"></a>            row[arm] <span class="op">=</span> values_by_arm.get(arm, <span class="st">""</span>)</span>
+<span id="cb7-148"><a href="#cb7-148" aria-hidden="true" tabindex="-1"></a>        row[<span class="st">"Total"</span>] <span class="op">=</span> values_by_arm.get(<span class="st">"Total"</span>, <span class="st">""</span>)</span>
+<span id="cb7-149"><a href="#cb7-149" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pval <span class="kw">is</span> <span class="va">None</span> <span class="kw">or</span> test_name <span class="kw">in</span> (<span class="st">""</span>, <span class="st">"NA"</span>, <span class="va">None</span>):</span>
+<span id="cb7-150"><a href="#cb7-150" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">"p-value"</span>] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb7-151"><a href="#cb7-151" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb7-152"><a href="#cb7-152" aria-hidden="true" tabindex="-1"></a>            lt <span class="op">=</span> _letter_for(test_name)</span>
+<span id="cb7-153"><a href="#cb7-153" aria-hidden="true" tabindex="-1"></a>            row[<span class="st">"p-value"</span>] <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>_fmt_p(pval)<span class="sc">}</span><span class="ss">[</span><span class="sc">{</span>lt<span class="sc">}</span><span class="ss">]"</span></span>
+<span id="cb7-154"><a href="#cb7-154" aria-hidden="true" tabindex="-1"></a>        rows.append(row)</span>
+<span id="cb7-155"><a href="#cb7-155" aria-hidden="true" tabindex="-1"></a>        index.append(row_label)</span>
+<span id="cb7-156"><a href="#cb7-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-157"><a href="#cb7-157" aria-hidden="true" tabindex="-1"></a>    <span class="co"># --------- CATEGORICAL ---------</span></span>
+<span id="cb7-158"><a href="#cb7-158" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> var <span class="kw">in</span> categorical:</span>
+<span id="cb7-159"><a href="#cb7-159" aria-hidden="true" tabindex="-1"></a>        var_label <span class="op">=</span> labels.get(var, var)</span>
+<span id="cb7-160"><a href="#cb7-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-161"><a href="#cb7-161" aria-hidden="true" tabindex="-1"></a>        p, test <span class="op">=</span> _cat_pvalue(df, var, arm_col)</span>
+<span id="cb7-162"><a href="#cb7-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-163"><a href="#cb7-163" aria-hidden="true" tabindex="-1"></a>        <span class="co"># header row (blank cells + p-value)</span></span>
+<span id="cb7-164"><a href="#cb7-164" aria-hidden="true" tabindex="-1"></a>        empty_vals <span class="op">=</span> {arm: <span class="st">""</span> <span class="cf">for</span> arm <span class="kw">in</span> arm_levels}</span>
+<span id="cb7-165"><a href="#cb7-165" aria-hidden="true" tabindex="-1"></a>        empty_vals[<span class="st">"Total"</span>] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb7-166"><a href="#cb7-166" aria-hidden="true" tabindex="-1"></a>        _add_row(var_label, empty_vals, p, test)</span>
+<span id="cb7-167"><a href="#cb7-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-168"><a href="#cb7-168" aria-hidden="true" tabindex="-1"></a>        levels <span class="op">=</span> pd.Series(df[var].dropna().unique()).tolist()</span>
+<span id="cb7-169"><a href="#cb7-169" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> lvl <span class="kw">in</span> levels:</span>
+<span id="cb7-170"><a href="#cb7-170" aria-hidden="true" tabindex="-1"></a>            vals <span class="op">=</span> {}</span>
+<span id="cb7-171"><a href="#cb7-171" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> arm <span class="kw">in</span> arm_levels:</span>
+<span id="cb7-172"><a href="#cb7-172" aria-hidden="true" tabindex="-1"></a>                sub <span class="op">=</span> _get_arm_subset(arm)</span>
+<span id="cb7-173"><a href="#cb7-173" aria-hidden="true" tabindex="-1"></a>                n <span class="op">=</span> (sub[var] <span class="op">==</span> lvl).<span class="bu">sum</span>()</span>
+<span id="cb7-174"><a href="#cb7-174" aria-hidden="true" tabindex="-1"></a>                denom <span class="op">=</span> <span class="bu">len</span>(sub)</span>
+<span id="cb7-175"><a href="#cb7-175" aria-hidden="true" tabindex="-1"></a>                vals[arm] <span class="op">=</span> _n_pct_fmt(n, denom)</span>
+<span id="cb7-176"><a href="#cb7-176" aria-hidden="true" tabindex="-1"></a>            vals[<span class="st">"Total"</span>] <span class="op">=</span> _n_pct_fmt((df[var] <span class="op">==</span> lvl).<span class="bu">sum</span>(), total_n)</span>
+<span id="cb7-177"><a href="#cb7-177" aria-hidden="true" tabindex="-1"></a>            _add_row(<span class="ss">f"  </span><span class="sc">{</span>lvl<span class="sc">}</span><span class="ss">"</span>, vals)</span>
+<span id="cb7-178"><a href="#cb7-178" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-179"><a href="#cb7-179" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> include_missing_row:</span>
+<span id="cb7-180"><a href="#cb7-180" aria-hidden="true" tabindex="-1"></a>            vals <span class="op">=</span> {}</span>
+<span id="cb7-181"><a href="#cb7-181" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> arm <span class="kw">in</span> arm_levels:</span>
+<span id="cb7-182"><a href="#cb7-182" aria-hidden="true" tabindex="-1"></a>                sub <span class="op">=</span> _get_arm_subset(arm)</span>
+<span id="cb7-183"><a href="#cb7-183" aria-hidden="true" tabindex="-1"></a>                n_miss <span class="op">=</span> sub[var].isna().<span class="bu">sum</span>()</span>
+<span id="cb7-184"><a href="#cb7-184" aria-hidden="true" tabindex="-1"></a>                denom <span class="op">=</span> <span class="bu">len</span>(sub)</span>
+<span id="cb7-185"><a href="#cb7-185" aria-hidden="true" tabindex="-1"></a>                vals[arm] <span class="op">=</span> _n_pct_fmt(n_miss, denom)</span>
+<span id="cb7-186"><a href="#cb7-186" aria-hidden="true" tabindex="-1"></a>            vals[<span class="st">"Total"</span>] <span class="op">=</span> _n_pct_fmt(df[var].isna().<span class="bu">sum</span>(), total_n)</span>
+<span id="cb7-187"><a href="#cb7-187" aria-hidden="true" tabindex="-1"></a>            <span class="co"># _add_row("  Missing", vals)</span></span>
+<span id="cb7-188"><a href="#cb7-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-189"><a href="#cb7-189" aria-hidden="true" tabindex="-1"></a>    <span class="co"># --------- CONTINUOUS ---------</span></span>
+<span id="cb7-190"><a href="#cb7-190" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> var <span class="kw">in</span> continuous:</span>
+<span id="cb7-191"><a href="#cb7-191" aria-hidden="true" tabindex="-1"></a>        var_label <span class="op">=</span> labels.get(var, var)</span>
+<span id="cb7-192"><a href="#cb7-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-193"><a href="#cb7-193" aria-hidden="true" tabindex="-1"></a>        vals <span class="op">=</span> {}</span>
+<span id="cb7-194"><a href="#cb7-194" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> arm <span class="kw">in</span> arm_levels:</span>
+<span id="cb7-195"><a href="#cb7-195" aria-hidden="true" tabindex="-1"></a>            sub <span class="op">=</span> _get_arm_subset(arm)</span>
+<span id="cb7-196"><a href="#cb7-196" aria-hidden="true" tabindex="-1"></a>            vals[arm] <span class="op">=</span> _mean_sd_fmt(sub[var])</span>
+<span id="cb7-197"><a href="#cb7-197" aria-hidden="true" tabindex="-1"></a>        vals[<span class="st">"Total"</span>] <span class="op">=</span> _mean_sd_fmt(df[var])</span>
+<span id="cb7-198"><a href="#cb7-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-199"><a href="#cb7-199" aria-hidden="true" tabindex="-1"></a>        p, test <span class="op">=</span> _cont_pvalue(df, var, arm_col, normality<span class="op">=</span>normality_for_continuous)</span>
+<span id="cb7-200"><a href="#cb7-200" aria-hidden="true" tabindex="-1"></a>        _add_row(var_label, vals, p, test)</span>
+<span id="cb7-201"><a href="#cb7-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-202"><a href="#cb7-202" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> include_missing_row:</span>
+<span id="cb7-203"><a href="#cb7-203" aria-hidden="true" tabindex="-1"></a>            vals_m <span class="op">=</span> {}</span>
+<span id="cb7-204"><a href="#cb7-204" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> arm <span class="kw">in</span> arm_levels:</span>
+<span id="cb7-205"><a href="#cb7-205" aria-hidden="true" tabindex="-1"></a>                sub <span class="op">=</span> _get_arm_subset(arm)</span>
+<span id="cb7-206"><a href="#cb7-206" aria-hidden="true" tabindex="-1"></a>                n_miss <span class="op">=</span> pd.to_numeric(sub[var], errors<span class="op">=</span><span class="st">"coerce"</span>).isna().<span class="bu">sum</span>()</span>
+<span id="cb7-207"><a href="#cb7-207" aria-hidden="true" tabindex="-1"></a>                denom <span class="op">=</span> <span class="bu">len</span>(sub)</span>
+<span id="cb7-208"><a href="#cb7-208" aria-hidden="true" tabindex="-1"></a>                vals_m[arm] <span class="op">=</span> _n_pct_fmt(n_miss, denom)</span>
+<span id="cb7-209"><a href="#cb7-209" aria-hidden="true" tabindex="-1"></a>            vals_m[<span class="st">"Total"</span>] <span class="op">=</span> _n_pct_fmt(pd.to_numeric(df[var], errors<span class="op">=</span><span class="st">"coerce"</span>).isna().<span class="bu">sum</span>(), total_n)</span>
+<span id="cb7-210"><a href="#cb7-210" aria-hidden="true" tabindex="-1"></a>            <span class="co"># _add_row("  Missing", vals_m)</span></span>
+<span id="cb7-211"><a href="#cb7-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-212"><a href="#cb7-212" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pd.DataFrame(rows, index<span class="op">=</span>index)</span>
+<span id="cb7-213"><a href="#cb7-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-214"><a href="#cb7-214" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Rename NaN ARM column if exists</span></span>
+<span id="cb7-215"><a href="#cb7-215" aria-hidden="true" tabindex="-1"></a>    col_rename <span class="op">=</span> {}</span>
+<span id="cb7-216"><a href="#cb7-216" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> arm <span class="kw">in</span> arm_levels:</span>
+<span id="cb7-217"><a href="#cb7-217" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pd.isna(arm):</span>
+<span id="cb7-218"><a href="#cb7-218" aria-hidden="true" tabindex="-1"></a>            col_rename[arm] <span class="op">=</span> <span class="st">"Missing ARM"</span></span>
+<span id="cb7-219"><a href="#cb7-219" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb7-220"><a href="#cb7-220" aria-hidden="true" tabindex="-1"></a>            col_rename[arm] <span class="op">=</span> <span class="bu">str</span>(arm)</span>
+<span id="cb7-221"><a href="#cb7-221" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> out.rename(columns<span class="op">=</span>col_rename)</span>
+<span id="cb7-222"><a href="#cb7-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-223"><a href="#cb7-223" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Footnotes</span></span>
+<span id="cb7-224"><a href="#cb7-224" aria-hidden="true" tabindex="-1"></a>    letter_to_test <span class="op">=</span> {v: k <span class="cf">for</span> k, v <span class="kw">in</span> test_to_letter.items()}</span>
+<span id="cb7-225"><a href="#cb7-225" aria-hidden="true" tabindex="-1"></a>    footnotes <span class="op">=</span> [<span class="ss">f"</span><span class="sc">{</span>lt<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span>letter_to_test[lt]<span class="sc">}</span><span class="ss">"</span> <span class="cf">for</span> lt <span class="kw">in</span> <span class="bu">sorted</span>(letter_to_test.keys())]</span>
+<span id="cb7-226"><a href="#cb7-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-227"><a href="#cb7-227" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out, footnotes</span>
+<span id="cb7-228"><a href="#cb7-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-229"><a href="#cb7-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-230"><a href="#cb7-230" aria-hidden="true" tabindex="-1"></a><span class="co"># =========================</span></span>
+<span id="cb7-231"><a href="#cb7-231" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage</span></span>
+<span id="cb7-232"><a href="#cb7-232" aria-hidden="true" tabindex="-1"></a><span class="co"># =========================</span></span>
+<span id="cb7-233"><a href="#cb7-233" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data[<span class="st">"adsl"</span>]</span>
+<span id="cb7-234"><a href="#cb7-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-235"><a href="#cb7-235" aria-hidden="true" tabindex="-1"></a>labels <span class="op">=</span> {</span>
+<span id="cb7-236"><a href="#cb7-236" aria-hidden="true" tabindex="-1"></a>    <span class="st">"SEX"</span>: <span class="st">"Sex"</span>,</span>
+<span id="cb7-237"><a href="#cb7-237" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AGE"</span>: <span class="st">"Age"</span>,</span>
+<span id="cb7-238"><a href="#cb7-238" aria-hidden="true" tabindex="-1"></a>    <span class="st">"RACE"</span>: <span class="st">"Race"</span>,</span>
+<span id="cb7-239"><a href="#cb7-239" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ETHNIC"</span>: <span class="st">"Ethnicity"</span>,</span>
+<span id="cb7-240"><a href="#cb7-240" aria-hidden="true" tabindex="-1"></a>    <span class="st">"BMIBL"</span>: <span class="st">"Baseline BMI (kg/m^2)"</span>,</span>
+<span id="cb7-241"><a href="#cb7-241" aria-hidden="true" tabindex="-1"></a>    <span class="st">"HEIGHTBL"</span>: <span class="st">"Baseline Height (cm)"</span>,</span>
+<span id="cb7-242"><a href="#cb7-242" aria-hidden="true" tabindex="-1"></a>    <span class="st">"WEIGHTBL"</span>: <span class="st">"Baseline Weight (kg)"</span>,</span>
+<span id="cb7-243"><a href="#cb7-243" aria-hidden="true" tabindex="-1"></a>    <span class="st">"EDUCLVL"</span>: <span class="st">"Years of Education"</span>,</span>
+<span id="cb7-244"><a href="#cb7-244" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-245"><a href="#cb7-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-246"><a href="#cb7-246" aria-hidden="true" tabindex="-1"></a>categorical <span class="op">=</span> [<span class="st">"SEX"</span>, <span class="st">"RACE"</span>, <span class="st">"ETHNIC"</span>]</span>
+<span id="cb7-247"><a href="#cb7-247" aria-hidden="true" tabindex="-1"></a>continuous <span class="op">=</span> [<span class="st">"AGE"</span>, <span class="st">"BMIBL"</span>, <span class="st">"HEIGHTBL"</span>, <span class="st">"WEIGHTBL"</span>, <span class="st">"EDUCLVL"</span>]</span>
+<span id="cb7-248"><a href="#cb7-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-249"><a href="#cb7-249" aria-hidden="true" tabindex="-1"></a>table1, footnotes <span class="op">=</span> make_table1_adsl(</span>
+<span id="cb7-250"><a href="#cb7-250" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb7-251"><a href="#cb7-251" aria-hidden="true" tabindex="-1"></a>    arm_col<span class="op">=</span><span class="st">"ARM"</span>,</span>
+<span id="cb7-252"><a href="#cb7-252" aria-hidden="true" tabindex="-1"></a>    continuous<span class="op">=</span>continuous,</span>
+<span id="cb7-253"><a href="#cb7-253" aria-hidden="true" tabindex="-1"></a>    categorical<span class="op">=</span>categorical,</span>
+<span id="cb7-254"><a href="#cb7-254" aria-hidden="true" tabindex="-1"></a>    labels<span class="op">=</span>labels,</span>
+<span id="cb7-255"><a href="#cb7-255" aria-hidden="true" tabindex="-1"></a>    normality_for_continuous<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb7-256"><a href="#cb7-256" aria-hidden="true" tabindex="-1"></a>    include_missing_row<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-257"><a href="#cb7-257" aria-hidden="true" tabindex="-1"></a>    pct_decimals<span class="op">=</span><span class="dv">0</span>, </span>
+<span id="cb7-258"><a href="#cb7-258" aria-hidden="true" tabindex="-1"></a>    cont_decimals<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb7-259"><a href="#cb7-259" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-260"><a href="#cb7-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-261"><a href="#cb7-261" aria-hidden="true" tabindex="-1"></a>display(table1)</span>
+<span id="cb7-262"><a href="#cb7-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-263"><a href="#cb7-263" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Footnotes:"</span>)</span>
+<span id="cb7-264"><a href="#cb7-264" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> footnotes:</span>
+<span id="cb7-265"><a href="#cb7-265" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(f)</span></code></pre></div>
 </details>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Placebo</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Total</th>
+<th data-quarto-table-cell-role="th">p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Sex</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0.141[1]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">F</td>
+<td>53 (62%)</td>
+<td>40 (48%)</td>
+<td>50 (60%)</td>
+<td>143 (56%)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">M</td>
+<td>33 (38%)</td>
+<td>44 (52%)</td>
+<td>34 (40%)</td>
+<td>111 (44%)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Race</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0.604[1]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">WHITE</td>
+<td>78 (91%)</td>
+<td>74 (88%)</td>
+<td>78 (93%)</td>
+<td>230 (91%)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">BLACK OR AFRICAN AMERICAN</td>
+<td>8 (9%)</td>
+<td>9 (11%)</td>
+<td>6 (7%)</td>
+<td>23 (9%)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">AMERICAN INDIAN OR ALASKA NATIVE</td>
+<td>0 (0%)</td>
+<td>1 (1%)</td>
+<td>0 (0%)</td>
+<td>1 (0%)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Ethnicity</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>0.442[1]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">HISPANIC OR LATINO</td>
+<td>3 (3%)</td>
+<td>3 (4%)</td>
+<td>6 (7%)</td>
+<td>12 (5%)</td>
+<td></td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">NOT HISPANIC OR LATINO</td>
+<td>83 (97%)</td>
+<td>81 (96%)</td>
+<td>78 (93%)</td>
+<td>242 (95%)</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Age</td>
+<td>75 (9)</td>
+<td>74 (8)</td>
+<td>76 (8)</td>
+<td>75 (8)</td>
+<td>0.593[2]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Baseline BMI (kg/m^2)</td>
+<td>24 (4)</td>
+<td>25 (4)</td>
+<td>25 (4)</td>
+<td>25 (4)</td>
+<td>0.013[2]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Baseline Height (cm)</td>
+<td>163 (12)</td>
+<td>166 (10)</td>
+<td>163 (10)</td>
+<td>164 (11)</td>
+<td>0.126[2]</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Baseline Weight (kg)</td>
+<td>63 (13)</td>
+<td>70 (15)</td>
+<td>67 (14)</td>
+<td>67 (14)</td>
+<td>0.003[2]</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Years of Education</td>
+<td>13 (3)</td>
+<td>13 (3)</td>
+<td>13 (4)</td>
+<td>13 (3)</td>
+<td>0.388[2]</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-<div id="950003a1-1c40-4d62-bcdc-267c310cbcb5" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a> <span class="co">'AGE'</span>: <span class="st">'Age'</span>,</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a> <span class="co">'AGEGR1'</span>: <span class="st">'Pooled Age Group 1'</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a> <span class="co">'AGEGR1N'</span>: <span class="st">'Pooled Age Group 1 (N)'</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a> <span class="co">'AGEU'</span>: <span class="st">'Age Units'</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a> <span class="co">'RACE'</span>: <span class="st">'Race'</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a> <span class="co">'RACEN'</span>: <span class="st">'Race (N)'</span>,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a> <span class="co">'SEX'</span>: <span class="st">'Sex'</span>,</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a> <span class="co">'ETHNIC'</span>: <span class="st">'Ethnicity'</span>,</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a> <span class="co">'BMIBL'</span>: <span class="st">'Baseline BMI (kg/m^2)'</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a> <span class="co">'BMIBLGR1'</span>: <span class="st">'Pooled Baseline BMI Group 1'</span>,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a> <span class="co">'HEIGHTBL'</span>: <span class="st">'Baseline Height (cm)'</span>,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a> <span class="co">'WEIGHTBL'</span>: <span class="st">'Baseline Weight (kg)'</span>,</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a> <span class="co">'EDUCLVL'</span>: <span class="st">'Years of Education'</span>,</span></code></pre></div>
-</details>
 </div>
-<ul>
-<li>Treatment Exposure
+<div class="cell-output cell-output-stdout">
+<pre><code>Footnotes:
+1 Chi-square
+2 ANOVA</code></pre>
+</div>
+</div>
+</section>
+<section id="treatment-exposure" class="level2">
+<h2 class="anchored" data-anchor-id="treatment-exposure">Treatment Exposure</h2>
 <ul>
 <li>exposure duration</li>
 <li>compliance</li>
-</ul></li>
 </ul>
 <p>‘TRT01P’: ‘Planned Treatment for Period 01’, ‘TRT01PN’: ‘Planned Treatment for Period 01 (N)’, ‘TRT01A’: ‘Actual Treatment for Period 01’, ‘TRT01AN’: ‘Actual Treatment for Period 01 (N)’, ‘TRTSDT’: ‘Date of First Exposure to Treatment’, ‘TRTEDT’: ‘Date of Last Exposure to Treatment’, ‘TRTDUR’: ‘Duration of Treatment (days)’,</p>
 <ul>
@@ -589,10 +968,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </ul></li>
 </ul>
 <div id="c843d85f-f7c7-4e79-ae07-698ab0c8a334" class="cell" data-execution_count="328">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adqsadas'</span>]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adqsadas'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="328">
 <div>
 
@@ -897,10 +1273,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 </div>
 <div id="e6f76891-5446-4106-87dc-55af0c3ff0a0" class="cell" data-execution_count="329">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adqscibc'</span>]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adqscibc'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="329">
 <div>
 
@@ -1213,10 +1586,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </ul></li>
 </ul>
 <div id="fdd09f56-1c63-4b4a-8209-86f3858ba21b" class="cell" data-execution_count="330">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adae'</span>]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adae'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="330">
 <div>
 
@@ -1528,10 +1898,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </ul></li>
 </ul>
 <div id="15ccffbc-5cec-413a-af1c-23508e342dd1" class="cell" data-execution_count="332">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbc'</span>]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbc'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="332">
 <div>
 
@@ -1836,10 +2203,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 </div>
 <div id="8e12d64b-0dc5-4cb2-97a7-28674cb1a9aa" class="cell" data-execution_count="333">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbh'</span>]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbh'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="333">
 <div>
 
@@ -2153,10 +2517,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </ul></li>
 </ul>
 <div id="d7938689-7332-4cf1-908d-023ede322e45" class="cell" data-execution_count="334">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'advs'</span>]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'advs'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="334">
 <div>
 
@@ -2469,10 +2830,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </ul></li>
 </ul>
 <div id="ccf2a90b-3f36-4b6c-ab37-b3a51fca98eb" class="cell" data-execution_count="335">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="335">
 <div>
 
@@ -2784,23 +3142,20 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </ul></li>
 </ul>
 <div id="f34f2a8f-e422-4acb-8225-6429f72b476b" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Columns</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Placebo</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>Low Dose</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>High Dose</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>Total</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>Rows</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>Age mean (SD)</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>Sex n (<span class="op">%</span>)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>Race n (<span class="op">%</span>)</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>Baseline ADAS score</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>Weight</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>Disease duration</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>Columns</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>Placebo</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Low Dose</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>High Dose</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>Total</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>Rows</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>Age mean (SD)</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>Sex n (<span class="op">%</span>)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>Race n (<span class="op">%</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>Baseline ADAS score</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>Weight</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>Disease duration</span></code></pre></div>
 </div>
 <ul>
 <li>Disposition</li>
@@ -2811,143 +3166,110 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </ul>
 <p>Randomized Treated Completed Discontinued</p>
 <div id="3c38124d-8b5e-47b9-b328-651e376b9a2a" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Exposure</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.3</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>Treatment Exposure Summary</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>Treatment duration</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>Mean exposure</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>Dose interruptions</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>Exposure</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.3</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>Treatment Exposure Summary</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>Treatment duration</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>Mean exposure</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>Dose interruptions</span></code></pre></div>
 </div>
 <p>Primary efficacy Table 14.4</p>
 <p>Change from Baseline in ADAS-Cog</p>
 <p>Baseline Week 12 Week 26 Mean change Treatment difference 95% CI p-value</p>
 <div id="5fab83a5-981a-4702-85bd-cd95ec81efd3" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Secondary efficacy</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.5</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>CIBIC<span class="op">+</span> Score</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>Improved</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>No change</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>Worsened</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>Secondary efficacy</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.5</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>CIBIC<span class="op">+</span> Score</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>Improved</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>No change</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>Worsened</span></code></pre></div>
 </div>
 <div id="d8bbfd4f-913c-44ab-b5c8-d4ee5ca3a1aa" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Safety tables</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.6</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>Patients <span class="cf">with</span> ≥<span class="dv">1</span> TEAE</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>Placebo</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>Low dose</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>High dose</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>Safety tables</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.6</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>Patients <span class="cf">with</span> ≥<span class="dv">1</span> TEAE</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>Placebo</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>Low dose</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>High dose</span></code></pre></div>
 </div>
 <div id="bdc27b83-870d-48f3-9cc0-822730ad5d07" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.7</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>TEAE by System Organ Class</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>Example</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>Cardiac disorders</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>GI disorders</span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>Nervous system disorders</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>Psychiatric disorders</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.7</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>TEAE by System Organ Class</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>Example</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>Cardiac disorders</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>GI disorders</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>Nervous system disorders</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>Psychiatric disorders</span></code></pre></div>
 </div>
 <div id="9485789f-3dcd-4536-8480-8483d6126c0d" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.8</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>Top Preferred Terms</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>Headache</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>Nausea</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>Fatigue</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>Dizziness</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.8</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>Top Preferred Terms</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>Headache</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>Nausea</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>Fatigue</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>Dizziness</span></code></pre></div>
 </div>
 <div id="b656b2d8-ab55-4f53-917e-bd6653fb18bd" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Laboratory</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.9</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>Laboratory Parameters – Change <span class="im">from</span> Baseline</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>ALT</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>AST</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>Creatinine</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>Hemoglobin</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>Laboratory</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.9</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>Laboratory Parameters – Change <span class="im">from</span> Baseline</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>ALT</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>AST</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>Creatinine</span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>Hemoglobin</span></code></pre></div>
 </div>
 <div id="372b6427-c10a-4173-ade0-0dd722d187aa" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.10</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>Laboratory Shift Table</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>Low → Normal</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>Normal → High</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>High → Normal</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.10</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>Laboratory Shift Table</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>Low → Normal</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>Normal → High</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>High → Normal</span></code></pre></div>
 </div>
 <div id="ff83f67c-b7bd-4b06-a48f-057c216a2fbd" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Vital signs</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.11</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>Vital Signs Summary</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>Systolic BP</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>Diastolic BP</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>Heart rate</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>Weight</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Vital signs</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.11</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>Vital Signs Summary</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>Systolic BP</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>Diastolic BP</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>Heart rate</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>Weight</span></code></pre></div>
 </div>
 <div id="07701757-228f-45c6-947a-a8951fcfbacc" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Figures</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.1</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>ADAS<span class="op">-</span>Cog change <span class="im">from</span> baseline over time</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>(line plot)</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>Figures</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.1</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>ADAS<span class="op">-</span>Cog change <span class="im">from</span> baseline over time</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>(line plot)</span></code></pre></div>
 </div>
 <div id="1a4d7e27-5a1e-492d-96fc-25409919eccb" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.2</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>Kaplan<span class="op">-</span>Meier survival curve</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>(dataset: ADTTE)</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.2</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>Kaplan<span class="op">-</span>Meier survival curve</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>(dataset: ADTTE)</span></code></pre></div>
 </div>
 <div id="c7863949-7186-442f-9749-63d281e0f382" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.3</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>AE incidence bar chart</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.3</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>AE incidence bar chart</span></code></pre></div>
 </div>
 </section>
 <section id="adsl" class="level2">
@@ -2956,10 +3278,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <p>The first is ADSL (Subject Level Analysis Dataset), a one-recordper-subject structure that contains subject-level attributes. Because of its structure, it can be merged onto any other clinical dataset, including other ADaM datasets and SDTM datasets.</p>
 </blockquote>
 <div id="f7a7577c-8836-492e-b54f-66d890713e60" class="cell" data-execution_count="6">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adsl'</span>].head()</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adsl'</span>].head()</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
@@ -3120,10 +3439,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 </div>
 <div id="80cbcdeb-8b30-4075-96ba-b37df8c16cb5" class="cell" data-execution_count="7">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adsl'</span>].column_names_to_labels</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adsl'</span>].column_names_to_labels</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>{'STUDYID': 'Study Identifier',
  'USUBJID': 'Unique Subject Identifier',
@@ -3182,110 +3498,89 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <section id="table-11-1.-demographic-characteristics" class="level2">
 <h2 class="anchored" data-anchor-id="table-11-1.-demographic-characteristics">Table 11-1. Demographic Characteristics</h2>
 <div id="dc7975bf-f806-47a9-9975-a4ea07b7f2e8" class="cell" data-execution_count="289">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> data[<span class="st">'adsl'</span>].copy()</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>data2[<span class="st">'RACE2'</span>] <span class="op">=</span> data2[<span class="st">'RACE'</span>].replace({</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'WHITE'</span>: <span class="st">'White/Caucasian'</span>,</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'BLACK OR AFRICAN AMERICAN'</span>: <span class="st">'Other'</span>,</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AMERICAN INDIAN OR ALASKA NATIVE'</span>: <span class="st">'Other'</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> data[<span class="st">'adsl'</span>].copy()</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>data2[<span class="st">'RACE2'</span>] <span class="op">=</span> data2[<span class="st">'RACE'</span>].replace({</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'WHITE'</span>: <span class="st">'White/Caucasian'</span>,</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'BLACK OR AFRICAN AMERICAN'</span>: <span class="st">'Other'</span>,</span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AMERICAN INDIAN OR ALASKA NATIVE'</span>: <span class="st">'Other'</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 </div>
 <div id="2d1aafee-9b31-4660-8738-5fb399bf520b" class="cell" data-execution_count="290">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>n_counts <span class="op">=</span> data[<span class="st">'adsl'</span>].groupby(<span class="st">'ARM'</span>)[<span class="st">'USUBJID'</span>].nunique()</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>total_n <span class="op">=</span> data[<span class="st">'adsl'</span>][<span class="st">'USUBJID'</span>].nunique()</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>n_counts[<span class="st">'Total'</span>] <span class="op">=</span> total_n</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>n_counts <span class="op">=</span> data[<span class="st">'adsl'</span>].groupby(<span class="st">'ARM'</span>)[<span class="st">'USUBJID'</span>].nunique()</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>total_n <span class="op">=</span> data[<span class="st">'adsl'</span>][<span class="st">'USUBJID'</span>].nunique()</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>n_counts[<span class="st">'Total'</span>] <span class="op">=</span> total_n</span></code></pre></div>
 </div>
 <div id="5b6716c2-070c-4a1e-b960-64062dbaf0d6" class="cell" data-execution_count="316">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_min_max_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>,</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                       mean_digits<span class="op">=</span><span class="dv">1</span>, minmax_digits<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    arm_summary <span class="op">=</span> (</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>        df.groupby(group_col)[var]</span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    total_summary <span class="op">=</span> (</span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>        df[var]</span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>          .to_frame().T</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    total_summary.index <span class="op">=</span> [total_label]</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    final <span class="op">=</span> pd.concat([arm_summary, total_summary])</span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>    final[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>] <span class="op">=</span> (</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>        final[<span class="st">'mean'</span>].<span class="bu">round</span>(mean_digits).astype(<span class="bu">str</span>)</span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'min'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">"–"</span></span>
-<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'max'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
-<span id="cb34-24"><a href="#cb34-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> final[[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>]]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_min_max_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                       mean_digits<span class="op">=</span><span class="dv">1</span>, minmax_digits<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    arm_summary <span class="op">=</span> (</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        df.groupby(group_col)[var]</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    total_summary <span class="op">=</span> (</span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>        df[var]</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>          .to_frame().T</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>    total_summary.index <span class="op">=</span> [total_label]</span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>    final <span class="op">=</span> pd.concat([arm_summary, total_summary])</span>
+<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-18"><a href="#cb33-18" aria-hidden="true" tabindex="-1"></a>    final[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>] <span class="op">=</span> (</span>
+<span id="cb33-19"><a href="#cb33-19" aria-hidden="true" tabindex="-1"></a>        final[<span class="st">'mean'</span>].<span class="bu">round</span>(mean_digits).astype(<span class="bu">str</span>)</span>
+<span id="cb33-20"><a href="#cb33-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
+<span id="cb33-21"><a href="#cb33-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'min'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb33-22"><a href="#cb33-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">"–"</span></span>
+<span id="cb33-23"><a href="#cb33-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'max'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb33-24"><a href="#cb33-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb33-25"><a href="#cb33-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb33-26"><a href="#cb33-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-27"><a href="#cb33-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> final[[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>]]</span></code></pre></div>
 </div>
 <div id="16a8f4fa-5abf-4c01-9478-71fbc45a397a" class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorical_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>, pct_digits<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    ct <span class="op">=</span> pd.crosstab(df[var], df[group_col])</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> ct.div(ct.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    formatted <span class="op">=</span> (</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>        ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
-<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>        pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
-<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>    total_n <span class="op">=</span> df.shape[<span class="dv">0</span>]</span>
-<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>    total_ct <span class="op">=</span> df[var].value_counts()</span>
-<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>    total_pct <span class="op">=</span> total_ct <span class="op">/</span> total_n <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb35-15"><a href="#cb35-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-16"><a href="#cb35-16" aria-hidden="true" tabindex="-1"></a>    formatted[total_label] <span class="op">=</span> (</span>
-<span id="cb35-17"><a href="#cb35-17" aria-hidden="true" tabindex="-1"></a>        total_ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
-<span id="cb35-18"><a href="#cb35-18" aria-hidden="true" tabindex="-1"></a>        total_pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
-<span id="cb35-19"><a href="#cb35-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb35-20"><a href="#cb35-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-21"><a href="#cb35-21" aria-hidden="true" tabindex="-1"></a>    formatted.columns.name <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb35-22"><a href="#cb35-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-23"><a href="#cb35-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> formatted</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorical_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>, pct_digits<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    ct <span class="op">=</span> pd.crosstab(df[var], df[group_col])</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> ct.div(ct.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>    formatted <span class="op">=</span> (</span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>        ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>        pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>    total_n <span class="op">=</span> df.shape[<span class="dv">0</span>]</span>
+<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>    total_ct <span class="op">=</span> df[var].value_counts()</span>
+<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>    total_pct <span class="op">=</span> total_ct <span class="op">/</span> total_n <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a>    formatted[total_label] <span class="op">=</span> (</span>
+<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a>        total_ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
+<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>        total_pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
+<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a>    formatted.columns.name <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-23"><a href="#cb34-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> formatted</span></code></pre></div>
 </div>
 <div id="3b7749fe-fd8a-47f5-a059-2286ae6bee95" class="cell" data-execution_count="313">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Table11_1 <span class="op">=</span> pd.concat([mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'AGE'</span>).T,</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data[<span class="st">'adsl'</span>],<span class="st">'SEX'</span>).reset_index().set_index(<span class="st">'SEX'</span>).reindex([<span class="st">'M'</span>, <span class="st">'F'</span>]),</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data2,<span class="st">'RACE2'</span>).reset_index().set_index(<span class="st">'RACE2'</span>).reindex([<span class="st">'White/Caucasian'</span>, <span class="st">'Other'</span>]),</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>                    mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'EDUCLVL'</span>).T,</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>                   ])</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Table11_1 <span class="op">=</span> pd.concat([mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'AGE'</span>).T,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data[<span class="st">'adsl'</span>],<span class="st">'SEX'</span>).reset_index().set_index(<span class="st">'SEX'</span>).reindex([<span class="st">'M'</span>, <span class="st">'F'</span>]),</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data2,<span class="st">'RACE2'</span>).reset_index().set_index(<span class="st">'RACE2'</span>).reindex([<span class="st">'White/Caucasian'</span>, <span class="st">'Other'</span>]),</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>                    mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'EDUCLVL'</span>).T,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>                   ])</span></code></pre></div>
 </div>
 <div id="f2014872-9cfd-47eb-984e-e65952a76c1e" class="cell" data-execution_count="314">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Table11_1.columns <span class="op">=</span> [</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> (n=</span><span class="sc">{</span>n_counts[col]<span class="sc">}</span><span class="ss">)"</span> <span class="cf">if</span> col <span class="kw">in</span> n_counts.index</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> col</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> final2.columns</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Table11_1.columns <span class="op">=</span> [</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> (n=</span><span class="sc">{</span>n_counts[col]<span class="sc">}</span><span class="ss">)"</span> <span class="cf">if</span> col <span class="kw">in</span> n_counts.index</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> col</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> final2.columns</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
 </div>
 <div id="85a1b91a-15a6-4995-9b6a-b73327a96c8a" class="cell" data-execution_count="315">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>Table11_1</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Table11_1</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="315">
 <div>
 
@@ -3350,10 +3645,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 </div>
 <div id="6a295be0-5c87-4aae-95f1-450a81ada861" class="cell" data-execution_count="319">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
-</details>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="319">
 <div>
 
