@@ -301,9 +301,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#n-table" id="toc-n-table" class="nav-link" data-scroll-target="#n-table">N table</a></li>
   <li><a href="#mean-change-from-baseline" id="toc-mean-change-from-baseline" class="nav-link" data-scroll-target="#mean-change-from-baseline">Mean change from baseline</a></li>
   <li><a href="#ancovachange-from-baseline-treatment-baseline" id="toc-ancovachange-from-baseline-treatment-baseline" class="nav-link" data-scroll-target="#ancovachange-from-baseline-treatment-baseline">ANCOVA(Change from baseline ~ Treatment + Baseline)</a></li>
+  </ul></li>
+  <li><a href="#primary-endpoint" id="toc-primary-endpoint" class="nav-link" data-scroll-target="#primary-endpoint">Primary endpoint</a>
+  <ul class="collapse">
   <li><a href="#mmrm-mixed-model-for-repeated-measureschg-trtp-avisit-base" id="toc-mmrm-mixed-model-for-repeated-measureschg-trtp-avisit-base" class="nav-link" data-scroll-target="#mmrm-mixed-model-for-repeated-measureschg-trtp-avisit-base">MMRM, Mixed Model for Repeated Measures(CHG ~ TRTP * AVISIT + BASE)</a></li>
   </ul></li>
-  <li><a href="#primary-endpoint" id="toc-primary-endpoint" class="nav-link" data-scroll-target="#primary-endpoint">Primary endpoint</a></li>
   <li><a href="#adsl" id="toc-adsl" class="nav-link" data-scroll-target="#adsl">ADSL</a></li>
   </ul></li>
   <li><a href="#table" id="toc-table" class="nav-link" data-scroll-target="#table">Table</a>
@@ -1275,7 +1277,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </section>
 <section id="efficacy-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="efficacy-analysis">Efficacy Analysis</h2>
-<div id="e1a3029d-09ed-4de2-8370-3c59dc589acb" class="cell" data-execution_count="434">
+<div id="e1a3029d-09ed-4de2-8370-3c59dc589acb" class="cell" data-execution_count="489">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_change_table_adqs_se(</span>
@@ -1299,66 +1301,66 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> use_flag <span class="kw">and</span> flag_col <span class="kw">in</span> d.columns:</span>
 <span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> d[d[flag_col] <span class="op">==</span> <span class="st">"Y"</span>]</span>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Numeric coercion</span></span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    d[aval_col] <span class="op">=</span> pd.to_numeric(d[aval_col], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    d[base_col] <span class="op">=</span> pd.to_numeric(d[base_col], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Change from baseline</span></span>
-<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    d[<span class="st">"CHG_CALC"</span>] <span class="op">=</span> d[aval_col] <span class="op">-</span> d[base_col]</span>
-<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Summary by ARM x PARAM x VISIT</span></span>
-<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>    grp <span class="op">=</span> d.groupby([arm_col, param_col, visit_col], dropna<span class="op">=</span><span class="va">False</span>)[<span class="st">"CHG_CALC"</span>]</span>
-<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>    summ <span class="op">=</span> grp.agg(N<span class="op">=</span><span class="st">"count"</span>, Mean<span class="op">=</span><span class="st">"mean"</span>, SD<span class="op">=</span><span class="st">"std"</span>).reset_index()</span>
-<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>    summ[<span class="st">"SE"</span>] <span class="op">=</span> summ[<span class="st">"SD"</span>] <span class="op">/</span> np.sqrt(summ[<span class="st">"N"</span>])</span>
-<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Format Mean (SE)</span></span>
-<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>    summ[<span class="st">"Mean (SE)"</span>] <span class="op">=</span> (</span>
-<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>        summ[<span class="st">"Mean"</span>].<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
-<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> summ[<span class="st">"SE"</span>].<span class="bu">round</span>(decimals).fillna(<span class="dv">0</span>).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
-<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Pivot Mean(SE)</span></span>
-<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>    wide <span class="op">=</span> summ.pivot_table(</span>
-<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>[param_col, visit_col],</span>
-<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>arm_col,</span>
-<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>        values<span class="op">=</span><span class="st">"Mean (SE)"</span>,</span>
-<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>        aggfunc<span class="op">=</span><span class="st">"first"</span></span>
-<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Total column</span></span>
-<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>    grp_tot <span class="op">=</span> d.groupby([param_col, visit_col], dropna<span class="op">=</span><span class="va">False</span>)[<span class="st">"CHG_CALC"</span>]</span>
-<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>    tot <span class="op">=</span> grp_tot.agg(N<span class="op">=</span><span class="st">"count"</span>, Mean<span class="op">=</span><span class="st">"mean"</span>, SD<span class="op">=</span><span class="st">"std"</span>)</span>
-<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>    tot[<span class="st">"SE"</span>] <span class="op">=</span> tot[<span class="st">"SD"</span>] <span class="op">/</span> np.sqrt(tot[<span class="st">"N"</span>])</span>
-<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a>    tot_fmt <span class="op">=</span> (</span>
-<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>        tot[<span class="st">"Mean"</span>].<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
-<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> tot[<span class="st">"SE"</span>].<span class="bu">round</span>(decimals).fillna(<span class="dv">0</span>).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
-<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>    wide[<span class="st">"Total"</span>] <span class="op">=</span> tot_fmt</span>
-<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># N table (optional but useful)</span></span>
-<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a>    n_wide <span class="op">=</span> summ.pivot_table(</span>
-<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>[param_col, visit_col],</span>
-<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>arm_col,</span>
-<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a>        values<span class="op">=</span><span class="st">"N"</span>,</span>
-<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>        aggfunc<span class="op">=</span><span class="st">"first"</span></span>
-<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>    n_wide[<span class="st">"Total"</span>] <span class="op">=</span> tot[<span class="st">"N"</span>]</span>
-<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Visit ordering by AVISITN if available</span></span>
-<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"AVISITN"</span> <span class="kw">in</span> d.columns:</span>
-<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>        visit_order <span class="op">=</span> (</span>
-<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a>            d[[visit_col, <span class="st">"AVISITN"</span>]]</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Summary by ARM x PARAM x VISIT</span></span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    grp <span class="op">=</span> d.query(<span class="st">'AVISIT!="Baseline"'</span>).groupby([arm_col, param_col, visit_col], dropna<span class="op">=</span><span class="va">False</span>)[<span class="st">"CHG"</span>]</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    summ <span class="op">=</span> grp.agg(N<span class="op">=</span><span class="st">"count"</span>, Mean<span class="op">=</span><span class="st">"mean"</span>, SD<span class="op">=</span><span class="st">"std"</span>).reset_index()</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>    summ[<span class="st">"SE"</span>] <span class="op">=</span> summ[<span class="st">"SD"</span>] <span class="op">/</span> np.sqrt(summ[<span class="st">"N"</span>])</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Format Mean (SE)</span></span>
+<span id="cb17-28"><a href="#cb17-28" aria-hidden="true" tabindex="-1"></a>    summ[<span class="st">"Mean (SE)"</span>] <span class="op">=</span> (</span>
+<span id="cb17-29"><a href="#cb17-29" aria-hidden="true" tabindex="-1"></a>        summ[<span class="st">"Mean"</span>].<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-30"><a href="#cb17-30" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
+<span id="cb17-31"><a href="#cb17-31" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> summ[<span class="st">"SE"</span>].<span class="bu">round</span>(decimals).fillna(<span class="dv">0</span>).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-32"><a href="#cb17-32" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb17-33"><a href="#cb17-33" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-34"><a href="#cb17-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-35"><a href="#cb17-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Pivot Mean(SE)</span></span>
+<span id="cb17-36"><a href="#cb17-36" aria-hidden="true" tabindex="-1"></a>    wide <span class="op">=</span> summ.pivot_table(</span>
+<span id="cb17-37"><a href="#cb17-37" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>[param_col, visit_col],</span>
+<span id="cb17-38"><a href="#cb17-38" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>arm_col,</span>
+<span id="cb17-39"><a href="#cb17-39" aria-hidden="true" tabindex="-1"></a>        values<span class="op">=</span><span class="st">"Mean (SE)"</span>,</span>
+<span id="cb17-40"><a href="#cb17-40" aria-hidden="true" tabindex="-1"></a>        aggfunc<span class="op">=</span><span class="st">"first"</span></span>
+<span id="cb17-41"><a href="#cb17-41" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-42"><a href="#cb17-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-43"><a href="#cb17-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Total column</span></span>
+<span id="cb17-44"><a href="#cb17-44" aria-hidden="true" tabindex="-1"></a>    grp_tot <span class="op">=</span> d.query(<span class="st">'AVISIT!="Baseline"'</span>).groupby([param_col, visit_col], dropna<span class="op">=</span><span class="va">False</span>)[<span class="st">"CHG"</span>]</span>
+<span id="cb17-45"><a href="#cb17-45" aria-hidden="true" tabindex="-1"></a>    tot <span class="op">=</span> grp_tot.agg(N<span class="op">=</span><span class="st">"count"</span>, Mean<span class="op">=</span><span class="st">"mean"</span>, SD<span class="op">=</span><span class="st">"std"</span>)</span>
+<span id="cb17-46"><a href="#cb17-46" aria-hidden="true" tabindex="-1"></a>    tot[<span class="st">"SE"</span>] <span class="op">=</span> tot[<span class="st">"SD"</span>] <span class="op">/</span> np.sqrt(tot[<span class="st">"N"</span>])</span>
+<span id="cb17-47"><a href="#cb17-47" aria-hidden="true" tabindex="-1"></a>    tot_fmt <span class="op">=</span> (</span>
+<span id="cb17-48"><a href="#cb17-48" aria-hidden="true" tabindex="-1"></a>        tot[<span class="st">"Mean"</span>].<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-49"><a href="#cb17-49" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
+<span id="cb17-50"><a href="#cb17-50" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> tot[<span class="st">"SE"</span>].<span class="bu">round</span>(decimals).fillna(<span class="dv">0</span>).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb17-51"><a href="#cb17-51" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb17-52"><a href="#cb17-52" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-53"><a href="#cb17-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># wide["Total"] = tot_fmt</span></span>
+<span id="cb17-54"><a href="#cb17-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-55"><a href="#cb17-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># N table (optional but useful)</span></span>
+<span id="cb17-56"><a href="#cb17-56" aria-hidden="true" tabindex="-1"></a>    n_wide <span class="op">=</span> summ.pivot_table(</span>
+<span id="cb17-57"><a href="#cb17-57" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>[param_col, visit_col],</span>
+<span id="cb17-58"><a href="#cb17-58" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>arm_col,</span>
+<span id="cb17-59"><a href="#cb17-59" aria-hidden="true" tabindex="-1"></a>        values<span class="op">=</span><span class="st">"N"</span>,</span>
+<span id="cb17-60"><a href="#cb17-60" aria-hidden="true" tabindex="-1"></a>        aggfunc<span class="op">=</span><span class="st">"first"</span></span>
+<span id="cb17-61"><a href="#cb17-61" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb17-62"><a href="#cb17-62" aria-hidden="true" tabindex="-1"></a>    n_wide[<span class="st">"Total"</span>] <span class="op">=</span> tot[<span class="st">"N"</span>]</span>
+<span id="cb17-63"><a href="#cb17-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-64"><a href="#cb17-64" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Visit ordering by AVISITN if available</span></span>
+<span id="cb17-65"><a href="#cb17-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"AVISITN"</span> <span class="kw">in</span> d.columns:</span>
+<span id="cb17-66"><a href="#cb17-66" aria-hidden="true" tabindex="-1"></a>        visit_order <span class="op">=</span> (</span>
+<span id="cb17-67"><a href="#cb17-67" aria-hidden="true" tabindex="-1"></a>            d[[visit_col, <span class="st">"AVISITN"</span>]]</span>
+<span id="cb17-68"><a href="#cb17-68" aria-hidden="true" tabindex="-1"></a>            .drop_duplicates()</span>
+<span id="cb17-69"><a href="#cb17-69" aria-hidden="true" tabindex="-1"></a>            .sort_values(<span class="st">"AVISITN"</span>)</span>
+<span id="cb17-70"><a href="#cb17-70" aria-hidden="true" tabindex="-1"></a>            .set_index(visit_col)[<span class="st">"AVISITN"</span>]</span>
+<span id="cb17-71"><a href="#cb17-71" aria-hidden="true" tabindex="-1"></a>            .to_dict()</span>
+<span id="cb17-72"><a href="#cb17-72" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb17-73"><a href="#cb17-73" aria-hidden="true" tabindex="-1"></a>        visit_order2 <span class="op">=</span> (</span>
+<span id="cb17-74"><a href="#cb17-74" aria-hidden="true" tabindex="-1"></a>            d.query(<span class="st">'AVISIT!="Baseline"'</span>)[[visit_col, <span class="st">"AVISITN"</span>]]</span>
 <span id="cb17-75"><a href="#cb17-75" aria-hidden="true" tabindex="-1"></a>            .drop_duplicates()</span>
 <span id="cb17-76"><a href="#cb17-76" aria-hidden="true" tabindex="-1"></a>            .sort_values(<span class="st">"AVISITN"</span>)</span>
 <span id="cb17-77"><a href="#cb17-77" aria-hidden="true" tabindex="-1"></a>            .set_index(visit_col)[<span class="st">"AVISITN"</span>]</span>
 <span id="cb17-78"><a href="#cb17-78" aria-hidden="true" tabindex="-1"></a>            .to_dict()</span>
 <span id="cb17-79"><a href="#cb17-79" aria-hidden="true" tabindex="-1"></a>        )</span>
 <span id="cb17-80"><a href="#cb17-80" aria-hidden="true" tabindex="-1"></a>        wide <span class="op">=</span> wide.reset_index()</span>
-<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a>        wide[<span class="st">"__v"</span>] <span class="op">=</span> wide[visit_col].<span class="bu">map</span>(visit_order)</span>
+<span id="cb17-81"><a href="#cb17-81" aria-hidden="true" tabindex="-1"></a>        wide[<span class="st">"__v"</span>] <span class="op">=</span> wide[visit_col].<span class="bu">map</span>(visit_order2)</span>
 <span id="cb17-82"><a href="#cb17-82" aria-hidden="true" tabindex="-1"></a>        wide <span class="op">=</span> wide.sort_values([param_col, <span class="st">"__v"</span>]).drop(columns<span class="op">=</span><span class="st">"__v"</span>).set_index([param_col, visit_col])</span>
 <span id="cb17-83"><a href="#cb17-83" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-84"><a href="#cb17-84" aria-hidden="true" tabindex="-1"></a>        n_wide <span class="op">=</span> n_wide.reset_index()</span>
@@ -1380,7 +1382,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 <section id="n-table" class="level3">
 <h3 class="anchored" data-anchor-id="n-table">N table</h3>
-<div id="3b383d13-9069-4446-bf90-260c8b7366dd" class="cell" data-execution_count="435">
+<div id="3b383d13-9069-4446-bf90-260c8b7366dd" class="cell" data-execution_count="490">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>display(n_table)        <span class="co"># N</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1407,43 +1409,29 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Adas-Cog(11) Subscore</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Adas-Cog(11) Subscore</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
 <td>81</td>
 <td>234</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>79</td>
 <td>74</td>
 <td>81</td>
 <td>234</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>79</td>
 <td>74</td>
 <td>81</td>
 <td>234</td>
 </tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Attention/Visual Search Task</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>77</td>
-<td>74</td>
-<td>80</td>
-<td>231</td>
-</tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Attention/Visual Search Task</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>75</td>
 <td>73</td>
@@ -1465,14 +1453,29 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <td>150</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Commands</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Commands</td>
+<td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
 <td>81</td>
 <td>234</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">Week 16</td>
+<td>68</td>
+<td>40</td>
+<td>42</td>
+<td>150</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Week 24</td>
+<td>65</td>
+<td>41</td>
+<td>49</td>
+<td>155</td>
+</tr>
+<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Comprehension Of Spoken Language</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
@@ -1494,72 +1497,29 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <td>155</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Comprehension Of Spoken Language</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Constructional Praxis</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
 <td>81</td>
 <td>234</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>68</td>
 <td>40</td>
 <td>42</td>
 <td>150</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>65</td>
 <td>41</td>
 <td>49</td>
 <td>155</td>
 </tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Constructional Praxis</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">Week 8</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">Week 16</td>
-<td>68</td>
-<td>40</td>
-<td>42</td>
-<td>150</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">Week 24</td>
-<td>65</td>
-<td>41</td>
-<td>49</td>
-<td>155</td>
-</tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Delayed Word Recall</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Delayed Word Recall</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>78</td>
 <td>74</td>
@@ -1581,43 +1541,29 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <td>154</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Ideational Praxis</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Ideational Praxis</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
 <td>81</td>
 <td>234</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>68</td>
 <td>40</td>
 <td>42</td>
 <td>150</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>65</td>
 <td>40</td>
 <td>49</td>
 <td>154</td>
 </tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Maze Solution</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>78</td>
-<td>74</td>
-<td>80</td>
-<td>232</td>
-</tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Maze Solution</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>77</td>
 <td>74</td>
@@ -1639,14 +1585,29 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <td>150</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Naming Objects And Fingers (Refer To 5 C</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Naming Objects And Fingers (Refer To 5 C</td>
+<td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
 <td>81</td>
 <td>234</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">Week 16</td>
+<td>68</td>
+<td>40</td>
+<td>42</td>
+<td>150</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Week 24</td>
+<td>65</td>
+<td>41</td>
+<td>49</td>
+<td>155</td>
+</tr>
+<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Orientation</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
@@ -1668,72 +1629,29 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <td>155</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Orientation</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Recall Of Test Instructions</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
 <td>81</td>
 <td>234</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>68</td>
 <td>40</td>
 <td>42</td>
 <td>150</td>
 </tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">Week 24</td>
-<td>65</td>
-<td>41</td>
-<td>49</td>
-<td>155</td>
-</tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Recall Of Test Instructions</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">Week 8</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">Week 16</td>
-<td>68</td>
-<td>40</td>
-<td>42</td>
-<td>150</td>
-</tr>
-<tr class="even">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>65</td>
 <td>40</td>
 <td>49</td>
 <td>154</td>
 </tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Spoken Language Ability</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Spoken Language Ability</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
@@ -1755,14 +1673,29 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <td>155</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Word Finding Difficulty In Spontaneous S</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Word Finding Difficulty In Spontaneous S</td>
+<td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
 <td>81</td>
 <td>234</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">Week 16</td>
+<td>68</td>
+<td>40</td>
+<td>42</td>
+<td>150</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Week 24</td>
+<td>65</td>
+<td>41</td>
+<td>49</td>
+<td>155</td>
+</tr>
+<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Word Recall Task</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>79</td>
 <td>74</td>
@@ -1784,57 +1717,21 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <td>155</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Word Recall Task</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">Week 8</td>
-<td>79</td>
-<td>74</td>
-<td>81</td>
-<td>234</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">Week 16</td>
-<td>68</td>
-<td>40</td>
-<td>42</td>
-<td>150</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">Week 24</td>
-<td>65</td>
-<td>41</td>
-<td>49</td>
-<td>155</td>
-</tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Word Recognition</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>78</td>
-<td>74</td>
-<td>78</td>
-<td>230</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Word Recognition</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>77</td>
 <td>72</td>
 <td>78</td>
 <td>227</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>67</td>
 <td>39</td>
 <td>39</td>
 <td>145</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>63</td>
 <td>39</td>
@@ -1850,7 +1747,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </section>
 <section id="mean-change-from-baseline" class="level3">
 <h3 class="anchored" data-anchor-id="mean-change-from-baseline">Mean change from baseline</h3>
-<div id="54d6e7ba-224e-42f8-91ea-2ed55278e75e" class="cell" data-execution_count="436">
+<div id="54d6e7ba-224e-42f8-91ea-2ed55278e75e" class="cell" data-execution_count="491">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>display(mean_se_table)  <span class="co"># Mean (SE)</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1864,7 +1761,6 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <th data-quarto-table-cell-role="th">Placebo</th>
 <th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
 <th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
-<th data-quarto-table-cell-role="th">Total</th>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">PARAM</th>
@@ -1872,444 +1768,293 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th"></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Adas-Cog(11) Subscore</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Adas-Cog(11) Subscore</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>0.85 (0.54)</td>
 <td>0.96 (0.42)</td>
 <td>1.76 (0.46)</td>
-<td>1.20 (0.28)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>1.96 (0.66)</td>
 <td>1.19 (0.50)</td>
 <td>1.61 (0.46)</td>
-<td>1.60 (0.32)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>2.54 (0.65)</td>
 <td>1.47 (0.50)</td>
 <td>2.00 (0.62)</td>
-<td>2.01 (0.34)</td>
-</tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Attention/Visual Search Task</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
 </tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Attention/Visual Search Task</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>-2.13 (0.81)</td>
 <td>-1.79 (0.72)</td>
 <td>-0.92 (0.97)</td>
-<td>-1.60 (0.49)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>-1.09 (0.75)</td>
 <td>0.08 (0.94)</td>
 <td>-0.30 (1.36)</td>
-<td>-0.55 (0.56)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>-1.21 (0.95)</td>
 <td>2.12 (1.31)</td>
 <td>0.46 (0.91)</td>
-<td>0.21 (0.61)</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Commands</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Commands</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>0.06 (0.10)</td>
 <td>-0.12 (0.10)</td>
 <td>-0.01 (0.11)</td>
-<td>-0.02 (0.06)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>0.13 (0.10)</td>
 <td>-0.22 (0.14)</td>
 <td>-0.17 (0.14)</td>
-<td>-0.05 (0.07)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>0.23 (0.11)</td>
 <td>-0.02 (0.12)</td>
 <td>-0.06 (0.12)</td>
-<td>0.07 (0.07)</td>
-</tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Comprehension Of Spoken Language</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
 </tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Comprehension Of Spoken Language</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>0.03 (0.07)</td>
 <td>0.04 (0.08)</td>
 <td>0.09 (0.09)</td>
-<td>0.05 (0.05)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>-0.03 (0.09)</td>
 <td>-0.15 (0.10)</td>
 <td>0.00 (0.13)</td>
-<td>-0.05 (0.06)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>0.28 (0.12)</td>
 <td>-0.10 (0.08)</td>
 <td>0.14 (0.14)</td>
-<td>0.14 (0.07)</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Constructional Praxis</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Constructional Praxis</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>-0.04 (0.10)</td>
 <td>-0.18 (0.08)</td>
 <td>0.16 (0.11)</td>
-<td>-0.01 (0.06)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>-0.06 (0.11)</td>
 <td>-0.08 (0.15)</td>
 <td>0.02 (0.14)</td>
-<td>-0.04 (0.07)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>0.06 (0.12)</td>
 <td>0.02 (0.14)</td>
 <td>0.06 (0.13)</td>
-<td>0.05 (0.08)</td>
-</tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Delayed Word Recall</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
 </tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Delayed Word Recall</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>-0.19 (0.22)</td>
 <td>-0.07 (0.19)</td>
 <td>-0.05 (0.21)</td>
-<td>-0.10 (0.12)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>-0.35 (0.25)</td>
 <td>-0.28 (0.23)</td>
 <td>0.12 (0.36)</td>
-<td>-0.20 (0.16)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>-0.18 (0.25)</td>
 <td>0.45 (0.29)</td>
 <td>0.31 (0.33)</td>
-<td>0.14 (0.17)</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Ideational Praxis</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Ideational Praxis</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>0.06 (0.10)</td>
 <td>-0.18 (0.11)</td>
 <td>-0.05 (0.10)</td>
-<td>-0.05 (0.06)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>0.19 (0.10)</td>
 <td>-0.10 (0.18)</td>
 <td>0.12 (0.11)</td>
-<td>0.09 (0.07)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>0.23 (0.12)</td>
 <td>0.12 (0.10)</td>
 <td>-0.04 (0.16)</td>
-<td>0.12 (0.08)</td>
-</tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Maze Solution</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
 </tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Maze Solution</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>8.47 (8.10)</td>
 <td>18.78 (6.87)</td>
 <td>9.99 (7.46)</td>
-<td>12.30 (4.33)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>9.24 (9.27)</td>
 <td>6.15 (8.81)</td>
 <td>-1.98 (9.86)</td>
-<td>5.22 (5.51)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>12.77 (10.89)</td>
 <td>30.28 (11.13)</td>
 <td>7.29 (10.91)</td>
-<td>15.69 (6.43)</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Naming Objects And Fingers (Refer To 5 C</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Naming Objects And Fingers (Refer To 5 C</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>-0.06 (0.09)</td>
 <td>0.04 (0.08)</td>
 <td>-0.01 (0.09)</td>
-<td>-0.01 (0.05)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>0.10 (0.10)</td>
 <td>-0.15 (0.10)</td>
 <td>-0.02 (0.13)</td>
-<td>0.00 (0.06)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>0.02 (0.12)</td>
 <td>0.00 (0.13)</td>
 <td>-0.12 (0.12)</td>
-<td>-0.03 (0.07)</td>
-</tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Orientation</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
 </tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Orientation</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>-0.37 (0.16)</td>
 <td>0.39 (0.17)</td>
 <td>0.11 (0.15)</td>
-<td>0.04 (0.09)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>0.09 (0.20)</td>
 <td>0.42 (0.25)</td>
 <td>0.00 (0.21)</td>
-<td>0.15 (0.13)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>-0.02 (0.19)</td>
 <td>0.61 (0.27)</td>
 <td>0.02 (0.20)</td>
-<td>0.16 (0.12)</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Recall Of Test Instructions</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Recall Of Test Instructions</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>0.05 (0.12)</td>
 <td>0.16 (0.11)</td>
 <td>0.04 (0.11)</td>
-<td>0.08 (0.07)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>-0.06 (0.10)</td>
 <td>0.15 (0.18)</td>
 <td>-0.05 (0.12)</td>
-<td>0.00 (0.07)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>0.14 (0.17)</td>
 <td>0.15 (0.20)</td>
 <td>0.02 (0.17)</td>
-<td>0.10 (0.10)</td>
-</tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Spoken Language Ability</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
 </tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Spoken Language Ability</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>0.11 (0.08)</td>
 <td>0.11 (0.07)</td>
 <td>0.15 (0.06)</td>
-<td>0.12 (0.04)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>0.21 (0.09)</td>
 <td>0.08 (0.09)</td>
 <td>0.10 (0.11)</td>
-<td>0.14 (0.06)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>0.18 (0.12)</td>
 <td>0.05 (0.09)</td>
 <td>0.02 (0.15)</td>
-<td>0.10 (0.07)</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Word Finding Difficulty In Spontaneous S</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Word Finding Difficulty In Spontaneous S</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>0.08 (0.08)</td>
 <td>0.18 (0.10)</td>
 <td>0.27 (0.09)</td>
-<td>0.18 (0.05)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>0.34 (0.11)</td>
 <td>0.10 (0.13)</td>
 <td>0.14 (0.12)</td>
-<td>0.22 (0.07)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>0.28 (0.13)</td>
 <td>0.29 (0.15)</td>
 <td>0.12 (0.14)</td>
-<td>0.23 (0.08)</td>
-</tr>
-<tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Word Recall Task</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
 </tr>
 <tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Word Recall Task</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>0.09 (0.11)</td>
 <td>-0.24 (0.12)</td>
 <td>-0.01 (0.12)</td>
-<td>-0.05 (0.07)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>-0.11 (0.14)</td>
 <td>-0.20 (0.19)</td>
 <td>-0.05 (0.19)</td>
-<td>-0.12 (0.10)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>-0.02 (0.11)</td>
 <td>-0.07 (0.17)</td>
 <td>-0.10 (0.16)</td>
-<td>-0.06 (0.08)</td>
 </tr>
 <tr class="odd">
-<td rowspan="4" data-quarto-table-cell-role="th" data-valign="top">Word Recognition</td>
-<td data-quarto-table-cell-role="th">Baseline</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-<td>0.00 (0.00)</td>
-</tr>
-<tr class="even">
+<td rowspan="3" data-quarto-table-cell-role="th" data-valign="top">Word Recognition</td>
 <td data-quarto-table-cell-role="th">Week 8</td>
 <td>0.81 (0.30)</td>
 <td>0.82 (0.23)</td>
 <td>1.04 (0.22)</td>
-<td>0.89 (0.15)</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td data-quarto-table-cell-role="th">Week 16</td>
 <td>0.93 (0.36)</td>
 <td>1.10 (0.42)</td>
 <td>1.18 (0.30)</td>
-<td>1.04 (0.22)</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td data-quarto-table-cell-role="th">Week 24</td>
 <td>0.71 (0.36)</td>
 <td>0.95 (0.42)</td>
 <td>1.33 (0.34)</td>
-<td>0.97 (0.22)</td>
 </tr>
 </tbody>
 </table>
@@ -2320,7 +2065,15 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </section>
 <section id="ancovachange-from-baseline-treatment-baseline" class="level3">
 <h3 class="anchored" data-anchor-id="ancovachange-from-baseline-treatment-baseline">ANCOVA(Change from baseline ~ Treatment + Baseline)</h3>
-<div id="c08923a7-413d-42d6-b6ac-98de8936446a" class="cell" data-execution_count="445">
+<ul>
+<li><p>Analysis of Covariance (ANCOVA) was performed to evaluate the treatment effect on the change from baseline in ADAS-Cog scores at each visit.</p></li>
+<li><p>The model included treatment group as a fixed effect and baseline ADAS-Cog score as a covariate.</p></li>
+<li><p>Least squares (LS) mean differences between each treatment group and placebo were estimated along with their 95% confidence intervals and p-values.</p></li>
+<li><p>공분산분석(ANCOVA)은 각 방문 시점에서 ADAS-Cog 점수의 기저 대비 변화량을 비교하기 위해 수행되었다.</p></li>
+<li><p>모형에는 치료군을 고정효과로 포함하고 기저 ADAS-Cog 점수를 공변량으로 포함하였다.</p></li>
+<li><p>각 치료군과 위약군(placebo) 간의 최소제곱평균(LS mean) 차이와 95% 신뢰구간 및 p-value를 산출하였다.</p></li>
+</ul>
+<div id="c08923a7-413d-42d6-b6ac-98de8936446a" class="cell" data-execution_count="492">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data[<span class="st">'adqsadas'</span>].copy()</span>
@@ -2358,7 +2111,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>ancova_table</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="445">
+<div class="cell-output cell-output-display" data-execution_count="492">
 <div>
 
 
@@ -2431,10 +2184,30 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <blockquote class="blockquote">
 <p>Across all visits, neither high-dose nor low-dose Xanomeline showed a statistically significant difference compared with placebo.</p>
 </blockquote>
+<ul>
+<li>The ANCOVA analysis did not show statistically significant differences between the Xanomeline treatment groups and placebo at Week 8, Week 16, or Week 24.</li>
+<li>ANCOVA 분석 결과, Week 8, Week 16 및 Week 24 모든 방문 시점에서 Xanomeline 치료군과 위약군 간 통계적으로 유의한 차이는 관찰되지 않았다.</li>
+</ul>
 </section>
+</section>
+<section id="primary-endpoint" class="level2">
+<h2 class="anchored" data-anchor-id="primary-endpoint">Primary endpoint</h2>
+<ul>
+<li>adas-cog change from baseline</li>
+</ul>
 <section id="mmrm-mixed-model-for-repeated-measureschg-trtp-avisit-base" class="level3">
 <h3 class="anchored" data-anchor-id="mmrm-mixed-model-for-repeated-measureschg-trtp-avisit-base">MMRM, Mixed Model for Repeated Measures(CHG ~ TRTP * AVISIT + BASE)</h3>
-<div id="5050c964-c6d1-4b50-97e5-0f5fbf51e84d" class="cell" data-execution_count="455">
+<ul>
+<li><p>A Mixed-Effects Model for Repeated Measures (MMRM) was used to evaluate longitudinal changes in ADAS-Cog scores over time.</p></li>
+<li><p>The model included treatment group, visit, and the treatment-by-visit interaction as fixed effects, with baseline ADAS-Cog score as a covariate.</p></li>
+<li><p>Subject was included as a random effect to account for within-subject correlation across repeated measurements.</p></li>
+<li><p>Least squares mean changes from baseline were estimated for each treatment group at each visit, and treatment differences versus placebo were reported with corresponding standard errors, 95% confidence intervals, and p-values.</p></li>
+<li><p>시간에 따른 ADAS-Cog 점수 변화를 평가하기 위해 반복측정 혼합효과모형(MMRM)을 적용하였다.</p></li>
+<li><p>모형에는 치료군, 방문 시점, 그리고 치료군과 방문 시점 간 상호작용을 고정효과로 포함하였으며 기저 ADAS-Cog 점수를 공변량으로 포함하였다.</p></li>
+<li><p>개체 내 반복 측정으로 인한 상관성을 고려하기 위해 대상자(subject)를 랜덤효과로 포함하였다.</p></li>
+<li><p>각 방문 시점에서 치료군별 최소제곱평균(LS mean) 변화량을 추정하고, 위약군 대비 치료 효과 차이와 함께 표준오차, 95% 신뢰구간 및 p-value를 산출하였다.</p></li>
+</ul>
+<div id="5050c964-c6d1-4b50-97e5-0f5fbf51e84d" class="cell" data-execution_count="493">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data[<span class="st">'adqsadas'</span>].copy()</span>
@@ -2482,7 +2255,7 @@ Group Var                                       4.931    0.073
 </code></pre>
 </div>
 </div>
-<div id="6ae04554-1710-431f-b425-995a78e612d8" class="cell" data-execution_count="464">
+<div id="6ae04554-1710-431f-b425-995a78e612d8" class="cell" data-execution_count="521">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _fmt(x, d<span class="op">=</span><span class="dv">2</span>):</span>
@@ -2498,138 +2271,134 @@ Group Var                                       4.931    0.073
 <span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    base_col<span class="op">=</span><span class="st">"BASE"</span>,</span>
 <span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    visits<span class="op">=</span><span class="va">None</span>,</span>
 <span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    treatments<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    placebo_label<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">2</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># levels</span></span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> visits <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>        visits <span class="op">=</span> <span class="bu">list</span>(pd.Series(mm[visit_col].unique()).dropna())</span>
-<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> treatments <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>        treatments <span class="op">=</span> <span class="bu">list</span>(pd.Series(mm[arm_col].unique()).dropna())</span>
-<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># keep category order if present</span></span>
-<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.api.types.is_categorical_dtype(mm[visit_col]):</span>
-<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>        visits <span class="op">=</span> [v <span class="cf">for</span> v <span class="kw">in</span> mm[visit_col].cat.categories <span class="cf">if</span> v <span class="kw">in</span> visits]</span>
-<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>        visits <span class="op">=</span> <span class="bu">sorted</span>(visits)</span>
-<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.api.types.is_categorical_dtype(mm[arm_col]):</span>
-<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a>        treatments <span class="op">=</span> [t <span class="cf">for</span> t <span class="kw">in</span> mm[arm_col].cat.categories <span class="cf">if</span> t <span class="kw">in</span> treatments]</span>
-<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># placebo default: first level if not given</span></span>
-<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if placebo_label is None:</span></span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     placebo_label = treatments[0]</span></span>
-<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># if placebo_label not in treatments:</span></span>
-<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    <span class="co">#     raise ValueError(f"placebo_label='{placebo_label}' not found in {arm_col} levels: {treatments}")</span></span>
-<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prediction grid at mean(BASE)</span></span>
-<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    base_mean <span class="op">=</span> pd.to_numeric(mm[base_col], errors<span class="op">=</span><span class="st">"coerce"</span>).mean()</span>
-<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> pd.DataFrame([(t, v) <span class="cf">for</span> v <span class="kw">in</span> visits <span class="cf">for</span> t <span class="kw">in</span> treatments], columns<span class="op">=</span>[arm_col, visit_col])</span>
-<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    grid[base_col] <span class="op">=</span> base_mean</span>
-<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># align categories to training data (important)</span></span>
-<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.api.types.is_categorical_dtype(mm[arm_col]):</span>
-<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>        grid[arm_col] <span class="op">=</span> pd.Categorical(grid[arm_col], categories<span class="op">=</span>mm[arm_col].cat.categories)</span>
-<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.api.types.is_categorical_dtype(mm[visit_col]):</span>
-<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>        grid[visit_col] <span class="op">=</span> pd.Categorical(grid[visit_col], categories<span class="op">=</span>mm[visit_col].cat.categories)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">2</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># levels</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> visits <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>        visits <span class="op">=</span> <span class="bu">list</span>(pd.Series(mm[visit_col].unique()).dropna())</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> treatments <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        treatments <span class="op">=</span> <span class="bu">list</span>(pd.Series(mm[arm_col].unique()).dropna())</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># keep category order if present</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.api.types.is_categorical_dtype(mm[visit_col]):</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>        visits <span class="op">=</span> [v <span class="cf">for</span> v <span class="kw">in</span> mm[visit_col].cat.categories <span class="cf">if</span> v <span class="kw">in</span> visits]</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>        visits <span class="op">=</span> <span class="bu">sorted</span>(visits)</span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.api.types.is_categorical_dtype(mm[arm_col]):</span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>        treatments <span class="op">=</span> [t <span class="cf">for</span> t <span class="kw">in</span> mm[arm_col].cat.categories <span class="cf">if</span> t <span class="kw">in</span> treatments]</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># prediction grid at mean(BASE)</span></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    base_mean <span class="op">=</span> pd.to_numeric(mm[base_col], errors<span class="op">=</span><span class="st">"coerce"</span>).mean()</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> pd.DataFrame([(t, v) <span class="cf">for</span> v <span class="kw">in</span> visits <span class="cf">for</span> t <span class="kw">in</span> treatments], columns<span class="op">=</span>[arm_col, visit_col])</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a>    grid[base_col] <span class="op">=</span> base_mean</span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># align categories to training data (important)</span></span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.api.types.is_categorical_dtype(mm[arm_col]):</span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>        grid[arm_col] <span class="op">=</span> pd.Categorical(grid[arm_col], categories<span class="op">=</span>mm[arm_col].cat.categories)</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.api.types.is_categorical_dtype(mm[visit_col]):</span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a>        grid[visit_col] <span class="op">=</span> pd.Categorical(grid[visit_col], categories<span class="op">=</span>mm[visit_col].cat.categories)</span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># build fixed-effects design matrix using model's design_info</span></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>    design_info <span class="op">=</span> res.model.data.design_info</span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> patsy.build_design_matrices([design_info], grid, return_type<span class="op">=</span><span class="st">"dataframe"</span>)[<span class="dv">0</span>]</span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fixed effects only</span></span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>    fe_names <span class="op">=</span> <span class="bu">list</span>(res.fe_params.index)</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>    beta <span class="op">=</span> res.fe_params.loc[fe_names].values</span>
 <span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># build fixed-effects design matrix using model's design_info</span></span>
-<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a>    design_info <span class="op">=</span> res.model.data.design_info</span>
-<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> patsy.build_design_matrices([design_info], grid, return_type<span class="op">=</span><span class="st">"dataframe"</span>)[<span class="dv">0</span>]</span>
-<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># fixed effects only</span></span>
-<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a>    fe_names <span class="op">=</span> <span class="bu">list</span>(res.fe_params.index)</span>
-<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>    beta <span class="op">=</span> res.fe_params.loc[fe_names].values</span>
-<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a>    cov_all <span class="op">=</span> res.cov_params()</span>
-<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ⭐ subset covariance to fixed-effect names</span></span>
-<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(cov_all, pd.DataFrame):</span>
-<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>        covb <span class="op">=</span> cov_all.loc[fe_names, fe_names].values</span>
-<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
-<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>        <span class="co"># fallback if ndarray; assume fixed effects come first</span></span>
-<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>        covb <span class="op">=</span> np.asarray(cov_all)[:<span class="bu">len</span>(fe_names), :<span class="bu">len</span>(fe_names)]</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>    cov_all <span class="op">=</span> res.cov_params()</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># subset covariance to fixed-effect names</span></span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">isinstance</span>(cov_all, pd.DataFrame):</span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a>        covb <span class="op">=</span> cov_all.loc[fe_names, fe_names].values</span>
+<span id="cb23-56"><a href="#cb23-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb23-57"><a href="#cb23-57" aria-hidden="true" tabindex="-1"></a>        <span class="co"># fallback if ndarray; assume fixed effects come first</span></span>
+<span id="cb23-58"><a href="#cb23-58" aria-hidden="true" tabindex="-1"></a>        covb <span class="op">=</span> np.asarray(cov_all)[:<span class="bu">len</span>(fe_names), :<span class="bu">len</span>(fe_names)]</span>
+<span id="cb23-59"><a href="#cb23-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a>    <span class="co"># also align X to fe_names (in case X has extra cols ordering mismatch)</span></span>
+<span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> X[fe_names].values</span>
+<span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LSMeans and SE</span></span>
+<span id="cb23-64"><a href="#cb23-64" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> X <span class="op">@</span> beta</span>
+<span id="cb23-65"><a href="#cb23-65" aria-hidden="true" tabindex="-1"></a>    var_pred <span class="op">=</span> np.einsum(<span class="st">"ij,jk,ik-&gt;i"</span>, X, covb, X)</span>
+<span id="cb23-66"><a href="#cb23-66" aria-hidden="true" tabindex="-1"></a>    se_pred <span class="op">=</span> np.sqrt(np.maximum(var_pred, <span class="dv">0</span>))</span>
 <span id="cb23-67"><a href="#cb23-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># also align X to fe_names (in case X has extra cols ordering mismatch)</span></span>
-<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> X[fe_names].values</span>
-<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># LSMeans and SE</span></span>
-<span id="cb23-72"><a href="#cb23-72" aria-hidden="true" tabindex="-1"></a>    pred <span class="op">=</span> X <span class="op">@</span> beta</span>
-<span id="cb23-73"><a href="#cb23-73" aria-hidden="true" tabindex="-1"></a>    var_pred <span class="op">=</span> np.einsum(<span class="st">"ij,jk,ik-&gt;i"</span>, X, covb, X)</span>
-<span id="cb23-74"><a href="#cb23-74" aria-hidden="true" tabindex="-1"></a>    se_pred <span class="op">=</span> np.sqrt(np.maximum(var_pred, <span class="dv">0</span>))</span>
-<span id="cb23-75"><a href="#cb23-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-76"><a href="#cb23-76" aria-hidden="true" tabindex="-1"></a>    grid_out <span class="op">=</span> grid.copy()</span>
-<span id="cb23-77"><a href="#cb23-77" aria-hidden="true" tabindex="-1"></a>    grid_out[<span class="st">"LSMean"</span>] <span class="op">=</span> pred</span>
-<span id="cb23-78"><a href="#cb23-78" aria-hidden="true" tabindex="-1"></a>    grid_out[<span class="st">"SE"</span>] <span class="op">=</span> se_pred</span>
-<span id="cb23-79"><a href="#cb23-79" aria-hidden="true" tabindex="-1"></a>    grid_out[<span class="st">"LSMean (SE)"</span>] <span class="op">=</span> grid_out[<span class="st">"LSMean"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x: _fmt(x, decimals)) <span class="op">+</span> <span class="op">\</span></span>
-<span id="cb23-80"><a href="#cb23-80" aria-hidden="true" tabindex="-1"></a>                              <span class="st">" ("</span> <span class="op">+</span> grid_out[<span class="st">"SE"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x: _fmt(x, decimals)) <span class="op">+</span> <span class="st">")"</span></span>
-<span id="cb23-81"><a href="#cb23-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-82"><a href="#cb23-82" aria-hidden="true" tabindex="-1"></a>    lsmean_table <span class="op">=</span> (</span>
-<span id="cb23-83"><a href="#cb23-83" aria-hidden="true" tabindex="-1"></a>        grid_out.pivot(index<span class="op">=</span>visit_col, columns<span class="op">=</span>arm_col, values<span class="op">=</span><span class="st">"LSMean (SE)"</span>)</span>
-<span id="cb23-84"><a href="#cb23-84" aria-hidden="true" tabindex="-1"></a>        .loc[visits, treatments]</span>
-<span id="cb23-85"><a href="#cb23-85" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-68"><a href="#cb23-68" aria-hidden="true" tabindex="-1"></a>    grid_out <span class="op">=</span> grid.copy()</span>
+<span id="cb23-69"><a href="#cb23-69" aria-hidden="true" tabindex="-1"></a>    grid_out[<span class="st">"LSMean"</span>] <span class="op">=</span> pred</span>
+<span id="cb23-70"><a href="#cb23-70" aria-hidden="true" tabindex="-1"></a>    grid_out[<span class="st">"SE"</span>] <span class="op">=</span> se_pred</span>
+<span id="cb23-71"><a href="#cb23-71" aria-hidden="true" tabindex="-1"></a>    grid_out[<span class="st">"LSMean (SE)"</span>] <span class="op">=</span> grid_out[<span class="st">"LSMean"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x: _fmt(x, decimals)) <span class="op">+</span> <span class="op">\</span></span>
+<span id="cb23-72"><a href="#cb23-72" aria-hidden="true" tabindex="-1"></a>                              <span class="st">" ("</span> <span class="op">+</span> grid_out[<span class="st">"SE"</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x: _fmt(x, decimals)) <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb23-73"><a href="#cb23-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-74"><a href="#cb23-74" aria-hidden="true" tabindex="-1"></a>    lsmean_table <span class="op">=</span> (</span>
+<span id="cb23-75"><a href="#cb23-75" aria-hidden="true" tabindex="-1"></a>        grid_out.pivot(index<span class="op">=</span>visit_col, columns<span class="op">=</span>arm_col, values<span class="op">=</span><span class="st">"LSMean (SE)"</span>)</span>
+<span id="cb23-76"><a href="#cb23-76" aria-hidden="true" tabindex="-1"></a>        .loc[visits, treatments]</span>
+<span id="cb23-77"><a href="#cb23-77" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-78"><a href="#cb23-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-79"><a href="#cb23-79" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Differences vs placebo (Wald z)</span></span>
+<span id="cb23-80"><a href="#cb23-80" aria-hidden="true" tabindex="-1"></a>    diffs <span class="op">=</span> []</span>
+<span id="cb23-81"><a href="#cb23-81" aria-hidden="true" tabindex="-1"></a>    <span class="co"># To access each row's X, rebuild as DataFrame with fe_names columns</span></span>
+<span id="cb23-82"><a href="#cb23-82" aria-hidden="true" tabindex="-1"></a>    X_df <span class="op">=</span> pd.DataFrame(X, columns<span class="op">=</span>fe_names)</span>
+<span id="cb23-83"><a href="#cb23-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-84"><a href="#cb23-84" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> v <span class="kw">in</span> visits:</span>
+<span id="cb23-85"><a href="#cb23-85" aria-hidden="true" tabindex="-1"></a>        idx_v <span class="op">=</span> grid_out[grid_out[visit_col] <span class="op">==</span> v].index</span>
 <span id="cb23-86"><a href="#cb23-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-87"><a href="#cb23-87" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Differences vs placebo (Wald z)</span></span>
-<span id="cb23-88"><a href="#cb23-88" aria-hidden="true" tabindex="-1"></a>    diffs <span class="op">=</span> []</span>
-<span id="cb23-89"><a href="#cb23-89" aria-hidden="true" tabindex="-1"></a>    <span class="co"># To access each row's X, rebuild as DataFrame with fe_names columns</span></span>
-<span id="cb23-90"><a href="#cb23-90" aria-hidden="true" tabindex="-1"></a>    X_df <span class="op">=</span> pd.DataFrame(X, columns<span class="op">=</span>fe_names)</span>
-<span id="cb23-91"><a href="#cb23-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-92"><a href="#cb23-92" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> v <span class="kw">in</span> visits:</span>
-<span id="cb23-93"><a href="#cb23-93" aria-hidden="true" tabindex="-1"></a>        idx_v <span class="op">=</span> grid_out[grid_out[visit_col] <span class="op">==</span> v].index</span>
-<span id="cb23-94"><a href="#cb23-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-95"><a href="#cb23-95" aria-hidden="true" tabindex="-1"></a>        <span class="co"># placebo row index</span></span>
-<span id="cb23-96"><a href="#cb23-96" aria-hidden="true" tabindex="-1"></a>        idx_p <span class="op">=</span> grid_out[(grid_out[visit_col] <span class="op">==</span> v) <span class="op">&amp;</span> (grid_out[arm_col] <span class="op">==</span> placebo_label)].index[<span class="dv">0</span>]</span>
-<span id="cb23-97"><a href="#cb23-97" aria-hidden="true" tabindex="-1"></a>        x_p <span class="op">=</span> X_df.loc[idx_p].values</span>
-<span id="cb23-98"><a href="#cb23-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-99"><a href="#cb23-99" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> t <span class="kw">in</span> treatments:</span>
-<span id="cb23-100"><a href="#cb23-100" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> t <span class="op">==</span> placebo_label:</span>
-<span id="cb23-101"><a href="#cb23-101" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
-<span id="cb23-102"><a href="#cb23-102" aria-hidden="true" tabindex="-1"></a>            idx_t <span class="op">=</span> grid_out[(grid_out[visit_col] <span class="op">==</span> v) <span class="op">&amp;</span> (grid_out[arm_col] <span class="op">==</span> t)].index[<span class="dv">0</span>]</span>
-<span id="cb23-103"><a href="#cb23-103" aria-hidden="true" tabindex="-1"></a>            x_t <span class="op">=</span> X_df.loc[idx_t].values</span>
+<span id="cb23-87"><a href="#cb23-87" aria-hidden="true" tabindex="-1"></a>        <span class="co"># placebo row index</span></span>
+<span id="cb23-88"><a href="#cb23-88" aria-hidden="true" tabindex="-1"></a>        idx_p <span class="op">=</span> grid_out[(grid_out[visit_col] <span class="op">==</span> v) <span class="op">&amp;</span> (grid_out[arm_col] <span class="op">==</span> <span class="st">"Placebo"</span>)].index[<span class="dv">0</span>]</span>
+<span id="cb23-89"><a href="#cb23-89" aria-hidden="true" tabindex="-1"></a>        x_p <span class="op">=</span> X_df.loc[idx_p].values</span>
+<span id="cb23-90"><a href="#cb23-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-91"><a href="#cb23-91" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> t <span class="kw">in</span> treatments:</span>
+<span id="cb23-92"><a href="#cb23-92" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> t <span class="op">==</span> <span class="st">"Placebo"</span>:</span>
+<span id="cb23-93"><a href="#cb23-93" aria-hidden="true" tabindex="-1"></a>                <span class="cf">continue</span></span>
+<span id="cb23-94"><a href="#cb23-94" aria-hidden="true" tabindex="-1"></a>            idx_t <span class="op">=</span> grid_out[(grid_out[visit_col] <span class="op">==</span> v) <span class="op">&amp;</span> (grid_out[arm_col] <span class="op">==</span> t)].index[<span class="dv">0</span>]</span>
+<span id="cb23-95"><a href="#cb23-95" aria-hidden="true" tabindex="-1"></a>            x_t <span class="op">=</span> X_df.loc[idx_t].values</span>
+<span id="cb23-96"><a href="#cb23-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-97"><a href="#cb23-97" aria-hidden="true" tabindex="-1"></a>            c <span class="op">=</span> x_t <span class="op">-</span> x_p</span>
+<span id="cb23-98"><a href="#cb23-98" aria-hidden="true" tabindex="-1"></a>            diff <span class="op">=</span> c <span class="op">@</span> beta</span>
+<span id="cb23-99"><a href="#cb23-99" aria-hidden="true" tabindex="-1"></a>            se <span class="op">=</span> np.sqrt(np.maximum(c <span class="op">@</span> covb <span class="op">@</span> c, <span class="dv">0</span>))</span>
+<span id="cb23-100"><a href="#cb23-100" aria-hidden="true" tabindex="-1"></a>            z <span class="op">=</span> diff <span class="op">/</span> se <span class="cf">if</span> se <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> np.nan</span>
+<span id="cb23-101"><a href="#cb23-101" aria-hidden="true" tabindex="-1"></a>            p <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z))) <span class="cf">if</span> pd.notna(z) <span class="cf">else</span> np.nan</span>
+<span id="cb23-102"><a href="#cb23-102" aria-hidden="true" tabindex="-1"></a>            ci_low <span class="op">=</span> diff <span class="op">-</span> <span class="fl">1.96</span> <span class="op">*</span> se</span>
+<span id="cb23-103"><a href="#cb23-103" aria-hidden="true" tabindex="-1"></a>            ci_high <span class="op">=</span> diff <span class="op">+</span> <span class="fl">1.96</span> <span class="op">*</span> se</span>
 <span id="cb23-104"><a href="#cb23-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-105"><a href="#cb23-105" aria-hidden="true" tabindex="-1"></a>            c <span class="op">=</span> x_t <span class="op">-</span> x_p</span>
-<span id="cb23-106"><a href="#cb23-106" aria-hidden="true" tabindex="-1"></a>            diff <span class="op">=</span> c <span class="op">@</span> beta</span>
-<span id="cb23-107"><a href="#cb23-107" aria-hidden="true" tabindex="-1"></a>            se <span class="op">=</span> np.sqrt(np.maximum(c <span class="op">@</span> covb <span class="op">@</span> c, <span class="dv">0</span>))</span>
-<span id="cb23-108"><a href="#cb23-108" aria-hidden="true" tabindex="-1"></a>            z <span class="op">=</span> diff <span class="op">/</span> se <span class="cf">if</span> se <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> np.nan</span>
-<span id="cb23-109"><a href="#cb23-109" aria-hidden="true" tabindex="-1"></a>            p <span class="op">=</span> <span class="dv">2</span> <span class="op">*</span> (<span class="dv">1</span> <span class="op">-</span> stats.norm.cdf(<span class="bu">abs</span>(z))) <span class="cf">if</span> pd.notna(z) <span class="cf">else</span> np.nan</span>
-<span id="cb23-110"><a href="#cb23-110" aria-hidden="true" tabindex="-1"></a>            ci_low <span class="op">=</span> diff <span class="op">-</span> <span class="fl">1.96</span> <span class="op">*</span> se</span>
-<span id="cb23-111"><a href="#cb23-111" aria-hidden="true" tabindex="-1"></a>            ci_high <span class="op">=</span> diff <span class="op">+</span> <span class="fl">1.96</span> <span class="op">*</span> se</span>
-<span id="cb23-112"><a href="#cb23-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-113"><a href="#cb23-113" aria-hidden="true" tabindex="-1"></a>            diffs.append({</span>
-<span id="cb23-114"><a href="#cb23-114" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Visit"</span>: v,</span>
-<span id="cb23-115"><a href="#cb23-115" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Treatment"</span>: t,</span>
-<span id="cb23-116"><a href="#cb23-116" aria-hidden="true" tabindex="-1"></a>                <span class="st">"LS Mean Diff vs Placebo"</span>: _fmt(diff, decimals),</span>
-<span id="cb23-117"><a href="#cb23-117" aria-hidden="true" tabindex="-1"></a>                <span class="st">"SE"</span>: _fmt(se, decimals),</span>
-<span id="cb23-118"><a href="#cb23-118" aria-hidden="true" tabindex="-1"></a>                <span class="st">"95% CI"</span>: <span class="ss">f"(</span><span class="sc">{</span>_fmt(ci_low, decimals)<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>_fmt(ci_high, decimals)<span class="sc">}</span><span class="ss">)"</span>,</span>
-<span id="cb23-119"><a href="#cb23-119" aria-hidden="true" tabindex="-1"></a>                <span class="st">"p-value"</span>: <span class="st">"&lt;0.001"</span> <span class="cf">if</span> (pd.notna(p) <span class="kw">and</span> p <span class="op">&lt;</span> <span class="fl">0.001</span>) <span class="cf">else</span> (_fmt(p, <span class="dv">3</span>) <span class="cf">if</span> pd.notna(p) <span class="cf">else</span> <span class="st">""</span>)</span>
-<span id="cb23-120"><a href="#cb23-120" aria-hidden="true" tabindex="-1"></a>            })</span>
-<span id="cb23-121"><a href="#cb23-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-122"><a href="#cb23-122" aria-hidden="true" tabindex="-1"></a>    diff_table <span class="op">=</span> pd.DataFrame(diffs)</span>
-<span id="cb23-123"><a href="#cb23-123" aria-hidden="true" tabindex="-1"></a>    diff_table[<span class="st">"Visit"</span>] <span class="op">=</span> pd.Categorical(diff_table[<span class="st">"Visit"</span>], categories<span class="op">=</span>visits, ordered<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb23-124"><a href="#cb23-124" aria-hidden="true" tabindex="-1"></a>    diff_table <span class="op">=</span> diff_table.sort_values([<span class="st">"Visit"</span>, <span class="st">"Treatment"</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb23-125"><a href="#cb23-125" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-126"><a href="#cb23-126" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lsmean_table, diff_table, base_mean</span>
-<span id="cb23-127"><a href="#cb23-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-128"><a href="#cb23-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-129"><a href="#cb23-129" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== usage =====</span></span>
-<span id="cb23-130"><a href="#cb23-130" aria-hidden="true" tabindex="-1"></a>lsmeans, diffs, base_used <span class="op">=</span> mmrm_lsmeans_and_diffs_fixedonly(</span>
-<span id="cb23-131"><a href="#cb23-131" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res,</span>
-<span id="cb23-132"><a href="#cb23-132" aria-hidden="true" tabindex="-1"></a>    mm<span class="op">=</span>mm,</span>
-<span id="cb23-133"><a href="#cb23-133" aria-hidden="true" tabindex="-1"></a>    arm_col<span class="op">=</span><span class="st">"TRTP"</span>,</span>
-<span id="cb23-134"><a href="#cb23-134" aria-hidden="true" tabindex="-1"></a>    visit_col<span class="op">=</span><span class="st">"AVISIT"</span>,</span>
-<span id="cb23-135"><a href="#cb23-135" aria-hidden="true" tabindex="-1"></a>    base_col<span class="op">=</span><span class="st">"BASE"</span>,</span>
-<span id="cb23-136"><a href="#cb23-136" aria-hidden="true" tabindex="-1"></a>    visits<span class="op">=</span>[<span class="st">"Week 8"</span>,<span class="st">"Week 16"</span>,<span class="st">"Week 24"</span>],</span>
-<span id="cb23-137"><a href="#cb23-137" aria-hidden="true" tabindex="-1"></a>    placebo_label<span class="op">=</span><span class="st">"Placebo"</span>,</span>
-<span id="cb23-138"><a href="#cb23-138" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">2</span></span>
-<span id="cb23-139"><a href="#cb23-139" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-140"><a href="#cb23-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-141"><a href="#cb23-141" aria-hidden="true" tabindex="-1"></a><span class="co"># print(f"BASE fixed at mean(BASE) = {base_used:.2f}\n")</span></span></code></pre></div>
+<span id="cb23-105"><a href="#cb23-105" aria-hidden="true" tabindex="-1"></a>            diffs.append({</span>
+<span id="cb23-106"><a href="#cb23-106" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Visit"</span>: v,</span>
+<span id="cb23-107"><a href="#cb23-107" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Treatment"</span>: t,</span>
+<span id="cb23-108"><a href="#cb23-108" aria-hidden="true" tabindex="-1"></a>                <span class="st">"LS Mean Diff vs Placebo"</span>: _fmt(diff, decimals),</span>
+<span id="cb23-109"><a href="#cb23-109" aria-hidden="true" tabindex="-1"></a>                <span class="st">"SE"</span>: _fmt(se, decimals),</span>
+<span id="cb23-110"><a href="#cb23-110" aria-hidden="true" tabindex="-1"></a>                <span class="st">"95% CI"</span>: <span class="ss">f"(</span><span class="sc">{</span>_fmt(ci_low, decimals)<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span>_fmt(ci_high, decimals)<span class="sc">}</span><span class="ss">)"</span>,</span>
+<span id="cb23-111"><a href="#cb23-111" aria-hidden="true" tabindex="-1"></a>                <span class="st">"p-value"</span>: <span class="st">"&lt;0.001"</span> <span class="cf">if</span> (pd.notna(p) <span class="kw">and</span> p <span class="op">&lt;</span> <span class="fl">0.001</span>) <span class="cf">else</span> (_fmt(p, <span class="dv">3</span>) <span class="cf">if</span> pd.notna(p) <span class="cf">else</span> <span class="st">""</span>)</span>
+<span id="cb23-112"><a href="#cb23-112" aria-hidden="true" tabindex="-1"></a>            })</span>
+<span id="cb23-113"><a href="#cb23-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-114"><a href="#cb23-114" aria-hidden="true" tabindex="-1"></a>    diff_table <span class="op">=</span> pd.DataFrame(diffs)</span>
+<span id="cb23-115"><a href="#cb23-115" aria-hidden="true" tabindex="-1"></a>    diff_table[<span class="st">"Visit"</span>] <span class="op">=</span> pd.Categorical(diff_table[<span class="st">"Visit"</span>], categories<span class="op">=</span>visits, ordered<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-116"><a href="#cb23-116" aria-hidden="true" tabindex="-1"></a>    diff_table <span class="op">=</span> diff_table.sort_values([<span class="st">"Visit"</span>, <span class="st">"Treatment"</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb23-117"><a href="#cb23-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-118"><a href="#cb23-118" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> lsmean_table, diff_table, base_mean</span>
+<span id="cb23-119"><a href="#cb23-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-120"><a href="#cb23-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-121"><a href="#cb23-121" aria-hidden="true" tabindex="-1"></a><span class="co"># ===== usage =====</span></span>
+<span id="cb23-122"><a href="#cb23-122" aria-hidden="true" tabindex="-1"></a>lsmeans, diffs, base_used <span class="op">=</span> mmrm_lsmeans_and_diffs_fixedonly(</span>
+<span id="cb23-123"><a href="#cb23-123" aria-hidden="true" tabindex="-1"></a>    res<span class="op">=</span>res,</span>
+<span id="cb23-124"><a href="#cb23-124" aria-hidden="true" tabindex="-1"></a>    mm<span class="op">=</span>mm,</span>
+<span id="cb23-125"><a href="#cb23-125" aria-hidden="true" tabindex="-1"></a>    arm_col<span class="op">=</span><span class="st">"TRTP"</span>,</span>
+<span id="cb23-126"><a href="#cb23-126" aria-hidden="true" tabindex="-1"></a>    visit_col<span class="op">=</span><span class="st">"AVISIT"</span>,</span>
+<span id="cb23-127"><a href="#cb23-127" aria-hidden="true" tabindex="-1"></a>    base_col<span class="op">=</span><span class="st">"BASE"</span>,</span>
+<span id="cb23-128"><a href="#cb23-128" aria-hidden="true" tabindex="-1"></a>    visits<span class="op">=</span>[<span class="st">"Week 8"</span>,<span class="st">"Week 16"</span>,<span class="st">"Week 24"</span>],</span>
+<span id="cb23-129"><a href="#cb23-129" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">2</span></span>
+<span id="cb23-130"><a href="#cb23-130" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </details>
 </div>
-<div id="108618dd-3d82-4192-99c0-ccbeea786df2" class="cell" data-execution_count="467">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>display(lsmeans)</span></code></pre></div>
+<div id="a4d63d3b-7078-4e4c-a163-67c4a3b2b5ea" class="cell" data-execution_count="522">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"BASE fixed at mean(BASE) = </span><span class="sc">{</span>base_used<span class="sc">:.2f}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>BASE fixed at mean(BASE) = 7.17
+</code></pre>
+</div>
+</div>
+<div id="108618dd-3d82-4192-99c0-ccbeea786df2" class="cell" data-execution_count="523">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>display(lsmeans)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -2674,11 +2443,11 @@ Group Var                                       4.931    0.073
 </div>
 </div>
 </div>
-<ul>
-<li>There is no constant pattern by visits.</li>
-</ul>
-<div id="3be09e87-c93b-4f3f-b892-1025600a1ca3" class="cell" data-execution_count="468">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>display(diffs)</span></code></pre></div>
+<blockquote class="blockquote">
+<p>There is no constant pattern by visits.</p>
+</blockquote>
+<div id="3be09e87-c93b-4f3f-b892-1025600a1ca3" class="cell" data-execution_count="524">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>display(diffs)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -2759,335 +2528,16 @@ Group Var                                       4.931    0.073
 <blockquote class="blockquote">
 <p>Across all visits, neither high-dose nor low-dose Xanomeline showed a statistically significant difference compared with placebo.</p>
 </blockquote>
-</section>
-</section>
-<section id="primary-endpoint" class="level2">
-<h2 class="anchored" data-anchor-id="primary-endpoint">Primary endpoint</h2>
 <ul>
-<li>adas-cog change from baseline</li>
+<li>The MMRM analysis showed no statistically significant treatment differences across visits.</li>
+<li>MMRM 분석에서도 방문 시점 전반에 걸쳐 치료군과 위약군 간 유의한 차이는 확인되지 않았다.</li>
 </ul>
-<div id="c843d85f-f7c7-4e79-ae07-698ab0c8a334" class="cell" data-execution_count="469">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adqsadas'</span>].head()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="469">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">STUDYID</th>
-<th data-quarto-table-cell-role="th">SITEID</th>
-<th data-quarto-table-cell-role="th">SITEGR1</th>
-<th data-quarto-table-cell-role="th">USUBJID</th>
-<th data-quarto-table-cell-role="th">TRTSDT</th>
-<th data-quarto-table-cell-role="th">TRTEDT</th>
-<th data-quarto-table-cell-role="th">TRTP</th>
-<th data-quarto-table-cell-role="th">TRTPN</th>
-<th data-quarto-table-cell-role="th">AGE</th>
-<th data-quarto-table-cell-role="th">AGEGR1</th>
-<th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">ABLFL</th>
-<th data-quarto-table-cell-role="th">ANL01FL</th>
-<th data-quarto-table-cell-role="th">DTYPE</th>
-<th data-quarto-table-cell-role="th">AWRANGE</th>
-<th data-quarto-table-cell-role="th">AWTARGET</th>
-<th data-quarto-table-cell-role="th">AWTDIFF</th>
-<th data-quarto-table-cell-role="th">AWLO</th>
-<th data-quarto-table-cell-role="th">AWHI</th>
-<th data-quarto-table-cell-role="th">AWU</th>
-<th data-quarto-table-cell-role="th">QSSEQ</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td>Y</td>
-<td>Y</td>
-<td></td>
-<td>&lt;=1</td>
-<td>1.0</td>
-<td>0.0</td>
-<td>NaN</td>
-<td>1.0</td>
-<td>DAYS</td>
-<td>5001.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td></td>
-<td>Y</td>
-<td></td>
-<td>2-84</td>
-<td>56.0</td>
-<td>7.0</td>
-<td>2.0</td>
-<td>84.0</td>
-<td>DAYS</td>
-<td>5016.0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td></td>
-<td>Y</td>
-<td></td>
-<td>85-140</td>
-<td>112.0</td>
-<td>14.0</td>
-<td>85.0</td>
-<td>140.0</td>
-<td>DAYS</td>
-<td>5031.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td></td>
-<td>Y</td>
-<td></td>
-<td>&gt;140</td>
-<td>168.0</td>
-<td>0.0</td>
-<td>141.0</td>
-<td>NaN</td>
-<td>DAYS</td>
-<td>5046.0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td>Y</td>
-<td>Y</td>
-<td></td>
-<td>&lt;=1</td>
-<td>1.0</td>
-<td>0.0</td>
-<td>NaN</td>
-<td>1.0</td>
-<td>DAYS</td>
-<td>5002.0</td>
-</tr>
-</tbody>
-</table>
-
-<p>5 rows × 40 columns</p>
-</div>
-</div>
-</div>
-<div id="e6f76891-5446-4106-87dc-55af0c3ff0a0" class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adqscibc'</span>].head()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="470">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">STUDYID</th>
-<th data-quarto-table-cell-role="th">SITEID</th>
-<th data-quarto-table-cell-role="th">SITEGR1</th>
-<th data-quarto-table-cell-role="th">USUBJID</th>
-<th data-quarto-table-cell-role="th">TRTSDT</th>
-<th data-quarto-table-cell-role="th">TRTEDT</th>
-<th data-quarto-table-cell-role="th">TRTP</th>
-<th data-quarto-table-cell-role="th">TRTPN</th>
-<th data-quarto-table-cell-role="th">AGE</th>
-<th data-quarto-table-cell-role="th">AGEGR1</th>
-<th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">AVAL</th>
-<th data-quarto-table-cell-role="th">ANL01FL</th>
-<th data-quarto-table-cell-role="th">DTYPE</th>
-<th data-quarto-table-cell-role="th">AWRANGE</th>
-<th data-quarto-table-cell-role="th">AWTARGET</th>
-<th data-quarto-table-cell-role="th">AWTDIFF</th>
-<th data-quarto-table-cell-role="th">AWLO</th>
-<th data-quarto-table-cell-role="th">AWHI</th>
-<th data-quarto-table-cell-role="th">AWU</th>
-<th data-quarto-table-cell-role="th">QSSEQ</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td>4.0</td>
-<td>Y</td>
-<td></td>
-<td>2-84</td>
-<td>56.0</td>
-<td>7.0</td>
-<td>2.0</td>
-<td>84.0</td>
-<td>DAYS</td>
-<td>6001.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td>4.0</td>
-<td>Y</td>
-<td></td>
-<td>85-140</td>
-<td>112.0</td>
-<td>14.0</td>
-<td>85.0</td>
-<td>140.0</td>
-<td>DAYS</td>
-<td>6002.0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td>4.0</td>
-<td>Y</td>
-<td></td>
-<td>&gt;140</td>
-<td>168.0</td>
-<td>0.0</td>
-<td>141.0</td>
-<td>NaN</td>
-<td>DAYS</td>
-<td>6003.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1023</td>
-<td>2012-08-05</td>
-<td>2012-09-01</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>64.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td>3.0</td>
-<td>Y</td>
-<td></td>
-<td>2-84</td>
-<td>56.0</td>
-<td>27.0</td>
-<td>2.0</td>
-<td>84.0</td>
-<td>DAYS</td>
-<td>6001.0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>701</td>
-<td>01-701-1023</td>
-<td>2012-08-05</td>
-<td>2012-09-01</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>64.0</td>
-<td>&lt;65</td>
-<td>...</td>
-<td>3.0</td>
-<td>Y</td>
-<td>LOCF</td>
-<td>85-140</td>
-<td>112.0</td>
-<td>83.0</td>
-<td>85.0</td>
-<td>140.0</td>
-<td>DAYS</td>
-<td>6001.0</td>
-</tr>
-</tbody>
-</table>
-
-<p>5 rows × 36 columns</p>
-</div>
-</div>
-</div>
+<blockquote class="blockquote">
+<p>Overall, the results indicate that Xanomeline did not demonstrate a significant improvement in ADAS-Cog scores compared with placebo.</p>
+</blockquote>
+<blockquote class="blockquote">
+<p>종합적으로 Xanomeline은 위약군 대비 ADAS-Cog 점수 개선 효과를 유의하게 나타내지 못한 것으로 판단된다.</p>
+</blockquote>
 <ul>
 <li>Safety Analysis
 <ul>
@@ -4782,6 +4232,7 @@ Group Var                                       4.931    0.073
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>AE incidence bar chart</span></code></pre></div>
 </div>
+</section>
 </section>
 <section id="adsl" class="level2">
 <h2 class="anchored" data-anchor-id="adsl">ADSL</h2>
