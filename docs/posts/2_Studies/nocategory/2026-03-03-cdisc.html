@@ -296,7 +296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#analysis-populations" id="toc-analysis-populations" class="nav-link" data-scroll-target="#analysis-populations">Analysis Populations</a></li>
   <li><a href="#demographics-and-baseline-characteristics" id="toc-demographics-and-baseline-characteristics" class="nav-link" data-scroll-target="#demographics-and-baseline-characteristics">Demographics and Baseline Characteristics</a></li>
   <li><a href="#treatment-exposure" id="toc-treatment-exposure" class="nav-link" data-scroll-target="#treatment-exposure">Treatment Exposure</a></li>
-  <li><a href="#efficacy-analysis" id="toc-efficacy-analysis" class="nav-link" data-scroll-target="#efficacy-analysis">Efficacy Analysis</a>
+  <li><a href="#efficacy-analysisbased-on-efficacy-population" id="toc-efficacy-analysisbased-on-efficacy-population" class="nav-link" data-scroll-target="#efficacy-analysisbased-on-efficacy-population">Efficacy Analysis(Based on Efficacy Population)</a>
   <ul class="collapse">
   <li><a href="#n-table" id="toc-n-table" class="nav-link" data-scroll-target="#n-table">N table</a></li>
   <li><a href="#mean-change-from-baseline" id="toc-mean-change-from-baseline" class="nav-link" data-scroll-target="#mean-change-from-baseline">Mean change from baseline</a></li>
@@ -305,6 +305,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#primary-endpoint" id="toc-primary-endpoint" class="nav-link" data-scroll-target="#primary-endpoint">Primary endpoint</a>
   <ul class="collapse">
   <li><a href="#mmrm-mixed-model-for-repeated-measureschg-trtp-avisit-base" id="toc-mmrm-mixed-model-for-repeated-measureschg-trtp-avisit-base" class="nav-link" data-scroll-target="#mmrm-mixed-model-for-repeated-measureschg-trtp-avisit-base">MMRM, Mixed Model for Repeated Measures(CHG ~ TRTP * AVISIT + BASE)</a></li>
+  </ul></li>
+  <li><a href="#safety-analysisbased-on-safety-population" id="toc-safety-analysisbased-on-safety-population" class="nav-link" data-scroll-target="#safety-analysisbased-on-safety-population">Safety Analysis(Based on Safety Population)</a>
+  <ul class="collapse">
+  <li><a href="#adverse-event" id="toc-adverse-event" class="nav-link" data-scroll-target="#adverse-event">Adverse Event</a></li>
+  <li><a href="#laboratory-analysis" id="toc-laboratory-analysis" class="nav-link" data-scroll-target="#laboratory-analysis">Laboratory Analysis</a></li>
   </ul></li>
   <li><a href="#adsl" id="toc-adsl" class="nav-link" data-scroll-target="#adsl">ADSL</a></li>
   </ul></li>
@@ -1275,8 +1280,8 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 </div>
 </section>
-<section id="efficacy-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="efficacy-analysis">Efficacy Analysis</h2>
+<section id="efficacy-analysisbased-on-efficacy-population" class="level2">
+<h2 class="anchored" data-anchor-id="efficacy-analysisbased-on-efficacy-population">Efficacy Analysis(Based on Efficacy Population)</h2>
 <div id="e1a3029d-09ed-4de2-8370-3c59dc589acb" class="cell" data-execution_count="489">
 <details class="code-fold">
 <summary>Show Python code</summary>
@@ -2188,6 +2193,12 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <li>The ANCOVA analysis did not show statistically significant differences between the Xanomeline treatment groups and placebo at Week 8, Week 16, or Week 24.</li>
 <li>ANCOVA 분석 결과, Week 8, Week 16 및 Week 24 모든 방문 시점에서 Xanomeline 치료군과 위약군 간 통계적으로 유의한 차이는 관찰되지 않았다.</li>
 </ul>
+<hr>
+<p>Least squares means (LS means) were estimated from the statistical models to provide adjusted mean estimates for each treatment group. Unlike simple arithmetic means, LS means account for covariates included in the model (e.g., baseline score) and adjust for potential imbalances between treatment groups. This allows for a more accurate comparison of treatment effects across groups.</p>
+<p>In this study, LS mean changes from baseline in ADAS-Cog scores were estimated for each treatment group at each visit using the fitted statistical model.</p>
+<p>최소제곱평균(LS mean)은 통계 모형을 기반으로 각 치료군의 평균을 추정하기 위해 계산되었다. 단순 평균과 달리 LS mean은 모형에 포함된 공변량(예: 기저 점수)을 고려하여 군 간 잠재적인 불균형을 보정한 평균값을 제공한다. 따라서 치료군 간 효과를 보다 정확하게 비교할 수 있다.</p>
+<p>본 연구에서는 통계 모형을 이용하여 각 방문 시점에서 치료군별 ADAS-Cog 점수의 기저 대비 변화량에 대한 LS mean을 추정하였다.</p>
+<hr>
 </section>
 </section>
 <section id="primary-endpoint" class="level2">
@@ -2446,6 +2457,9 @@ Group Var                                       4.931    0.073
 <blockquote class="blockquote">
 <p>There is no constant pattern by visits.</p>
 </blockquote>
+<ul>
+<li>reference는 placebo로 설정</li>
+</ul>
 <div id="3be09e87-c93b-4f3f-b892-1025600a1ca3" class="cell" data-execution_count="524">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>display(diffs)</span></code></pre></div>
 <div class="cell-output cell-output-display">
@@ -2538,17 +2552,292 @@ Group Var                                       4.931    0.073
 <blockquote class="blockquote">
 <p>종합적으로 Xanomeline은 위약군 대비 ADAS-Cog 점수 개선 효과를 유의하게 나타내지 못한 것으로 판단된다.</p>
 </blockquote>
+<hr>
+<p>In mixed-effects models for repeated measures (MMRM), LS means represent model-based estimates of the mean outcome for each treatment group at each visit. These estimates incorporate all available longitudinal data and adjust for baseline differences, enabling a robust comparison of treatment effects over time.</p>
+<p>반복측정 혼합효과모형(MMRM)에서는 각 방문 시점에서 치료군별 평균 결과를 모형 기반으로 추정한 값이 LS mean이다. LS mean은 기저값 보정과 반복 측정 데이터를 모두 반영하여 시간에 따른 치료 효과를 보다 안정적으로 비교할 수 있게 한다.</p>
+<hr>
+</section>
+</section>
+<section id="safety-analysisbased-on-safety-population" class="level2">
+<h2 class="anchored" data-anchor-id="safety-analysisbased-on-safety-population">Safety Analysis(Based on Safety Population)</h2>
+<section id="adverse-event" class="level3">
+<h3 class="anchored" data-anchor-id="adverse-event">Adverse Event</h3>
+<div id="32c54eab-c476-4bf0-a28c-b18bd6d087fd" class="cell" data-execution_count="577">
+<details class="code-fold">
+<summary>Show Python code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fmt_npct(n, denom, decimals<span class="op">=</span><span class="dv">1</span>):</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> denom <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> (0.</span><span class="sc">{</span><span class="st">''</span><span class="sc">.</span>join([<span class="st">'0'</span>]<span class="op">*</span>decimals)<span class="sc">}</span><span class="ss">%)"</span> <span class="cf">if</span> decimals <span class="op">&gt;</span> <span class="dv">0</span> <span class="cf">else</span> <span class="ss">f"</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> (0%)"</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> <span class="dv">100</span> <span class="op">*</span> n <span class="op">/</span> denom</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span>pct<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">%)"</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_treatment_levels(df, trt_col<span class="op">=</span><span class="st">"TRTA"</span>):</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [x <span class="cf">for</span> x <span class="kw">in</span> df[trt_col].dropna().unique().tolist()]</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_total_row(df, trt_col<span class="op">=</span><span class="st">"TRTA"</span>, usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>):</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> get_treatment_levels(df, trt_col)</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>    denoms <span class="op">=</span> df[[usubjid_col, trt_col]].drop_duplicates().groupby(trt_col)[usubjid_col].nunique()</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    total_n <span class="op">=</span> df[usubjid_col].nunique()</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> levels, denoms, total_n</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_soc_pt_table(</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    soc_col<span class="op">=</span><span class="st">"AESOC"</span>,</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    pt_col<span class="op">=</span><span class="st">"AEDECOD"</span>,</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a>    sort_by_total<span class="op">=</span><span class="va">True</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="co">    Input df should already be filtered to the right analysis set and deduplicated appropriately.</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns a wide table with columns:</span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="co">    AESOC, AEDECOD, [TRTA groups...], Total</span></span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>    levels, denoms, total_n <span class="op">=</span> make_total_row(df, trt_col<span class="op">=</span>trt_col, usubjid_col<span class="op">=</span>usubjid_col)</span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> []</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># total counts by SOC/PT across treatment arms</span></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>    soc_total_counts <span class="op">=</span> (</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a>        df.groupby(soc_col)[usubjid_col]</span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a>        .nunique()</span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>        .sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>    soc_order <span class="op">=</span> soc_total_counts.index.tolist()</span>
+<span id="cb28-45"><a href="#cb28-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-46"><a href="#cb28-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> soc <span class="kw">in</span> soc_order:</span>
+<span id="cb28-47"><a href="#cb28-47" aria-hidden="true" tabindex="-1"></a>        d_soc <span class="op">=</span> df[df[soc_col] <span class="op">==</span> soc].copy()</span>
+<span id="cb28-48"><a href="#cb28-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-49"><a href="#cb28-49" aria-hidden="true" tabindex="-1"></a>        <span class="co"># SOC row: unique subjects with any event in SOC</span></span>
+<span id="cb28-50"><a href="#cb28-50" aria-hidden="true" tabindex="-1"></a>        row_soc <span class="op">=</span> {soc_col: soc, pt_col: <span class="st">""</span>}</span>
+<span id="cb28-51"><a href="#cb28-51" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> trt <span class="kw">in</span> levels:</span>
+<span id="cb28-52"><a href="#cb28-52" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> d_soc.loc[d_soc[trt_col] <span class="op">==</span> trt, usubjid_col].nunique()</span>
+<span id="cb28-53"><a href="#cb28-53" aria-hidden="true" tabindex="-1"></a>            row_soc[trt] <span class="op">=</span> fmt_npct(n, denoms.get(trt, <span class="dv">0</span>), decimals)</span>
+<span id="cb28-54"><a href="#cb28-54" aria-hidden="true" tabindex="-1"></a>        row_soc[<span class="st">"Total"</span>] <span class="op">=</span> fmt_npct(d_soc[usubjid_col].nunique(), total_n, decimals)</span>
+<span id="cb28-55"><a href="#cb28-55" aria-hidden="true" tabindex="-1"></a>        rows.append(row_soc)</span>
+<span id="cb28-56"><a href="#cb28-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-57"><a href="#cb28-57" aria-hidden="true" tabindex="-1"></a>        <span class="co"># PT rows within SOC</span></span>
+<span id="cb28-58"><a href="#cb28-58" aria-hidden="true" tabindex="-1"></a>        pt_counts <span class="op">=</span> (</span>
+<span id="cb28-59"><a href="#cb28-59" aria-hidden="true" tabindex="-1"></a>            d_soc.groupby(pt_col)[usubjid_col]</span>
+<span id="cb28-60"><a href="#cb28-60" aria-hidden="true" tabindex="-1"></a>            .nunique()</span>
+<span id="cb28-61"><a href="#cb28-61" aria-hidden="true" tabindex="-1"></a>            .sort_values(ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb28-62"><a href="#cb28-62" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb28-63"><a href="#cb28-63" aria-hidden="true" tabindex="-1"></a>        pt_order <span class="op">=</span> pt_counts.index.tolist()</span>
+<span id="cb28-64"><a href="#cb28-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-65"><a href="#cb28-65" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> pt <span class="kw">in</span> pt_order:</span>
+<span id="cb28-66"><a href="#cb28-66" aria-hidden="true" tabindex="-1"></a>            d_pt <span class="op">=</span> d_soc[d_soc[pt_col] <span class="op">==</span> pt].copy()</span>
+<span id="cb28-67"><a href="#cb28-67" aria-hidden="true" tabindex="-1"></a>            row_pt <span class="op">=</span> {soc_col: <span class="st">""</span>, pt_col: pt}</span>
+<span id="cb28-68"><a href="#cb28-68" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> trt <span class="kw">in</span> levels:</span>
+<span id="cb28-69"><a href="#cb28-69" aria-hidden="true" tabindex="-1"></a>                n <span class="op">=</span> d_pt.loc[d_pt[trt_col] <span class="op">==</span> trt, usubjid_col].nunique()</span>
+<span id="cb28-70"><a href="#cb28-70" aria-hidden="true" tabindex="-1"></a>                row_pt[trt] <span class="op">=</span> fmt_npct(n, denoms.get(trt, <span class="dv">0</span>), decimals)</span>
+<span id="cb28-71"><a href="#cb28-71" aria-hidden="true" tabindex="-1"></a>            row_pt[<span class="st">"Total"</span>] <span class="op">=</span> fmt_npct(d_pt[usubjid_col].nunique(), total_n, decimals)</span>
+<span id="cb28-72"><a href="#cb28-72" aria-hidden="true" tabindex="-1"></a>            rows.append(row_pt)</span>
+<span id="cb28-73"><a href="#cb28-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-74"><a href="#cb28-74" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pd.DataFrame(rows)</span>
+<span id="cb28-75"><a href="#cb28-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out[[soc_col, pt_col] <span class="op">+</span> levels <span class="op">+</span> [<span class="st">"Total"</span>]]</span>
+<span id="cb28-76"><a href="#cb28-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-77"><a href="#cb28-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-78"><a href="#cb28-78" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> build_binary_summary_table(</span>
+<span id="cb28-79"><a href="#cb28-79" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb28-80"><a href="#cb28-80" aria-hidden="true" tabindex="-1"></a>    flag_vars,</span>
+<span id="cb28-81"><a href="#cb28-81" aria-hidden="true" tabindex="-1"></a>    label_map<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb28-82"><a href="#cb28-82" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-83"><a href="#cb28-83" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-84"><a href="#cb28-84" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb28-85"><a href="#cb28-85" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb28-86"><a href="#cb28-86" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb28-87"><a href="#cb28-87" aria-hidden="true" tabindex="-1"></a><span class="co">    For variables like AESER, AESCAN, AESCONG, AESDISAB, AESDTH, AESHOSP, AESLIFE, AESOD</span></span>
+<span id="cb28-88"><a href="#cb28-88" aria-hidden="true" tabindex="-1"></a><span class="co">    summarize count of subjects with Y.</span></span>
+<span id="cb28-89"><a href="#cb28-89" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb28-90"><a href="#cb28-90" aria-hidden="true" tabindex="-1"></a>    label_map <span class="op">=</span> label_map <span class="kw">or</span> {}</span>
+<span id="cb28-91"><a href="#cb28-91" aria-hidden="true" tabindex="-1"></a>    levels, denoms, total_n <span class="op">=</span> make_total_row(df, trt_col<span class="op">=</span>trt_col, usubjid_col<span class="op">=</span>usubjid_col)</span>
+<span id="cb28-92"><a href="#cb28-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-93"><a href="#cb28-93" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> []</span>
+<span id="cb28-94"><a href="#cb28-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> var <span class="kw">in</span> flag_vars:</span>
+<span id="cb28-95"><a href="#cb28-95" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> df[df[var] <span class="op">==</span> <span class="st">"Y"</span>].copy()</span>
+<span id="cb28-96"><a href="#cb28-96" aria-hidden="true" tabindex="-1"></a>        row <span class="op">=</span> {<span class="st">"Parameter"</span>: label_map.get(var, var)}</span>
+<span id="cb28-97"><a href="#cb28-97" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> trt <span class="kw">in</span> levels:</span>
+<span id="cb28-98"><a href="#cb28-98" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> d.loc[d[trt_col] <span class="op">==</span> trt, usubjid_col].nunique()</span>
+<span id="cb28-99"><a href="#cb28-99" aria-hidden="true" tabindex="-1"></a>            row[trt] <span class="op">=</span> fmt_npct(n, denoms.get(trt, <span class="dv">0</span>), decimals)</span>
+<span id="cb28-100"><a href="#cb28-100" aria-hidden="true" tabindex="-1"></a>        row[<span class="st">"Total"</span>] <span class="op">=</span> fmt_npct(d[usubjid_col].nunique(), total_n, decimals)</span>
+<span id="cb28-101"><a href="#cb28-101" aria-hidden="true" tabindex="-1"></a>        rows.append(row)</span>
+<span id="cb28-102"><a href="#cb28-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-103"><a href="#cb28-103" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pd.DataFrame(rows)</span>
+<span id="cb28-104"><a href="#cb28-104" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out[[<span class="st">"Parameter"</span>] <span class="op">+</span> levels <span class="op">+</span> [<span class="st">"Total"</span>]]</span>
+<span id="cb28-105"><a href="#cb28-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-106"><a href="#cb28-106" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-107"><a href="#cb28-107" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------</span></span>
+<span id="cb28-108"><a href="#cb28-108" aria-hidden="true" tabindex="-1"></a><span class="co"># ADR condition helper</span></span>
+<span id="cb28-109"><a href="#cb28-109" aria-hidden="true" tabindex="-1"></a><span class="co"># -----------------------------</span></span>
+<span id="cb28-110"><a href="#cb28-110" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> is_related(series):</span>
+<span id="cb28-111"><a href="#cb28-111" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> series.astype(<span class="bu">str</span>).<span class="bu">str</span>.upper().<span class="bu">str</span>.strip()</span>
+<span id="cb28-112"><a href="#cb28-112" aria-hidden="true" tabindex="-1"></a>    related_vals <span class="op">=</span> {<span class="st">"POSSIBLE"</span>, <span class="st">"PROBABLE"</span>}</span>
+<span id="cb28-113"><a href="#cb28-113" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> s.isin(related_vals)</span>
+<span id="cb28-114"><a href="#cb28-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-115"><a href="#cb28-115" aria-hidden="true" tabindex="-1"></a>adae <span class="op">=</span> data[<span class="st">"adae"</span>].copy()</span>
+<span id="cb28-116"><a href="#cb28-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-117"><a href="#cb28-117" aria-hidden="true" tabindex="-1"></a>adae_saf <span class="op">=</span> adae[adae[<span class="st">"SAFFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>].copy()</span>
+<span id="cb28-118"><a href="#cb28-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-119"><a href="#cb28-119" aria-hidden="true" tabindex="-1"></a>teae_soc <span class="op">=</span> adae_saf[</span>
+<span id="cb28-120"><a href="#cb28-120" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"TRTEMFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>) <span class="op">&amp;</span></span>
+<span id="cb28-121"><a href="#cb28-121" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"AOCCSFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>)</span>
+<span id="cb28-122"><a href="#cb28-122" aria-hidden="true" tabindex="-1"></a>].copy()</span>
+<span id="cb28-123"><a href="#cb28-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-124"><a href="#cb28-124" aria-hidden="true" tabindex="-1"></a><span class="co"># PT level: first occurrence within PT</span></span>
+<span id="cb28-125"><a href="#cb28-125" aria-hidden="true" tabindex="-1"></a>teae_pt <span class="op">=</span> adae_saf[</span>
+<span id="cb28-126"><a href="#cb28-126" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"TRTEMFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>) <span class="op">&amp;</span></span>
+<span id="cb28-127"><a href="#cb28-127" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"AOCCPFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>)</span>
+<span id="cb28-128"><a href="#cb28-128" aria-hidden="true" tabindex="-1"></a>].copy()</span>
+<span id="cb28-129"><a href="#cb28-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-130"><a href="#cb28-130" aria-hidden="true" tabindex="-1"></a>teae_base <span class="op">=</span> teae_pt.copy()</span>
+<span id="cb28-131"><a href="#cb28-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-132"><a href="#cb28-132" aria-hidden="true" tabindex="-1"></a>teae_table <span class="op">=</span> build_soc_pt_table(</span>
+<span id="cb28-133"><a href="#cb28-133" aria-hidden="true" tabindex="-1"></a>    teae_base,</span>
+<span id="cb28-134"><a href="#cb28-134" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-135"><a href="#cb28-135" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-136"><a href="#cb28-136" aria-hidden="true" tabindex="-1"></a>    soc_col<span class="op">=</span><span class="st">"AESOC"</span>,</span>
+<span id="cb28-137"><a href="#cb28-137" aria-hidden="true" tabindex="-1"></a>    pt_col<span class="op">=</span><span class="st">"AEDECOD"</span>,</span>
+<span id="cb28-138"><a href="#cb28-138" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb28-139"><a href="#cb28-139" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-140"><a href="#cb28-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-141"><a href="#cb28-141" aria-hidden="true" tabindex="-1"></a>adr <span class="op">=</span> adae_saf[</span>
+<span id="cb28-142"><a href="#cb28-142" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"TRTEMFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>) <span class="op">&amp;</span></span>
+<span id="cb28-143"><a href="#cb28-143" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"AOCCPFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>) <span class="op">&amp;</span></span>
+<span id="cb28-144"><a href="#cb28-144" aria-hidden="true" tabindex="-1"></a>    (is_related(adae_saf[<span class="st">"AEREL"</span>]))</span>
+<span id="cb28-145"><a href="#cb28-145" aria-hidden="true" tabindex="-1"></a>].copy()</span>
+<span id="cb28-146"><a href="#cb28-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-147"><a href="#cb28-147" aria-hidden="true" tabindex="-1"></a>adr_table <span class="op">=</span> build_soc_pt_table(</span>
+<span id="cb28-148"><a href="#cb28-148" aria-hidden="true" tabindex="-1"></a>    adr,</span>
+<span id="cb28-149"><a href="#cb28-149" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-150"><a href="#cb28-150" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-151"><a href="#cb28-151" aria-hidden="true" tabindex="-1"></a>    soc_col<span class="op">=</span><span class="st">"AESOC"</span>,</span>
+<span id="cb28-152"><a href="#cb28-152" aria-hidden="true" tabindex="-1"></a>    pt_col<span class="op">=</span><span class="st">"AEDECOD"</span>,</span>
+<span id="cb28-153"><a href="#cb28-153" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb28-154"><a href="#cb28-154" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-155"><a href="#cb28-155" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-156"><a href="#cb28-156" aria-hidden="true" tabindex="-1"></a>serious <span class="op">=</span> adae_saf[</span>
+<span id="cb28-157"><a href="#cb28-157" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"TRTEMFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>) <span class="op">&amp;</span></span>
+<span id="cb28-158"><a href="#cb28-158" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"AESER"</span>] <span class="op">==</span> <span class="st">"Y"</span>)</span>
+<span id="cb28-159"><a href="#cb28-159" aria-hidden="true" tabindex="-1"></a>].copy()</span>
+<span id="cb28-160"><a href="#cb28-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-161"><a href="#cb28-161" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="st">"AOCC04FL"</span> <span class="kw">in</span> serious.columns:</span>
+<span id="cb28-162"><a href="#cb28-162" aria-hidden="true" tabindex="-1"></a>    serious <span class="op">=</span> serious[serious[<span class="st">"AOCC04FL"</span>] <span class="op">==</span> <span class="st">"Y"</span>].copy()</span>
+<span id="cb28-163"><a href="#cb28-163" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb28-164"><a href="#cb28-164" aria-hidden="true" tabindex="-1"></a>    serious <span class="op">=</span> serious.drop_duplicates(subset<span class="op">=</span>[<span class="st">"USUBJID"</span>, <span class="st">"TRTA"</span>, <span class="st">"AESOC"</span>, <span class="st">"AEDECOD"</span>])</span>
+<span id="cb28-165"><a href="#cb28-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-166"><a href="#cb28-166" aria-hidden="true" tabindex="-1"></a>serious_table <span class="op">=</span> build_soc_pt_table(</span>
+<span id="cb28-167"><a href="#cb28-167" aria-hidden="true" tabindex="-1"></a>    serious,</span>
+<span id="cb28-168"><a href="#cb28-168" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-169"><a href="#cb28-169" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-170"><a href="#cb28-170" aria-hidden="true" tabindex="-1"></a>    soc_col<span class="op">=</span><span class="st">"AESOC"</span>,</span>
+<span id="cb28-171"><a href="#cb28-171" aria-hidden="true" tabindex="-1"></a>    pt_col<span class="op">=</span><span class="st">"AEDECOD"</span>,</span>
+<span id="cb28-172"><a href="#cb28-172" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb28-173"><a href="#cb28-173" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-174"><a href="#cb28-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-175"><a href="#cb28-175" aria-hidden="true" tabindex="-1"></a>serious_table_adr <span class="op">=</span> build_soc_pt_table(</span>
+<span id="cb28-176"><a href="#cb28-176" aria-hidden="true" tabindex="-1"></a>    serious[(is_related(adae_saf[<span class="st">"AEREL"</span>]))],</span>
+<span id="cb28-177"><a href="#cb28-177" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-178"><a href="#cb28-178" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-179"><a href="#cb28-179" aria-hidden="true" tabindex="-1"></a>    soc_col<span class="op">=</span><span class="st">"AESOC"</span>,</span>
+<span id="cb28-180"><a href="#cb28-180" aria-hidden="true" tabindex="-1"></a>    pt_col<span class="op">=</span><span class="st">"AEDECOD"</span>,</span>
+<span id="cb28-181"><a href="#cb28-181" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb28-182"><a href="#cb28-182" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-183"><a href="#cb28-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-184"><a href="#cb28-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-185"><a href="#cb28-185" aria-hidden="true" tabindex="-1"></a>death_ae <span class="op">=</span> adae_saf[</span>
+<span id="cb28-186"><a href="#cb28-186" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"TRTEMFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>) <span class="op">&amp;</span></span>
+<span id="cb28-187"><a href="#cb28-187" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"AESDTH"</span>] <span class="op">==</span> <span class="st">"Y"</span>)</span>
+<span id="cb28-188"><a href="#cb28-188" aria-hidden="true" tabindex="-1"></a>].copy()</span>
+<span id="cb28-189"><a href="#cb28-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-190"><a href="#cb28-190" aria-hidden="true" tabindex="-1"></a><span class="co"># no dedicated death occurrence flags in the variable list, so deduplicate manually</span></span>
+<span id="cb28-191"><a href="#cb28-191" aria-hidden="true" tabindex="-1"></a>death_ae <span class="op">=</span> death_ae.drop_duplicates(subset<span class="op">=</span>[<span class="st">"USUBJID"</span>, <span class="st">"TRTA"</span>, <span class="st">"AESOC"</span>, <span class="st">"AEDECOD"</span>])</span>
+<span id="cb28-192"><a href="#cb28-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-193"><a href="#cb28-193" aria-hidden="true" tabindex="-1"></a>death_table <span class="op">=</span> build_soc_pt_table(</span>
+<span id="cb28-194"><a href="#cb28-194" aria-hidden="true" tabindex="-1"></a>    death_ae,</span>
+<span id="cb28-195"><a href="#cb28-195" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-196"><a href="#cb28-196" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-197"><a href="#cb28-197" aria-hidden="true" tabindex="-1"></a>    soc_col<span class="op">=</span><span class="st">"AESOC"</span>,</span>
+<span id="cb28-198"><a href="#cb28-198" aria-hidden="true" tabindex="-1"></a>    pt_col<span class="op">=</span><span class="st">"AEDECOD"</span>,</span>
+<span id="cb28-199"><a href="#cb28-199" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb28-200"><a href="#cb28-200" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-201"><a href="#cb28-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-202"><a href="#cb28-202" aria-hidden="true" tabindex="-1"></a>death_table_adr <span class="op">=</span> build_soc_pt_table(</span>
+<span id="cb28-203"><a href="#cb28-203" aria-hidden="true" tabindex="-1"></a>    death_ae[(is_related(adae_saf[<span class="st">"AEREL"</span>]))],</span>
+<span id="cb28-204"><a href="#cb28-204" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-205"><a href="#cb28-205" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-206"><a href="#cb28-206" aria-hidden="true" tabindex="-1"></a>    soc_col<span class="op">=</span><span class="st">"AESOC"</span>,</span>
+<span id="cb28-207"><a href="#cb28-207" aria-hidden="true" tabindex="-1"></a>    pt_col<span class="op">=</span><span class="st">"AEDECOD"</span>,</span>
+<span id="cb28-208"><a href="#cb28-208" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb28-209"><a href="#cb28-209" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-210"><a href="#cb28-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-211"><a href="#cb28-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-212"><a href="#cb28-212" aria-hidden="true" tabindex="-1"></a>criteria_vars <span class="op">=</span> [</span>
+<span id="cb28-213"><a href="#cb28-213" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESER"</span>,</span>
+<span id="cb28-214"><a href="#cb28-214" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESCAN"</span>,</span>
+<span id="cb28-215"><a href="#cb28-215" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESCONG"</span>,</span>
+<span id="cb28-216"><a href="#cb28-216" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESDISAB"</span>,</span>
+<span id="cb28-217"><a href="#cb28-217" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESDTH"</span>,</span>
+<span id="cb28-218"><a href="#cb28-218" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESHOSP"</span>,</span>
+<span id="cb28-219"><a href="#cb28-219" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESLIFE"</span>,</span>
+<span id="cb28-220"><a href="#cb28-220" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESOD"</span></span>
+<span id="cb28-221"><a href="#cb28-221" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb28-222"><a href="#cb28-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-223"><a href="#cb28-223" aria-hidden="true" tabindex="-1"></a>criteria_labels <span class="op">=</span> {</span>
+<span id="cb28-224"><a href="#cb28-224" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESER"</span>: <span class="st">"Serious Event"</span>,</span>
+<span id="cb28-225"><a href="#cb28-225" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESCAN"</span>: <span class="st">"Involves Cancer"</span>,</span>
+<span id="cb28-226"><a href="#cb28-226" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESCONG"</span>: <span class="st">"Congenital Anomaly or Birth Defect"</span>,</span>
+<span id="cb28-227"><a href="#cb28-227" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESDISAB"</span>: <span class="st">"Persistent or Significant Disability/Incapacity"</span>,</span>
+<span id="cb28-228"><a href="#cb28-228" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESDTH"</span>: <span class="st">"Results in Death"</span>,</span>
+<span id="cb28-229"><a href="#cb28-229" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESHOSP"</span>: <span class="st">"Requires or Prolongs Hospitalization"</span>,</span>
+<span id="cb28-230"><a href="#cb28-230" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESLIFE"</span>: <span class="st">"Life-Threatening"</span>,</span>
+<span id="cb28-231"><a href="#cb28-231" aria-hidden="true" tabindex="-1"></a>    <span class="st">"AESOD"</span>: <span class="st">"Occurred with Overdose"</span></span>
+<span id="cb28-232"><a href="#cb28-232" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb28-233"><a href="#cb28-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-234"><a href="#cb28-234" aria-hidden="true" tabindex="-1"></a>teae_criteria_df <span class="op">=</span> adae_saf[adae_saf[<span class="st">"TRTEMFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>].copy()</span>
+<span id="cb28-235"><a href="#cb28-235" aria-hidden="true" tabindex="-1"></a>teae_criteria_df <span class="op">=</span> teae_criteria_df.drop_duplicates(subset<span class="op">=</span>[<span class="st">"USUBJID"</span>, <span class="st">"TRTA"</span>] <span class="op">+</span> criteria_vars)</span>
+<span id="cb28-236"><a href="#cb28-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-237"><a href="#cb28-237" aria-hidden="true" tabindex="-1"></a>teae_criteria_table <span class="op">=</span> build_binary_summary_table(</span>
+<span id="cb28-238"><a href="#cb28-238" aria-hidden="true" tabindex="-1"></a>    teae_criteria_df,</span>
+<span id="cb28-239"><a href="#cb28-239" aria-hidden="true" tabindex="-1"></a>    flag_vars<span class="op">=</span>criteria_vars,</span>
+<span id="cb28-240"><a href="#cb28-240" aria-hidden="true" tabindex="-1"></a>    label_map<span class="op">=</span>criteria_labels,</span>
+<span id="cb28-241"><a href="#cb28-241" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-242"><a href="#cb28-242" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-243"><a href="#cb28-243" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb28-244"><a href="#cb28-244" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-245"><a href="#cb28-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-246"><a href="#cb28-246" aria-hidden="true" tabindex="-1"></a>adr_criteria_df <span class="op">=</span> adae_saf[</span>
+<span id="cb28-247"><a href="#cb28-247" aria-hidden="true" tabindex="-1"></a>    (adae_saf[<span class="st">"TRTEMFL"</span>] <span class="op">==</span> <span class="st">"Y"</span>) <span class="op">&amp;</span></span>
+<span id="cb28-248"><a href="#cb28-248" aria-hidden="true" tabindex="-1"></a>    (is_related(adae_saf[<span class="st">"AEREL"</span>]))</span>
+<span id="cb28-249"><a href="#cb28-249" aria-hidden="true" tabindex="-1"></a>].copy()</span>
+<span id="cb28-250"><a href="#cb28-250" aria-hidden="true" tabindex="-1"></a>adr_criteria_df <span class="op">=</span> adr_criteria_df.drop_duplicates(subset<span class="op">=</span>[<span class="st">"USUBJID"</span>, <span class="st">"TRTA"</span>] <span class="op">+</span> criteria_vars)</span>
+<span id="cb28-251"><a href="#cb28-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-252"><a href="#cb28-252" aria-hidden="true" tabindex="-1"></a>adr_criteria_table <span class="op">=</span> build_binary_summary_table(</span>
+<span id="cb28-253"><a href="#cb28-253" aria-hidden="true" tabindex="-1"></a>    adr_criteria_df,</span>
+<span id="cb28-254"><a href="#cb28-254" aria-hidden="true" tabindex="-1"></a>    flag_vars<span class="op">=</span>criteria_vars,</span>
+<span id="cb28-255"><a href="#cb28-255" aria-hidden="true" tabindex="-1"></a>    label_map<span class="op">=</span>criteria_labels,</span>
+<span id="cb28-256"><a href="#cb28-256" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb28-257"><a href="#cb28-257" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb28-258"><a href="#cb28-258" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb28-259"><a href="#cb28-259" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  serious[(is_related(adae_saf["AEREL"]))],
+&lt;ipython-input-577-8a30cf7a090b&gt;:206: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+  death_ae[(is_related(adae_saf["AEREL"]))],</code></pre>
+</div>
+</div>
 <ul>
-<li>Safety Analysis
-<ul>
-<li>TEAE</li>
-<li>serious AE</li>
-<li>AE leading to discontinuation</li>
-</ul></li>
+<li>TEAE SOC/PT Table</li>
 </ul>
-<div id="fdd09f56-1c63-4b4a-8209-86f3858ba21b" class="cell" data-execution_count="330">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adae'</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="330">
+<div id="d599cfc5-e714-45d7-80eb-a68f45bea6b6" class="cell" data-execution_count="568">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>display(teae_table)</span></code></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 
 
@@ -2556,149 +2845,59 @@ Group Var                                       4.931    0.073
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">STUDYID</th>
-<th data-quarto-table-cell-role="th">SITEID</th>
-<th data-quarto-table-cell-role="th">USUBJID</th>
-<th data-quarto-table-cell-role="th">TRTA</th>
-<th data-quarto-table-cell-role="th">TRTAN</th>
-<th data-quarto-table-cell-role="th">AGE</th>
-<th data-quarto-table-cell-role="th">AGEGR1</th>
-<th data-quarto-table-cell-role="th">AGEGR1N</th>
-<th data-quarto-table-cell-role="th">RACE</th>
-<th data-quarto-table-cell-role="th">RACEN</th>
-<th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">AESEQ</th>
-<th data-quarto-table-cell-role="th">TRTEMFL</th>
-<th data-quarto-table-cell-role="th">AOCCFL</th>
-<th data-quarto-table-cell-role="th">AOCCSFL</th>
-<th data-quarto-table-cell-role="th">AOCCPFL</th>
-<th data-quarto-table-cell-role="th">AOCC02FL</th>
-<th data-quarto-table-cell-role="th">AOCC03FL</th>
-<th data-quarto-table-cell-role="th">AOCC04FL</th>
-<th data-quarto-table-cell-role="th">CQ01NAM</th>
-<th data-quarto-table-cell-role="th">AOCC01FL</th>
+<th data-quarto-table-cell-role="th">AESOC</th>
+<th data-quarto-table-cell-role="th">AEDECOD</th>
+<th data-quarto-table-cell-role="th">Placebo</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Total</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">0</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>1.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>...</td>
-<td>1.0</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
+<td>GENERAL DISORDERS AND ADMINISTRATION SITE COND...</td>
 <td></td>
-<td></td>
-<td></td>
-<td>DERMATOLOGIC EVENTS</td>
-<td>Y</td>
+<td>21 (32.3%)</td>
+<td>40 (52.6%)</td>
+<td>47 (61.0%)</td>
+<td>108 (49.5%)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">1</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>1.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>...</td>
-<td>2.0</td>
-<td>Y</td>
 <td></td>
-<td></td>
-<td>Y</td>
-<td></td>
-<td></td>
-<td></td>
-<td>DERMATOLOGIC EVENTS</td>
-<td></td>
+<td>APPLICATION SITE PRURITUS</td>
+<td>6 (9.2%)</td>
+<td>22 (28.9%)</td>
+<td>22 (28.6%)</td>
+<td>50 (22.9%)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>1.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>...</td>
-<td>3.0</td>
-<td>Y</td>
 <td></td>
-<td>Y</td>
-<td>Y</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>APPLICATION SITE ERYTHEMA</td>
+<td>3 (4.6%)</td>
+<td>15 (19.7%)</td>
+<td>12 (15.6%)</td>
+<td>30 (13.8%)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1023</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>64.0</td>
-<td>&lt;65</td>
-<td>1.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>...</td>
-<td>1.0</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
-<td>Y</td>
 <td></td>
-<td></td>
-<td></td>
-<td>DERMATOLOGIC EVENTS</td>
-<td>Y</td>
+<td>APPLICATION SITE DERMATITIS</td>
+<td>5 (7.7%)</td>
+<td>7 (9.2%)</td>
+<td>9 (11.7%)</td>
+<td>21 (9.6%)</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1023</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>64.0</td>
-<td>&lt;65</td>
-<td>1.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>...</td>
-<td>2.0</td>
-<td>Y</td>
 <td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>DERMATOLOGIC EVENTS</td>
-<td></td>
+<td>APPLICATION SITE IRRITATION</td>
+<td>3 (4.6%)</td>
+<td>9 (11.8%)</td>
+<td>9 (11.7%)</td>
+<td>21 (9.6%)</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">...</td>
@@ -2708,158 +2907,599 @@ Group Var                                       4.931    0.073
 <td>...</td>
 <td>...</td>
 <td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1186</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>74.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>BLACK OR AFRICAN AMERICAN</td>
-<td>2.0</td>
-<td>...</td>
-<td>12.0</td>
-<td>Y</td>
+<td data-quarto-table-cell-role="th">248</td>
 <td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td>DERMATOLOGIC EVENTS</td>
-<td></td>
+<td>HYPERSENSITIVITY</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (1.3%)</td>
+<td>1 (0.5%)</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1187</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>74.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>BLACK OR AFRICAN AMERICAN</td>
-<td>2.0</td>
-<td>...</td>
-<td>13.0</td>
-<td>Y</td>
+<td data-quarto-table-cell-role="th">249</td>
+<td>HEPATOBILIARY DISORDERS</td>
 <td></td>
-<td>Y</td>
-<td>Y</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>1 (1.5%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (0.5%)</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1188</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>74.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>BLACK OR AFRICAN AMERICAN</td>
-<td>2.0</td>
-<td>...</td>
-<td>14.0</td>
-<td>Y</td>
+<td data-quarto-table-cell-role="th">250</td>
 <td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>HYPERBILIRUBINAEMIA</td>
+<td>1 (1.5%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (0.5%)</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1189</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>74.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>BLACK OR AFRICAN AMERICAN</td>
-<td>2.0</td>
-<td>...</td>
-<td>15.0</td>
-<td>Y</td>
+<td data-quarto-table-cell-role="th">251</td>
+<td>SOCIAL CIRCUMSTANCES</td>
 <td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>0 (0.0%)</td>
+<td>1 (1.3%)</td>
+<td>0 (0.0%)</td>
+<td>1 (0.5%)</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1190</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>74.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>BLACK OR AFRICAN AMERICAN</td>
-<td>2.0</td>
-<td>...</td>
-<td>16.0</td>
-<td>Y</td>
+<td data-quarto-table-cell-role="th">252</td>
 <td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>ALCOHOL USE</td>
+<td>0 (0.0%)</td>
+<td>1 (1.3%)</td>
+<td>0 (0.0%)</td>
+<td>1 (0.5%)</td>
 </tr>
 </tbody>
 </table>
 
-<p>1191 rows × 55 columns</p>
+<p>253 rows × 6 columns</p>
 </div>
 </div>
 </div>
 <ul>
-<li>Laboratory Analysis
+<li>ADR SOC/PT Table</li>
+</ul>
+<div id="7d814684-bc74-4dc2-af55-ae0fb714cacf" class="cell" data-execution_count="569">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>display(adr_table)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">AESOC</th>
+<th data-quarto-table-cell-role="th">AEDECOD</th>
+<th data-quarto-table-cell-role="th">Placebo</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>GENERAL DISORDERS AND ADMINISTRATION SITE COND...</td>
+<td></td>
+<td>18 (41.9%)</td>
+<td>35 (50.0%)</td>
+<td>43 (60.6%)</td>
+<td>96 (52.2%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td></td>
+<td>APPLICATION SITE PRURITUS</td>
+<td>6 (14.0%)</td>
+<td>22 (31.4%)</td>
+<td>22 (31.0%)</td>
+<td>50 (27.2%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td></td>
+<td>APPLICATION SITE ERYTHEMA</td>
+<td>3 (7.0%)</td>
+<td>15 (21.4%)</td>
+<td>12 (16.9%)</td>
+<td>30 (16.3%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td></td>
+<td>APPLICATION SITE DERMATITIS</td>
+<td>5 (11.6%)</td>
+<td>7 (10.0%)</td>
+<td>9 (12.7%)</td>
+<td>21 (11.4%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td></td>
+<td>APPLICATION SITE IRRITATION</td>
+<td>3 (7.0%)</td>
+<td>9 (12.9%)</td>
+<td>9 (12.7%)</td>
+<td>21 (11.4%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">126</td>
+<td></td>
+<td>VENTRICULAR SEPTAL DEFECT</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (1.4%)</td>
+<td>1 (0.5%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">127</td>
+<td>RENAL AND URINARY DISORDERS</td>
+<td></td>
+<td>0 (0.0%)</td>
+<td>1 (1.4%)</td>
+<td>0 (0.0%)</td>
+<td>1 (0.5%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">128</td>
+<td></td>
+<td>MICTURITION URGENCY</td>
+<td>0 (0.0%)</td>
+<td>1 (1.4%)</td>
+<td>0 (0.0%)</td>
+<td>1 (0.5%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">129</td>
+<td>REPRODUCTIVE SYSTEM AND BREAST DISORDERS</td>
+<td></td>
+<td>1 (2.3%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (0.5%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">130</td>
+<td></td>
+<td>PELVIC PAIN</td>
+<td>1 (2.3%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (0.5%)</td>
+</tr>
+</tbody>
+</table>
+
+<p>131 rows × 6 columns</p>
+</div>
+</div>
+</div>
+<ul>
+<li>Serious TEAE SOC/PT Table
+<ul>
+<li>AESER=‘Y’</li>
+</ul></li>
+</ul>
+<div id="1c9bb95d-a68a-4d31-8b5f-e41b879dcb8a" class="cell" data-execution_count="582">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>display(serious_table)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">AESOC</th>
+<th data-quarto-table-cell-role="th">AEDECOD</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>NERVOUS SYSTEM DISORDERS</td>
+<td></td>
+<td>2 (100.0%)</td>
+<td>1 (100.0%)</td>
+<td>3 (100.0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td></td>
+<td>SYNCOPE</td>
+<td>1 (50.0%)</td>
+<td>1 (100.0%)</td>
+<td>2 (66.7%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td></td>
+<td>PARTIAL SEIZURES WITH SECONDARY GENERALISATION</td>
+<td>1 (50.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (33.3%)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>Serious ADR SOC/PT Table
+<ul>
+<li>AESER=‘Y’</li>
+</ul></li>
+</ul>
+<div id="a70982a9-dbb1-4318-9a66-2f774e97c8a8" class="cell" data-execution_count="583">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>display(serious_table_adr)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">AESOC</th>
+<th data-quarto-table-cell-role="th">AEDECOD</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>NERVOUS SYSTEM DISORDERS</td>
+<td></td>
+<td>1 (100.0%)</td>
+<td>1 (100.0%)</td>
+<td>2 (100.0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td></td>
+<td>SYNCOPE</td>
+<td>1 (100.0%)</td>
+<td>1 (100.0%)</td>
+<td>2 (100.0%)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>Death AE SOC/PT Table
+<ul>
+<li>AESDTH=‘Y’</li>
+</ul></li>
+</ul>
+<div id="7c831560-2635-49b4-9236-f3095ed51871" class="cell" data-execution_count="571">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>display(death_table)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">AESOC</th>
+<th data-quarto-table-cell-role="th">AEDECOD</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Placebo</th>
+<th data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>CARDIAC DISORDERS</td>
+<td></td>
+<td>0 (0.0%)</td>
+<td>1 (50.0%)</td>
+<td>1 (33.3%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td></td>
+<td>MYOCARDIAL INFARCTION</td>
+<td>0 (0.0%)</td>
+<td>1 (50.0%)</td>
+<td>1 (33.3%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>GENERAL DISORDERS AND ADMINISTRATION SITE COND...</td>
+<td></td>
+<td>1 (100.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (33.3%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td></td>
+<td>SUDDEN DEATH</td>
+<td>1 (100.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (33.3%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>PSYCHIATRIC DISORDERS</td>
+<td></td>
+<td>0 (0.0%)</td>
+<td>1 (50.0%)</td>
+<td>1 (33.3%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td></td>
+<td>COMPLETED SUICIDE</td>
+<td>0 (0.0%)</td>
+<td>1 (50.0%)</td>
+<td>1 (33.3%)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>Death ADR SOC/PT Table
+<ul>
+<li>AESDTH=‘Y’</li>
+</ul></li>
+</ul>
+<div id="24bbd224-e8d2-4503-9a05-193aa2a4b4a4" class="cell" data-execution_count="578">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>display(death_table_adr)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">AESOC</th>
+<th data-quarto-table-cell-role="th">AEDECOD</th>
+<th data-quarto-table-cell-role="th">Placebo</th>
+<th data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>CARDIAC DISORDERS</td>
+<td></td>
+<td>1 (100.0%)</td>
+<td>1 (100.0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td></td>
+<td>MYOCARDIAL INFARCTION</td>
+<td>1 (100.0%)</td>
+<td>1 (100.0%)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>TEAE Seriousness Criteria Summary</li>
+</ul>
+<div id="bf396454-ab48-447f-b8a6-bb1beb93b0ec" class="cell" data-execution_count="572">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>display(teae_criteria_table)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Parameter</th>
+<th data-quarto-table-cell-role="th">Placebo</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Serious Event</td>
+<td>0 (0.0%)</td>
+<td>2 (2.6%)</td>
+<td>1 (1.3%)</td>
+<td>3 (1.4%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Involves Cancer</td>
+<td>0 (0.0%)</td>
+<td>1 (1.3%)</td>
+<td>2 (2.6%)</td>
+<td>3 (1.4%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Congenital Anomaly or Birth Defect</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Persistent or Significant Disability/Incapacity</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (1.3%)</td>
+<td>1 (0.5%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Results in Death</td>
+<td>2 (3.1%)</td>
+<td>0 (0.0%)</td>
+<td>1 (1.3%)</td>
+<td>3 (1.4%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Requires or Prolongs Hospitalization</td>
+<td>5 (7.7%)</td>
+<td>7 (9.2%)</td>
+<td>7 (9.1%)</td>
+<td>19 (8.7%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Life-Threatening</td>
+<td>2 (3.1%)</td>
+<td>1 (1.3%)</td>
+<td>1 (1.3%)</td>
+<td>4 (1.8%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Occurred with Overdose</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>ADR Seriousness Criteria Summary</li>
+</ul>
+<div id="f3b424cb-b7b6-4e0d-8945-e95854e4a906" class="cell" data-execution_count="573">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>display(adr_criteria_table)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Parameter</th>
+<th data-quarto-table-cell-role="th">Placebo</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Serious Event</td>
+<td>0 (0.0%)</td>
+<td>1 (1.4%)</td>
+<td>1 (1.4%)</td>
+<td>2 (1.1%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Involves Cancer</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Congenital Anomaly or Birth Defect</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Persistent or Significant Disability/Incapacity</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Results in Death</td>
+<td>1 (2.3%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>1 (0.5%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Requires or Prolongs Hospitalization</td>
+<td>3 (7.0%)</td>
+<td>4 (5.7%)</td>
+<td>4 (5.6%)</td>
+<td>11 (5.9%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Life-Threatening</td>
+<td>2 (4.7%)</td>
+<td>1 (1.4%)</td>
+<td>0 (0.0%)</td>
+<td>3 (1.6%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Occurred with Overdose</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="laboratory-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="laboratory-analysis">Laboratory Analysis</h3>
 <ul>
 <li>mean chang from baseline</li>
 <li>shift tables</li>
-</ul></li>
 </ul>
 <div id="15ccffbc-5cec-413a-af1c-23508e342dd1" class="cell" data-execution_count="332">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbc'</span>]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbc'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="332">
 <div>
 
@@ -3164,7 +3804,7 @@ Group Var                                       4.931    0.073
 </div>
 </div>
 <div id="8e12d64b-0dc5-4cb2-97a7-28674cb1a9aa" class="cell" data-execution_count="333">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbh'</span>]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbh'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="333">
 <div>
 
@@ -3478,7 +4118,7 @@ Group Var                                       4.931    0.073
 </ul></li>
 </ul>
 <div id="d7938689-7332-4cf1-908d-023ede322e45" class="cell" data-execution_count="334">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'advs'</span>]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'advs'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="334">
 <div>
 
@@ -3791,7 +4431,7 @@ Group Var                                       4.931    0.073
 </ul></li>
 </ul>
 <div id="ccf2a90b-3f36-4b6c-ab37-b3a51fca98eb" class="cell" data-execution_count="335">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="335">
 <div>
 
@@ -4103,20 +4743,20 @@ Group Var                                       4.931    0.073
 </ul></li>
 </ul>
 <div id="f34f2a8f-e422-4acb-8225-6429f72b476b" class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>Columns</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>Placebo</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>Low Dose</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>High Dose</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>Total</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>Rows</span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>Age mean (SD)</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>Sex n (<span class="op">%</span>)</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>Race n (<span class="op">%</span>)</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>Baseline ADAS score</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>Weight</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>Disease duration</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>Columns</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>Placebo</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>Low Dose</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>High Dose</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>Total</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>Rows</span>
+<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>Age mean (SD)</span>
+<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>Sex n (<span class="op">%</span>)</span>
+<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>Race n (<span class="op">%</span>)</span>
+<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>Baseline ADAS score</span>
+<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>Weight</span>
+<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>Disease duration</span></code></pre></div>
 </div>
 <ul>
 <li>Disposition</li>
@@ -4127,110 +4767,110 @@ Group Var                                       4.931    0.073
 </ul>
 <p>Randomized Treated Completed Discontinued</p>
 <div id="3c38124d-8b5e-47b9-b328-651e376b9a2a" class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Exposure</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.3</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>Treatment Exposure Summary</span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>Treatment duration</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>Mean exposure</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>Dose interruptions</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>Exposure</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.3</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>Treatment Exposure Summary</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>Treatment duration</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>Mean exposure</span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>Dose interruptions</span></code></pre></div>
 </div>
 <p>Primary efficacy Table 14.4</p>
 <p>Change from Baseline in ADAS-Cog</p>
 <p>Baseline Week 12 Week 26 Mean change Treatment difference 95% CI p-value</p>
 <div id="5fab83a5-981a-4702-85bd-cd95ec81efd3" class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>Secondary efficacy</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.5</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>CIBIC<span class="op">+</span> Score</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>Improved</span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>No change</span>
-<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>Worsened</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Secondary efficacy</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.5</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>CIBIC<span class="op">+</span> Score</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>Improved</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>No change</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>Worsened</span></code></pre></div>
 </div>
 <div id="d8bbfd4f-913c-44ab-b5c8-d4ee5ca3a1aa" class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>Safety tables</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.6</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>Patients <span class="cf">with</span> ≥<span class="dv">1</span> TEAE</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>Placebo</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>Low dose</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>High dose</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>Safety tables</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.6</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>Patients <span class="cf">with</span> ≥<span class="dv">1</span> TEAE</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>Placebo</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>Low dose</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>High dose</span></code></pre></div>
 </div>
 <div id="bdc27b83-870d-48f3-9cc0-822730ad5d07" class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.7</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>TEAE by System Organ Class</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>Example</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>Cardiac disorders</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>GI disorders</span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>Nervous system disorders</span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>Psychiatric disorders</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.7</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>TEAE by System Organ Class</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>Example</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>Cardiac disorders</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>GI disorders</span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>Nervous system disorders</span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>Psychiatric disorders</span></code></pre></div>
 </div>
 <div id="9485789f-3dcd-4536-8480-8483d6126c0d" class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.8</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>Top Preferred Terms</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>Headache</span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>Nausea</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>Fatigue</span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>Dizziness</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.8</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>Top Preferred Terms</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>Headache</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>Nausea</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>Fatigue</span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>Dizziness</span></code></pre></div>
 </div>
 <div id="b656b2d8-ab55-4f53-917e-bd6653fb18bd" class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>Laboratory</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.9</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>Laboratory Parameters – Change <span class="im">from</span> Baseline</span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>ALT</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>AST</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>Creatinine</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>Hemoglobin</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>Laboratory</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.9</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>Laboratory Parameters – Change <span class="im">from</span> Baseline</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>ALT</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>AST</span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>Creatinine</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>Hemoglobin</span></code></pre></div>
 </div>
 <div id="372b6427-c10a-4173-ade0-0dd722d187aa" class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.10</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>Laboratory Shift Table</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>Low → Normal</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>Normal → High</span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>High → Normal</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.10</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>Laboratory Shift Table</span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>Low → Normal</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>Normal → High</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>High → Normal</span></code></pre></div>
 </div>
 <div id="ff83f67c-b7bd-4b06-a48f-057c216a2fbd" class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>Vital signs</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.11</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>Vital Signs Summary</span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>Systolic BP</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>Diastolic BP</span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>Heart rate</span>
-<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>Weight</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>Vital signs</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.11</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>Vital Signs Summary</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>Systolic BP</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>Diastolic BP</span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>Heart rate</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>Weight</span></code></pre></div>
 </div>
 <div id="07701757-228f-45c6-947a-a8951fcfbacc" class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>Figures</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.1</span></span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>ADAS<span class="op">-</span>Cog change <span class="im">from</span> baseline over time</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>(line plot)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>Figures</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.1</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>ADAS<span class="op">-</span>Cog change <span class="im">from</span> baseline over time</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>(line plot)</span></code></pre></div>
 </div>
 <div id="1a4d7e27-5a1e-492d-96fc-25409919eccb" class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.2</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>Kaplan<span class="op">-</span>Meier survival curve</span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>(dataset: ADTTE)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.2</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>Kaplan<span class="op">-</span>Meier survival curve</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>(dataset: ADTTE)</span></code></pre></div>
 </div>
 <div id="c7863949-7186-442f-9749-63d281e0f382" class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.3</span></span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>AE incidence bar chart</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.3</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>AE incidence bar chart</span></code></pre></div>
 </div>
 </section>
 </section>
@@ -4240,7 +4880,7 @@ Group Var                                       4.931    0.073
 <p>The first is ADSL (Subject Level Analysis Dataset), a one-recordper-subject structure that contains subject-level attributes. Because of its structure, it can be merged onto any other clinical dataset, including other ADaM datasets and SDTM datasets.</p>
 </blockquote>
 <div id="f7a7577c-8836-492e-b54f-66d890713e60" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adsl'</span>].head()</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adsl'</span>].head()</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
@@ -4401,7 +5041,7 @@ Group Var                                       4.931    0.073
 </div>
 </div>
 <div id="80cbcdeb-8b30-4075-96ba-b37df8c16cb5" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adsl'</span>].column_names_to_labels</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adsl'</span>].column_names_to_labels</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>{'STUDYID': 'Study Identifier',
  'USUBJID': 'Unique Subject Identifier',
@@ -4460,89 +5100,89 @@ Group Var                                       4.931    0.073
 <section id="table-11-1.-demographic-characteristics" class="level2">
 <h2 class="anchored" data-anchor-id="table-11-1.-demographic-characteristics">Table 11-1. Demographic Characteristics</h2>
 <div id="dc7975bf-f806-47a9-9975-a4ea07b7f2e8" class="cell" data-execution_count="289">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> data[<span class="st">'adsl'</span>].copy()</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>data2[<span class="st">'RACE2'</span>] <span class="op">=</span> data2[<span class="st">'RACE'</span>].replace({</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'WHITE'</span>: <span class="st">'White/Caucasian'</span>,</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'BLACK OR AFRICAN AMERICAN'</span>: <span class="st">'Other'</span>,</span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AMERICAN INDIAN OR ALASKA NATIVE'</span>: <span class="st">'Other'</span></span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> data[<span class="st">'adsl'</span>].copy()</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>data2[<span class="st">'RACE2'</span>] <span class="op">=</span> data2[<span class="st">'RACE'</span>].replace({</span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'WHITE'</span>: <span class="st">'White/Caucasian'</span>,</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'BLACK OR AFRICAN AMERICAN'</span>: <span class="st">'Other'</span>,</span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AMERICAN INDIAN OR ALASKA NATIVE'</span>: <span class="st">'Other'</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
 </div>
 <div id="2d1aafee-9b31-4660-8738-5fb399bf520b" class="cell" data-execution_count="290">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>n_counts <span class="op">=</span> data[<span class="st">'adsl'</span>].groupby(<span class="st">'ARM'</span>)[<span class="st">'USUBJID'</span>].nunique()</span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>total_n <span class="op">=</span> data[<span class="st">'adsl'</span>][<span class="st">'USUBJID'</span>].nunique()</span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>n_counts[<span class="st">'Total'</span>] <span class="op">=</span> total_n</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>n_counts <span class="op">=</span> data[<span class="st">'adsl'</span>].groupby(<span class="st">'ARM'</span>)[<span class="st">'USUBJID'</span>].nunique()</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>total_n <span class="op">=</span> data[<span class="st">'adsl'</span>][<span class="st">'USUBJID'</span>].nunique()</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>n_counts[<span class="st">'Total'</span>] <span class="op">=</span> total_n</span></code></pre></div>
 </div>
 <div id="5b6716c2-070c-4a1e-b960-64062dbaf0d6" class="cell" data-execution_count="316">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_min_max_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>,</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>                       mean_digits<span class="op">=</span><span class="dv">1</span>, minmax_digits<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    arm_summary <span class="op">=</span> (</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>        df.groupby(group_col)[var]</span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>    total_summary <span class="op">=</span> (</span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>        df[var]</span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>          .to_frame().T</span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>    total_summary.index <span class="op">=</span> [total_label]</span>
-<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>    final <span class="op">=</span> pd.concat([arm_summary, total_summary])</span>
-<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>    final[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>] <span class="op">=</span> (</span>
-<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>        final[<span class="st">'mean'</span>].<span class="bu">round</span>(mean_digits).astype(<span class="bu">str</span>)</span>
-<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
-<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'min'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
-<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">"–"</span></span>
-<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'max'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
-<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
-<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> final[[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>]]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_min_max_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>,</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>                       mean_digits<span class="op">=</span><span class="dv">1</span>, minmax_digits<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>    arm_summary <span class="op">=</span> (</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>        df.groupby(group_col)[var]</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>    total_summary <span class="op">=</span> (</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>        df[var]</span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>          .to_frame().T</span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>    total_summary.index <span class="op">=</span> [total_label]</span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>    final <span class="op">=</span> pd.concat([arm_summary, total_summary])</span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>    final[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>] <span class="op">=</span> (</span>
+<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>        final[<span class="st">'mean'</span>].<span class="bu">round</span>(mean_digits).astype(<span class="bu">str</span>)</span>
+<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
+<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'min'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">"–"</span></span>
+<span id="cb59-23"><a href="#cb59-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'max'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
+<span id="cb59-24"><a href="#cb59-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb59-25"><a href="#cb59-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb59-26"><a href="#cb59-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-27"><a href="#cb59-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> final[[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>]]</span></code></pre></div>
 </div>
 <div id="16a8f4fa-5abf-4c01-9478-71fbc45a397a" class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorical_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>, pct_digits<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    ct <span class="op">=</span> pd.crosstab(df[var], df[group_col])</span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> ct.div(ct.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a>    formatted <span class="op">=</span> (</span>
-<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a>        ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
-<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a>        pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
-<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a>    total_n <span class="op">=</span> df.shape[<span class="dv">0</span>]</span>
-<span id="cb51-13"><a href="#cb51-13" aria-hidden="true" tabindex="-1"></a>    total_ct <span class="op">=</span> df[var].value_counts()</span>
-<span id="cb51-14"><a href="#cb51-14" aria-hidden="true" tabindex="-1"></a>    total_pct <span class="op">=</span> total_ct <span class="op">/</span> total_n <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb51-15"><a href="#cb51-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-16"><a href="#cb51-16" aria-hidden="true" tabindex="-1"></a>    formatted[total_label] <span class="op">=</span> (</span>
-<span id="cb51-17"><a href="#cb51-17" aria-hidden="true" tabindex="-1"></a>        total_ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
-<span id="cb51-18"><a href="#cb51-18" aria-hidden="true" tabindex="-1"></a>        total_pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
-<span id="cb51-19"><a href="#cb51-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb51-20"><a href="#cb51-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-21"><a href="#cb51-21" aria-hidden="true" tabindex="-1"></a>    formatted.columns.name <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb51-22"><a href="#cb51-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-23"><a href="#cb51-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> formatted</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorical_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>, pct_digits<span class="op">=</span><span class="dv">0</span>):</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    ct <span class="op">=</span> pd.crosstab(df[var], df[group_col])</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> ct.div(ct.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    formatted <span class="op">=</span> (</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>        ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>        pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    total_n <span class="op">=</span> df.shape[<span class="dv">0</span>]</span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>    total_ct <span class="op">=</span> df[var].value_counts()</span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>    total_pct <span class="op">=</span> total_ct <span class="op">/</span> total_n <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>    formatted[total_label] <span class="op">=</span> (</span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a>        total_ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
+<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>        total_pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
+<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a>    formatted.columns.name <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> formatted</span></code></pre></div>
 </div>
 <div id="3b7749fe-fd8a-47f5-a059-2286ae6bee95" class="cell" data-execution_count="313">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Table11_1 <span class="op">=</span> pd.concat([mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'AGE'</span>).T,</span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data[<span class="st">'adsl'</span>],<span class="st">'SEX'</span>).reset_index().set_index(<span class="st">'SEX'</span>).reindex([<span class="st">'M'</span>, <span class="st">'F'</span>]),</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data2,<span class="st">'RACE2'</span>).reset_index().set_index(<span class="st">'RACE2'</span>).reindex([<span class="st">'White/Caucasian'</span>, <span class="st">'Other'</span>]),</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>                    mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'EDUCLVL'</span>).T,</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>                   ])</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>Table11_1 <span class="op">=</span> pd.concat([mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'AGE'</span>).T,</span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data[<span class="st">'adsl'</span>],<span class="st">'SEX'</span>).reset_index().set_index(<span class="st">'SEX'</span>).reindex([<span class="st">'M'</span>, <span class="st">'F'</span>]),</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data2,<span class="st">'RACE2'</span>).reset_index().set_index(<span class="st">'RACE2'</span>).reindex([<span class="st">'White/Caucasian'</span>, <span class="st">'Other'</span>]),</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>                    mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'EDUCLVL'</span>).T,</span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>                   ])</span></code></pre></div>
 </div>
 <div id="f2014872-9cfd-47eb-984e-e65952a76c1e" class="cell" data-execution_count="314">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Table11_1.columns <span class="op">=</span> [</span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> (n=</span><span class="sc">{</span>n_counts[col]<span class="sc">}</span><span class="ss">)"</span> <span class="cf">if</span> col <span class="kw">in</span> n_counts.index</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> col</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> final2.columns</span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>Table11_1.columns <span class="op">=</span> [</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> (n=</span><span class="sc">{</span>n_counts[col]<span class="sc">}</span><span class="ss">)"</span> <span class="cf">if</span> col <span class="kw">in</span> n_counts.index</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> col</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> final2.columns</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
 </div>
 <div id="85a1b91a-15a6-4995-9b6a-b73327a96c8a" class="cell" data-execution_count="315">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>Table11_1</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>Table11_1</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="315">
 <div>
 
@@ -4607,7 +5247,7 @@ Group Var                                       4.931    0.073
 </div>
 </div>
 <div id="6a295be0-5c87-4aae-95f1-450a81ada861" class="cell" data-execution_count="319">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="319">
 <div>
 
