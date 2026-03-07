@@ -40,6 +40,7 @@ website:
       - 1_note.qmd
       - section: "**Studies**"
         contents:
+          - 2_clinical.qmd
           - 2_graph.qmd
           - 2_ept.qmd
           - 2_stgcn.qmd

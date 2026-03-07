@@ -23,52 +23,21 @@
     ]
   },
   {
-    "listing": "/2_linearalgebra.html",
+    "listing": "/2_clinical.html",
     "items": [
-      "/posts/2_Studies/LinearAlgebra/2024-06-01-MIT_Linear_Algebra_23.html",
-      "/posts/2_Studies/LinearAlgebra/2024-05-25-MIT_Linear_Algebra_22.html",
-      "/posts/2_Studies/LinearAlgebra/2024-05-18-MIT_Linear_Algebra_21.html",
-      "/posts/2_Studies/LinearAlgebra/2024-05-11-MIT_Linear_Algebra_20.html",
-      "/posts/2_Studies/LinearAlgebra/2024-05-04-MIT_Linear_Algebra_19.html",
-      "/posts/2_Studies/LinearAlgebra/2024-04-27-MIT_Linear_Algebra_18.html",
-      "/posts/2_Studies/LinearAlgebra/2024-04-14-MIT_Linear_Algebra_17.html",
-      "/posts/2_Studies/LinearAlgebra/2024-04-10-MIT_Linear_Algebra_16.html",
-      "/posts/2_Studies/LinearAlgebra/2024-04-06-MIT_Linear_Algebra_15.html",
-      "/posts/2_Studies/LinearAlgebra/2024-04-03-MIT_Linear_Algebra_14.html",
-      "/posts/2_Studies/LinearAlgebra/2024-03-26-MIT_Linear_Algebra_12.html",
-      "/posts/2_Studies/LinearAlgebra/2024-03-20-MIT_Linear_Algebra_11.html",
-      "/posts/2_Studies/LinearAlgebra/2024-03-12-MIT_Linear_Algebra_10.html",
-      "/posts/2_Studies/LinearAlgebra/2024-03-03-MIT_Linear_Algebra_09.html",
-      "/posts/2_Studies/LinearAlgebra/2024-02-29-MIT_Linear_Algebra_08.html",
-      "/posts/2_Studies/LinearAlgebra/2024-02-27-MIT_Linear_Algebra_07.html",
-      "/posts/2_Studies/LinearAlgebra/2024-02-25-MIT_Linear_Algebra_06.html",
-      "/posts/2_Studies/LinearAlgebra/2024-02-21-MIT_Linear_Algebra_05.html",
-      "/posts/2_Studies/LinearAlgebra/2024-02-18-MIT_Linear_Algebra_04.html",
-      "/posts/2_Studies/LinearAlgebra/2024-02-16-MIT_Linear_Algebra_03.html",
-      "/posts/2_Studies/LinearAlgebra/2024-02-15-MIT_Linear_Algebra_02.html",
-      "/posts/2_Studies/LinearAlgebra/2024-02-13-MIT_Linear_Algebra_01.html"
+      "/posts/2_Studies/Clinical/2026-03-03-cdisc.html"
     ]
   },
   {
-    "listing": "/2_kan.html",
+    "listing": "/2_nocategory.html",
     "items": [
-      "/posts/2_Studies/KAN/2024-07-13-KAN_other_examples.html",
-      "/posts/2_Studies/KAN/2024-07-11-KAN.html"
-    ]
-  },
-  {
-    "listing": "/2_stgcn.html",
-    "items": [
-      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_8.html",
-      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_3 regression.html",
-      "/posts/2_Studies/STGCN/2024-02-18-self_consistency_gyubin_choi.html",
-      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html"
+      "/posts/2_Studies/nocategory/2025-03-06-정리.html"
     ]
   },
   {
     "listing": "/index.html",
     "items": [
-      "/posts/2_Studies/nocategory/2026-03-03-cdisc.html",
+      "/posts/2_Studies/Clinical/2026-03-03-cdisc.html",
       "/posts/2_Studies/nocategory/2025-03-06-정리.html",
       "/posts/1_Note/2025-02-19-Tableau.html",
       "/posts/1_Note/2024-07-31-EbayesThresh_Torch.html",
@@ -128,10 +97,46 @@
     ]
   },
   {
-    "listing": "/2_nocategory.html",
+    "listing": "/2_stgcn.html",
     "items": [
-      "/posts/2_Studies/nocategory/2026-03-03-cdisc.html",
-      "/posts/2_Studies/nocategory/2025-03-06-정리.html"
+      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_8.html",
+      "/posts/2_Studies/STGCN/2024-02-28-Self-Consistency Review_3 regression.html",
+      "/posts/2_Studies/STGCN/2024-02-18-self_consistency_gyubin_choi.html",
+      "/posts/2_Studies/STGCN/2024-02-05-Self-Consistency Review.html"
+    ]
+  },
+  {
+    "listing": "/2_kan.html",
+    "items": [
+      "/posts/2_Studies/KAN/2024-07-13-KAN_other_examples.html",
+      "/posts/2_Studies/KAN/2024-07-11-KAN.html"
+    ]
+  },
+  {
+    "listing": "/2_linearalgebra.html",
+    "items": [
+      "/posts/2_Studies/LinearAlgebra/2024-06-01-MIT_Linear_Algebra_23.html",
+      "/posts/2_Studies/LinearAlgebra/2024-05-25-MIT_Linear_Algebra_22.html",
+      "/posts/2_Studies/LinearAlgebra/2024-05-18-MIT_Linear_Algebra_21.html",
+      "/posts/2_Studies/LinearAlgebra/2024-05-11-MIT_Linear_Algebra_20.html",
+      "/posts/2_Studies/LinearAlgebra/2024-05-04-MIT_Linear_Algebra_19.html",
+      "/posts/2_Studies/LinearAlgebra/2024-04-27-MIT_Linear_Algebra_18.html",
+      "/posts/2_Studies/LinearAlgebra/2024-04-14-MIT_Linear_Algebra_17.html",
+      "/posts/2_Studies/LinearAlgebra/2024-04-10-MIT_Linear_Algebra_16.html",
+      "/posts/2_Studies/LinearAlgebra/2024-04-06-MIT_Linear_Algebra_15.html",
+      "/posts/2_Studies/LinearAlgebra/2024-04-03-MIT_Linear_Algebra_14.html",
+      "/posts/2_Studies/LinearAlgebra/2024-03-26-MIT_Linear_Algebra_12.html",
+      "/posts/2_Studies/LinearAlgebra/2024-03-20-MIT_Linear_Algebra_11.html",
+      "/posts/2_Studies/LinearAlgebra/2024-03-12-MIT_Linear_Algebra_10.html",
+      "/posts/2_Studies/LinearAlgebra/2024-03-03-MIT_Linear_Algebra_09.html",
+      "/posts/2_Studies/LinearAlgebra/2024-02-29-MIT_Linear_Algebra_08.html",
+      "/posts/2_Studies/LinearAlgebra/2024-02-27-MIT_Linear_Algebra_07.html",
+      "/posts/2_Studies/LinearAlgebra/2024-02-25-MIT_Linear_Algebra_06.html",
+      "/posts/2_Studies/LinearAlgebra/2024-02-21-MIT_Linear_Algebra_05.html",
+      "/posts/2_Studies/LinearAlgebra/2024-02-18-MIT_Linear_Algebra_04.html",
+      "/posts/2_Studies/LinearAlgebra/2024-02-16-MIT_Linear_Algebra_03.html",
+      "/posts/2_Studies/LinearAlgebra/2024-02-15-MIT_Linear_Algebra_02.html",
+      "/posts/2_Studies/LinearAlgebra/2024-02-13-MIT_Linear_Algebra_01.html"
     ]
   },
   {
