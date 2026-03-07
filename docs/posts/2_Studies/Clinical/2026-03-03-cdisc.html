@@ -292,7 +292,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#adam-analysis-data-model" id="toc-adam-analysis-data-model" class="nav-link active" data-scroll-target="#adam-analysis-data-model">ADaM Analysis Data Model</a></li>
+  <li><a href="#purpose" id="toc-purpose" class="nav-link active" data-scroll-target="#purpose">Purpose</a></li>
+  <li><a href="#adam-analysis-data-model" id="toc-adam-analysis-data-model" class="nav-link" data-scroll-target="#adam-analysis-data-model">ADaM Analysis Data Model</a></li>
   <li><a href="#reference" id="toc-reference" class="nav-link" data-scroll-target="#reference">Reference</a></li>
   <li><a href="#import" id="toc-import" class="nav-link" data-scroll-target="#import">Import</a></li>
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
@@ -316,12 +317,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#adverse-event" id="toc-adverse-event" class="nav-link" data-scroll-target="#adverse-event">Adverse Event</a></li>
   <li><a href="#laboratory-analysis" id="toc-laboratory-analysis" class="nav-link" data-scroll-target="#laboratory-analysis">Laboratory Analysis</a></li>
+  <li><a href="#vital-signs" id="toc-vital-signs" class="nav-link" data-scroll-target="#vital-signs">Vital Signs</a></li>
   </ul></li>
   <li><a href="#adsl" id="toc-adsl" class="nav-link" data-scroll-target="#adsl">ADSL</a></li>
-  </ul></li>
-  <li><a href="#table" id="toc-table" class="nav-link" data-scroll-target="#table">Table</a>
-  <ul class="collapse">
-  <li><a href="#table-11-1.-demographic-characteristics" id="toc-table-11-1.-demographic-characteristics" class="nav-link" data-scroll-target="#table-11-1.-demographic-characteristics">Table 11-1. Demographic Characteristics</a></li>
   </ul></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2026-03-03-cdisc.out.ipynb" download="2026-03-03-cdisc.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
@@ -333,6 +331,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
+<section id="purpose" class="level1">
+<h1>Purpose</h1>
+<p>The objective of this project is to demonstrate a typical clinical trial analysis workflow using CDISC ADaM datasets, including baseline summary, efficacy analyses, and safety evaluations.</p>
+<p>본 프로젝트의 목적은 CDISC ADaM 데이터셋을 활용하여 임상시험 분석의 전형적인 workflow(기초 특성 분석, 유효성 분석, 안전성 분석)를 구현하는 것이다.</p>
+</section>
 <section id="adam-analysis-data-model" class="level1">
 <h1>ADaM Analysis Data Model</h1>
 <blockquote class="blockquote">
@@ -388,7 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="import" class="level1">
 <h1>Import</h1>
-<div id="b288a599-f3fa-4be4-a013-5a0582dc52bb" class="cell" data-execution_count="458">
+<div id="b288a599-f3fa-4be4-a013-5a0582dc52bb" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyreadstat</span>
@@ -405,7 +408,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="data" class="level1">
 <h1>Data</h1>
-<div id="2308a50d-8fea-4b0a-85aa-6135051e2931" class="cell" data-execution_count="3">
+<div id="2308a50d-8fea-4b0a-85aa-6135051e2931" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data_folder <span class="op">=</span> Path(<span class="st">"../../../../delete/adam/"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> [</span>
@@ -421,11 +424,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"advs.xpt"</span></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
 </div>
-<div id="95fe7627-bbbe-482b-b492-3ac5c48dafad" class="cell" data-execution_count="4">
+<div id="95fe7627-bbbe-482b-b492-3ac5c48dafad" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> {}</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>metadata <span class="op">=</span> {}</span></code></pre></div>
 </div>
-<div id="3962fd9b-3f38-44a3-8c99-06eb6b01d304" class="cell" data-execution_count="5">
+<div id="3962fd9b-3f38-44a3-8c99-06eb6b01d304" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> f <span class="kw">in</span> files:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    full_path <span class="op">=</span> data_folder <span class="op">/</span> f</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    df, meta <span class="op">=</span> pyreadstat.read_xport(full_path)</span>
@@ -453,9 +456,9 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <ul>
 <li>How could get the information of dataset?</li>
 </ul>
-<div id="89933e80-8d00-4f97-8bde-3e8f1c94adfe" class="cell" data-execution_count="374">
+<div id="89933e80-8d00-4f97-8bde-3e8f1c94adfe" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adsl'</span>].column_names_to_labels</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="374">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>{'STUDYID': 'Study Identifier',
  'USUBJID': 'Unique Subject Identifier',
  'SUBJID': 'Subject Identifier for the Study',
@@ -516,9 +519,9 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <li>ADAS-Cog score</li>
 </ul></li>
 </ul>
-<div id="efecb195-d842-4e9c-9f6a-d7b1ed7fd8cf" class="cell" data-execution_count="398">
+<div id="efecb195-d842-4e9c-9f6a-d7b1ed7fd8cf" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adqsadas'</span>].column_names_to_labels</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="398">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>{'STUDYID': 'Study Identifier',
  'SITEID': 'Study Site Identifier',
  'SITEGR1': 'Pooled Site Group 1',
@@ -564,9 +567,9 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <ul>
 <li>Clinician’s Interview-Based Impression of Change</li>
 </ul>
-<div id="9ec95074-dea6-4e32-950e-160585c2066c" class="cell" data-execution_count="399">
+<div id="9ec95074-dea6-4e32-950e-160585c2066c" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adqscibc'</span>].column_names_to_labels</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="399">
+<div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>{'STUDYID': 'Study Identifier',
  'SITEID': 'Study Site Identifier',
  'SITEGR1': 'Pooled Site Group 1',
@@ -613,7 +616,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <ul>
 <li>Population Summary</li>
 </ul>
-<div id="fd96b74d-ba93-430f-b511-20239a7e701d" class="cell" data-execution_count="342">
+<div id="fd96b74d-ba93-430f-b511-20239a7e701d" class="cell" data-execution_count="8">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data[<span class="st">'adsl'</span>]</span>
@@ -645,7 +648,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>table</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="342">
+<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -714,7 +717,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <ul>
 <li>Describe comparability of treatment groups</li>
 </ul>
-<div id="d4c803e3-d567-4e4a-825b-73dd1d25de10" class="cell" data-execution_count="365">
+<div id="d4c803e3-d567-4e4a-825b-73dd1d25de10" class="cell" data-execution_count="9">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _fmt_p(p):</span>
@@ -1136,7 +1139,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <ul>
 <li>exposure duration</li>
 </ul>
-<div id="cbd22987-29bf-48ab-b9d9-77a3fc4f00c2" class="cell" data-execution_count="392">
+<div id="cbd22987-29bf-48ab-b9d9-77a3fc4f00c2" class="cell" data-execution_count="10">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>exposure <span class="op">=</span> data[<span class="st">'adsl'</span>].groupby(<span class="st">'ARM'</span>)[<span class="st">'TRTDUR'</span>].agg(</span>
@@ -1168,7 +1171,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>exposure <span class="op">=</span> pd.concat([exposure, total])</span>
 <span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>exposure</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="392">
+<div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
 
@@ -1220,7 +1223,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <ul>
 <li>compliance</li>
 </ul>
-<div id="887ce233-009c-4670-a1b5-e431dcd17bdb" class="cell" data-execution_count="394">
+<div id="887ce233-009c-4670-a1b5-e431dcd17bdb" class="cell" data-execution_count="11">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data[<span class="st">'adsl'</span>]</span>
@@ -1243,7 +1246,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>disc_table</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="394">
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
 
@@ -1288,7 +1291,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </section>
 <section id="efficacy-analysisbased-on-efficacy-population" class="level2">
 <h2 class="anchored" data-anchor-id="efficacy-analysisbased-on-efficacy-population">Efficacy Analysis(Based on Efficacy Population)</h2>
-<div id="e1a3029d-09ed-4de2-8370-3c59dc589acb" class="cell" data-execution_count="489">
+<div id="e1a3029d-09ed-4de2-8370-3c59dc589acb" class="cell" data-execution_count="12">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_change_table_adqs_se(</span>
@@ -1393,7 +1396,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </div>
 <section id="n-table" class="level3">
 <h3 class="anchored" data-anchor-id="n-table">N table</h3>
-<div id="3b383d13-9069-4446-bf90-260c8b7366dd" class="cell" data-execution_count="490">
+<div id="3b383d13-9069-4446-bf90-260c8b7366dd" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>display(n_table)        <span class="co"># N</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -1758,7 +1761,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 </section>
 <section id="mean-change-from-baseline" class="level3">
 <h3 class="anchored" data-anchor-id="mean-change-from-baseline">Mean change from baseline</h3>
-<div id="54d6e7ba-224e-42f8-91ea-2ed55278e75e" class="cell" data-execution_count="491">
+<div id="54d6e7ba-224e-42f8-91ea-2ed55278e75e" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>display(mean_se_table)  <span class="co"># Mean (SE)</span></span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -2084,7 +2087,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <li><p>모형에는 치료군을 고정효과로 포함하고 기저 ADAS-Cog 점수를 공변량으로 포함하였다.</p></li>
 <li><p>각 치료군과 위약군(placebo) 간의 최소제곱평균(LS mean) 차이와 95% 신뢰구간 및 p-value를 산출하였다.</p></li>
 </ul>
-<div id="c08923a7-413d-42d6-b6ac-98de8936446a" class="cell" data-execution_count="492">
+<div id="c08923a7-413d-42d6-b6ac-98de8936446a" class="cell" data-execution_count="15">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data[<span class="st">'adqsadas'</span>].copy()</span>
@@ -2122,7 +2125,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <span id="cb20-33"><a href="#cb20-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-34"><a href="#cb20-34" aria-hidden="true" tabindex="-1"></a>ancova_table</span></code></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="492">
+<div class="cell-output cell-output-display" data-execution_count="15">
 <div>
 
 
@@ -2224,7 +2227,7 @@ advs.xpt loaded: (32139, 34)</code></pre>
 <li><p>개체 내 반복 측정으로 인한 상관성을 고려하기 위해 대상자(subject)를 랜덤효과로 포함하였다.</p></li>
 <li><p>각 방문 시점에서 치료군별 최소제곱평균(LS mean) 변화량을 추정하고, 위약군 대비 치료 효과 차이와 함께 표준오차, 95% 신뢰구간 및 p-value를 산출하였다.</p></li>
 </ul>
-<div id="5050c964-c6d1-4b50-97e5-0f5fbf51e84d" class="cell" data-execution_count="493">
+<div id="5050c964-c6d1-4b50-97e5-0f5fbf51e84d" class="cell" data-execution_count="16">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> data[<span class="st">'adqsadas'</span>].copy()</span>
@@ -2272,7 +2275,7 @@ Group Var                                       4.931    0.073
 </code></pre>
 </div>
 </div>
-<div id="6ae04554-1710-431f-b425-995a78e612d8" class="cell" data-execution_count="521">
+<div id="6ae04554-1710-431f-b425-995a78e612d8" class="cell" data-execution_count="17">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _fmt(x, d<span class="op">=</span><span class="dv">2</span>):</span>
@@ -2407,14 +2410,14 @@ Group Var                                       4.931    0.073
 <span id="cb23-130"><a href="#cb23-130" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </details>
 </div>
-<div id="a4d63d3b-7078-4e4c-a163-67c4a3b2b5ea" class="cell" data-execution_count="522">
+<div id="a4d63d3b-7078-4e4c-a163-67c4a3b2b5ea" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"BASE fixed at mean(BASE) = </span><span class="sc">{</span>base_used<span class="sc">:.2f}</span><span class="ch">\n</span><span class="ss">"</span>)</span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>BASE fixed at mean(BASE) = 7.17
 </code></pre>
 </div>
 </div>
-<div id="108618dd-3d82-4192-99c0-ccbeea786df2" class="cell" data-execution_count="523">
+<div id="108618dd-3d82-4192-99c0-ccbeea786df2" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>display(lsmeans)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -2466,7 +2469,7 @@ Group Var                                       4.931    0.073
 <ul>
 <li>reference는 placebo로 설정</li>
 </ul>
-<div id="3be09e87-c93b-4f3f-b892-1025600a1ca3" class="cell" data-execution_count="524">
+<div id="3be09e87-c93b-4f3f-b892-1025600a1ca3" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>display(diffs)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -2568,7 +2571,7 @@ Group Var                                       4.931    0.073
 <h2 class="anchored" data-anchor-id="safety-analysisbased-on-safety-population">Safety Analysis(Based on Safety Population)</h2>
 <section id="adverse-event" class="level3">
 <h3 class="anchored" data-anchor-id="adverse-event">Adverse Event</h3>
-<div id="32c54eab-c476-4bf0-a28c-b18bd6d087fd" class="cell" data-execution_count="577">
+<div id="32c54eab-c476-4bf0-a28c-b18bd6d087fd" class="cell" data-execution_count="21">
 <details class="code-fold">
 <summary>Show Python code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fmt_npct(n, denom, decimals<span class="op">=</span><span class="dv">1</span>):</span>
@@ -2834,14 +2837,14 @@ Group Var                                       4.931    0.073
 <div class="cell-output cell-output-stderr">
 <pre><code>UserWarning: Boolean Series key will be reindexed to match DataFrame index.
   serious[(is_related(adae_saf["AEREL"]))],
-&lt;ipython-input-577-8a30cf7a090b&gt;:206: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
+&lt;ipython-input-21-8a30cf7a090b&gt;:206: UserWarning: Boolean Series key will be reindexed to match DataFrame index.
   death_ae[(is_related(adae_saf["AEREL"]))],</code></pre>
 </div>
 </div>
 <ul>
 <li>TEAE SOC/PT Table</li>
 </ul>
-<div id="d599cfc5-e714-45d7-80eb-a68f45bea6b6" class="cell" data-execution_count="568">
+<div id="d599cfc5-e714-45d7-80eb-a68f45bea6b6" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>display(teae_table)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -2969,7 +2972,7 @@ Group Var                                       4.931    0.073
 <ul>
 <li>ADR SOC/PT Table</li>
 </ul>
-<div id="7d814684-bc74-4dc2-af55-ae0fb714cacf" class="cell" data-execution_count="569">
+<div id="7d814684-bc74-4dc2-af55-ae0fb714cacf" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>display(adr_table)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -3100,7 +3103,7 @@ Group Var                                       4.931    0.073
 <li>AESER=‘Y’</li>
 </ul></li>
 </ul>
-<div id="1c9bb95d-a68a-4d31-8b5f-e41b879dcb8a" class="cell" data-execution_count="582">
+<div id="1c9bb95d-a68a-4d31-8b5f-e41b879dcb8a" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>display(serious_table)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -3154,7 +3157,7 @@ Group Var                                       4.931    0.073
 <li>AESER=‘Y’</li>
 </ul></li>
 </ul>
-<div id="a70982a9-dbb1-4318-9a66-2f774e97c8a8" class="cell" data-execution_count="583">
+<div id="a70982a9-dbb1-4318-9a66-2f774e97c8a8" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>display(serious_table_adr)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -3200,7 +3203,7 @@ Group Var                                       4.931    0.073
 <li>AESDTH=‘Y’</li>
 </ul></li>
 </ul>
-<div id="7c831560-2635-49b4-9236-f3095ed51871" class="cell" data-execution_count="571">
+<div id="7c831560-2635-49b4-9236-f3095ed51871" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>display(death_table)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -3278,7 +3281,7 @@ Group Var                                       4.931    0.073
 <li>AESDTH=‘Y’</li>
 </ul></li>
 </ul>
-<div id="24bbd224-e8d2-4503-9a05-193aa2a4b4a4" class="cell" data-execution_count="578">
+<div id="24bbd224-e8d2-4503-9a05-193aa2a4b4a4" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>display(death_table_adr)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -3318,7 +3321,7 @@ Group Var                                       4.931    0.073
 <ul>
 <li>TEAE Seriousness Criteria Summary</li>
 </ul>
-<div id="bf396454-ab48-447f-b8a6-bb1beb93b0ec" class="cell" data-execution_count="572">
+<div id="bf396454-ab48-447f-b8a6-bb1beb93b0ec" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>display(teae_criteria_table)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -3409,7 +3412,7 @@ Group Var                                       4.931    0.073
 <ul>
 <li>ADR Seriousness Criteria Summary</li>
 </ul>
-<div id="f3b424cb-b7b6-4e0d-8945-e95854e4a906" class="cell" data-execution_count="573">
+<div id="f3b424cb-b7b6-4e0d-8945-e95854e4a906" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>display(adr_criteria_table)</span></code></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -3500,13 +3503,101 @@ Group Var                                       4.931    0.073
 </section>
 <section id="laboratory-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="laboratory-analysis">Laboratory Analysis</h3>
+<section id="mean-chang-from-baseline" class="level4">
+<h4 class="anchored" data-anchor-id="mean-chang-from-baseline">Mean chang from baseline</h4>
+<div id="ea60fe54-17eb-41d2-bafb-b84b956d2700" class="cell" data-execution_count="30">
+<details class="code-fold">
+<summary>Show Python code</summary>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_lab_mean_chg_table(</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTA"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    param_col<span class="op">=</span><span class="st">"PARAM"</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    visit_col<span class="op">=</span><span class="st">"AVISIT"</span>,</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    chg_col<span class="op">=</span><span class="st">"CHG"</span>,</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    saffl_col<span class="op">=</span><span class="st">"SAFFL"</span>,</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    anlfl_col<span class="op">=</span><span class="st">"ANL01FL"</span>,</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    use_saffl<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    use_anlfl<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    stat<span class="op">=</span><span class="st">"SD"</span>   <span class="co"># "SD" or "SE"</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> df.copy()</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> use_saffl <span class="kw">and</span> saffl_col <span class="kw">in</span> d.columns:</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> d[d[saffl_col] <span class="op">==</span> <span class="st">"Y"</span>]</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> use_anlfl <span class="kw">and</span> anlfl_col <span class="kw">in</span> d.columns:</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> d[d[anlfl_col] <span class="op">==</span> <span class="st">"Y"</span>]</span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>    d[chg_col] <span class="op">=</span> pd.to_numeric(d[chg_col], errors<span class="op">=</span><span class="st">"coerce"</span>)</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> d.dropna(subset<span class="op">=</span>[chg_col])</span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>    grp <span class="op">=</span> d.groupby([param_col, visit_col, trt_col], dropna<span class="op">=</span><span class="va">False</span>)[chg_col]</span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>    summ <span class="op">=</span> grp.agg(N<span class="op">=</span><span class="st">"count"</span>, Mean<span class="op">=</span><span class="st">"mean"</span>, SD<span class="op">=</span><span class="st">"std"</span>).reset_index()</span>
+<span id="cb38-26"><a href="#cb38-26" aria-hidden="true" tabindex="-1"></a>    summ[<span class="st">"SE"</span>] <span class="op">=</span> summ[<span class="st">"SD"</span>] <span class="op">/</span> np.sqrt(summ[<span class="st">"N"</span>])</span>
+<span id="cb38-27"><a href="#cb38-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-28"><a href="#cb38-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> stat.upper() <span class="op">==</span> <span class="st">"SE"</span>:</span>
+<span id="cb38-29"><a href="#cb38-29" aria-hidden="true" tabindex="-1"></a>        summ[<span class="st">"Value"</span>] <span class="op">=</span> (</span>
+<span id="cb38-30"><a href="#cb38-30" aria-hidden="true" tabindex="-1"></a>            summ[<span class="st">"Mean"</span>].<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-31"><a href="#cb38-31" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> <span class="st">" ("</span></span>
+<span id="cb38-32"><a href="#cb38-32" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> summ[<span class="st">"SE"</span>].fillna(<span class="dv">0</span>).<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-33"><a href="#cb38-33" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb38-34"><a href="#cb38-34" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb38-35"><a href="#cb38-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb38-36"><a href="#cb38-36" aria-hidden="true" tabindex="-1"></a>        summ[<span class="st">"Value"</span>] <span class="op">=</span> (</span>
+<span id="cb38-37"><a href="#cb38-37" aria-hidden="true" tabindex="-1"></a>            summ[<span class="st">"Mean"</span>].<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-38"><a href="#cb38-38" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> <span class="st">" ("</span></span>
+<span id="cb38-39"><a href="#cb38-39" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> summ[<span class="st">"SD"</span>].fillna(<span class="dv">0</span>).<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-40"><a href="#cb38-40" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb38-41"><a href="#cb38-41" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb38-42"><a href="#cb38-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-43"><a href="#cb38-43" aria-hidden="true" tabindex="-1"></a>    wide <span class="op">=</span> summ.pivot_table(</span>
+<span id="cb38-44"><a href="#cb38-44" aria-hidden="true" tabindex="-1"></a>        index<span class="op">=</span>[param_col, visit_col],</span>
+<span id="cb38-45"><a href="#cb38-45" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>trt_col,</span>
+<span id="cb38-46"><a href="#cb38-46" aria-hidden="true" tabindex="-1"></a>        values<span class="op">=</span><span class="st">"Value"</span>,</span>
+<span id="cb38-47"><a href="#cb38-47" aria-hidden="true" tabindex="-1"></a>        aggfunc<span class="op">=</span><span class="st">"first"</span></span>
+<span id="cb38-48"><a href="#cb38-48" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb38-49"><a href="#cb38-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-50"><a href="#cb38-50" aria-hidden="true" tabindex="-1"></a>    grp_tot <span class="op">=</span> d.groupby([param_col, visit_col], dropna<span class="op">=</span><span class="va">False</span>)[chg_col]</span>
+<span id="cb38-51"><a href="#cb38-51" aria-hidden="true" tabindex="-1"></a>    tot <span class="op">=</span> grp_tot.agg(N<span class="op">=</span><span class="st">"count"</span>, Mean<span class="op">=</span><span class="st">"mean"</span>, SD<span class="op">=</span><span class="st">"std"</span>)</span>
+<span id="cb38-52"><a href="#cb38-52" aria-hidden="true" tabindex="-1"></a>    tot[<span class="st">"SE"</span>] <span class="op">=</span> tot[<span class="st">"SD"</span>] <span class="op">/</span> np.sqrt(tot[<span class="st">"N"</span>])</span>
+<span id="cb38-53"><a href="#cb38-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-54"><a href="#cb38-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> stat.upper() <span class="op">==</span> <span class="st">"SE"</span>:</span>
+<span id="cb38-55"><a href="#cb38-55" aria-hidden="true" tabindex="-1"></a>        wide[<span class="st">"Total"</span>] <span class="op">=</span> (</span>
+<span id="cb38-56"><a href="#cb38-56" aria-hidden="true" tabindex="-1"></a>            tot[<span class="st">"Mean"</span>].<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-57"><a href="#cb38-57" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> <span class="st">" ("</span></span>
+<span id="cb38-58"><a href="#cb38-58" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> tot[<span class="st">"SE"</span>].fillna(<span class="dv">0</span>).<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-59"><a href="#cb38-59" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb38-60"><a href="#cb38-60" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb38-61"><a href="#cb38-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb38-62"><a href="#cb38-62" aria-hidden="true" tabindex="-1"></a>        wide[<span class="st">"Total"</span>] <span class="op">=</span> (</span>
+<span id="cb38-63"><a href="#cb38-63" aria-hidden="true" tabindex="-1"></a>            tot[<span class="st">"Mean"</span>].<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-64"><a href="#cb38-64" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> <span class="st">" ("</span></span>
+<span id="cb38-65"><a href="#cb38-65" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> tot[<span class="st">"SD"</span>].fillna(<span class="dv">0</span>).<span class="bu">round</span>(decimals).<span class="bu">map</span>(<span class="kw">lambda</span> x: <span class="ss">f"</span><span class="sc">{</span>x<span class="sc">:.</span>{decimals}f<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb38-66"><a href="#cb38-66" aria-hidden="true" tabindex="-1"></a>            <span class="op">+</span> <span class="st">")"</span></span>
+<span id="cb38-67"><a href="#cb38-67" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb38-68"><a href="#cb38-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-69"><a href="#cb38-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">"AVISITN"</span> <span class="kw">in</span> d.columns:</span>
+<span id="cb38-70"><a href="#cb38-70" aria-hidden="true" tabindex="-1"></a>        visit_order <span class="op">=</span> (</span>
+<span id="cb38-71"><a href="#cb38-71" aria-hidden="true" tabindex="-1"></a>            d[[visit_col, <span class="st">"AVISITN"</span>]]</span>
+<span id="cb38-72"><a href="#cb38-72" aria-hidden="true" tabindex="-1"></a>            .drop_duplicates()</span>
+<span id="cb38-73"><a href="#cb38-73" aria-hidden="true" tabindex="-1"></a>            .sort_values(<span class="st">"AVISITN"</span>)</span>
+<span id="cb38-74"><a href="#cb38-74" aria-hidden="true" tabindex="-1"></a>            .set_index(visit_col)[<span class="st">"AVISITN"</span>]</span>
+<span id="cb38-75"><a href="#cb38-75" aria-hidden="true" tabindex="-1"></a>            .to_dict()</span>
+<span id="cb38-76"><a href="#cb38-76" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb38-77"><a href="#cb38-77" aria-hidden="true" tabindex="-1"></a>        wide <span class="op">=</span> wide.reset_index()</span>
+<span id="cb38-78"><a href="#cb38-78" aria-hidden="true" tabindex="-1"></a>        wide[<span class="st">"_ord"</span>] <span class="op">=</span> wide[visit_col].<span class="bu">map</span>(visit_order)</span>
+<span id="cb38-79"><a href="#cb38-79" aria-hidden="true" tabindex="-1"></a>        wide <span class="op">=</span> wide.sort_values([param_col, <span class="st">"_ord"</span>]).drop(columns<span class="op">=</span><span class="st">"_ord"</span>).set_index([param_col, visit_col])</span>
+<span id="cb38-80"><a href="#cb38-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-81"><a href="#cb38-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> wide</span></code></pre></div>
+</details>
+</div>
 <ul>
-<li>mean chang from baseline</li>
-<li>shift tables</li>
+<li>Laboratory Chemistry</li>
 </ul>
-<div id="15ccffbc-5cec-413a-af1c-23508e342dd1" class="cell" data-execution_count="332">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbc'</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="332">
+<div id="c80e6a2d-a063-488a-a046-ae22f8001527" class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>adlbc_meanchg <span class="op">=</span> make_lab_mean_chg_table(data[<span class="st">"adlbc"</span>], stat<span class="op">=</span><span class="st">"SD"</span>)</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>display(adlbc_meanchg)</span></code></pre></div>
+<div class="cell-output cell-output-display">
 <div>
 
 
@@ -3514,618 +3605,1043 @@ Group Var                                       4.931    0.073
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">STUDYID</th>
-<th data-quarto-table-cell-role="th">SUBJID</th>
-<th data-quarto-table-cell-role="th">USUBJID</th>
-<th data-quarto-table-cell-role="th">TRTP</th>
-<th data-quarto-table-cell-role="th">TRTPN</th>
 <th data-quarto-table-cell-role="th">TRTA</th>
-<th data-quarto-table-cell-role="th">TRTAN</th>
-<th data-quarto-table-cell-role="th">TRTSDT</th>
-<th data-quarto-table-cell-role="th">TRTEDT</th>
-<th data-quarto-table-cell-role="th">AGE</th>
-<th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">BR2A1HI</th>
-<th data-quarto-table-cell-role="th">ANL01FL</th>
-<th data-quarto-table-cell-role="th">ALBTRVAL</th>
-<th data-quarto-table-cell-role="th">ANRIND</th>
-<th data-quarto-table-cell-role="th">BNRIND</th>
-<th data-quarto-table-cell-role="th">ABLFL</th>
-<th data-quarto-table-cell-role="th">AENTMTFL</th>
-<th data-quarto-table-cell-role="th">LBSEQ</th>
-<th data-quarto-table-cell-role="th">LBNRIND</th>
-<th data-quarto-table-cell-role="th">LBSTRESN</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.965517</td>
-<td></td>
-<td>77.50000</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>27.0</td>
-<td>NORMAL</td>
-<td>140.00000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.833333</td>
-<td></td>
-<td>3.60000</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>20.0</td>
-<td>NORMAL</td>
-<td>4.50000</td>
+<th data-quarto-table-cell-role="th">Placebo</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Total</th>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.946429</td>
-<td></td>
-<td>62.00000</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>12.0</td>
-<td>NORMAL</td>
-<td>106.00000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.488571</td>
-<td></td>
-<td>21.24000</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>7.0</td>
-<td>NORMAL</td>
-<td>10.26000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.295652</td>
-<td></td>
-<td>138.50000</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>2.0</td>
-<td>LOW</td>
-<td>34.00000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">74259</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td>Y</td>
-<td>27.00000</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>133.0</td>
-<td>NORMAL</td>
-<td>42.00000</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">74260</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td></td>
-<td>5.87322</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>141.0</td>
-<td>NORMAL</td>
-<td>5.76678</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">74261</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td></td>
-<td>5.87322</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>141.0</td>
-<td>NORMAL</td>
-<td>5.76678</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">74262</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td></td>
-<td>159.50000</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>142.0</td>
-<td>NORMAL</td>
-<td>94.00000</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">74263</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td></td>
-<td>159.50000</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>142.0</td>
-<td>NORMAL</td>
-<td>94.00000</td>
-</tr>
-</tbody>
-</table>
-
-<p>74264 rows × 46 columns</p>
-</div>
-</div>
-</div>
-<div id="8e12d64b-0dc5-4cb2-97a7-28674cb1a9aa" class="cell" data-execution_count="333">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbh'</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="333">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
+<th data-quarto-table-cell-role="th">PARAM</th>
+<th data-quarto-table-cell-role="th">AVISIT</th>
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">STUDYID</th>
-<th data-quarto-table-cell-role="th">SUBJID</th>
-<th data-quarto-table-cell-role="th">USUBJID</th>
-<th data-quarto-table-cell-role="th">TRTP</th>
-<th data-quarto-table-cell-role="th">TRTPN</th>
-<th data-quarto-table-cell-role="th">TRTA</th>
-<th data-quarto-table-cell-role="th">TRTAN</th>
-<th data-quarto-table-cell-role="th">TRTSDT</th>
-<th data-quarto-table-cell-role="th">TRTEDT</th>
-<th data-quarto-table-cell-role="th">AGE</th>
-<th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">BR2A1HI</th>
-<th data-quarto-table-cell-role="th">ANL01FL</th>
-<th data-quarto-table-cell-role="th">ALBTRVAL</th>
-<th data-quarto-table-cell-role="th">ANRIND</th>
-<th data-quarto-table-cell-role="th">BNRIND</th>
-<th data-quarto-table-cell-role="th">ABLFL</th>
-<th data-quarto-table-cell-role="th">AENTMTFL</th>
-<th data-quarto-table-cell-role="th">LBSEQ</th>
-<th data-quarto-table-cell-role="th">LBNRIND</th>
-<th data-quarto-table-cell-role="th">LBSTRESN</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.904646</td>
-<td></td>
-<td>5.84042</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>19.0</td>
-<td>NORMAL</td>
-<td>8.87458</td>
+<td rowspan="5" data-quarto-table-cell-role="th" data-valign="top">Alanine Aminotransferase (U/L)</td>
+<td data-quarto-table-cell-role="th">Week 2</td>
+<td>-2.40 (4.86)</td>
+<td>-0.77 (5.90)</td>
+<td>0.86 (12.38)</td>
+<td>-0.72 (8.46)</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.875000</td>
-<td></td>
-<td>0.30000</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>18.0</td>
-<td>NORMAL</td>
-<td>0.42000</td>
+<td data-quarto-table-cell-role="th">Week 4</td>
+<td>3.19 (15.47)</td>
+<td>2.00 (8.02)</td>
+<td>-2.35 (3.72)</td>
+<td>0.88 (10.27)</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.800000</td>
-<td></td>
-<td>70.00000</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>25.0</td>
-<td>NORMAL</td>
-<td>80.00000</td>
+<td data-quarto-table-cell-role="th">Week 6</td>
+<td>5.83 (19.74)</td>
+<td>-2.60 (5.18)</td>
+<td>-3.75 (3.17)</td>
+<td>-1.48 (9.41)</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.797914</td>
-<td></td>
-<td>1.47438</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>23.0</td>
-<td>NORMAL</td>
-<td>1.67562</td>
+<td data-quarto-table-cell-role="th">Week 8</td>
+<td>-3.93 (6.62)</td>
+<td>16.50 (41.92)</td>
+<td>-1.33 (9.22)</td>
+<td>2.10 (22.97)</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>CDISCPILOT01</td>
-<td>1015</td>
-<td>01-701-1015</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>63.0</td>
-<td>...</td>
-<td>0.879183</td>
-<td></td>
-<td>14.89960</td>
-<td>N</td>
-<td>N</td>
-<td>Y</td>
-<td></td>
-<td>24.0</td>
-<td>NORMAL</td>
-<td>21.10040</td>
+<td data-quarto-table-cell-role="th">Week 12</td>
+<td>-3.17 (14.05)</td>
+<td>-1.43 (3.60)</td>
+<td>5.50 (24.39)</td>
+<td>0.21 (15.44)</td>
 </tr>
 <tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
 <td data-quarto-table-cell-role="th">...</td>
 <td>...</td>
 <td>...</td>
 <td>...</td>
 <td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">49927</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td></td>
-<td>0.28000</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>137.0</td>
-<td>NORMAL</td>
-<td>0.02000</td>
+<td rowspan="5" data-quarto-table-cell-role="th" data-valign="top">Urate (umol/L)</td>
+<td data-quarto-table-cell-role="th">Week 12</td>
+<td>-5.20 (36.45)</td>
+<td>-5.20 (44.22)</td>
+<td>-31.23 (27.20)</td>
+<td>-10.41 (37.96)</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">49928</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td></td>
-<td>384.00000</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>158.0</td>
-<td>NORMAL</td>
-<td>207.00000</td>
+<td data-quarto-table-cell-role="th">Week 16</td>
+<td>-25.11 (32.14)</td>
+<td>-30.59 (29.82)</td>
+<td>-29.74 (43.98)</td>
+<td>-28.19 (33.94)</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">49929</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td></td>
-<td>384.00000</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>158.0</td>
-<td>NORMAL</td>
-<td>207.00000</td>
+<td data-quarto-table-cell-role="th">Week 20</td>
+<td>-23.13 (46.12)</td>
+<td>-1.98 (45.04)</td>
+<td>-71.38 (55.00)</td>
+<td>-33.59 (52.61)</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">49930</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td></td>
-<td>4.25000</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>160.0</td>
-<td>NORMAL</td>
-<td>4.00000</td>
+<td data-quarto-table-cell-role="th">Week 24</td>
+<td>-32.71 (62.35)</td>
+<td>-48.58 (78.32)</td>
+<td>-60.67 (22.02)</td>
+<td>-46.53 (58.21)</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">49931</td>
-<td>CDISCPILOT01</td>
-<td>1427</td>
-<td>01-718-1427</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>2012-12-17</td>
-<td>2013-02-11</td>
-<td>74.0</td>
-<td>...</td>
-<td>NaN</td>
-<td></td>
-<td>4.25000</td>
-<td>N</td>
-<td></td>
-<td></td>
-<td>Y</td>
-<td>160.0</td>
-<td>NORMAL</td>
-<td>4.00000</td>
+<td data-quarto-table-cell-role="th">End of Treatment</td>
+<td>-10.15 (48.99)</td>
+<td>-22.55 (52.79)</td>
+<td>-10.79 (44.57)</td>
+<td>-14.78 (48.32)</td>
 </tr>
 </tbody>
 </table>
 
-<p>49932 rows × 46 columns</p>
+<p>162 rows × 4 columns</p>
 </div>
 </div>
 </div>
 <ul>
-<li>Vital Signs
+<li>Laboratory Hematology</li>
+</ul>
+<div id="c1f1f94b-387b-4e97-a397-643748169b24" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>adlbh_meanchg <span class="op">=</span> make_lab_mean_chg_table(data[<span class="st">"adlbh"</span>], stat<span class="op">=</span><span class="st">"SD"</span>)</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>display(adlbh_meanchg)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">TRTA</th>
+<th data-quarto-table-cell-role="th">Placebo</th>
+<th data-quarto-table-cell-role="th">Xanomeline High Dose</th>
+<th data-quarto-table-cell-role="th">Xanomeline Low Dose</th>
+<th data-quarto-table-cell-role="th">Total</th>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">PARAM</th>
+<th data-quarto-table-cell-role="th">AVISIT</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td rowspan="5" data-quarto-table-cell-role="th" data-valign="top">Basophils (GI/L)</td>
+<td data-quarto-table-cell-role="th">Week 2</td>
+<td>-0.03 (0.03)</td>
+<td>-0.01 (0.02)</td>
+<td>-0.01 (0.03)</td>
+<td>-0.02 (0.03)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Week 4</td>
+<td>-0.03 (0.03)</td>
+<td>-0.01 (0.01)</td>
+<td>-0.02 (0.02)</td>
+<td>-0.02 (0.03)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Week 6</td>
+<td>-0.03 (0.02)</td>
+<td>-0.01 (0.04)</td>
+<td>-0.02 (0.02)</td>
+<td>-0.02 (0.03)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Week 8</td>
+<td>-0.02 (0.01)</td>
+<td>-0.01 (0.02)</td>
+<td>-0.06 (0.05)</td>
+<td>-0.03 (0.04)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Week 12</td>
+<td>-0.04 (0.04)</td>
+<td>-0.02 (0.01)</td>
+<td>-0.02 (0.02)</td>
+<td>-0.03 (0.03)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">...</td>
+<td data-quarto-table-cell-role="th">...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+<td>...</td>
+</tr>
+<tr class="odd">
+<td rowspan="5" data-quarto-table-cell-role="th" data-valign="top">Platelet (GI/L)</td>
+<td data-quarto-table-cell-role="th">Week 12</td>
+<td>-40.00 (14.49)</td>
+<td>-31.60 (28.32)</td>
+<td>-6.38 (16.94)</td>
+<td>-24.45 (24.10)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Week 16</td>
+<td>-45.64 (42.04)</td>
+<td>-9.67 (23.97)</td>
+<td>-20.00 (9.83)</td>
+<td>-35.62 (37.96)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">Week 20</td>
+<td>-30.17 (19.30)</td>
+<td>5.71 (30.74)</td>
+<td>-4.33 (65.88)</td>
+<td>-8.18 (47.13)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">Week 24</td>
+<td>-34.36 (27.41)</td>
+<td>-11.80 (31.40)</td>
+<td>-42.67 (29.14)</td>
+<td>-29.74 (29.35)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">End of Treatment</td>
+<td>-25.05 (27.59)</td>
+<td>-8.71 (35.20)</td>
+<td>-2.24 (39.17)</td>
+<td>-10.31 (35.90)</td>
+</tr>
+</tbody>
+</table>
+
+<p>108 rows × 4 columns</p>
+</div>
+</div>
+</div>
+</section>
+<section id="shift-tables" class="level4">
+<h4 class="anchored" data-anchor-id="shift-tables">Shift tables</h4>
+<div id="e7dea315-f78e-4079-bb70-54ff201e367a" class="cell" data-execution_count="33">
+<details class="code-fold">
+<summary>Show Python code</summary>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> normalize_range(x):</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(x):</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> np.nan</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="bu">str</span>(x).strip().upper()</span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>    mapping <span class="op">=</span> {</span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">"LOW"</span>: <span class="st">"Low"</span>,</span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"L"</span>: <span class="st">"Low"</span>,</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"NORMAL"</span>: <span class="st">"Normal"</span>,</span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"N"</span>: <span class="st">"Normal"</span>,</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"HIGH"</span>: <span class="st">"High"</span>,</span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"H"</span>: <span class="st">"High"</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mapping.get(s, s.title())</span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_shift_table_by_visits(</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>    param,</span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>    trt<span class="op">=</span><span class="va">None</span>,  </span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    visits<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>    trt_col<span class="op">=</span><span class="st">"TRTAN"</span>,</span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>    usubjid_col<span class="op">=</span><span class="st">"USUBJID"</span>,</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    param_col<span class="op">=</span><span class="st">"PARAMN"</span>,</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>    visit_col<span class="op">=</span><span class="st">"AVISIT"</span>,</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>    bnr_col<span class="op">=</span><span class="st">"BNRIND"</span>,</span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>    anr_col<span class="op">=</span><span class="st">"ANRIND"</span>,</span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>    saffl_col<span class="op">=</span><span class="st">"SAFFL"</span>,</span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>    anlfl_col<span class="op">=</span><span class="st">"ANL01FL"</span>,</span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>    decimals<span class="op">=</span><span class="dv">1</span></span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>):</span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> visits <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>        visits <span class="op">=</span> [<span class="st">'WEEK 2'</span>, <span class="st">'WEEK 4'</span>, <span class="st">'WEEK 6'</span>, <span class="st">'WEEK 8'</span>, <span class="st">'WEEK 12'</span>, <span class="st">'WEEK 16'</span>, <span class="st">'WEEK 20'</span>, <span class="st">'WEEK 24'</span>]</span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> df.copy()</span>
+<span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> saffl_col <span class="kw">in</span> d.columns:</span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> d[d[saffl_col] <span class="op">==</span> <span class="st">"Y"</span>]</span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> anlfl_col <span class="kw">in</span> d.columns:</span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> d[d[anlfl_col] <span class="op">==</span> <span class="st">"Y"</span>]</span>
+<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> d[d[param_col] <span class="op">==</span> param].copy()</span>
+<span id="cb41-42"><a href="#cb41-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-43"><a href="#cb41-43" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> trt <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb41-44"><a href="#cb41-44" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> d[d[trt_col] <span class="op">==</span> trt].copy()</span>
+<span id="cb41-45"><a href="#cb41-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-46"><a href="#cb41-46" aria-hidden="true" tabindex="-1"></a>    d[<span class="st">"BASE_CAT"</span>] <span class="op">=</span> d[bnr_col].<span class="bu">apply</span>(normalize_range)</span>
+<span id="cb41-47"><a href="#cb41-47" aria-hidden="true" tabindex="-1"></a>    d[<span class="st">"POST_CAT"</span>] <span class="op">=</span> d[anr_col].<span class="bu">apply</span>(normalize_range)</span>
+<span id="cb41-48"><a href="#cb41-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-49"><a href="#cb41-49" aria-hidden="true" tabindex="-1"></a>    d <span class="op">=</span> d.dropna(subset<span class="op">=</span>[usubjid_col, visit_col, <span class="st">"BASE_CAT"</span>, <span class="st">"POST_CAT"</span>])</span>
+<span id="cb41-50"><a href="#cb41-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-51"><a href="#cb41-51" aria-hidden="true" tabindex="-1"></a>    cats <span class="op">=</span> [<span class="st">"Low"</span>, <span class="st">"Normal"</span>, <span class="st">"High"</span>]</span>
+<span id="cb41-52"><a href="#cb41-52" aria-hidden="true" tabindex="-1"></a>    out_rows <span class="op">=</span> []</span>
+<span id="cb41-53"><a href="#cb41-53" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb41-54"><a href="#cb41-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> visit <span class="kw">in</span> visits:</span>
+<span id="cb41-55"><a href="#cb41-55" aria-hidden="true" tabindex="-1"></a>        <span class="co"># dv = d[d[visit_col] == visit].copy()</span></span>
+<span id="cb41-56"><a href="#cb41-56" aria-hidden="true" tabindex="-1"></a>        dv <span class="op">=</span> d.copy()</span>
+<span id="cb41-57"><a href="#cb41-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-58"><a href="#cb41-58" aria-hidden="true" tabindex="-1"></a>        dv <span class="op">=</span> dv.drop_duplicates(subset<span class="op">=</span>[usubjid_col, <span class="st">"BASE_CAT"</span>, <span class="st">"POST_CAT"</span>])</span>
+<span id="cb41-59"><a href="#cb41-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-60"><a href="#cb41-60" aria-hidden="true" tabindex="-1"></a>        tab <span class="op">=</span> pd.crosstab(dv[<span class="st">"BASE_CAT"</span>], dv[<span class="st">"POST_CAT"</span>]).reindex(index<span class="op">=</span>cats, columns<span class="op">=</span>cats, fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb41-61"><a href="#cb41-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-62"><a href="#cb41-62" aria-hidden="true" tabindex="-1"></a>        row_pct <span class="op">=</span> tab.div(tab.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>).replace(<span class="dv">0</span>, np.nan), axis<span class="op">=</span><span class="dv">0</span>) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb41-63"><a href="#cb41-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-64"><a href="#cb41-64" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i, base_cat <span class="kw">in</span> <span class="bu">enumerate</span>(cats):</span>
+<span id="cb41-65"><a href="#cb41-65" aria-hidden="true" tabindex="-1"></a>            row <span class="op">=</span> {</span>
+<span id="cb41-66"><a href="#cb41-66" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Visit"</span>: visit <span class="cf">if</span> i <span class="op">==</span> <span class="dv">0</span> <span class="cf">else</span> <span class="st">""</span>,</span>
+<span id="cb41-67"><a href="#cb41-67" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Baseline"</span>: base_cat,</span>
+<span id="cb41-68"><a href="#cb41-68" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Low"</span>: <span class="ss">f"</span><span class="sc">{</span>tab<span class="sc">.</span>loc[base_cat, <span class="st">'Low'</span>]<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="dv">0</span> <span class="cf">if</span> pd<span class="sc">.</span>isna(row_pct.loc[base_cat, <span class="st">'Low'</span>]) <span class="cf">else</span> <span class="bu">round</span>(row_pct.loc[base_cat, <span class="st">'Low'</span>], decimals)<span class="sc">}</span><span class="ss">%)"</span>,</span>
+<span id="cb41-69"><a href="#cb41-69" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Normal"</span>: <span class="ss">f"</span><span class="sc">{</span>tab<span class="sc">.</span>loc[base_cat, <span class="st">'Normal'</span>]<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="dv">0</span> <span class="cf">if</span> pd<span class="sc">.</span>isna(row_pct.loc[base_cat, <span class="st">'Normal'</span>]) <span class="cf">else</span> <span class="bu">round</span>(row_pct.loc[base_cat, <span class="st">'Normal'</span>], decimals)<span class="sc">}</span><span class="ss">%)"</span>,</span>
+<span id="cb41-70"><a href="#cb41-70" aria-hidden="true" tabindex="-1"></a>                <span class="st">"High"</span>: <span class="ss">f"</span><span class="sc">{</span>tab<span class="sc">.</span>loc[base_cat, <span class="st">'High'</span>]<span class="sc">}</span><span class="ss"> (</span><span class="sc">{</span><span class="dv">0</span> <span class="cf">if</span> pd<span class="sc">.</span>isna(row_pct.loc[base_cat, <span class="st">'High'</span>]) <span class="cf">else</span> <span class="bu">round</span>(row_pct.loc[base_cat, <span class="st">'High'</span>], decimals)<span class="sc">}</span><span class="ss">%)"</span>,</span>
+<span id="cb41-71"><a href="#cb41-71" aria-hidden="true" tabindex="-1"></a>            }</span>
+<span id="cb41-72"><a href="#cb41-72" aria-hidden="true" tabindex="-1"></a>            out_rows.append(row)</span>
+<span id="cb41-73"><a href="#cb41-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-74"><a href="#cb41-74" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> pd.DataFrame(out_rows)</span>
+<span id="cb41-75"><a href="#cb41-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span></code></pre></div>
+</details>
+</div>
+<ul>
+<li>Parameter Types</li>
+</ul>
+<div id="effb74f5-ad67-4e8c-a2bb-486673d0fd1e" class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbc'</span>][[<span class="st">'TRTA'</span>,<span class="st">'TRTAN'</span>]].drop_duplicates(subset<span class="op">=</span>[<span class="st">'TRTA'</span>,<span class="st">'TRTAN'</span>])</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">TRTA</th>
+<th data-quarto-table-cell-role="th">TRTAN</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Placebo</td>
+<td>0.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">540</td>
+<td>Xanomeline High Dose</td>
+<td>81.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">936</td>
+<td>Xanomeline Low Dose</td>
+<td>54.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="2198ddb4-4061-43fc-ab20-920e96ed4353" class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbc'</span>][[<span class="st">'PARAM'</span>,<span class="st">'PARAMN'</span>]].drop_duplicates(subset<span class="op">=</span>[<span class="st">'PARAM'</span>,<span class="st">'PARAMN'</span>])</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PARAM</th>
+<th data-quarto-table-cell-role="th">PARAMN</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Sodium (mmol/L)</td>
+<td>18.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Potassium (mmol/L)</td>
+<td>19.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Chloride (mmol/L)</td>
+<td>20.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Bilirubin (umol/L)</td>
+<td>21.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Alkaline Phosphatase (U/L)</td>
+<td>22.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Gamma Glutamyl Transferase (U/L)</td>
+<td>23.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Alanine Aminotransferase (U/L)</td>
+<td>24.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Aspartate Aminotransferase (U/L)</td>
+<td>25.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Blood Urea Nitrogen (mmol/L)</td>
+<td>26.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>Creatinine (umol/L)</td>
+<td>27.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>Urate (umol/L)</td>
+<td>28.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>Phosphate (mmol/L)</td>
+<td>29.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>Calcium (mmol/L)</td>
+<td>30.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>Glucose (mmol/L)</td>
+<td>31.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>Protein (g/L)</td>
+<td>32.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>Albumin (g/L)</td>
+<td>33.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>Cholesterol (mmol/L)</td>
+<td>34.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>Creatine Kinase (U/L)</td>
+<td>35.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>Sodium (mmol/L) change from previous visit, re...</td>
+<td>118.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>Potassium (mmol/L) change from previous visit,...</td>
+<td>119.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
+<td>Chloride (mmol/L) change from previous visit, ...</td>
+<td>120.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>Bilirubin (umol/L) change from previous visit,...</td>
+<td>121.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>Alkaline Phosphatase (U/L) change from previou...</td>
+<td>122.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23</td>
+<td>Gamma Glutamyl Transferase (U/L) change from p...</td>
+<td>123.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">24</td>
+<td>Alanine Aminotransferase (U/L) change from pre...</td>
+<td>124.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">25</td>
+<td>Aspartate Aminotransferase (U/L) change from p...</td>
+<td>125.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">26</td>
+<td>Blood Urea Nitrogen (mmol/L) change from previ...</td>
+<td>126.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">27</td>
+<td>Creatinine (umol/L) change from previous visit...</td>
+<td>127.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">28</td>
+<td>Urate (umol/L) change from previous visit, rel...</td>
+<td>128.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">29</td>
+<td>Phosphate (mmol/L) change from previous visit,...</td>
+<td>129.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">30</td>
+<td>Calcium (mmol/L) change from previous visit, r...</td>
+<td>130.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">31</td>
+<td>Glucose (mmol/L) change from previous visit, r...</td>
+<td>131.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">32</td>
+<td>Protein (g/L) change from previous visit, rela...</td>
+<td>132.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">33</td>
+<td>Albumin (g/L) change from previous visit, rela...</td>
+<td>133.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">34</td>
+<td>Cholesterol (mmol/L) change from previous visi...</td>
+<td>134.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">35</td>
+<td>Creatine Kinase (U/L) change from previous vis...</td>
+<td>135.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="ac1fe015-d1d4-4719-a51d-7d56ee585508" class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbh'</span>][[<span class="st">'PARAM'</span>,<span class="st">'PARAMN'</span>]].drop_duplicates(subset<span class="op">=</span>[<span class="st">'PARAM'</span>,<span class="st">'PARAMN'</span>])</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">PARAM</th>
+<th data-quarto-table-cell-role="th">PARAMN</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>Hemoglobin (mmol/L)</td>
+<td>1.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td>Hematocrit</td>
+<td>2.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td>Ery. Mean Corpuscular Volume (fL)</td>
+<td>3.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>Ery. Mean Corpuscular Hemoglobin (fmol(Fe))</td>
+<td>4.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td>Ery. Mean Corpuscular HGB Concentration (mmol/L)</td>
+<td>5.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td>Leukocytes (GI/L)</td>
+<td>6.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>Lymphocytes (GI/L)</td>
+<td>7.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td>Monocytes (GI/L)</td>
+<td>8.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td>Eosinophils (GI/L)</td>
+<td>9.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>Basophils (GI/L)</td>
+<td>10.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td>Platelet (GI/L)</td>
+<td>11.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td>Erythrocytes (TI/L)</td>
+<td>12.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>Anisocytes</td>
+<td>13.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td>Hemoglobin (mmol/L) change from previous visit...</td>
+<td>101.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td>Hematocrit change from previous visit, relativ...</td>
+<td>102.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>Ery. Mean Corpuscular Volume (fL) change from ...</td>
+<td>103.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td>Ery. Mean Corpuscular Hemoglobin (fmol(Fe)) ch...</td>
+<td>104.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td>Ery. Mean Corpuscular HGB Concentration (mmol/...</td>
+<td>105.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>Leukocytes (GI/L) change from previous visit, ...</td>
+<td>106.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td>Lymphocytes (GI/L) change from previous visit,...</td>
+<td>107.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
+<td>Monocytes (GI/L) change from previous visit, r...</td>
+<td>108.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>Eosinophils (GI/L) change from previous visit,...</td>
+<td>109.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td>Basophils (GI/L) change from previous visit, r...</td>
+<td>110.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23</td>
+<td>Platelet (GI/L) change from previous visit, re...</td>
+<td>111.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">24</td>
+<td>Erythrocytes (TI/L) change from previous visit...</td>
+<td>112.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">25</td>
+<td>Anisocytes change from previous visit, relativ...</td>
+<td>113.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">519</td>
+<td>Macrocytes</td>
+<td>14.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">533</td>
+<td>Macrocytes change from previous visit, relativ...</td>
+<td>114.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">588</td>
+<td>Polychromasia</td>
+<td>17.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">616</td>
+<td>Polychromasia change from previous visit, rela...</td>
+<td>117.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16042</td>
+<td>Poikilocytes</td>
+<td>16.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">16058</td>
+<td>Poikilocytes change from previous visit, relat...</td>
+<td>116.0</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">21333</td>
+<td>Microcytes</td>
+<td>15.0</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21350</td>
+<td>Microcytes change from previous visit, relativ...</td>
+<td>115.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<ul>
+<li>Specific Parameter</li>
+</ul>
+<div id="8361fffa-2159-476a-b3df-fcdd576d0c92" class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>shift_table_alt_placebo <span class="op">=</span> make_shift_table_by_visits(</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    data[<span class="st">"adlbc"</span>],</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    param<span class="op">=</span><span class="fl">18.0</span>,</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    trt<span class="op">=</span><span class="fl">54.0</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>display(shift_table_alt_placebo)</span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Visit</th>
+<th data-quarto-table-cell-role="th">Baseline</th>
+<th data-quarto-table-cell-role="th">Low</th>
+<th data-quarto-table-cell-role="th">Normal</th>
+<th data-quarto-table-cell-role="th">High</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">0</td>
+<td>WEEK 2</td>
+<td>Low</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">1</td>
+<td></td>
+<td>Normal</td>
+<td>0 (0.0%)</td>
+<td>80 (100.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2</td>
+<td></td>
+<td>High</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3</td>
+<td>WEEK 4</td>
+<td>Low</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4</td>
+<td></td>
+<td>Normal</td>
+<td>0 (0.0%)</td>
+<td>80 (100.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5</td>
+<td></td>
+<td>High</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6</td>
+<td>WEEK 6</td>
+<td>Low</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">7</td>
+<td></td>
+<td>Normal</td>
+<td>0 (0.0%)</td>
+<td>80 (100.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">8</td>
+<td></td>
+<td>High</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">9</td>
+<td>WEEK 8</td>
+<td>Low</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">10</td>
+<td></td>
+<td>Normal</td>
+<td>0 (0.0%)</td>
+<td>80 (100.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">11</td>
+<td></td>
+<td>High</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">12</td>
+<td>WEEK 12</td>
+<td>Low</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">13</td>
+<td></td>
+<td>Normal</td>
+<td>0 (0.0%)</td>
+<td>80 (100.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">14</td>
+<td></td>
+<td>High</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">15</td>
+<td>WEEK 16</td>
+<td>Low</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">16</td>
+<td></td>
+<td>Normal</td>
+<td>0 (0.0%)</td>
+<td>80 (100.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">17</td>
+<td></td>
+<td>High</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">18</td>
+<td>WEEK 20</td>
+<td>Low</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">19</td>
+<td></td>
+<td>Normal</td>
+<td>0 (0.0%)</td>
+<td>80 (100.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">20</td>
+<td></td>
+<td>High</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">21</td>
+<td>WEEK 24</td>
+<td>Low</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">22</td>
+<td></td>
+<td>Normal</td>
+<td>0 (0.0%)</td>
+<td>80 (100.0%)</td>
+<td>0 (0.0%)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">23</td>
+<td></td>
+<td>High</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="085ce8dd-c6e5-47e8-9545-86a9eac977a4" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adlbc'</span>][<span class="st">'PARAM'</span>].unique()</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>array(['Sodium (mmol/L)', 'Potassium (mmol/L)', 'Chloride (mmol/L)',
+       'Bilirubin (umol/L)', 'Alkaline Phosphatase (U/L)',
+       'Gamma Glutamyl Transferase (U/L)',
+       'Alanine Aminotransferase (U/L)',
+       'Aspartate Aminotransferase (U/L)', 'Blood Urea Nitrogen (mmol/L)',
+       'Creatinine (umol/L)', 'Urate (umol/L)', 'Phosphate (mmol/L)',
+       'Calcium (mmol/L)', 'Glucose (mmol/L)', 'Protein (g/L)',
+       'Albumin (g/L)', 'Cholesterol (mmol/L)', 'Creatine Kinase (U/L)',
+       'Sodium (mmol/L) change from previous visit, relative to normal range',
+       'Potassium (mmol/L) change from previous visit, relative to normal range',
+       'Chloride (mmol/L) change from previous visit, relative to normal range',
+       'Bilirubin (umol/L) change from previous visit, relative to normal range',
+       'Alkaline Phosphatase (U/L) change from previous visit, relative to normal range',
+       'Gamma Glutamyl Transferase (U/L) change from previous visit, relative to normal range',
+       'Alanine Aminotransferase (U/L) change from previous visit, relative to normal range',
+       'Aspartate Aminotransferase (U/L) change from previous visit, relative to normal range',
+       'Blood Urea Nitrogen (mmol/L) change from previous visit, relative to normal range',
+       'Creatinine (umol/L) change from previous visit, relative to normal range',
+       'Urate (umol/L) change from previous visit, relative to normal range',
+       'Phosphate (mmol/L) change from previous visit, relative to normal range',
+       'Calcium (mmol/L) change from previous visit, relative to normal range',
+       'Glucose (mmol/L) change from previous visit, relative to normal range',
+       'Protein (g/L) change from previous visit, relative to normal range',
+       'Albumin (g/L) change from previous visit, relative to normal range',
+       'Cholesterol (mmol/L) change from previous visit, relative to normal range',
+       'Creatine Kinase (U/L) change from previous visit, relative to normal range'],
+      dtype=object)</code></pre>
+</div>
+</div>
+<ul>
+<li>For every parameters</li>
+</ul>
+<div class="sourceCode" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>params_lbc <span class="op">=</span> <span class="bu">sorted</span>(data[<span class="st">"adlbc"</span>][<span class="st">"PARAMN"</span>].dropna().unique())</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>params_lbh <span class="op">=</span> <span class="bu">sorted</span>(data[<span class="st">"adlbh"</span>][<span class="st">"PARAMN"</span>].dropna().unique())</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> param <span class="kw">in</span> params_lbc:</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="st">"="</span><span class="op">*</span><span class="dv">80</span>)</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"PARAMN:"</span>, param)</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">80</span>)</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> make_shift_table_by_visits(</span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>        data[<span class="st">"adlbc"</span>],</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a>        param<span class="op">=</span>param,</span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a>        trt<span class="op">=</span><span class="va">None</span>   </span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a>    display(table)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> param <span class="kw">in</span> params_lbh:</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> <span class="st">"="</span><span class="op">*</span><span class="dv">80</span>)</span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"PARAM:"</span>, param)</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"="</span><span class="op">*</span><span class="dv">80</span>)</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> make_shift_table_by_visits(</span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>        data[<span class="st">"adlbh"</span>],</span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>        param<span class="op">=</span>param,</span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>        trt<span class="op">=</span><span class="va">None</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>    display(table)</span></code></pre></div>
+</section>
+</section>
+<section id="vital-signs" class="level3">
+<h3 class="anchored" data-anchor-id="vital-signs">Vital Signs</h3>
 <ul>
 <li>systolic BP</li>
 <li>diastolic BP</li>
 <li>heart rate</li>
 <li>weight</li>
-</ul></li>
 </ul>
-<div id="d7938689-7332-4cf1-908d-023ede322e45" class="cell" data-execution_count="334">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'advs'</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="334">
+<div id="d7938689-7332-4cf1-908d-023ede322e45" class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'advs'</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
 <div>
 
 
@@ -4436,9 +4952,9 @@ Group Var                                       4.931    0.073
 <li>Cox model</li>
 </ul></li>
 </ul>
-<div id="ccf2a90b-3f36-4b6c-ab37-b3a51fca98eb" class="cell" data-execution_count="335">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="335">
+<div id="ccf2a90b-3f36-4b6c-ab37-b3a51fca98eb" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="43">
 <div>
 
 
@@ -4748,21 +5264,24 @@ Group Var                                       4.931    0.073
 <li>Demographic and Baseline Characteristics</li>
 </ul></li>
 </ul>
-<div id="f34f2a8f-e422-4acb-8225-6429f72b476b" class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>Columns</span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>Placebo</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>Low Dose</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>High Dose</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>Total</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>Rows</span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a>Age mean (SD)</span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a>Sex n (<span class="op">%</span>)</span>
-<span id="cb42-11"><a href="#cb42-11" aria-hidden="true" tabindex="-1"></a>Race n (<span class="op">%</span>)</span>
-<span id="cb42-12"><a href="#cb42-12" aria-hidden="true" tabindex="-1"></a>Baseline ADAS score</span>
-<span id="cb42-13"><a href="#cb42-13" aria-hidden="true" tabindex="-1"></a>Weight</span>
-<span id="cb42-14"><a href="#cb42-14" aria-hidden="true" tabindex="-1"></a>Disease duration</span></code></pre></div>
+<div id="f34f2a8f-e422-4acb-8225-6429f72b476b" class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Columns</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>Placebo</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>Low Dose</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>High Dose</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a>Total</span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>Rows</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>Age mean (SD)</span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>Sex n (<span class="op">%</span>)</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>Race n (<span class="op">%</span>)</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>Baseline ADAS score</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>Weight</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>Disease duration</span></code></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>SyntaxError: invalid syntax (&lt;ipython-input-44-ec749c4a54f8&gt;, line 3)</code></pre>
+</div>
 </div>
 <ul>
 <li>Disposition</li>
@@ -4773,110 +5292,110 @@ Group Var                                       4.931    0.073
 </ul>
 <p>Randomized Treated Completed Discontinued</p>
 <div id="3c38124d-8b5e-47b9-b328-651e376b9a2a" class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>Exposure</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.3</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>Treatment Exposure Summary</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>Treatment duration</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>Mean exposure</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>Dose interruptions</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>Exposure</span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.3</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>Treatment Exposure Summary</span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>Treatment duration</span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>Mean exposure</span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>Dose interruptions</span></code></pre></div>
 </div>
 <p>Primary efficacy Table 14.4</p>
 <p>Change from Baseline in ADAS-Cog</p>
 <p>Baseline Week 12 Week 26 Mean change Treatment difference 95% CI p-value</p>
 <div id="5fab83a5-981a-4702-85bd-cd95ec81efd3" class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>Secondary efficacy</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.5</span></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>CIBIC<span class="op">+</span> Score</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>Improved</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a>No change</span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>Worsened</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>Secondary efficacy</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.5</span></span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>CIBIC<span class="op">+</span> Score</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>Improved</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>No change</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>Worsened</span></code></pre></div>
 </div>
 <div id="d8bbfd4f-913c-44ab-b5c8-d4ee5ca3a1aa" class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>Safety tables</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.6</span></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>Patients <span class="cf">with</span> ≥<span class="dv">1</span> TEAE</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>Placebo</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>Low dose</span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>High dose</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>Safety tables</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.6</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>Patients <span class="cf">with</span> ≥<span class="dv">1</span> TEAE</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>Placebo</span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>Low dose</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>High dose</span></code></pre></div>
 </div>
 <div id="bdc27b83-870d-48f3-9cc0-822730ad5d07" class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.7</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>TEAE by System Organ Class</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>Example</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>Cardiac disorders</span>
-<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>GI disorders</span>
-<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>Nervous system disorders</span>
-<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>Psychiatric disorders</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.7</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>TEAE by System Organ Class</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>Example</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>Cardiac disorders</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a>GI disorders</span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a>Nervous system disorders</span>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a>Psychiatric disorders</span></code></pre></div>
 </div>
 <div id="9485789f-3dcd-4536-8480-8483d6126c0d" class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.8</span></span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>Top Preferred Terms</span>
-<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>Headache</span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>Nausea</span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>Fatigue</span>
-<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>Dizziness</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.8</span></span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>Top Preferred Terms</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>Headache</span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>Nausea</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>Fatigue</span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a>Dizziness</span></code></pre></div>
 </div>
 <div id="b656b2d8-ab55-4f53-917e-bd6653fb18bd" class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>Laboratory</span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.9</span></span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>Laboratory Parameters – Change <span class="im">from</span> Baseline</span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>ALT</span>
-<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>AST</span>
-<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>Creatinine</span>
-<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>Hemoglobin</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>Laboratory</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.9</span></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>Laboratory Parameters – Change <span class="im">from</span> Baseline</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>ALT</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>AST</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>Creatinine</span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>Hemoglobin</span></code></pre></div>
 </div>
 <div id="372b6427-c10a-4173-ade0-0dd722d187aa" class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.10</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>Laboratory Shift Table</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>Low → Normal</span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>Normal → High</span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>High → Normal</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.10</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>Laboratory Shift Table</span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>Low → Normal</span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>Normal → High</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a>High → Normal</span></code></pre></div>
 </div>
 <div id="ff83f67c-b7bd-4b06-a48f-057c216a2fbd" class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>Vital signs</span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.11</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>Vital Signs Summary</span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>Systolic BP</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>Diastolic BP</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>Heart rate</span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>Weight</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>Vital signs</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>Table <span class="fl">14.11</span></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>Vital Signs Summary</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>Systolic BP</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>Diastolic BP</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>Heart rate</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>Weight</span></code></pre></div>
 </div>
 <div id="07701757-228f-45c6-947a-a8951fcfbacc" class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>Figures</span>
-<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.1</span></span>
-<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a>ADAS<span class="op">-</span>Cog change <span class="im">from</span> baseline over time</span>
-<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a>(line plot)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>Figures</span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.1</span></span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>ADAS<span class="op">-</span>Cog change <span class="im">from</span> baseline over time</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>(line plot)</span></code></pre></div>
 </div>
 <div id="1a4d7e27-5a1e-492d-96fc-25409919eccb" class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.2</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>Kaplan<span class="op">-</span>Meier survival curve</span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>(dataset: ADTTE)</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.2</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a>Kaplan<span class="op">-</span>Meier survival curve</span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>(dataset: ADTTE)</span></code></pre></div>
 </div>
 <div id="c7863949-7186-442f-9749-63d281e0f382" class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.3</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>AE incidence bar chart</span></code></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>Figure <span class="fl">14.3</span></span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>AE incidence bar chart</span></code></pre></div>
 </div>
 </section>
 </section>
@@ -4885,677 +5404,11 @@ Group Var                                       4.931    0.073
 <blockquote class="blockquote">
 <p>The first is ADSL (Subject Level Analysis Dataset), a one-recordper-subject structure that contains subject-level attributes. Because of its structure, it can be merged onto any other clinical dataset, including other ADaM datasets and SDTM datasets.</p>
 </blockquote>
-<div id="f7a7577c-8836-492e-b54f-66d890713e60" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adsl'</span>].head()</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">STUDYID</th>
-<th data-quarto-table-cell-role="th">USUBJID</th>
-<th data-quarto-table-cell-role="th">SUBJID</th>
-<th data-quarto-table-cell-role="th">SITEID</th>
-<th data-quarto-table-cell-role="th">SITEGR1</th>
-<th data-quarto-table-cell-role="th">ARM</th>
-<th data-quarto-table-cell-role="th">TRT01P</th>
-<th data-quarto-table-cell-role="th">TRT01PN</th>
-<th data-quarto-table-cell-role="th">TRT01A</th>
-<th data-quarto-table-cell-role="th">TRT01AN</th>
-<th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">DURDIS</th>
-<th data-quarto-table-cell-role="th">DURDSGR1</th>
-<th data-quarto-table-cell-role="th">VISIT1DT</th>
-<th data-quarto-table-cell-role="th">RFSTDTC</th>
-<th data-quarto-table-cell-role="th">RFENDTC</th>
-<th data-quarto-table-cell-role="th">VISNUMEN</th>
-<th data-quarto-table-cell-role="th">RFENDT</th>
-<th data-quarto-table-cell-role="th">DCDECOD</th>
-<th data-quarto-table-cell-role="th">DCREASCD</th>
-<th data-quarto-table-cell-role="th">MMSETOT</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>CDISCPILOT01</td>
-<td>01-701-1015</td>
-<td>1015</td>
-<td>701</td>
-<td>701</td>
-<td>Placebo</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>...</td>
-<td>43.9</td>
-<td>&gt;=12</td>
-<td>2013-12-26</td>
-<td>2014-01-02</td>
-<td>2014-07-02</td>
-<td>12.0</td>
-<td>2014-07-02</td>
-<td>COMPLETED</td>
-<td>Completed</td>
-<td>23.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>CDISCPILOT01</td>
-<td>01-701-1023</td>
-<td>1023</td>
-<td>701</td>
-<td>701</td>
-<td>Placebo</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>Placebo</td>
-<td>0.0</td>
-<td>...</td>
-<td>76.4</td>
-<td>&gt;=12</td>
-<td>2012-07-22</td>
-<td>2012-08-05</td>
-<td>2012-09-02</td>
-<td>5.0</td>
-<td>2012-09-02</td>
-<td>ADVERSE EVENT</td>
-<td>Adverse Event</td>
-<td>23.0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>CDISCPILOT01</td>
-<td>01-701-1028</td>
-<td>1028</td>
-<td>701</td>
-<td>701</td>
-<td>Xanomeline High Dose</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>...</td>
-<td>42.8</td>
-<td>&gt;=12</td>
-<td>2013-07-11</td>
-<td>2013-07-19</td>
-<td>2014-01-14</td>
-<td>12.0</td>
-<td>2014-01-14</td>
-<td>COMPLETED</td>
-<td>Completed</td>
-<td>23.0</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>CDISCPILOT01</td>
-<td>01-701-1033</td>
-<td>1033</td>
-<td>701</td>
-<td>701</td>
-<td>Xanomeline Low Dose</td>
-<td>Xanomeline Low Dose</td>
-<td>54.0</td>
-<td>Xanomeline Low Dose</td>
-<td>54.0</td>
-<td>...</td>
-<td>55.3</td>
-<td>&gt;=12</td>
-<td>2014-03-10</td>
-<td>2014-03-18</td>
-<td>2014-04-14</td>
-<td>5.0</td>
-<td>2014-04-14</td>
-<td>STUDY TERMINATED BY SPONSOR</td>
-<td>Sponsor Decision</td>
-<td>23.0</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>CDISCPILOT01</td>
-<td>01-701-1034</td>
-<td>1034</td>
-<td>701</td>
-<td>701</td>
-<td>Xanomeline High Dose</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>Xanomeline High Dose</td>
-<td>81.0</td>
-<td>...</td>
-<td>32.9</td>
-<td>&gt;=12</td>
-<td>2014-06-24</td>
-<td>2014-07-01</td>
-<td>2014-12-30</td>
-<td>12.0</td>
-<td>2014-12-30</td>
-<td>COMPLETED</td>
-<td>Completed</td>
-<td>21.0</td>
-</tr>
-</tbody>
-</table>
-
-<p>5 rows × 48 columns</p>
+<div id="f7a7577c-8836-492e-b54f-66d890713e60" class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adsl'</span>].head()</span></code></pre></div>
 </div>
-</div>
-</div>
-<div id="80cbcdeb-8b30-4075-96ba-b37df8c16cb5" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adsl'</span>].column_names_to_labels</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>{'STUDYID': 'Study Identifier',
- 'USUBJID': 'Unique Subject Identifier',
- 'SUBJID': 'Subject Identifier for the Study',
- 'SITEID': 'Study Site Identifier',
- 'SITEGR1': 'Pooled Site Group 1',
- 'ARM': 'Description of Planned Arm',
- 'TRT01P': 'Planned Treatment for Period 01',
- 'TRT01PN': 'Planned Treatment for Period 01 (N)',
- 'TRT01A': 'Actual Treatment for Period 01',
- 'TRT01AN': 'Actual Treatment for Period 01 (N)',
- 'TRTSDT': 'Date of First Exposure to Treatment',
- 'TRTEDT': 'Date of Last Exposure to Treatment',
- 'TRTDUR': 'Duration of Treatment (days)',
- 'AVGDD': 'Avg Daily Dose (as planned)',
- 'CUMDOSE': 'Cumulative Dose (as planned)',
- 'AGE': 'Age',
- 'AGEGR1': 'Pooled Age Group 1',
- 'AGEGR1N': 'Pooled Age Group 1 (N)',
- 'AGEU': 'Age Units',
- 'RACE': 'Race',
- 'RACEN': 'Race (N)',
- 'SEX': 'Sex',
- 'ETHNIC': 'Ethnicity',
- 'SAFFL': 'Safety Population Flag',
- 'ITTFL': 'Intent-To-Treat Population Flag',
- 'EFFFL': 'Efficacy Population Flag',
- 'COMP8FL': 'Completers of Week 8 Population Flag',
- 'COMP16FL': 'Completers of Week 16 Population Flag',
- 'COMP24FL': 'Completers of Week 24 Population Flag',
- 'DISCONFL': 'Did the Subject Discontinue the Study?',
- 'DSRAEFL': 'Discontinued due to AE?',
- 'DTHFL': 'Subject Died?',
- 'BMIBL': 'Baseline BMI (kg/m^2)',
- 'BMIBLGR1': 'Pooled Baseline BMI Group 1',
- 'HEIGHTBL': 'Baseline Height (cm)',
- 'WEIGHTBL': 'Baseline Weight (kg)',
- 'EDUCLVL': 'Years of Education',
- 'DISONSDT': 'Date of Onset of Disease',
- 'DURDIS': 'Duration of Disease (Months)',
- 'DURDSGR1': 'Pooled Disease Duration Group 1',
- 'VISIT1DT': 'Date of Visit 1',
- 'RFSTDTC': 'Subject Reference Start Date/Time',
- 'RFENDTC': 'Subject Reference End Date/Time',
- 'VISNUMEN': 'End of Trt Visit (Vis 12 or Early Term.)',
- 'RFENDT': 'Date of Discontinuation/Completion',
- 'DCDECOD': 'Standardized Disposition Term',
- 'DCREASCD': 'Reason for Discontinuation',
- 'MMSETOT': 'MMSE Total'}</code></pre>
-</div>
-</div>
-</section>
-</section>
-<section id="table" class="level1">
-<h1>Table</h1>
-<section id="table-11-1.-demographic-characteristics" class="level2">
-<h2 class="anchored" data-anchor-id="table-11-1.-demographic-characteristics">Table 11-1. Demographic Characteristics</h2>
-<div id="dc7975bf-f806-47a9-9975-a4ea07b7f2e8" class="cell" data-execution_count="289">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="op">=</span> data[<span class="st">'adsl'</span>].copy()</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>data2[<span class="st">'RACE2'</span>] <span class="op">=</span> data2[<span class="st">'RACE'</span>].replace({</span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'WHITE'</span>: <span class="st">'White/Caucasian'</span>,</span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'BLACK OR AFRICAN AMERICAN'</span>: <span class="st">'Other'</span>,</span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'AMERICAN INDIAN OR ALASKA NATIVE'</span>: <span class="st">'Other'</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>})</span></code></pre></div>
-</div>
-<div id="2d1aafee-9b31-4660-8738-5fb399bf520b" class="cell" data-execution_count="290">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>n_counts <span class="op">=</span> data[<span class="st">'adsl'</span>].groupby(<span class="st">'ARM'</span>)[<span class="st">'USUBJID'</span>].nunique()</span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>total_n <span class="op">=</span> data[<span class="st">'adsl'</span>][<span class="st">'USUBJID'</span>].nunique()</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>n_counts[<span class="st">'Total'</span>] <span class="op">=</span> total_n</span></code></pre></div>
-</div>
-<div id="5b6716c2-070c-4a1e-b960-64062dbaf0d6" class="cell" data-execution_count="316">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> mean_min_max_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>,</span>
-<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>                       mean_digits<span class="op">=</span><span class="dv">1</span>, minmax_digits<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>    arm_summary <span class="op">=</span> (</span>
-<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>        df.groupby(group_col)[var]</span>
-<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
-<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>    total_summary <span class="op">=</span> (</span>
-<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>        df[var]</span>
-<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>          .agg([<span class="st">'mean'</span>, <span class="st">'min'</span>, <span class="st">'max'</span>])</span>
-<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>          .to_frame().T</span>
-<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>    total_summary.index <span class="op">=</span> [total_label]</span>
-<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>    final <span class="op">=</span> pd.concat([arm_summary, total_summary])</span>
-<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>    final[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>] <span class="op">=</span> (</span>
-<span id="cb59-19"><a href="#cb59-19" aria-hidden="true" tabindex="-1"></a>        final[<span class="st">'mean'</span>].<span class="bu">round</span>(mean_digits).astype(<span class="bu">str</span>)</span>
-<span id="cb59-20"><a href="#cb59-20" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">" ("</span></span>
-<span id="cb59-21"><a href="#cb59-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'min'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
-<span id="cb59-22"><a href="#cb59-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">"–"</span></span>
-<span id="cb59-23"><a href="#cb59-23" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> final[<span class="st">'max'</span>].<span class="bu">round</span>(minmax_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>)</span>
-<span id="cb59-24"><a href="#cb59-24" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> <span class="st">")"</span></span>
-<span id="cb59-25"><a href="#cb59-25" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb59-26"><a href="#cb59-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-27"><a href="#cb59-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> final[[<span class="ss">f'</span><span class="sc">{</span>var<span class="sc">}</span><span class="ss"> Mean (Min–Max)'</span>]]</span></code></pre></div>
-</div>
-<div id="16a8f4fa-5abf-4c01-9478-71fbc45a397a" class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorical_table(df, var, group_col<span class="op">=</span><span class="st">'ARM'</span>, total_label<span class="op">=</span><span class="st">'Total'</span>, pct_digits<span class="op">=</span><span class="dv">0</span>):</span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>    ct <span class="op">=</span> pd.crosstab(df[var], df[group_col])</span>
-<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>    pct <span class="op">=</span> ct.div(ct.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">0</span>), axis<span class="op">=</span><span class="dv">1</span>) <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>    formatted <span class="op">=</span> (</span>
-<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>        ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
-<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>        pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
-<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    total_n <span class="op">=</span> df.shape[<span class="dv">0</span>]</span>
-<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>    total_ct <span class="op">=</span> df[var].value_counts()</span>
-<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>    total_pct <span class="op">=</span> total_ct <span class="op">/</span> total_n <span class="op">*</span> <span class="dv">100</span></span>
-<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>    formatted[total_label] <span class="op">=</span> (</span>
-<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a>        total_ct.astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">" ("</span> <span class="op">+</span></span>
-<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>        total_pct.<span class="bu">round</span>(pct_digits).astype(<span class="bu">int</span>).astype(<span class="bu">str</span>) <span class="op">+</span> <span class="st">"%)"</span></span>
-<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a>    formatted.columns.name <span class="op">=</span> <span class="va">None</span></span>
-<span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> formatted</span></code></pre></div>
-</div>
-<div id="3b7749fe-fd8a-47f5-a059-2286ae6bee95" class="cell" data-execution_count="313">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>Table11_1 <span class="op">=</span> pd.concat([mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'AGE'</span>).T,</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data[<span class="st">'adsl'</span>],<span class="st">'SEX'</span>).reset_index().set_index(<span class="st">'SEX'</span>).reindex([<span class="st">'M'</span>, <span class="st">'F'</span>]),</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a>                    categorical_table(data2,<span class="st">'RACE2'</span>).reset_index().set_index(<span class="st">'RACE2'</span>).reindex([<span class="st">'White/Caucasian'</span>, <span class="st">'Other'</span>]),</span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a>                    mean_min_max_table(data[<span class="st">'adsl'</span>],<span class="st">'EDUCLVL'</span>).T,</span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a>                   ])</span></code></pre></div>
-</div>
-<div id="f2014872-9cfd-47eb-984e-e65952a76c1e" class="cell" data-execution_count="314">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>Table11_1.columns <span class="op">=</span> [</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>    <span class="ss">f"</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> (n=</span><span class="sc">{</span>n_counts[col]<span class="sc">}</span><span class="ss">)"</span> <span class="cf">if</span> col <span class="kw">in</span> n_counts.index</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span> col</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col <span class="kw">in</span> final2.columns</span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div>
-</div>
-<div id="85a1b91a-15a6-4995-9b6a-b73327a96c8a" class="cell" data-execution_count="315">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>Table11_1</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="315">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">Placebo (n=86)</th>
-<th data-quarto-table-cell-role="th">Xanomeline High Dose (n=84)</th>
-<th data-quarto-table-cell-role="th">Xanomeline Low Dose (n=84)</th>
-<th data-quarto-table-cell-role="th">Total (n=254)</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">AGE Mean (Min–Max)</td>
-<td>75.2 (52–89)</td>
-<td>74.4 (56–88)</td>
-<td>75.7 (51–88)</td>
-<td>75.1 (51–89)</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">M</td>
-<td>33 (38%)</td>
-<td>44 (52%)</td>
-<td>34 (40%)</td>
-<td>111 (44%)</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">F</td>
-<td>53 (62%)</td>
-<td>40 (48%)</td>
-<td>50 (60%)</td>
-<td>143 (56%)</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">White/Caucasian</td>
-<td>78 (91%)</td>
-<td>74 (88%)</td>
-<td>78 (93%)</td>
-<td>230 (91%)</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">Other</td>
-<td>8 (9%)</td>
-<td>10 (12%)</td>
-<td>6 (7%)</td>
-<td>24 (9%)</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">EDUCLVL Mean (Min–Max)</td>
-<td>12.6 (6–21)</td>
-<td>12.5 (6–20)</td>
-<td>13.2 (3–24)</td>
-<td>12.8 (3–24)</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="6a295be0-5c87-4aae-95f1-450a81ada861" class="cell" data-execution_count="319">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'adtte'</span>]</span></code></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="319">
-<div>
-
-
-<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">STUDYID</th>
-<th data-quarto-table-cell-role="th">SITEID</th>
-<th data-quarto-table-cell-role="th">USUBJID</th>
-<th data-quarto-table-cell-role="th">AGE</th>
-<th data-quarto-table-cell-role="th">AGEGR1</th>
-<th data-quarto-table-cell-role="th">AGEGR1N</th>
-<th data-quarto-table-cell-role="th">RACE</th>
-<th data-quarto-table-cell-role="th">RACEN</th>
-<th data-quarto-table-cell-role="th">SEX</th>
-<th data-quarto-table-cell-role="th">TRTSDT</th>
-<th data-quarto-table-cell-role="th">...</th>
-<th data-quarto-table-cell-role="th">PARAMCD</th>
-<th data-quarto-table-cell-role="th">AVAL</th>
-<th data-quarto-table-cell-role="th">STARTDT</th>
-<th data-quarto-table-cell-role="th">ADT</th>
-<th data-quarto-table-cell-role="th">CNSR</th>
-<th data-quarto-table-cell-role="th">EVNTDESC</th>
-<th data-quarto-table-cell-role="th">SRCDOM</th>
-<th data-quarto-table-cell-role="th">SRCVAR</th>
-<th data-quarto-table-cell-role="th">SRCSEQ</th>
-<th data-quarto-table-cell-role="th">SAFFL</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1015</td>
-<td>63.0</td>
-<td>&lt;65</td>
-<td>1.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>F</td>
-<td>2014-01-02</td>
-<td>...</td>
-<td>TTDE</td>
-<td>2.0</td>
-<td>2014-01-02</td>
-<td>2014-01-03</td>
-<td>0.0</td>
-<td>Dematologic Event Occured</td>
-<td>ADAE</td>
-<td>ASTDT</td>
-<td>1.0</td>
-<td>Y</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1023</td>
-<td>64.0</td>
-<td>&lt;65</td>
-<td>1.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>M</td>
-<td>2012-08-05</td>
-<td>...</td>
-<td>TTDE</td>
-<td>3.0</td>
-<td>2012-08-05</td>
-<td>2012-08-07</td>
-<td>0.0</td>
-<td>Dematologic Event Occured</td>
-<td>ADAE</td>
-<td>ASTDT</td>
-<td>1.0</td>
-<td>Y</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1028</td>
-<td>71.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>M</td>
-<td>2013-07-19</td>
-<td>...</td>
-<td>TTDE</td>
-<td>3.0</td>
-<td>2013-07-19</td>
-<td>2013-07-21</td>
-<td>0.0</td>
-<td>Dematologic Event Occured</td>
-<td>ADAE</td>
-<td>ASTDT</td>
-<td>1.0</td>
-<td>Y</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1033</td>
-<td>74.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>M</td>
-<td>2014-03-18</td>
-<td>...</td>
-<td>TTDE</td>
-<td>28.0</td>
-<td>2014-03-18</td>
-<td>2014-04-14</td>
-<td>1.0</td>
-<td>Study Completion Date</td>
-<td>ADSL</td>
-<td>RFENDT</td>
-<td>NaN</td>
-<td>Y</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
-<td>CDISCPILOT01</td>
-<td>701</td>
-<td>01-701-1034</td>
-<td>77.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>F</td>
-<td>2014-07-01</td>
-<td>...</td>
-<td>TTDE</td>
-<td>58.0</td>
-<td>2014-07-01</td>
-<td>2014-08-27</td>
-<td>0.0</td>
-<td>Dematologic Event Occured</td>
-<td>ADAE</td>
-<td>ASTDT</td>
-<td>1.0</td>
-<td>Y</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-<td>...</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">249</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1254</td>
-<td>78.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>M</td>
-<td>2013-07-10</td>
-<td>...</td>
-<td>TTDE</td>
-<td>35.0</td>
-<td>2013-07-10</td>
-<td>2013-08-13</td>
-<td>0.0</td>
-<td>Dematologic Event Occured</td>
-<td>ADAE</td>
-<td>ASTDT</td>
-<td>4.0</td>
-<td>Y</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">250</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1328</td>
-<td>86.0</td>
-<td>&gt;80</td>
-<td>3.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>M</td>
-<td>2013-02-01</td>
-<td>...</td>
-<td>TTDE</td>
-<td>51.0</td>
-<td>2013-02-01</td>
-<td>2013-03-23</td>
-<td>0.0</td>
-<td>Dematologic Event Occured</td>
-<td>ADAE</td>
-<td>ASTDT</td>
-<td>1.0</td>
-<td>Y</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">251</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1355</td>
-<td>79.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>M</td>
-<td>2013-02-28</td>
-<td>...</td>
-<td>TTDE</td>
-<td>9.0</td>
-<td>2013-02-28</td>
-<td>2013-03-08</td>
-<td>0.0</td>
-<td>Dematologic Event Occured</td>
-<td>ADAE</td>
-<td>ASTDT</td>
-<td>1.0</td>
-<td>Y</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">252</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1371</td>
-<td>69.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>WHITE</td>
-<td>1.0</td>
-<td>F</td>
-<td>2013-04-26</td>
-<td>...</td>
-<td>TTDE</td>
-<td>29.0</td>
-<td>2013-04-26</td>
-<td>2013-05-24</td>
-<td>0.0</td>
-<td>Dematologic Event Occured</td>
-<td>ADAE</td>
-<td>ASTDT</td>
-<td>3.0</td>
-<td>Y</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">253</td>
-<td>CDISCPILOT01</td>
-<td>718</td>
-<td>01-718-1427</td>
-<td>74.0</td>
-<td>65-80</td>
-<td>2.0</td>
-<td>BLACK OR AFRICAN AMERICAN</td>
-<td>2.0</td>
-<td>F</td>
-<td>2012-12-17</td>
-<td>...</td>
-<td>TTDE</td>
-<td>42.0</td>
-<td>2012-12-17</td>
-<td>2013-01-27</td>
-<td>0.0</td>
-<td>Dematologic Event Occured</td>
-<td>ADAE</td>
-<td>ASTDT</td>
-<td>9.0</td>
-<td>Y</td>
-</tr>
-</tbody>
-</table>
-
-<p>254 rows × 26 columns</p>
-</div>
-</div>
+<div id="80cbcdeb-8b30-4075-96ba-b37df8c16cb5" class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>metadata[<span class="st">'adsl'</span>].column_names_to_labels</span></code></pre></div>
 </div>
 
 
