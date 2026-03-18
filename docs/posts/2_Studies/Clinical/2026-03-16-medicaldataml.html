@@ -297,6 +297,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data">Data</a></li>
   <li><a href="#ema" id="toc-ema" class="nav-link" data-scroll-target="#ema">EMA</a></li>
   <li><a href="#logistic-regression" id="toc-logistic-regression" class="nav-link" data-scroll-target="#logistic-regression">Logistic Regression</a></li>
+  <li><a href="#mlp-multi-layer-perceptron" id="toc-mlp-multi-layer-perceptron" class="nav-link" data-scroll-target="#mlp-multi-layer-perceptron">MLP, Multi-layer Perceptron</a></li>
   </ul>
 <div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="2026-03-16-medicaldataml.out.ipynb" download="2026-03-16-medicaldataml.out.ipynb"><i class="bi bi-journal-code"></i>Jupyter</a></li></ul></div></nav>
     </div>
@@ -332,7 +333,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="import" class="level1">
 <h1>Import</h1>
-<div id="f6520ea7-f2b0-4d38-a23f-101c54457b53" class="cell" data-execution_count="55">
+<div id="f6520ea7-f2b0-4d38-a23f-101c54457b53" class="cell" data-execution_count="86">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -344,7 +345,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LogisticRegression</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, roc_auc_score, roc_curve</span></code></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> accuracy_score, roc_auc_score, roc_curve</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.models <span class="im">import</span> Sequential</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tensorflow.keras.layers <span class="im">import</span> Dense</span></code></pre></div>
 </div>
 </section>
 <section id="data" class="level1">
@@ -754,13 +759,167 @@ ROC AUC: 0.88</code></pre>
 7                  Troponin         6.84      932.77</code></pre>
 </div>
 </div>
-<div id="6e36871c-15b2-45a2-9af5-24592cd39814" class="cell">
+<div id="6e36871c-15b2-45a2-9af5-24592cd39814" class="cell" data-execution_count="57">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>fpr, tpr, _ <span class="op">=</span> roc_curve(y_test, y_prob)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>plt.plot(fpr, tpr)</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"False Positive Rate"</span>)</span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"True Positive Rate"</span>)</span>
 <span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"ROC Curve"</span>)<span class="op">;</span></span></code></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2026-03-16-medicaldataml_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="mlp-multi-layer-perceptron" class="level1">
+<h1>MLP, Multi-layer Perceptron</h1>
+<div id="c2f54562-ed8e-4505-9070-2718826bce83" class="cell" data-execution_count="87">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> scaler.fit_transform(X_train)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>X_test <span class="op">=</span> scaler.transform(X_test)</span></code></pre></div>
+</div>
+<div id="60ccf3a9-44cc-47f1-b11a-89f23cc11537" class="cell" data-execution_count="88">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Sequential([</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>    Dense(<span class="dv">16</span>, activation<span class="op">=</span><span class="st">'relu'</span>, input_shape<span class="op">=</span>(X_train.shape[<span class="dv">1</span>],)),</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    Dense(<span class="dv">8</span>, activation<span class="op">=</span><span class="st">'relu'</span>),</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>    Dense(<span class="dv">1</span>, activation<span class="op">=</span><span class="st">'sigmoid'</span>)</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>])</span></code></pre></div>
+</div>
+<div id="bf8ea7b3-a1e4-48e2-8757-3ee3a8c8d83d" class="cell" data-execution_count="89">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>model.<span class="bu">compile</span>(optimizer<span class="op">=</span><span class="st">'adam'</span>, loss<span class="op">=</span><span class="st">'binary_crossentropy'</span>, metrics<span class="op">=</span>[<span class="st">'accuracy'</span>])</span></code></pre></div>
+</div>
+<div id="43d2a97f-d926-4730-9a4a-4bf08f7a6d13" class="cell" data-execution_count="95">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>model.fit(X_train, y_train, epochs<span class="op">=</span><span class="dv">50</span>, batch_size<span class="op">=</span><span class="dv">32</span>, validation_split<span class="op">=</span><span class="fl">0.2</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Epoch 1/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.4792 - accuracy: 0.7539 - val_loss: 0.4921 - val_accuracy: 0.7488
+Epoch 2/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.4714 - accuracy: 0.7693 - val_loss: 0.4865 - val_accuracy: 0.7488
+Epoch 3/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.4630 - accuracy: 0.7741 - val_loss: 0.4784 - val_accuracy: 0.7583
+Epoch 4/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.4552 - accuracy: 0.7836 - val_loss: 0.4770 - val_accuracy: 0.7488
+Epoch 5/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.4469 - accuracy: 0.7895 - val_loss: 0.4674 - val_accuracy: 0.7536
+Epoch 6/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.4395 - accuracy: 0.7848 - val_loss: 0.4623 - val_accuracy: 0.7488
+Epoch 7/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.4332 - accuracy: 0.7919 - val_loss: 0.4594 - val_accuracy: 0.7630
+Epoch 8/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.4276 - accuracy: 0.7943 - val_loss: 0.4543 - val_accuracy: 0.7583
+Epoch 9/50
+27/27 [==============================] - 0s 2ms/step - loss: 0.4217 - accuracy: 0.7967 - val_loss: 0.4465 - val_accuracy: 0.7630
+Epoch 10/50
+27/27 [==============================] - 0s 2ms/step - loss: 0.4161 - accuracy: 0.8026 - val_loss: 0.4445 - val_accuracy: 0.7725
+Epoch 11/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.4113 - accuracy: 0.8050 - val_loss: 0.4387 - val_accuracy: 0.7678
+Epoch 12/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.4065 - accuracy: 0.8026 - val_loss: 0.4341 - val_accuracy: 0.7773
+Epoch 13/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.4014 - accuracy: 0.8050 - val_loss: 0.4296 - val_accuracy: 0.7773
+Epoch 14/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3965 - accuracy: 0.8038 - val_loss: 0.4250 - val_accuracy: 0.7915
+Epoch 15/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3930 - accuracy: 0.8062 - val_loss: 0.4217 - val_accuracy: 0.7820
+Epoch 16/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3895 - accuracy: 0.8145 - val_loss: 0.4202 - val_accuracy: 0.7867
+Epoch 17/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3858 - accuracy: 0.8062 - val_loss: 0.4139 - val_accuracy: 0.7867
+Epoch 18/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3820 - accuracy: 0.8086 - val_loss: 0.4099 - val_accuracy: 0.7962
+Epoch 19/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3788 - accuracy: 0.8169 - val_loss: 0.4096 - val_accuracy: 0.7773
+Epoch 20/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3789 - accuracy: 0.8205 - val_loss: 0.4061 - val_accuracy: 0.7820
+Epoch 21/50
+27/27 [==============================] - 0s 2ms/step - loss: 0.3736 - accuracy: 0.8169 - val_loss: 0.4031 - val_accuracy: 0.8009
+Epoch 22/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3698 - accuracy: 0.8181 - val_loss: 0.3977 - val_accuracy: 0.7962
+Epoch 23/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3669 - accuracy: 0.8228 - val_loss: 0.3965 - val_accuracy: 0.8104
+Epoch 24/50
+27/27 [==============================] - 0s 2ms/step - loss: 0.3667 - accuracy: 0.8252 - val_loss: 0.3965 - val_accuracy: 0.7820
+Epoch 25/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3617 - accuracy: 0.8264 - val_loss: 0.3904 - val_accuracy: 0.8104
+Epoch 26/50
+27/27 [==============================] - 0s 5ms/step - loss: 0.3594 - accuracy: 0.8264 - val_loss: 0.3893 - val_accuracy: 0.7962
+Epoch 27/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3587 - accuracy: 0.8252 - val_loss: 0.3873 - val_accuracy: 0.8009
+Epoch 28/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3560 - accuracy: 0.8276 - val_loss: 0.3859 - val_accuracy: 0.8104
+Epoch 29/50
+27/27 [==============================] - 0s 5ms/step - loss: 0.3534 - accuracy: 0.8288 - val_loss: 0.3848 - val_accuracy: 0.8104
+Epoch 30/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3507 - accuracy: 0.8276 - val_loss: 0.3820 - val_accuracy: 0.8199
+Epoch 31/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3483 - accuracy: 0.8252 - val_loss: 0.3795 - val_accuracy: 0.8152
+Epoch 32/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3467 - accuracy: 0.8276 - val_loss: 0.3781 - val_accuracy: 0.8152
+Epoch 33/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3445 - accuracy: 0.8371 - val_loss: 0.3755 - val_accuracy: 0.8199
+Epoch 34/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3442 - accuracy: 0.8300 - val_loss: 0.3737 - val_accuracy: 0.8199
+Epoch 35/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3414 - accuracy: 0.8312 - val_loss: 0.3730 - val_accuracy: 0.8152
+Epoch 36/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3393 - accuracy: 0.8395 - val_loss: 0.3708 - val_accuracy: 0.8199
+Epoch 37/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3385 - accuracy: 0.8359 - val_loss: 0.3701 - val_accuracy: 0.8199
+Epoch 38/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3360 - accuracy: 0.8359 - val_loss: 0.3681 - val_accuracy: 0.8199
+Epoch 39/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3341 - accuracy: 0.8371 - val_loss: 0.3670 - val_accuracy: 0.8246
+Epoch 40/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3329 - accuracy: 0.8383 - val_loss: 0.3661 - val_accuracy: 0.8246
+Epoch 41/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3311 - accuracy: 0.8371 - val_loss: 0.3639 - val_accuracy: 0.8152
+Epoch 42/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3328 - accuracy: 0.8383 - val_loss: 0.3625 - val_accuracy: 0.8057
+Epoch 43/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3291 - accuracy: 0.8419 - val_loss: 0.3623 - val_accuracy: 0.8152
+Epoch 44/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3273 - accuracy: 0.8478 - val_loss: 0.3604 - val_accuracy: 0.8246
+Epoch 45/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3270 - accuracy: 0.8395 - val_loss: 0.3588 - val_accuracy: 0.8104
+Epoch 46/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3227 - accuracy: 0.8454 - val_loss: 0.3589 - val_accuracy: 0.8199
+Epoch 47/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3243 - accuracy: 0.8454 - val_loss: 0.3551 - val_accuracy: 0.8246
+Epoch 48/50
+27/27 [==============================] - 0s 4ms/step - loss: 0.3216 - accuracy: 0.8442 - val_loss: 0.3557 - val_accuracy: 0.8104
+Epoch 49/50
+27/27 [==============================] - 0s 2ms/step - loss: 0.3185 - accuracy: 0.8490 - val_loss: 0.3563 - val_accuracy: 0.8152
+Epoch 50/50
+27/27 [==============================] - 0s 3ms/step - loss: 0.3178 - accuracy: 0.8430 - val_loss: 0.3511 - val_accuracy: 0.8341</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="95">
+<pre><code>&lt;keras.callbacks.History at 0x7fcde80caf70&gt;</code></pre>
+</div>
+</div>
+<div id="82de4f06-56d9-4d7e-9eec-516162303ea3" class="cell" data-execution_count="96">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> model.predict(X_test)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>9/9 [==============================] - 0s 891us/step</code></pre>
+</div>
+</div>
+<div id="3ddee82c-7417-461a-9a98-1a3d5da29534" class="cell" data-execution_count="97">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>y_pred_class <span class="op">=</span> (y_pred <span class="op">&gt;</span> <span class="fl">0.5</span>).astype(<span class="bu">int</span>)</span></code></pre></div>
+</div>
+<div id="aec7dac2-3889-456a-9312-348748047780" class="cell" data-execution_count="98">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'accuracy: '</span>,<span class="bu">round</span>(accuracy_score(y_test, y_pred_class),<span class="dv">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>accuracy:  0.78</code></pre>
+</div>
+</div>
+<div id="6259b89a-437f-4355-a7ad-24f61d002690" class="cell" data-execution_count="99">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'roc: '</span>,<span class="bu">round</span>(roc_auc_score(y_test, y_pred),<span class="dv">2</span>))</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>roc:  0.87</code></pre>
+</div>
 </div>
 
 
