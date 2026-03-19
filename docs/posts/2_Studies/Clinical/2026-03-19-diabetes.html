@@ -312,6 +312,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1>Data</h1>
 <p>The Diabetes prediction dataset is a collection of medical and demographic data from patients, along with their diabetes status (positive or negative). The data includes features such as age, gender, body mass index (BMI), hypertension, heart disease, smoking history, HbA1c level, and blood glucose level. This dataset can be used to build machine learning models to predict diabetes in patients based on their medical history and demographic information. This can be useful for healthcare professionals in identifying patients who may be at risk of developing diabetes and in developing personalized treatment plans. Additionally, the dataset can be used by researchers to explore the relationships between various medical and demographic factors and the likelihood of developing diabetes.</p>
 <p>고혈압 여부 (Hypertension)</p>
+<p>HbA1c_level 혈액 속 당이 얼마나 높을까? 나타내는 지표</p>
+<p>blood_glucose_level 혈당 레벨</p>
 </section>
 <section id="import" class="level1">
 <h1>Import</h1>
@@ -449,6 +451,28 @@ Name: diabetes, dtype: int64</code></pre>
 </div>
 </div>
 </div>
+<table class="table">
+<thead>
+<tr class="header">
+<th>HbA1c (%)</th>
+<th>의미</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>&lt; 5.7</td>
+<td>정상</td>
+</tr>
+<tr class="even">
+<td>5.7 ~ 6.4</td>
+<td>당뇨 전단계 (Prediabetes)</td>
+</tr>
+<tr class="odd">
+<td>≥ 6.5</td>
+<td>당뇨병</td>
+</tr>
+</tbody>
+</table>
 <div id="6825ad0a-a52d-4cf7-a6fb-d64ccdbdefc1" class="cell" data-execution_count="52">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [<span class="st">'gender'</span>, <span class="st">'hypertension'</span>, <span class="st">'heart_disease'</span>, <span class="st">'smoking_history'</span>]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
