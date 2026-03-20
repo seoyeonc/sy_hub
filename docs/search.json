@@ -391,7 +391,7 @@
     "href": "posts/2_Studies/Clinical/2026-03-03-cdisc.html",
     "title": "[CDISC] CDISC ADaM Clinical Trial Analysis",
     "section": "",
-    "text": "The objective of this project is to demonstrate a typical clinical trial analysis workflow using CDISC ADaM datasets, including baseline summary, efficacy analyses, and safety evaluations.\n본 프로젝트의 목적은 CDISC ADaM 데이터셋을 활용하여 임상시험 분석의 전형적인 workflow(기초 특성 분석, 유효성 분석, 안전성 분석)를 구현하는 것이다."
+    "text": "The objective of this project is to demonstrate a typical clinical trial analysis workflow using CDISC ADaM datasets, including baseline summary, efficacy analyses, and safety evaluations.\n본 프로젝트의 목적은 CDISC ADaM 데이터셋을 활용하여 임상시험 분석의 전형적인 workflow(기초 특성 분석, 유효성 분석, 안전성 분석)를 구현하는 것이다.\n\nPhase 1 1상\n\n건강한 자원자 또는 소수 환자에서 약물의 안전성, 내약성, 약동학 pk를 평가하는 초기시험\n\nPhase 2 2상\n\n환자 집단에서 약물의 유효성과 적절한 용량을 탐색하는 시험\n\nPhase 3 3상\n\n대규모 환자에서 약물의 유효성과 안전성을 확증하여 허가를 위한 근거를 마련하는 시험\n\nPhase 4 4상\n\n시판 후 실제 환경에서 장기 안전성과 효과를 평가하는 사험"
   },
   {
     "objectID": "posts/2_Studies/Clinical/2026-03-03-cdisc.html#analysis-populations",
